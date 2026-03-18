@@ -1,0 +1,198 @@
+{
+  "fill-specializations" : [
+    {
+      "value" : {
+        "linear-gradient" : [
+          "display-p3:1.00000,1.00000,0.91728,1.00000",
+          "srgb:0.72932,0.93841,1.00000,1.00000"
+        ]
+      }
+    },
+    {
+      "appearance" : "dark",
+      "value" : {
+        "linear-gradient" : [
+          "display-p3:0.75712,0.69312,0.93213,1.00000",
+          "display-p3:0.47313,0.44731,0.78467,1.00000"
+        ]
+      }
+    }
+  ],
+  "groups" : [
+    {
+      "layers" : [
+        {
+          "hidden" : false,
+          "image-name" : "image-mi8vSklIWoc1TGdEC4eyJ1iQJ4iAZK.png",
+          "name" : "image-mi8vSklIWoc1TGdEC4eyJ1iQJ4iAZK",
+          "position" : {
+            "scale" : 0.3,
+            "translation-in-points" : [
+              14.07000000000005,
+              24.20718749999986
+            ]
+          }
+        },
+        {
+          "hidden" : true,
+          "image-name" : "image-uvT8LcYBki2O1QqshT6NUI5Uh81k3r.png",
+          "name" : "image-uvT8LcYBki2O1QqshT6NUI5Uh81k3r",
+          "position" : {
+            "scale" : 0.2,
+            "translation-in-points" : [
+              13.720000000000027,
+              -9.59281250000015
+            ]
+          }
+        },
+        {
+          "hidden" : true,
+          "image-name" : "image-JaLO4GvMZea2az0FyzzLXFoWFyjJOB.png",
+          "name" : "image-JaLO4GvMZea2az0FyzzLXFoWFyjJOB",
+          "position" : {
+            "scale" : 0.3,
+            "translation-in-points" : [
+              7.45187500000003,
+              4.390000000000043
+            ]
+          }
+        },
+        {
+          "glass" : false,
+          "image-name" : "screenshot_1771649915436.png",
+          "name" : "screenshot_1771649915436",
+          "position" : {
+            "scale" : 0.4,
+            "translation-in-points" : [
+              7.970000000000027,
+              0.9578124999998181
+            ]
+          }
+        },
+        {
+          "hidden" : true,
+          "image-name" : "image-sfdlM3BOPdGmNpHGA6CIxQcqzml1de (1).png",
+          "name" : "image-sfdlM3BOPdGmNpHGA6CIxQcqzml1de (1)",
+          "position" : {
+            "scale" : 0.3,
+            "translation-in-points" : [
+              279.151875,
+              215.7578124999999
+            ]
+          }
+        },
+        {
+          "hidden" : true,
+          "image-name" : "image-LfpfRdF2BugZEEpTgPQNhXOgbpJBMo.png",
+          "name" : "image-LfpfRdF2BugZEEpTgPQNhXOgbpJBMo",
+          "position" : {
+            "scale" : 0.05,
+            "translation-in-points" : [
+              -222.93875000000014,
+              -33.842812500000036
+            ]
+          }
+        },
+        {
+          "glass" : false,
+          "hidden" : true,
+          "image-name" : "screenshot_1771648446440.png",
+          "name" : "screenshot_1771648446440",
+          "position" : {
+            "scale" : 0.38,
+            "translation-in-points" : [
+              0,
+              0
+            ]
+          }
+        },
+        {
+          "fill" : "none",
+          "glass" : false,
+          "hidden" : true,
+          "image-name" : "screenshot_1771649099328.png",
+          "name" : "screenshot_1771649099328",
+          "position" : {
+            "scale" : 0.4,
+            "translation-in-points" : [
+              0.20000000000004547,
+              0.7578124999997726
+            ]
+          }
+        },
+        {
+          "glass" : false,
+          "hidden" : true,
+          "image-name" : "screenshot_1771648163531.png",
+          "name" : "screenshot_1771648163531",
+          "position" : {
+            "scale" : 0.4,
+            "translation-in-points" : [
+              11.220000000000027,
+              -42.1328125
+            ]
+          }
+        },
+        {
+          "fill-specializations" : [
+            {
+              "appearance" : "dark",
+              "value" : "none"
+            }
+          ],
+          "glass" : false,
+          "image-name" : "viewfinder.svg",
+          "name" : "viewfinder",
+          "position" : {
+            "scale" : 18.5,
+            "translation-in-points" : [
+              8.549999999999955,
+              0.7578124999997726
+            ]
+          }
+        },
+        {
+          "fill" : "automatic",
+          "glass" : false,
+          "hidden" : true,
+          "image-name" : "square.dashed.svg",
+          "name" : "square.dashed",
+          "position" : {
+            "scale" : 50,
+            "translation-in-points" : [
+              8.549999999999955,
+              0
+            ]
+          }
+        }
+      ],
+      "shadow" : {
+        "kind" : "neutral",
+        "opacity" : 0.5
+      },
+      "translucency" : {
+        "enabled" : true,
+        "value" : 0.5
+      }
+    },
+    {
+      "layers" : [
+
+      ],
+      "shadow" : {
+        "kind" : "neutral",
+        "opacity" : 0.5
+      },
+      "translucency" : {
+        "enabled" : true,
+        "value" : 0.5
+      }
+    }
+  ],
+  "supported-platforms" : {
+    "circles" : [
+      "watchOS"
+    ],
+    "squares" : "shared"
+  }
+}

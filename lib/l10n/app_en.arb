@@ -1,0 +1,2097 @@
+{
+  "@@locale": "en",
+  "appTitle": "App Screenshots",
+  "@appTitle": {
+    "description": "App title shown in the app bar and share sheets"
+  },
+  "screenshotStudio": "Screenshot Studio",
+  "@screenshotStudio": {
+    "description": "Main section title on the home page"
+  },
+  "screenshotStudioSubtitle": "Create beautiful App Store screenshots",
+  "@screenshotStudioSubtitle": {
+    "description": "Subtitle shown on the empty state of the home page"
+  },
+  "settings": "Settings",
+  "@settings": {
+    "description": "Settings page/dialog title"
+  },
+  "appearance": "Appearance",
+  "@appearance": {
+    "description": "Settings section header for theme options"
+  },
+  "about": "About",
+  "@about": {
+    "description": "Settings section header for app info"
+  },
+  "themeSystem": "System",
+  "@themeSystem": {
+    "description": "Theme mode label — follow device settings"
+  },
+  "themeLight": "Light",
+  "@themeLight": {
+    "description": "Theme mode label — always light"
+  },
+  "themeDark": "Dark",
+  "@themeDark": {
+    "description": "Theme mode label — always dark"
+  },
+  "themeSystemSubtitle": "Follow device settings",
+  "@themeSystemSubtitle": {
+    "description": "Subtitle for the System theme option"
+  },
+  "themeLightSubtitle": "Always use light theme",
+  "@themeLightSubtitle": {
+    "description": "Subtitle for the Light theme option"
+  },
+  "themeDarkSubtitle": "Always use dark theme",
+  "@themeDarkSubtitle": {
+    "description": "Subtitle for the Dark theme option"
+  },
+  "newDesign": "New Design",
+  "@newDesign": {
+    "description": "Button label to create a new screenshot design"
+  },
+  "save": "Save",
+  "@save": {
+    "description": "Generic save action label"
+  },
+  "saveAs": "Save As",
+  "@saveAs": {
+    "description": "Save as new copy action label"
+  },
+  "export": "Export",
+  "@export": {
+    "description": "Export action label"
+  },
+  "share": "Share",
+  "@share": {
+    "description": "Share action label"
+  },
+  "delete": "Delete",
+  "@delete": {
+    "description": "Delete action label"
+  },
+  "rename": "Rename",
+  "@rename": {
+    "description": "Rename action label"
+  },
+  "duplicate": "Duplicate",
+  "@duplicate": {
+    "description": "Duplicate action label"
+  },
+  "cancel": "Cancel",
+  "@cancel": {
+    "description": "Cancel action label"
+  },
+  "undo": "Undo",
+  "@undo": {
+    "description": "Undo the last action"
+  },
+  "redo": "Redo",
+  "@redo": {
+    "description": "Redo the previously undone action"
+  },
+  "confirm": "Confirm",
+  "@confirm": {
+    "description": "Confirm action label"
+  },
+  "done": "Done",
+  "@done": {
+    "description": "Done action label"
+  },
+  "rotationX": "Rotation X",
+  "@rotationX": {
+    "description": "Label for 3D rotation on the X axis"
+  },
+  "rotationY": "Rotation Y",
+  "@rotationY": {
+    "description": "Label for 3D rotation on the Y axis"
+  },
+  "rotationZ": "Rotation Z",
+  "@rotationZ": {
+    "description": "Label for 3D rotation on the Z axis"
+  },
+  "edit": "Edit",
+  "@edit": {
+    "description": "Edit action label"
+  },
+  "close": "Close",
+  "@close": {
+    "description": "Close action label"
+  },
+  "designName": "Design Name",
+  "@designName": {
+    "description": "Label for the design name text field"
+  },
+  "enterDesignName": "Enter design name",
+  "@enterDesignName": {
+    "description": "Hint text for the design name text field"
+  },
+  "folder": "Folder",
+  "@folder": {
+    "description": "Label for a folder"
+  },
+  "newFolder": "New Folder",
+  "@newFolder": {
+    "description": "Button label for creating a new folder"
+  },
+  "folderName": "Folder Name",
+  "@folderName": {
+    "description": "Label for the folder name text field"
+  },
+  "enterFolderName": "Enter folder name",
+  "@enterFolderName": {
+    "description": "Hint text for the folder name text field"
+  },
+  "moveToFolder": "Move to Folder",
+  "@moveToFolder": {
+    "description": "Action label for moving a design to a folder"
+  },
+  "noFolder": "No Folder",
+  "@noFolder": {
+    "description": "Option label for designs without a folder"
+  },
+  "emptyFolder": "This folder is empty",
+  "@emptyFolder": {
+    "description": "Empty state message for a folder"
+  },
+  "deleteFolder": "Delete Folder",
+  "@deleteFolder": {
+    "description": "Action label for deleting a folder"
+  },
+  "deleteFolderConfirmation": "Are you sure you want to delete this folder? Designs will be moved to the root.",
+  "@deleteFolderConfirmation": {
+    "description": "Confirmation message when deleting a folder"
+  },
+  "cloneToDevice": "Clone to Device",
+  "@cloneToDevice": {
+    "description": "Action to clone a design to a different device format"
+  },
+  "saveAsTemplate": "Save as Template",
+  "@saveAsTemplate": {
+    "description": "Action to save the current design as a reusable template"
+  },
+  "moveLeft": "Move Left",
+  "@moveLeft": {
+    "description": "Action to reorder an item to the left"
+  },
+  "moveRight": "Move Right",
+  "@moveRight": {
+    "description": "Action to reorder an item to the right"
+  },
+  "deleteSelectedConfirmation": "Are you sure you want to delete the selected items?",
+  "@deleteSelectedConfirmation": {
+    "description": "Confirmation message when deleting selected items in bulk"
+  },
+  "selectedCount": "{count} Selected",
+  "@selectedCount": {
+    "description": "Header showing number of selected items",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "exportedDesigns": "Exported Designs",
+  "@exportedDesigns": {
+    "description": "Snackbar message after exporting selected designs"
+  },
+  "select": "Select",
+  "@select": {
+    "description": "Action to enter selection mode"
+  },
+  "move": "Move",
+  "@move": {
+    "description": "Action to move items to a folder"
+  },
+  "alsoDeleteAllDesigns": "Also delete all designs inside",
+  "@alsoDeleteAllDesigns": {
+    "description": "Checkbox label to also delete all designs inside a folder"
+  },
+  "renameFolder": "Rename Folder",
+  "@renameFolder": {
+    "description": "Action label for renaming a folder"
+  },
+  "deleteDesign": "Delete Design",
+  "@deleteDesign": {
+    "description": "Action label for deleting a design"
+  },
+  "deleteDesignConfirmation": "Are you sure you want to delete this design?",
+  "@deleteDesignConfirmation": {
+    "description": "Confirmation message when deleting a design"
+  },
+  "background": "Background",
+  "@background": {
+    "description": "Section label for background settings"
+  },
+  "solidColor": "Solid Color",
+  "@solidColor": {
+    "description": "Background type — single solid color"
+  },
+  "gradient": "Gradient",
+  "@gradient": {
+    "description": "Background type — gradient"
+  },
+  "addGradientStop": "Add Stop",
+  "@addGradientStop": {
+    "description": "Action to add a gradient color stop"
+  },
+  "removeGradientStop": "Remove Stop",
+  "@removeGradientStop": {
+    "description": "Action to remove a gradient color stop"
+  },
+  "deviceFrame": "Device Frame",
+  "@deviceFrame": {
+    "description": "Section label for device frame settings"
+  },
+  "selectDevice": "Select Device",
+  "@selectDevice": {
+    "description": "Label for choosing a device frame"
+  },
+  "noFrame": "No Frame",
+  "@noFrame": {
+    "description": "Option to display without a device frame"
+  },
+  "iphone": "iPhone",
+  "@iphone": {
+    "description": "iPhone device frame label"
+  },
+  "ipad": "iPad",
+  "@ipad": {
+    "description": "iPad device frame label"
+  },
+  "textOverlay": "Text",
+  "@textOverlay": {
+    "description": "Section label for text overlay controls"
+  },
+  "addText": "Add Text",
+  "@addText": {
+    "description": "Action to add a text overlay"
+  },
+  "newText": "New Text",
+  "@newText": {
+    "description": "Default text for a new text overlay"
+  },
+  "editText": "Edit Text",
+  "@editText": {
+    "description": "Action to edit a text overlay"
+  },
+  "fontSize": "Font Size",
+  "@fontSize": {
+    "description": "Label for the font size control"
+  },
+  "fontWeight": "Font Weight",
+  "@fontWeight": {
+    "description": "Label for the font weight control"
+  },
+  "fontFamily": "Font Family",
+  "@fontFamily": {
+    "description": "Label for the font family picker"
+  },
+  "textColor": "Text Color",
+  "@textColor": {
+    "description": "Label for the text color picker"
+  },
+  "textAlign": "Text Align",
+  "@textAlign": {
+    "description": "Label for text alignment options"
+  },
+  "textRotation": "Rotation",
+  "@textRotation": {
+    "description": "Label for text rotation control"
+  },
+  "textScale": "Scale",
+  "@textScale": {
+    "description": "Label for text scale control"
+  },
+  "textDecoration": "Decoration",
+  "@textDecoration": {
+    "description": "Label for text decoration options (underline, strikethrough)"
+  },
+  "textBackground": "Background",
+  "@textBackground": {
+    "description": "Label for text background color control"
+  },
+  "textBorder": "Border",
+  "@textBorder": {
+    "description": "Label for text border/outline control"
+  },
+  "deleteText": "Delete Text",
+  "@deleteText": {
+    "description": "Action to delete a text overlay"
+  },
+  "imageOverlay": "Image",
+  "@imageOverlay": {
+    "description": "Section label for image overlay controls"
+  },
+  "addImage": "Add Image",
+  "@addImage": {
+    "description": "Action to add an image overlay"
+  },
+  "deleteImage": "Delete Image",
+  "@deleteImage": {
+    "description": "Action to delete an image overlay"
+  },
+  "doodle": "Doodle",
+  "@doodle": {
+    "description": "Section label for doodle pattern settings"
+  },
+  "enableDoodle": "Enable Doodle Pattern",
+  "@enableDoodle": {
+    "description": "Toggle label for enabling doodle icon pattern"
+  },
+  "iconSource": "Icon Source",
+  "@iconSource": {
+    "description": "Label for doodle icon source picker"
+  },
+  "iconSize": "Icon Size",
+  "@iconSize": {
+    "description": "Label for doodle icon size control"
+  },
+  "iconSpacing": "Spacing",
+  "@iconSpacing": {
+    "description": "Label for doodle icon spacing control"
+  },
+  "iconOpacity": "Opacity",
+  "@iconOpacity": {
+    "description": "Label for doodle icon opacity control"
+  },
+  "iconRotation": "Rotation",
+  "@iconRotation": {
+    "description": "Label for doodle icon rotation control"
+  },
+  "randomizeRotation": "Randomize Rotation",
+  "@randomizeRotation": {
+    "description": "Toggle label for random rotation on doodle icons"
+  },
+  "grid": "Grid",
+  "@grid": {
+    "description": "Section label for grid settings"
+  },
+  "showGrid": "Show Grid",
+  "@showGrid": {
+    "description": "Toggle to show grid lines"
+  },
+  "snapToGrid": "Snap to Grid",
+  "@snapToGrid": {
+    "description": "Toggle to snap elements to the grid"
+  },
+  "gridSize": "Grid Size",
+  "@gridSize": {
+    "description": "Label for the grid size slider"
+  },
+  "showCenterLines": "Show Center Lines",
+  "@showCenterLines": {
+    "description": "Toggle to show center alignment guides"
+  },
+  "padding": "Padding",
+  "@padding": {
+    "description": "Label for padding control"
+  },
+  "cornerRadius": "Corner Radius",
+  "@cornerRadius": {
+    "description": "Label for corner radius control"
+  },
+  "frameRotation": "Frame Rotation",
+  "@frameRotation": {
+    "description": "Label for device frame rotation control"
+  },
+  "orientation": "Orientation",
+  "@orientation": {
+    "description": "Label for orientation picker"
+  },
+  "portrait": "Portrait",
+  "@portrait": {
+    "description": "Portrait orientation label"
+  },
+  "landscape": "Landscape",
+  "@landscape": {
+    "description": "Landscape orientation label"
+  },
+  "tools": "Tools",
+  "@tools": {
+    "description": "Section label for editor tool bar"
+  },
+  "pickImage": "Pick Image",
+  "@pickImage": {
+    "description": "Action to pick an image from the file system"
+  },
+  "importImage": "Import Image",
+  "@importImage": {
+    "description": "Action to import an image"
+  },
+  "dropImageHere": "Drop image here",
+  "@dropImageHere": {
+    "description": "Hint text shown in the drop zone"
+  },
+  "replaceImage": "Replace Image",
+  "@replaceImage": {
+    "description": "Action to replace an image"
+  },
+  "savedToLibrary": "Saved to library",
+  "@savedToLibrary": {
+    "description": "Snackbar message after saving a design to the library"
+  },
+  "exportedSuccessfully": "Exported successfully",
+  "@exportedSuccessfully": {
+    "description": "Snackbar message after a successful export"
+  },
+  "failedToExport": "Failed to export",
+  "@failedToExport": {
+    "description": "Snackbar error message when export fails"
+  },
+  "gridView": "Grid View",
+  "@gridView": {
+    "description": "Toggle label for grid layout in the library"
+  },
+  "listView": "List View",
+  "@listView": {
+    "description": "Toggle label for list layout in the library"
+  },
+  "emptyLibrary": "No designs yet",
+  "@emptyLibrary": {
+    "description": "Empty state title in the design library"
+  },
+  "emptyLibrarySubtitle": "Tap + to create your first screenshot design",
+  "@emptyLibrarySubtitle": {
+    "description": "Empty state subtitle in the design library"
+  },
+  "version": "Version {version}",
+  "@version": {
+    "description": "App version string in settings",
+    "placeholders": {
+      "version": {
+        "type": "String"
+      }
+    }
+  },
+  "designsCount": "{count, plural, =0{No designs} =1{1 design} other{{count} designs}}",
+  "@designsCount": {
+    "description": "Pluralized count of designs in a folder or library",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "library": "Library",
+  "@library": {
+    "description": "Library section label"
+  },
+  "noDesignsYet": "No designs yet",
+  "@noDesignsYet": {
+    "description": "Empty state title when the library has no designs"
+  },
+  "createYourFirstDesign": "Create your first screenshot design",
+  "@createYourFirstDesign": {
+    "description": "Empty state subtitle when the library has no designs"
+  },
+  "solid": "Solid",
+  "@solid": {
+    "description": "Solid background type label"
+  },
+  "backgroundColor": "Background Color",
+  "@backgroundColor": {
+    "description": "Label for the background color picker"
+  },
+  "gradientColors": "Gradient Colors",
+  "@gradientColors": {
+    "description": "Section label for gradient color stops"
+  },
+  "none": "None",
+  "@none": {
+    "description": "Generic 'none' option label"
+  },
+  "color": "Color",
+  "@color": {
+    "description": "Generic color label"
+  },
+  "location": "Location",
+  "@location": {
+    "description": "Label for gradient stop location"
+  },
+  "angle": "Angle",
+  "@angle": {
+    "description": "Label for gradient angle control"
+  },
+  "removeStop": "Remove Stop",
+  "@removeStop": {
+    "description": "Action to remove a gradient stop"
+  },
+  "alignment": "Alignment",
+  "@alignment": {
+    "description": "Label for alignment control"
+  },
+  "decorationStyle": "Decoration Style",
+  "@decorationStyle": {
+    "description": "Label for text decoration style picker"
+  },
+  "decorationColor": "Decoration Color",
+  "@decorationColor": {
+    "description": "Label for text decoration color picker"
+  },
+  "borderAndFill": "Border & Fill",
+  "@borderAndFill": {
+    "description": "Section label for text border and fill settings"
+  },
+  "fillColor": "Fill Color",
+  "@fillColor": {
+    "description": "Label for fill color picker"
+  },
+  "borderColor": "Border Color",
+  "@borderColor": {
+    "description": "Label for border color picker"
+  },
+  "borderWidth": "Border Width",
+  "@borderWidth": {
+    "description": "Label for border width slider"
+  },
+  "borderRadius": "Border Radius",
+  "@borderRadius": {
+    "description": "Label for border radius slider"
+  },
+  "horizontalPadding": "Horizontal Padding",
+  "@horizontalPadding": {
+    "description": "Label for horizontal padding slider"
+  },
+  "verticalPadding": "Vertical Padding",
+  "@verticalPadding": {
+    "description": "Label for vertical padding slider"
+  },
+  "rotation": "Rotation",
+  "@rotation": {
+    "description": "Label for generic rotation slider"
+  },
+  "selectOrAddText": "Select or add a text overlay",
+  "@selectOrAddText": {
+    "description": "Hint shown when no text overlay is selected"
+  },
+  "editingLocale": "Editing {locale} override",
+  "@editingLocale": {
+    "description": "Badge shown in text controls when a translation preview locale is active",
+    "placeholders": {
+      "locale": {
+        "type": "String"
+      }
+    }
+  },
+  "copyToClipboard": "Copy to Clipboard",
+  "@copyToClipboard": {
+    "description": "Action to copy the screenshot to clipboard"
+  },
+  "copiedToClipboard": "Copied to clipboard",
+  "@copiedToClipboard": {
+    "description": "Snackbar message after copying to clipboard"
+  },
+  "pasteFromClipboard": "Paste from Clipboard",
+  "@pasteFromClipboard": {
+    "description": "Action to paste an image from clipboard"
+  },
+  "noImageInClipboard": "No image found in clipboard",
+  "@noImageInClipboard": {
+    "description": "Snackbar message when clipboard has no image"
+  },
+  "checkOutMyDesign": "Check out my design!",
+  "@checkOutMyDesign": {
+    "description": "Default share text when sharing a design"
+  },
+  "templates": "Templates",
+  "@templates": {
+    "description": "Templates section/button label"
+  },
+  "more": "More",
+  "@more": {
+    "description": "Overflow menu tooltip"
+  },
+  "pickAStyleForScreenshots": "Pick a style for your screenshots",
+  "@pickAStyleForScreenshots": {
+    "description": "Subtitle in the template picker"
+  },
+  "content": "Content",
+  "@content": {
+    "description": "Section label for content controls in the editor"
+  },
+  "enterText": "Enter text...",
+  "@enterText": {
+    "description": "Placeholder text for the text overlay input"
+  },
+  "typography": "Typography",
+  "@typography": {
+    "description": "Section label for typography controls"
+  },
+  "sizeAndWeight": "Size & Weight",
+  "@sizeAndWeight": {
+    "description": "Section label for font size and weight controls"
+  },
+  "transform": "Transform",
+  "@transform": {
+    "description": "Section label for transform controls (scale, rotation)"
+  },
+  "transparent": "Transparent",
+  "@transparent": {
+    "description": "Label for the transparent background option"
+  },
+  "addIcon": "Add Icon",
+  "@addIcon": {
+    "description": "Action to add an icon overlay"
+  },
+  "iconColor": "Icon Color",
+  "@iconColor": {
+    "description": "Label for icon color picker"
+  },
+  "sfSymbols": "SF Symbols",
+  "@sfSymbols": {
+    "description": "SF Symbols icon library label"
+  },
+  "materialLabel": "Material",
+  "@materialLabel": {
+    "description": "Material Icons library label"
+  },
+  "emojiLabel": "Emoji",
+  "@emojiLabel": {
+    "description": "Emoji icon source label in the doodle icon style picker"
+  },
+  "searchIcons": "Search icons...",
+  "@searchIcons": {
+    "description": "Hint text for the icon search field"
+  },
+  "roundedStyle": "Rounded",
+  "@roundedStyle": {
+    "description": "Icon style — rounded"
+  },
+  "sharpStyle": "Sharp",
+  "@sharpStyle": {
+    "description": "Icon style — sharp"
+  },
+  "outlinedStyle": "Outlined",
+  "@outlinedStyle": {
+    "description": "Icon style — outlined"
+  },
+  "weightLabel": "Weight",
+  "@weightLabel": {
+    "description": "Icon weight slider label"
+  },
+  "displayLabel": "Display",
+  "@displayLabel": {
+    "description": "Display type picker label"
+  },
+  "showGridLabel": "Show Grid",
+  "@showGridLabel": {
+    "description": "Grid toggle label in settings"
+  },
+  "displayGridLines": "Display grid lines on the canvas",
+  "@displayGridLines": {
+    "description": "Subtitle for the show grid toggle"
+  },
+  "snapToGridLabel": "Snap to Grid",
+  "@snapToGridLabel": {
+    "description": "Snap to grid toggle label in settings"
+  },
+  "snapToGridSubtitle": "Snap elements to the nearest grid line",
+  "@snapToGridSubtitle": {
+    "description": "Subtitle for the snap to grid toggle"
+  },
+  "centerLines": "Center Lines",
+  "@centerLines": {
+    "description": "Center alignment guides toggle label"
+  },
+  "centerLinesSubtitle": "Show center alignment guides",
+  "@centerLinesSubtitle": {
+    "description": "Subtitle for the center lines toggle"
+  },
+  "gridSizeLabel": "Grid Size",
+  "@gridSizeLabel": {
+    "description": "Grid size slider label in settings"
+  },
+  "sizeLabel": "Size",
+  "@sizeLabel": {
+    "description": "Generic size label"
+  },
+  "scatterIconPatterns": "Scatter icon patterns behind content",
+  "@scatterIconPatterns": {
+    "description": "Subtitle for the doodle pattern section"
+  },
+  "iconStyle": "Icon Style",
+  "@iconStyle": {
+    "description": "Label for the doodle icon style picker"
+  },
+  "presetsLabel": "Presets",
+  "@presetsLabel": {
+    "description": "Presets section label in the icon picker"
+  },
+  "layoutLabel": "Layout",
+  "@layoutLabel": {
+    "description": "Layout section label"
+  },
+  "opacityLabel": "Opacity",
+  "@opacityLabel": {
+    "description": "Opacity slider label"
+  },
+  "iconSizeLabel": "Icon Size",
+  "@iconSizeLabel": {
+    "description": "Icon size slider label in doodle settings"
+  },
+  "spacingLabel": "Spacing",
+  "@spacingLabel": {
+    "description": "Spacing slider label in doodle settings"
+  },
+  "customIcons": "Custom Icons",
+  "@customIcons": {
+    "description": "Label for the custom icons section in the icon picker"
+  },
+  "screenshotLabel": "Screenshot {index}",
+  "@screenshotLabel": {
+    "description": "Label for a screenshot by its index in the multi-screenshot editor",
+    "placeholders": {
+      "index": {
+        "type": "int"
+      }
+    }
+  },
+  "searchDesignsAndFolders": "Search designs and folders…",
+  "@searchDesignsAndFolders": {
+    "description": "Hint text for the library search bar"
+  },
+  "noResultsFor": "No results for \"{query}\"",
+  "@noResultsFor": {
+    "description": "Message shown when library search yields no results",
+    "placeholders": {
+      "query": {
+        "type": "String"
+      }
+    }
+  },
+  "zoomToFit": "Zoom to Fit",
+  "@zoomToFit": {
+    "description": "Action to zoom the canvas to fit the screenshot"
+  },
+  "addScreenshot": "Add Screenshot",
+  "@addScreenshot": {
+    "description": "Action to add another screenshot in multi-screenshot mode"
+  },
+  "exportCurrent": "Export Current",
+  "@exportCurrent": {
+    "description": "Action to export only the currently active screenshot"
+  },
+  "exportAll": "Export All",
+  "@exportAll": {
+    "description": "Action to export all screenshots at once"
+  },
+  "selectExportFolder": "Select export folder",
+  "@selectExportFolder": {
+    "description": "Dialog title for choosing the export directory"
+  },
+  "screenshotStudioCount": "Screenshot Studio · {count} screenshots",
+  "@screenshotStudioCount": {
+    "description": "Title showing the number of screenshots in the multi-editor",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "deviceFrames": "Device Frames",
+  "@deviceFrames": {
+    "description": "Section label for device frame options"
+  },
+  "gradients": "Gradients",
+  "@gradients": {
+    "description": "Section label for gradient preset options"
+  },
+  "textOverlays": "Text Overlays",
+  "@textOverlays": {
+    "description": "Section label for text overlay options"
+  },
+  "doodles": "Doodles",
+  "@doodles": {
+    "description": "Section label for doodle pattern options"
+  },
+  "frame": "Frame",
+  "@frame": {
+    "description": "Short label for device frame"
+  },
+  "text": "Text",
+  "@text": {
+    "description": "Short label for text"
+  },
+  "unlockPro": "✨ Unlock Pro",
+  "@unlockPro": {
+    "description": "Pro upgrade banner title"
+  },
+  "removeAllCreativeLimits": "Remove all creative limits",
+  "@removeAllCreativeLimits": {
+    "description": "Pro upgrade banner subtitle"
+  },
+  "foldersUnlimitedSaves": "Folders & Unlimited Saves",
+  "@foldersUnlimitedSaves": {
+    "description": "Pro feature bullet — folders and unlimited saves"
+  },
+  "foldersUnlimitedSavesSubtitle": "Stay organised with folders and save as many designs as you want",
+  "@foldersUnlimitedSavesSubtitle": {
+    "description": "Description for the folders and unlimited saves Pro feature"
+  },
+  "allDevicesMultiScreenshot": "All Devices + Multi-Screenshot",
+  "@allDevicesMultiScreenshot": {
+    "description": "Pro feature bullet — all devices and multi-screenshot"
+  },
+  "allDevicesMultiScreenshotSubtitle": "Use every device frame and design multiple screenshots at once",
+  "@allDevicesMultiScreenshotSubtitle": {
+    "description": "Description for the all devices and multi-screenshot Pro feature"
+  },
+  "advancedDesignTools": "Advanced Design Tools",
+  "@advancedDesignTools": {
+    "description": "Pro feature bullet — advanced design tools"
+  },
+  "advancedDesignToolsSubtitle": "Unlock text overlays, icons, doodles, and the full Google Fonts library",
+  "@advancedDesignToolsSubtitle": {
+    "description": "Description for the advanced design tools Pro feature"
+  },
+  "proUnlimitedMultiSets": "Unlimited Multi-Screenshot Sets",
+  "@proUnlimitedMultiSets": {
+    "description": "Pro feature bullet — unlimited multi-screenshot sets"
+  },
+  "proUnlimitedMultiSetsSubtitle": "Create as many sets as you need",
+  "@proUnlimitedMultiSetsSubtitle": {
+    "description": "Description for the unlimited multi-screenshot sets Pro feature"
+  },
+  "proAllDevicesMultiMode": "All Device Frames in Multi Mode",
+  "@proAllDevicesMultiMode": {
+    "description": "Pro feature bullet — all device frames in multi-screenshot mode"
+  },
+  "proAllDevicesMultiModeSubtitle": "iPad, Apple Watch & more for batch screenshots",
+  "@proAllDevicesMultiModeSubtitle": {
+    "description": "Description for the all devices in multi mode Pro feature"
+  },
+  "proAiTranslationAllLocales": "AI Translation — All Locales",
+  "@proAiTranslationAllLocales": {
+    "description": "Pro feature bullet — AI translation for all locales"
+  },
+  "proAiTranslationSubtitle": "Translate to every App Store language at once",
+  "@proAiTranslationSubtitle": {
+    "description": "Description for the AI translation all locales Pro feature"
+  },
+  "proAllDoodlePresets": "All Doodle Presets & Custom Icons",
+  "@proAllDoodlePresets": {
+    "description": "Pro feature bullet — all doodle presets and custom icons"
+  },
+  "proAllDoodlePresetsSubtitle": "Full creative freedom with unlimited patterns",
+  "@proAllDoodlePresetsSubtitle": {
+    "description": "Description for the all doodle presets Pro feature"
+  },
+  "proLabel": "Pro",
+  "@proLabel": {
+    "description": "Short 'Pro' label used on locked feature badges"
+  },
+  "continueWithPro": "Continue with Pro",
+  "@continueWithPro": {
+    "description": "CTA button label on the Pro upgrade sheet"
+  },
+  "restorePurchases": "Restore Purchases",
+  "@restorePurchases": {
+    "description": "Action to restore previous Pro purchases"
+  },
+  "support": "Support",
+  "@support": {
+    "description": "Settings section header for support links"
+  },
+  "legal": "Legal",
+  "@legal": {
+    "description": "Settings section header for legal links"
+  },
+  "rateOnAppStore": "Rate on App Store",
+  "@rateOnAppStore": {
+    "description": "Settings tile — rate the app on the App Store"
+  },
+  "sendFeedback": "Send Feedback",
+  "@sendFeedback": {
+    "description": "Settings tile — send feedback via email"
+  },
+  "redeemCode": "Redeem Code",
+  "@redeemCode": {
+    "description": "Settings tile — redeem a promo code"
+  },
+  "termsOfService": "Terms of Service",
+  "@termsOfService": {
+    "description": "Settings tile — view terms of service"
+  },
+  "privacyPolicy": "Privacy Policy",
+  "@privacyPolicy": {
+    "description": "Settings tile — view privacy policy"
+  },
+  "enjoyingApp": "Enjoying App Screenshots?",
+  "@enjoyingApp": {
+    "description": "Review prompt card title"
+  },
+  "enjoyingAppSubtitle": "Tap to let us know how we're doing",
+  "@enjoyingAppSubtitle": {
+    "description": "Review prompt card subtitle"
+  },
+  "restoreCode": "Restore Code",
+  "@restoreCode": {
+    "description": "Action label for restoring with a code"
+  },
+  "upgradeNow": "Upgrade Now",
+  "@upgradeNow": {
+    "description": "CTA button label to upgrade to Pro"
+  },
+  "oneTimePurchase": "One-time purchase — forever yours",
+  "@oneTimePurchase": {
+    "description": "Selling point on the Pro upgrade sheet"
+  },
+  "restorePurchase": "Restore Purchase",
+  "@restorePurchase": {
+    "description": "Singular form — action to restore a purchase"
+  },
+  "proActive": "Pro Active",
+  "@proActive": {
+    "description": "Badge label when Pro is active"
+  },
+  "allFeaturesUnlocked": "All features unlocked",
+  "@allFeaturesUnlocked": {
+    "description": "Subtitle when Pro is active"
+  },
+  "upgradeToPro": "Upgrade to Pro",
+  "@upgradeToPro": {
+    "description": "Settings tile title to upgrade to Pro"
+  },
+  "upgradeToProDescription": "Unlock folders, all devices, multi-screenshot, advanced design tools & more.",
+  "@upgradeToProDescription": {
+    "description": "Settings tile subtitle describing Pro benefits"
+  },
+  "restore": "Restore",
+  "@restore": {
+    "description": "Short restore action label"
+  },
+  "appIcon": "App Icon",
+  "@appIcon": {
+    "description": "Settings section header for app icon selection"
+  },
+  "defaultLabel": "Default",
+  "@defaultLabel": {
+    "description": "Label for the default app icon"
+  },
+  "purpleLabel": "Purple",
+  "@purpleLabel": {
+    "description": "Label for the purple app icon"
+  },
+  "exportingScreenshots": "Exporting screenshots…",
+  "@exportingScreenshots": {
+    "description": "Progress message while screenshots are being exported"
+  },
+  "images": "Images",
+  "@images": {
+    "description": "Tab or section label for images"
+  },
+  "icons": "Icons",
+  "@icons": {
+    "description": "Tab or section label for icons"
+  },
+  "selectFont": "Select Font",
+  "@selectFont": {
+    "description": "Title of the font picker dialog"
+  },
+  "searchFonts": "Search fonts…",
+  "@searchFonts": {
+    "description": "Hint text for the font search field"
+  },
+  "stops": "Stops",
+  "@stops": {
+    "description": "Label for the gradient stops section"
+  },
+  "tapBarToAdd": "Tap bar to add",
+  "@tapBarToAdd": {
+    "description": "Hint for adding gradient stops by tapping the bar"
+  },
+  "selectedStop": "Selected Stop",
+  "@selectedStop": {
+    "description": "Label for the currently selected gradient stop"
+  },
+  "itemCount": "{count, plural, =1{1 item} other{{count} items}}",
+  "@itemCount": {
+    "description": "Pluralized item count displayed in the library",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "chooseScreenSize": "Choose a screen size for your design",
+  "@chooseScreenSize": {
+    "description": "Subtitle in the new design screen size picker"
+  },
+  "multiScreenshot": "Multi-Screenshot",
+  "@multiScreenshot": {
+    "description": "Mode label for multi-screenshot editing"
+  },
+  "createUpTo10Screenshots": "Create up to 10 screenshots",
+  "@createUpTo10Screenshots": {
+    "description": "Description for multi-screenshot mode"
+  },
+  "pickScreenSize": "Pick a screen size for your screenshots",
+  "@pickScreenSize": {
+    "description": "Subtitle in the multi-screenshot screen size picker"
+  },
+  "orPickDeviceSize": "or pick a device size",
+  "@orPickDeviceSize": {
+    "description": "Alternative hint to pick a device screen size"
+  },
+  "dragScreenshotsHint": "Drag screenshots into this area",
+  "@dragScreenshotsHint": {
+    "description": "Drop zone hint on desktop"
+  },
+  "tapImportHint": "or click here to import",
+  "@tapImportHint": {
+    "description": "Drop zone secondary hint on desktop"
+  },
+  "tapImportHintMobile": "Tap Import to add a screenshot",
+  "@tapImportHintMobile": {
+    "description": "Import hint on mobile devices"
+  },
+  "shareDesignFile": "Share Design File",
+  "@shareDesignFile": {
+    "description": "Action to share a .design file"
+  },
+  "importDesign": "Import Design",
+  "@importDesign": {
+    "description": "Action to import a .design file"
+  },
+  "designExportedSuccessfully": "Design exported successfully",
+  "@designExportedSuccessfully": {
+    "description": "Snackbar message after exporting a design file"
+  },
+  "designImportedSuccessfully": "Design imported successfully",
+  "@designImportedSuccessfully": {
+    "description": "Snackbar message after importing a design file"
+  },
+  "failedToImportDesign": "Failed to import design",
+  "@failedToImportDesign": {
+    "description": "Snackbar error message when design import fails"
+  },
+  "savedToFile": "Saved to file",
+  "@savedToFile": {
+    "description": "Snackbar message after saving a design to a file"
+  },
+  "saveToLibrary": "Save to Library",
+  "@saveToLibrary": {
+    "description": "Action to save a design to the library"
+  },
+  "icloudBackup": "iCloud Backup",
+  "@icloudBackup": {
+    "description": "Settings section header for iCloud backup"
+  },
+  "backupNow": "Backup Now",
+  "@backupNow": {
+    "description": "Action to trigger an iCloud backup"
+  },
+  "restoreFromBackup": "Restore from Backup",
+  "@restoreFromBackup": {
+    "description": "Action to restore from an iCloud backup"
+  },
+  "lastBackup": "Last backup",
+  "@lastBackup": {
+    "description": "Label showing the last backup date"
+  },
+  "backupsAutomatic": "Backups are created automatically",
+  "@backupsAutomatic": {
+    "description": "Info text about automatic backups"
+  },
+  "noBackupsAvailable": "No backups available",
+  "@noBackupsAvailable": {
+    "description": "Message when no iCloud backups exist"
+  },
+  "restoreWarning": "Restoring will replace all current designs. This cannot be undone.",
+  "@restoreWarning": {
+    "description": "Warning message before restoring from backup"
+  },
+  "backupRestoredSuccessfully": "Backup restored successfully",
+  "@backupRestoredSuccessfully": {
+    "description": "Snackbar message after a successful restore"
+  },
+  "backupCreatedSuccessfully": "Backup created successfully",
+  "@backupCreatedSuccessfully": {
+    "description": "Snackbar message after a successful backup"
+  },
+  "backupFailed": "Backup failed",
+  "@backupFailed": {
+    "description": "Snackbar error message when backup fails"
+  },
+  "icloudNotAvailable": "iCloud is not available",
+  "@icloudNotAvailable": {
+    "description": "Snackbar error message when iCloud is not available"
+  },
+  "gradientType": "Gradient Type",
+  "@gradientType": {
+    "description": "Label for the gradient type picker (linear, radial, sweep, mesh)"
+  },
+  "linear": "Linear",
+  "@linear": {
+    "description": "Linear gradient type label"
+  },
+  "radial": "Radial",
+  "@radial": {
+    "description": "Radial gradient type label"
+  },
+  "sweep": "Sweep",
+  "@sweep": {
+    "description": "Sweep gradient type label"
+  },
+  "mesh": "Mesh",
+  "@mesh": {
+    "description": "Mesh gradient type label"
+  },
+  "radialSettings": "Radial Settings",
+  "@radialSettings": {
+    "description": "Section label for radial gradient configuration"
+  },
+  "radius": "Radius",
+  "@radius": {
+    "description": "Label for the radial gradient radius slider"
+  },
+  "sweepSettings": "Sweep Settings",
+  "@sweepSettings": {
+    "description": "Section label for sweep gradient configuration"
+  },
+  "startAngle": "Start Angle",
+  "@startAngle": {
+    "description": "Label for sweep gradient start angle slider"
+  },
+  "endAngle": "End Angle",
+  "@endAngle": {
+    "description": "Label for sweep gradient end angle slider"
+  },
+  "meshPoints": "Mesh Points",
+  "@meshPoints": {
+    "description": "Section label for mesh gradient point list"
+  },
+  "meshOptions": "Mesh Options",
+  "@meshOptions": {
+    "description": "Section label for mesh gradient configuration"
+  },
+  "blend": "Blend",
+  "@blend": {
+    "description": "Label for mesh gradient blend control"
+  },
+  "noise": "Noise",
+  "@noise": {
+    "description": "Label for mesh gradient noise control"
+  },
+  "showDotGrid": "Canvas Dots",
+  "@showDotGrid": {
+    "description": "Toggle label for showing dots on the editor canvas"
+  },
+  "showDotGridSubtitle": "Show dot pattern on the editor background",
+  "@showDotGridSubtitle": {
+    "description": "Subtitle for the canvas dots toggle"
+  },
+  "addPoint": "Add Point",
+  "@addPoint": {
+    "description": "Action to add a mesh gradient point"
+  },
+  "removePoint": "Remove",
+  "@removePoint": {
+    "description": "Action to remove a mesh gradient point"
+  },
+  "centerX": "Center X",
+  "@centerX": {
+    "description": "Label for the X-axis center position slider"
+  },
+  "centerY": "Center Y",
+  "@centerY": {
+    "description": "Label for the Y-axis center position slider"
+  },
+  "pointCount": "{count, plural, =1{1 point} other{{count} points}}",
+  "@pointCount": {
+    "description": "Pluralized mesh point count",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "pointLabel": "Point {index}",
+  "@pointLabel": {
+    "description": "Label for a mesh gradient point by index",
+    "placeholders": {
+      "index": {
+        "type": "int"
+      }
+    }
+  },
+  "xAxis": "X",
+  "@xAxis": {
+    "description": "Short label for the X axis"
+  },
+  "yAxis": "Y",
+  "@yAxis": {
+    "description": "Short label for the Y axis"
+  },
+  "uploadToAppStoreConnect": "Upload to App Store Connect",
+  "@uploadToAppStoreConnect": {
+    "description": "ASC upload sheet header title"
+  },
+  "loadingApps": "Loading apps...",
+  "@loadingApps": {
+    "description": "Loading state text while fetching apps from ASC"
+  },
+  "loadingVersionForApp": "Loading version for {appName}...",
+  "@loadingVersionForApp": {
+    "description": "Loading state text while fetching the app version",
+    "placeholders": {
+      "appName": {
+        "type": "String"
+      }
+    }
+  },
+  "unknownError": "Unknown error",
+  "@unknownError": {
+    "description": "Generic fallback error message"
+  },
+  "noApiKeyConfigured": "No API Key Configured",
+  "@noApiKeyConfigured": {
+    "description": "Title shown when no ASC API key is set up"
+  },
+  "ascApiKeySetupHint": "Set up your App Store Connect API key to upload screenshots.",
+  "@ascApiKeySetupHint": {
+    "description": "Description text for the no-API-key prompt"
+  },
+  "configureApiKey": "Configure API Key",
+  "@configureApiKey": {
+    "description": "Button label to open the API key configuration"
+  },
+  "selectApp": "Select App",
+  "@selectApp": {
+    "description": "Title for the app picker in the ASC upload sheet"
+  },
+  "searchApps": "Search apps...",
+  "@searchApps": {
+    "description": "Hint text for the app search field"
+  },
+  "noAppsFound": "No apps found",
+  "@noAppsFound": {
+    "description": "Empty state title when no apps are returned"
+  },
+  "checkApiKeyPermissions": "Check your API key permissions.",
+  "@checkApiKeyPermissions": {
+    "description": "Subtitle for the no-apps-found empty state"
+  },
+  "noAppsMatchQuery": "No apps match \"{query}\"",
+  "@noAppsMatchQuery": {
+    "description": "Message when searching apps yields no results",
+    "placeholders": {
+      "query": {
+        "type": "String"
+      }
+    }
+  },
+  "changeApp": "Change app",
+  "@changeApp": {
+    "description": "Action label to re-select the target ASC app"
+  },
+  "screenshotDisplayType": "Screenshot Display Type",
+  "@screenshotDisplayType": {
+    "description": "Section label for choosing replace vs append mode"
+  },
+  "replace": "Replace",
+  "@replace": {
+    "description": "Upload mode — replace existing screenshots"
+  },
+  "append": "Append",
+  "@append": {
+    "description": "Upload mode — append to existing screenshots"
+  },
+  "rememberForThisDesign": "Remember for this design",
+  "@rememberForThisDesign": {
+    "description": "Toggle label to persist app selection for the design"
+  },
+  "willSkipAppSelectionNextTime": "Will skip app selection next time",
+  "@willSkipAppSelectionNextTime": {
+    "description": "Tooltip when remember-for-design is enabled"
+  },
+  "youllPickTheAppEachTime": "You'll pick the app each time",
+  "@youllPickTheAppEachTime": {
+    "description": "Tooltip when remember-for-design is disabled"
+  },
+  "localesHeader": "LOCALES",
+  "@localesHeader": {
+    "description": "Section header for the locale checklist in the upload sheet"
+  },
+  "deselectAll": "Deselect All",
+  "@deselectAll": {
+    "description": "Action to deselect all locales"
+  },
+  "selectAll": "Select All",
+  "@selectAll": {
+    "description": "Action to select all locales"
+  },
+  "selectLocalesToUpload": "Select locales to upload",
+  "@selectLocalesToUpload": {
+    "description": "Hint text when no locales are selected"
+  },
+  "uploadNLocales": "Upload {count} {count, plural, =1{Locale} other{Locales}}",
+  "@uploadNLocales": {
+    "description": "Upload button label with selected locale count",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "nScreenshots": "{count} {count, plural, =1{screenshot} other{screenshots}}",
+  "@nScreenshots": {
+    "description": "Pluralized screenshot count in upload summary",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "across": "across",
+  "@across": {
+    "description": "Connective word in 'X screenshots across Y locales'"
+  },
+  "nLocales": "{count} {count, plural, =1{locale} other{locales}}",
+  "@nLocales": {
+    "description": "Pluralized locale count in upload summary",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "nFiles": "{count} {count, plural, =1{file} other{files}}",
+  "@nFiles": {
+    "description": "Pluralized file count",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "uploadFailed": "Upload Failed",
+  "@uploadFailed": {
+    "description": "Title shown when all uploads fail"
+  },
+  "completedWithIssues": "Completed with Issues",
+  "@completedWithIssues": {
+    "description": "Title shown when some uploads succeed and some fail"
+  },
+  "uploadComplete": "Upload Complete!",
+  "@uploadComplete": {
+    "description": "Title shown when all uploads succeed"
+  },
+  "nSucceeded": "{count} succeeded",
+  "@nSucceeded": {
+    "description": "Success count chip in the upload-done view",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "nFailed": "{count} failed",
+  "@nFailed": {
+    "description": "Failure count chip in the upload-done view",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "uploadingLocale": "Uploading {locale}",
+  "@uploadingLocale": {
+    "description": "Progress label showing the locale currently being uploaded",
+    "placeholders": {
+      "locale": {
+        "type": "String"
+      }
+    }
+  },
+  "nOfTotalScreenshots": "{current} of {total} screenshots",
+  "@nOfTotalScreenshots": {
+    "description": "Progress counter showing current/total screenshots",
+    "placeholders": {
+      "current": {
+        "type": "int"
+      },
+      "total": {
+        "type": "int"
+      }
+    }
+  },
+  "preparingUpload": "Preparing upload...",
+  "@preparingUpload": {
+    "description": "Status label while upload is being prepared"
+  },
+  "statusPending": "Pending",
+  "@statusPending": {
+    "description": "Upload status — waiting to start"
+  },
+  "statusUploading": "Uploading...",
+  "@statusUploading": {
+    "description": "Upload status — in progress"
+  },
+  "statusDone": "Done",
+  "@statusDone": {
+    "description": "Upload status — finished successfully"
+  },
+  "statusFailed": "Failed",
+  "@statusFailed": {
+    "description": "Upload status — failed"
+  },
+  "somethingWentWrong": "Something went wrong",
+  "@somethingWentWrong": {
+    "description": "Generic error title"
+  },
+  "retry": "Retry",
+  "@retry": {
+    "description": "Action to retry a failed operation"
+  },
+  "appStoreConnectApiKey": "App Store Connect API Key",
+  "@appStoreConnectApiKey": {
+    "description": "Title of the ASC credentials dialog"
+  },
+  "ascApiKeyGenerateHint": "Generate an API key in App Store Connect → Users & Access → Integrations → Keys",
+  "@ascApiKeyGenerateHint": {
+    "description": "Help text explaining where to generate an ASC API key"
+  },
+  "keyId": "Key ID",
+  "@keyId": {
+    "description": "Label for the ASC Key ID field"
+  },
+  "keyIdHint": "e.g. ABC1234DEF",
+  "@keyIdHint": {
+    "description": "Hint text for the Key ID field"
+  },
+  "issuerId": "Issuer ID",
+  "@issuerId": {
+    "description": "Label for the ASC Issuer ID field"
+  },
+  "issuerIdHint": "e.g. 12345678-1234-1234-1234-123456789012",
+  "@issuerIdHint": {
+    "description": "Hint text for the Issuer ID field"
+  },
+  "privateKeyLabel": "Private Key (.p8 file content)",
+  "@privateKeyLabel": {
+    "description": "Label for the ASC private key field"
+  },
+  "privateKeyExistingHint": "••••••• (leave blank to keep existing)",
+  "@privateKeyExistingHint": {
+    "description": "Hint when a private key already exists"
+  },
+  "privateKeyNewHint": "-----BEGIN PRIVATE KEY-----\n...",
+  "@privateKeyNewHint": {
+    "description": "Hint text for entering a new private key"
+  },
+  "clear": "Clear",
+  "@clear": {
+    "description": "Action to clear credentials"
+  },
+  "clearCredentialsTitle": "Clear Credentials?",
+  "@clearCredentialsTitle": {
+    "description": "Title of the clear-credentials confirmation dialog"
+  },
+  "clearCredentialsMessage": "This will remove your saved API key. You'll need to re-enter it for future uploads.",
+  "@clearCredentialsMessage": {
+    "description": "Body text of the clear-credentials confirmation dialog"
+  },
+  "apiKeySettingsTitle": "API Key",
+  "@apiKeySettingsTitle": {
+    "description": "Settings tile title for the ASC API key"
+  },
+  "apiKeyLoading": "Loading...",
+  "@apiKeyLoading": {
+    "description": "Subtitle shown while API key status is loading"
+  },
+  "apiKeyConfigured": "Key ID: {maskedKeyId}",
+  "@apiKeyConfigured": {
+    "description": "Subtitle showing the masked API Key ID when configured",
+    "placeholders": {
+      "maskedKeyId": {
+        "type": "String"
+      }
+    }
+  },
+  "apiKeyNotConfigured": "Not configured",
+  "@apiKeyNotConfigured": {
+    "description": "Subtitle shown when no API key is configured"
+  },
+  "provider": "Provider",
+  "@provider": {
+    "description": "Label for the translation provider selector"
+  },
+  "appContext": "App Context",
+  "@appContext": {
+    "description": "Label for the app context description field"
+  },
+  "addContext": "Add context...",
+  "@addContext": {
+    "description": "Hint text for the app context field"
+  },
+  "sourceLanguage": "Source Language",
+  "@sourceLanguage": {
+    "description": "Label for the source language picker"
+  },
+  "targetLanguages": "Target Languages",
+  "@targetLanguages": {
+    "description": "Label for the target languages section"
+  },
+  "translateAll": "Translate All",
+  "@translateAll": {
+    "description": "Button label to translate all text overlays"
+  },
+  "translatingProgress": "Translating {completed} / {total}",
+  "@translatingProgress": {
+    "description": "Progress label during batch translation",
+    "placeholders": {
+      "completed": {
+        "type": "int"
+      },
+      "total": {
+        "type": "int"
+      }
+    }
+  },
+  "manualCopyPaste": "Manual (Copy-Paste)",
+  "@manualCopyPaste": {
+    "description": "Button label for the manual copy-paste translation flow"
+  },
+  "uploadToAsc": "Upload to ASC",
+  "@uploadToAsc": {
+    "description": "Menu item label to upload screenshots to App Store Connect"
+  },
+  "addMoreLanguages": "Add more languages",
+  "@addMoreLanguages": {
+    "description": "Action to add more target languages"
+  },
+  "editTranslations": "Edit Translations",
+  "@editTranslations": {
+    "description": "Action to edit existing translations"
+  },
+  "addTextOverlaysFirst": "Add text overlays to your screenshots first",
+  "@addTextOverlaysFirst": {
+    "description": "Snackbar message when trying to translate without text overlays"
+  },
+  "selectAtLeastOneTargetLanguage": "Select at least one target language",
+  "@selectAtLeastOneTargetLanguage": {
+    "description": "Snackbar message when no target language is selected"
+  },
+  "failedToCaptureLocaleScreenshots": "Failed to capture locale screenshots",
+  "@failedToCaptureLocaleScreenshots": {
+    "description": "Snackbar error when locale screenshot capture fails"
+  },
+  "translationProvider": "Translation Provider",
+  "@translationProvider": {
+    "description": "Title of the translation settings sheet"
+  },
+  "chooseHowTextGetsTranslated": "Choose how your text gets translated",
+  "@chooseHowTextGetsTranslated": {
+    "description": "Subtitle of the translation settings sheet"
+  },
+  "apiKey": "API Key",
+  "@apiKey": {
+    "description": "Label for the translation provider API key field"
+  },
+  "apiKeysStoredSecurely": "API keys are stored securely in the macOS Keychain",
+  "@apiKeysStoredSecurely": {
+    "description": "Security note about API key storage"
+  },
+  "endpointUrl": "Endpoint URL",
+  "@endpointUrl": {
+    "description": "Label for the custom translation endpoint URL field"
+  },
+  "model": "Model",
+  "@model": {
+    "description": "Label for the AI model name field"
+  },
+  "providerApple": "Apple (On-Device)",
+  "@providerApple": {
+    "description": "Translation provider name — Apple on-device"
+  },
+  "providerOpenai": "OpenAI",
+  "@providerOpenai": {
+    "description": "Translation provider name — OpenAI"
+  },
+  "providerGemini": "Google Gemini",
+  "@providerGemini": {
+    "description": "Translation provider name — Google Gemini"
+  },
+  "providerDeepl": "DeepL",
+  "@providerDeepl": {
+    "description": "Translation provider name — DeepL"
+  },
+  "providerCustom": "Custom Endpoint",
+  "@providerCustom": {
+    "description": "Translation provider name — custom endpoint"
+  },
+  "providerManual": "Manual (Copy-Paste)",
+  "@providerManual": {
+    "description": "Translation provider name — manual copy-paste"
+  },
+  "providerAppleSubtitle": "Free, private — requires Apple Intelligence",
+  "@providerAppleSubtitle": {
+    "description": "Subtitle for the Apple on-device provider"
+  },
+  "providerOpenaiSubtitle": "GPT-4o Mini — bring your own API key",
+  "@providerOpenaiSubtitle": {
+    "description": "Subtitle for the OpenAI provider"
+  },
+  "providerGeminiSubtitle": "Gemini 2.0 Flash — bring your own API key",
+  "@providerGeminiSubtitle": {
+    "description": "Subtitle for the Google Gemini provider"
+  },
+  "providerDeeplSubtitle": "Professional translation — bring your own API key",
+  "@providerDeeplSubtitle": {
+    "description": "Subtitle for the DeepL provider"
+  },
+  "providerCustomSubtitle": "Ollama, Together AI, LM Studio, etc.",
+  "@providerCustomSubtitle": {
+    "description": "Subtitle for the custom endpoint provider"
+  },
+  "providerManualSubtitle": "Copy prompt → paste into any AI → paste response back",
+  "@providerManualSubtitle": {
+    "description": "Subtitle for the manual copy-paste provider"
+  },
+  "manualTranslateTitle": "Manual Translate → {locales}",
+  "@manualTranslateTitle": {
+    "description": "Title of the manual translation dialog showing target locales",
+    "placeholders": {
+      "locales": {
+        "type": "String"
+      }
+    }
+  },
+  "step1CopyPrompt": "Step 1: Copy this prompt",
+  "@step1CopyPrompt": {
+    "description": "Section label in the manual translation dialog"
+  },
+  "step2PasteResponse": "Step 2: Paste AI response",
+  "@step2PasteResponse": {
+    "description": "Section label in the manual translation dialog"
+  },
+  "copied": "Copied!",
+  "@copied": {
+    "description": "Tooltip shown after text is copied"
+  },
+  "copyPrompt": "Copy Prompt",
+  "@copyPrompt": {
+    "description": "Button label to copy the translation prompt"
+  },
+  "paste": "Paste",
+  "@paste": {
+    "description": "Button label to paste from clipboard"
+  },
+  "pasteJsonHint": "Paste the JSON response from ChatGPT, Claude, Gemini, or any other AI.",
+  "@pasteJsonHint": {
+    "description": "Hint text for the AI response paste field"
+  },
+  "applyTranslations": "Apply Translations",
+  "@applyTranslations": {
+    "description": "Button label to apply pasted translations"
+  },
+  "couldNotParseJson": "Could not parse JSON. Please check the response format and try again.",
+  "@couldNotParseJson": {
+    "description": "Error message when AI response JSON is invalid"
+  },
+  "missingLocalesError": "Missing locales: {locales}",
+  "@missingLocalesError": {
+    "description": "Error when pasted translations are missing some locales",
+    "placeholders": {
+      "locales": {
+        "type": "String"
+      }
+    }
+  },
+  "localeMissingKeysError": "{locale} is missing keys: {keys}",
+  "@localeMissingKeysError": {
+    "description": "Error when a locale's translations are missing some keys",
+    "placeholders": {
+      "locale": {
+        "type": "String"
+      },
+      "keys": {
+        "type": "String"
+      }
+    }
+  },
+  "nTexts": "{count} {count, plural, =1{text} other{texts}}",
+  "@nTexts": {
+    "description": "Pluralized text count on locale translation cards",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "appContextDialogTitle": "App Context",
+  "@appContextDialogTitle": {
+    "description": "Title of the app context edit dialog"
+  },
+  "appContextDescription": "Describe your app so translations match its tone and domain.",
+  "@appContextDescription": {
+    "description": "Description text in the app context dialog"
+  },
+  "appContextHint": "e.g. A fitness tracking app for runners. Use energetic and motivational language.",
+  "@appContextHint": {
+    "description": "Hint text for the app context text area"
+  },
+  "addLanguages": "Add Languages",
+  "@addLanguages": {
+    "description": "Title of the add-languages dialog"
+  },
+  "searchLanguage": "Search language...",
+  "@searchLanguage": {
+    "description": "Hint text for the language search field"
+  },
+  "noLanguagesFound": "No languages found",
+  "@noLanguagesFound": {
+    "description": "Empty state when language search yields no results"
+  },
+  "selectLanguages": "Select languages",
+  "@selectLanguages": {
+    "description": "Button label when no languages are checked"
+  },
+  "addNLanguages": "Add {count} {count, plural, =1{language} other{languages}}",
+  "@addNLanguages": {
+    "description": "Button label showing how many languages will be added",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "appStoreConnect": "App Store Connect",
+  "@appStoreConnect": {
+    "description": "Settings section header for App Store Connect configuration"
+  },
+  "aiGenerate": "✨ AI Generate",
+  "@aiGenerate": {
+    "description": "Label for the AI template generation button/card"
+  },
+  "aiGenerateSubtitle": "Describe your style and let AI create a template",
+  "@aiGenerateSubtitle": {
+    "description": "Subtitle for the AI template generation dialog"
+  },
+  "aiTemplatePromptHint": "e.g., Dark elegant style for a fitness app",
+  "@aiTemplatePromptHint": {
+    "description": "Hint text for the AI template description text field"
+  },
+  "aiTemplateGenerating": "Generating…",
+  "@aiTemplateGenerating": {
+    "description": "Loading text shown while AI generates a template"
+  },
+  "aiTemplateError": "Failed to generate template",
+  "@aiTemplateError": {
+    "description": "Error message when AI template generation fails"
+  },
+  "aiTemplateNoApiKey": "Set up a Gemini API key in Settings to use AI templates",
+  "@aiTemplateNoApiKey": {
+    "description": "Message when no API key is configured for AI template generation"
+  },
+  "generate": "Generate",
+  "@generate": {
+    "description": "Generate action button label"
+  },
+  "applyTemplate": "Apply Template",
+  "@applyTemplate": {
+    "description": "Title for the apply template confirmation dialog"
+  },
+  "applyTemplateConfirm": "This will replace the design of all your current screenshots with the selected template.",
+  "@applyTemplateConfirm": {
+    "description": "Confirmation message when applying a template to existing screenshots"
+  },
+  "applyTemplateConfirmExpand": "This template has {templateCount} designs but you currently have {currentCount}. Missing screenshots will be created automatically, and all designs will be replaced.",
+  "@applyTemplateConfirmExpand": {
+    "description": "Confirmation message when applying a template that will add new screenshots",
+    "placeholders": {
+      "templateCount": {
+        "type": "int"
+      },
+      "currentCount": {
+        "type": "int"
+      }
+    }
+  },
+  "apply": "Apply",
+  "@apply": {
+    "description": "Apply action button label"
+  },
+  "aiProviderSettings": "AI Provider",
+  "@aiProviderSettings": {
+    "description": "Title for the AI provider settings section"
+  },
+  "aiProvider": "Provider",
+  "@aiProvider": {
+    "description": "Label for the AI provider selector"
+  },
+  "aiApiKeyHint": "Paste your API key here",
+  "@aiApiKeyHint": {
+    "description": "Hint text for the AI API key input field"
+  },
+  "aiGeminiKeyHelp": "Get your API key from Google AI Studio (aistudio.google.com).",
+  "@aiGeminiKeyHelp": {
+    "description": "Helper text for obtaining a Gemini API key"
+  },
+  "aiOpenaiKeyHelp": "Get your API key from the OpenAI dashboard (platform.openai.com).",
+  "@aiOpenaiKeyHelp": {
+    "description": "Helper text for obtaining an OpenAI API key"
+  },
+  "aiAppleFmInfo": "Apple Foundation Models run on-device. No API key or internet connection needed.",
+  "@aiAppleFmInfo": {
+    "description": "Info text explaining Apple FM requires no key"
+  },
+  "aiKeyNotConfigured": "No API key configured",
+  "@aiKeyNotConfigured": {
+    "description": "Subtitle when no AI API key is set"
+  },
+  "aiAssistant": "AI Assistant",
+  "@aiAssistant": {
+    "description": "Title for the AI design assistant sidebar tab"
+  },
+  "aiAssistantSubtitle": "Describe design changes and let AI apply them",
+  "@aiAssistantSubtitle": {
+    "description": "Subtitle in AI assistant empty state"
+  },
+  "aiAssistantHint": "Describe what you'd like to change...",
+  "@aiAssistantHint": {
+    "description": "Placeholder text in the AI assistant input field"
+  },
+  "aiAssistantSuggestions": "Try these",
+  "@aiAssistantSuggestions": {
+    "description": "Label above suggestion chips in AI assistant"
+  },
+  "aiAssistantThinking": "Thinking...",
+  "@aiAssistantThinking": {
+    "description": "Shown while AI processes a design request"
+  },
+  "aiAssistantUndo": "Undo AI change",
+  "@aiAssistantUndo": {
+    "description": "Button to revert to the design before the AI change"
+  },
+  "aiAssistantClearChat": "Clear chat",
+  "@aiAssistantClearChat": {
+    "description": "Tooltip for the clear chat button in AI assistant"
+  },
+  "aiAssistantApplyToAll": "Apply to all screenshots",
+  "@aiAssistantApplyToAll": {
+    "description": "Checkbox label for applying AI changes to all screenshots"
+  },
+  "aiAssistantAppliedToAll": "Applied changes to {count} screenshots.",
+  "@aiAssistantAppliedToAll": {
+    "description": "Success message after bulk AI operation",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "aiAssistantPartialSuccess": "Applied to {success}/{total} screenshots. {failed} failed.",
+  "@aiAssistantPartialSuccess": {
+    "description": "Partial success message after bulk AI operation",
+    "placeholders": {
+      "success": {
+        "type": "int"
+      },
+      "total": {
+        "type": "int"
+      },
+      "failed": {
+        "type": "int"
+      }
+    }
+  },
+  "aiAssistantUnexpectedError": "Unexpected error: {error}",
+  "@aiAssistantUnexpectedError": {
+    "description": "Generic error message in AI assistant",
+    "placeholders": {
+      "error": {
+        "type": "String"
+      }
+    }
+  },
+  "aiSuggestionAddGradient": "Add a gradient background",
+  "@aiSuggestionAddGradient": {
+    "description": "Contextual suggestion chip for adding gradient"
+  },
+  "aiSuggestionLightMode": "Switch to light mode",
+  "@aiSuggestionLightMode": {
+    "description": "Contextual suggestion chip for light mode"
+  },
+  "aiSuggestionDarkMode": "Switch to dark mode",
+  "@aiSuggestionDarkMode": {
+    "description": "Contextual suggestion chip for dark mode"
+  },
+  "aiSuggestionAddHeadline": "Add a catchy headline",
+  "@aiSuggestionAddHeadline": {
+    "description": "Contextual suggestion chip for adding headline"
+  },
+  "aiSuggestionBiggerTitle": "Make title bigger",
+  "@aiSuggestionBiggerTitle": {
+    "description": "Contextual suggestion chip for larger title"
+  },
+  "aiSuggestionAddSubtitle": "Add a subtitle",
+  "@aiSuggestionAddSubtitle": {
+    "description": "Contextual suggestion chip for adding subtitle"
+  },
+  "aiSuggestionTiltFrame": "Tilt device frame",
+  "@aiSuggestionTiltFrame": {
+    "description": "Contextual suggestion chip for tilting frame"
+  },
+  "aiSuggestionRoundCorners": "Round the corners",
+  "@aiSuggestionRoundCorners": {
+    "description": "Contextual suggestion chip for rounding corners"
+  },
+  "aiSuggestionWriteHeadline": "Write a catchy headline",
+  "@aiSuggestionWriteHeadline": {
+    "description": "Contextual suggestion chip for AI copywriting"
+  },
+  "aiSuggestionColorPalette": "Suggest a color palette",
+  "@aiSuggestionColorPalette": {
+    "description": "Contextual suggestion chip for color palette"
+  },
+  "aiSuggestionAddDoodle": "Add a doodle pattern background",
+  "@aiSuggestionAddDoodle": {
+    "description": "Contextual suggestion chip for adding doodle pattern"
+  },
+  "aiSuggestionEmojiDoodle": "Use emoji doodle pattern",
+  "@aiSuggestionEmojiDoodle": {
+    "description": "Contextual suggestion chip for emoji doodle"
+  },
+  "aiSuggestionAdd3DTilt": "Add 3D perspective tilt",
+  "@aiSuggestionAdd3DTilt": {
+    "description": "Contextual suggestion chip for 3D frame rotation"
+  },
+  "aiSuggestionTransparentBg": "Make background transparent",
+  "@aiSuggestionTransparentBg": {
+    "description": "Contextual suggestion chip for transparent background"
+  },
+  "aiSuggestionLandscapeMode": "Switch to landscape mode",
+  "@aiSuggestionLandscapeMode": {
+    "description": "Contextual suggestion chip for landscape orientation"
+  },
+  "magnifierShapeLabel": "Shape",
+  "@magnifierShapeLabel": {
+    "description": "Section label for magnifier shape picker"
+  },
+  "magnifierShapeCircle": "Circle",
+  "@magnifierShapeCircle": {
+    "description": "Magnifier shape option"
+  },
+  "magnifierShapeRounded": "Rounded",
+  "@magnifierShapeRounded": {
+    "description": "Magnifier shape option — rounded rectangle"
+  },
+  "magnifierShapeStar": "Star",
+  "@magnifierShapeStar": {
+    "description": "Magnifier shape option"
+  },
+  "magnifierShapeHexagon": "Hexagon",
+  "@magnifierShapeHexagon": {
+    "description": "Magnifier shape option"
+  },
+  "magnifierShapeDiamond": "Diamond",
+  "@magnifierShapeDiamond": {
+    "description": "Magnifier shape option"
+  },
+  "magnifierShapeHeart": "Heart",
+  "@magnifierShapeHeart": {
+    "description": "Magnifier shape option"
+  },
+  "magnifierCorner": "Corner: {value}",
+  "@magnifierCorner": {
+    "description": "Label for magnifier corner radius slider",
+    "placeholders": {
+      "value": {
+        "type": "int"
+      }
+    }
+  },
+  "magnifierPoints": "Points: {value}",
+  "@magnifierPoints": {
+    "description": "Label for magnifier star points slider",
+    "placeholders": {
+      "value": {
+        "type": "int"
+      }
+    }
+  },
+  "magnifierZoom": "Zoom: {value}×",
+  "@magnifierZoom": {
+    "description": "Label for magnifier zoom level slider",
+    "placeholders": {
+      "value": {
+        "type": "String"
+      }
+    }
+  },
+  "magnifierWidth": "Width: {value}",
+  "@magnifierWidth": {
+    "description": "Label for magnifier width slider",
+    "placeholders": {
+      "value": {
+        "type": "int"
+      }
+    }
+  },
+  "magnifierHeight": "Height: {value}",
+  "@magnifierHeight": {
+    "description": "Label for magnifier height slider",
+    "placeholders": {
+      "value": {
+        "type": "int"
+      }
+    }
+  },
+  "magnifierBorder": "Border: {value}",
+  "@magnifierBorder": {
+    "description": "Label for magnifier border width slider",
+    "placeholders": {
+      "value": {
+        "type": "String"
+      }
+    }
+  },
+  "magnifierSourceX": "Source X: {value}",
+  "@magnifierSourceX": {
+    "description": "Label for magnifier source offset X slider",
+    "placeholders": {
+      "value": {
+        "type": "int"
+      }
+    }
+  },
+  "magnifierSourceY": "Source Y: {value}",
+  "@magnifierSourceY": {
+    "description": "Label for magnifier source offset Y slider",
+    "placeholders": {
+      "value": {
+        "type": "int"
+      }
+    }
+  },
+  "magnifierOpacity": "Opacity: {value}%",
+  "@magnifierOpacity": {
+    "description": "Label for magnifier opacity slider",
+    "placeholders": {
+      "value": {
+        "type": "int"
+      }
+    }
+  },
+  "bringForward": "Bring Forward",
+  "@bringForward": {
+    "description": "Tooltip for bring-forward action on overlays"
+  },
+  "sendBackward": "Send Backward",
+  "@sendBackward": {
+    "description": "Tooltip for send-backward action on overlays"
+  },
+  "inFrontOfFrame": "In Front of Frame",
+  "@inFrontOfFrame": {
+    "description": "Tooltip when magnifier is behind frame and will move in front"
+  },
+  "behindFrame": "Behind Frame",
+  "@behindFrame": {
+    "description": "Tooltip when magnifier is in front of frame and will move behind"
+  }
+}

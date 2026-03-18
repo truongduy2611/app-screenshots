@@ -1,0 +1,39 @@
+name: device_frame
+description: Mockups for common devices.
+version: 1.4.0
+homepage: https://github.com/aloisdeniel/flutter_device_preview/device_frame
+
+environment:
+  sdk: '>=3.4.0 <4.0.0'
+  flutter: '>=3.2.0'
+
+dependencies:
+  freezed_annotation: ^3.0.0
+  flutter:
+    sdk: flutter
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  build_runner: ^2.4.15
+  json_serializable: ^6.9.4
+  freezed: ^3.0.0
+  flutter_lints: ^1.0.4
+  xml: ^6.5.0
+  recase: ^4.1.0
+
+flutter:
+  assets:
+    - assets/iphone_17/
+    - assets/iphone_17_pro/
+    - assets/iphone_17_pro_max/
+    - assets/iphone_air/
+    - assets/macbook_air/
+    - assets/macbook_pro/
+    - assets/watch/sport_band/
+    - assets/watch/sport_loop/
+    - assets/watch/ocean_band/
+    - assets/watch/alpine_loop/
+    - assets/watch/milanese_loop/
+    - assets/watch/magnetic_link/
+    - assets/watch/trail_loop/

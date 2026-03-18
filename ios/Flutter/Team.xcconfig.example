@@ -1,0 +1,11 @@
+// ────────────────────────────────────────────────────────────────
+// Team.xcconfig — Personal signing config (git-ignored)
+// ────────────────────────────────────────────────────────────────
+// Copy Team.xcconfig.example → Team.xcconfig and fill in your values.
+//
+// To find your Team ID:
+//   1. Open Xcode → Settings → Accounts
+//   2. Select your Apple ID → your team row shows the ID
+//   or run:  security find-identity -v -p codesigning | head -1
+//
+DEVELOPMENT_TEAM = YOUR_TEAM_ID_HERE

@@ -1,0 +1,6 @@
+#include? "Pods/Target Support Files/Pods-Runner/Pods-Runner.release.xcconfig"
+#include "Generated.xcconfig"
+#include? "Team.xcconfig"
+
+PRODUCT_NAME = AppScreenshots
+TREE_SHAKE_ICONS=true
