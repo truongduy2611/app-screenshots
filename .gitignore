@@ -51,6 +51,7 @@ macos/build/
 .asc/
 *.p8
 *.pem
+*.provisionprofile
 
 # Personal signing config (never commit)
 **/Team.xcconfig
@@ -63,3 +64,6 @@ macos/build/
 tmp_*.json
 skills-lock.json
 scripts.swift
+
+# Release builds
+*.dmg
