@@ -121,3 +121,13 @@ This project is licensed under the MIT License — see [LICENSE](LICENSE) for de
 - [device_frame](https://pub.dev/packages/device_frame) — Device frame rendering (included as local package)
 - [flutter_bloc](https://pub.dev/packages/flutter_bloc) — State management
 - [get_it](https://pub.dev/packages/get_it) — Dependency injection
+
+## Star History
+
+<a href="https://www.star-history.com/?repos=truongduy2611%2Fapp-screenshots&type=date&legend=top-left">
+ <picture>
+   <source media="(prefers-color-scheme: dark)" srcset="https://api.star-history.com/image?repos=truongduy2611/app-screenshots&type=date&theme=dark&legend=top-left" />
+   <source media="(prefers-color-scheme: light)" srcset="https://api.star-history.com/image?repos=truongduy2611/app-screenshots&type=date&legend=top-left" />
+   <img alt="Star History Chart" src="https://api.star-history.com/image?repos=truongduy2611/app-screenshots&type=date&legend=top-left" />
+ </picture>
+</a>
