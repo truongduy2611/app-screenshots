@@ -34,10 +34,6 @@ class AppConstants {
   static const String privacyPolicyUrl =
       'https://appscreenshots.progressiostudio.com/privacy-policy';
 
-  // ── Redeem ─────────────────────────────────────────────────────────────────
-  /// System URL that opens the App Store redeem-code sheet on macOS / iOS.
-  static const String redeemUrl = 'https://apps.apple.com/redeem';
-
   // ── Open Source ────────────────────────────────────────────────────────────
   /// GitHub repository URL.
   static const String githubRepoUrl =

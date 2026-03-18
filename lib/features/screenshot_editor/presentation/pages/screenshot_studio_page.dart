@@ -1,6 +1,7 @@
 import 'package:app_screenshots/core/di/service_locator.dart';
 import 'package:app_screenshots/core/extensions/context_extensions.dart';
 import 'package:app_screenshots/core/services/app_logger.dart';
+import 'package:app_screenshots/core/services/command_server.dart';
 import 'package:app_screenshots/features/screenshot_editor/data/services/design_file_service.dart';
 import 'package:app_screenshots/core/services/file_open_service.dart';
 import 'package:app_screenshots/core/widgets/app_button.dart';
@@ -92,11 +93,32 @@ class _ScreenshotStudioViewState extends State<ScreenshotStudioView> {
         );
       }
     };
+
+    // Register CLI navigation so `multi open` can push the editor page
+    sl<CommandServer>().registerNavigation(
+      openMulti: (displayType) async {
+        if (!mounted) return;
+        final currentFolderId = context
+            .read<ScreenshotLibraryCubit>()
+            .currentFolderId;
+        Navigator.of(context).push(
+          MaterialPageRoute(
+            builder: (_) => MultiScreenshotPage(
+              displayType: displayType,
+              folderId: currentFolderId,
+            ),
+          ),
+        );
+        // Small delay for the page to mount and register its cubits
+        await Future.delayed(const Duration(milliseconds: 500));
+      },
+    );
   }
 
   @override
   void dispose() {
     sl<FileOpenService>().onFileOpened = null;
+    sl<CommandServer>().unregisterNavigation();
     _searchController.dispose();
     super.dispose();
   }

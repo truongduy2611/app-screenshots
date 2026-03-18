@@ -138,17 +138,34 @@ if [ "$NOTARIZE" = true ]; then
   fi
 fi
 
+# ── Step 5: Build CLI binary (optional) ───────────────────────────
+echo ""
+echo "🔧 Building CLI binary..."
+if [ -f "scripts/build_cli.sh" ]; then
+  bash scripts/build_cli.sh
+  CLI_TARBALL=$(ls appshots-*-macos-*.tar.gz 2>/dev/null | head -1 || echo "")
+else
+  CLI_TARBALL=""
+  echo "   ⚠️  scripts/build_cli.sh not found, skipping CLI build"
+fi
+
 # ── Done ──────────────────────────────────────────────────────────
 echo ""
 echo "╔══════════════════════════════════════════════════╗"
 echo "║  ✅ Build complete!                              ║"
 echo "║                                                  ║"
-echo "║  Output: $DMG_NAME"
+echo "║  DMG: $DMG_NAME"
+if [ -n "$CLI_TARBALL" ]; then
+echo "║  CLI: $CLI_TARBALL"
+fi
 echo "║                                                  ║"
 echo "║  Next steps:                                     ║"
 echo "║  1. Test the DMG — open it and launch the app    ║"
 echo "║  2. Create a GitHub Release:                     ║"
 echo "║     git tag v$VERSION"
 echo "║     git push origin main --tags                  ║"
-echo "║  3. Go to GitHub Releases and upload the DMG     ║"
+echo "║  3. Upload DMG + CLI tarball to the Release      ║"
+echo "║  4. Update SHA256 hashes in homebrew-tap:        ║"
+echo "║     - Casks/app-screenshots.rb (DMG hash)        ║"
+echo "║     - Formula/appshots.rb (CLI hash)             ║"
 echo "╚══════════════════════════════════════════════════╝"

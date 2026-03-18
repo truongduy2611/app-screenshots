@@ -23,12 +23,21 @@ A powerful, cross-platform screenshot design tool built with Flutter. Create stu
 
 ## 🚀 Quick Start
 
-### Prerequisites
+### Install via Homebrew (macOS)
 
-- [Flutter SDK](https://flutter.dev/docs/get-started/install) `^3.10.8`
-- macOS, Windows, or Linux
+```bash
+brew tap truongduy2611/tap
 
-### Install & Run
+# Desktop App
+brew install --cask app-screenshots
+
+# CLI
+brew install appshots
+```
+
+### Build from Source
+
+**Prerequisites:** [Flutter SDK](https://flutter.dev/docs/get-started/install) `^3.10.8` · macOS, Windows, or Linux
 
 ```bash
 git clone https://github.com/truongduy2611/app-screenshots.git
@@ -108,6 +117,28 @@ packages/
 | `Delete` | Remove selected overlay |
 | `Esc` | Deselect overlay |
 
+## 🖥️ CLI & Automation
+
+The app includes a powerful CLI (`appshots`) for full programmatic control — perfect for AI agents, CI pipelines, and scripted workflows.
+
+```bash
+# Install the CLI
+dart pub global activate --source path packages/app_screenshots_cli
+
+# Quick examples
+appshots status                                    # Check app is running
+appshots editor state                              # View current design
+appshots editor set-background --color "#0A0A1A"   # Set background
+appshots editor add-text --text "Hello" --font "Poppins" --size 90 --align center --width 1100
+appshots multi open --display-type APP_IPHONE_67   # Open multi-editor
+appshots translate all --from en --to ja,ko,de     # AI-translate
+appshots editor export-all --dir ~/Desktop/shots   # Export all
+```
+
+**50+ commands** across 6 categories: `editor`, `multi`, `translate`, `library`, `preset`, `status`.
+
+📖 **Full CLI reference**: [packages/app_screenshots_cli/README.md](packages/app_screenshots_cli/README.md)
+
 ## 🤝 Contributing
 
 Contributions are welcome! See [CONTRIBUTING.md](CONTRIBUTING.md) for details.
@@ -117,6 +148,8 @@ Contributions are welcome! See [CONTRIBUTING.md](CONTRIBUTING.md) for details.
 This project is licensed under the MIT License — see [LICENSE](LICENSE) for details.
 
 ## 🙏 Acknowledgements
+
+Special thanks to [Rudrank Riyam](https://github.com/rudrankriyam) and the [App Store Connect CLI](https://github.com/rudrankriyam/App-Store-Connect-CLI) project for inspiring the creation of this open source tool. 🎉
 
 - [device_frame](https://pub.dev/packages/device_frame) — Device frame rendering (included as local package)
 - [flutter_bloc](https://pub.dev/packages/flutter_bloc) — State management

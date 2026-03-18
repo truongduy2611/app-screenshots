@@ -564,7 +564,7 @@ class ScreenshotPresets {
       ),
       padding: 200,
       imagePosition: const Offset(-200, 300),
-      frameRotation: -3.0,
+      frameRotation: -0.0524, // -3 degrees in radians
       overlays: [
         TextOverlay(
           id: 'story_2_title',
@@ -654,12 +654,12 @@ class ScreenshotPresets {
   }
 
   // ===========================================================================
-  // 14. Dark Premium — elegant dark with one bright contrast slide
+  // 14. Dark Premium — elegant dark with subtle purple accents
   // ===========================================================================
   static final darkPremium = ScreenshotPreset(
     id: 'dark_premium',
     name: 'Dark Premium',
-    description: 'Elegant dark with bright contrast',
+    description: 'Elegant dark with purple accents',
     thumbnailColors: [Color(0xFF0A0A0F), Color(0xFF8B5CF6)],
     titleFont: 'Playfair Display',
     designs: _buildDarkPremiumDesigns(),
@@ -667,17 +667,16 @@ class ScreenshotPresets {
 
   static List<ScreenshotDesign> _buildDarkPremiumDesigns() {
     const font = 'Playfair Display';
-    const darkBg = Color(0xFF0A0A0F);
     const titleColor = Colors.white;
     const subtitleColor = Color(0xB3FFFFFF);
 
-    // Slide 1: centered, dark
+    // Slide 1: text-top, dark with subtle indigo undertone
     final slide1 = ScreenshotDesign(
-      backgroundColor: darkBg,
+      backgroundColor: Color(0xFF0A0A0F),
       backgroundGradient: LinearGradient(
-        begin: Alignment.topCenter,
-        end: Alignment.bottomCenter,
-        colors: [Color(0xFF0A0A0F), Color(0xFF1A1A2E)],
+        begin: Alignment.topLeft,
+        end: Alignment.bottomRight,
+        colors: [Color(0xFF0F0F1A), Color(0xFF0A0A0F)],
       ),
       padding: 200,
       imagePosition: const Offset(0, 300),
@@ -708,13 +707,13 @@ class ScreenshotPresets {
       ],
     );
 
-    // Slide 2: text-bottom, dark
+    // Slide 2: text-bottom, dark with deeper purple hint
     final slide2 = ScreenshotDesign(
-      backgroundColor: darkBg,
+      backgroundColor: Color(0xFF0A0A0F),
       backgroundGradient: LinearGradient(
-        begin: Alignment.topLeft,
-        end: Alignment.bottomRight,
-        colors: [Color(0xFF0A0A0F), Color(0xFF1E1B4B)],
+        begin: Alignment.topCenter,
+        end: Alignment.bottomCenter,
+        colors: [Color(0xFF0A0A0F), Color(0xFF12101F)],
       ),
       padding: 200,
       imagePosition: const Offset(0, -300),
@@ -734,9 +733,14 @@ class ScreenshotPresets {
       ],
     );
 
-    // Slide 3: CONTRAST — bright white, centered
+    // Slide 3: text-top, dark with soft purple gradient
     final slide3 = ScreenshotDesign(
-      backgroundColor: Color(0xFFFAFAFA),
+      backgroundColor: Color(0xFF0D0B1A),
+      backgroundGradient: LinearGradient(
+        begin: Alignment.bottomLeft,
+        end: Alignment.topRight,
+        colors: [Color(0xFF0D0B1A), Color(0xFF1A1535)],
+      ),
       padding: 200,
       imagePosition: const Offset(0, 300),
       overlays: [
@@ -747,7 +751,7 @@ class ScreenshotPresets {
             fontSize: 100,
             fontWeight: FontWeight.w700,
             fontStyle: FontStyle.italic,
-            color: Color(0xFF0A0A0F),
+            color: titleColor,
           ),
           googleFont: font,
           position: const Offset(80, 100),
@@ -758,7 +762,7 @@ class ScreenshotPresets {
           style: TextStyle(
             fontSize: 46,
             fontWeight: FontWeight.w400,
-            color: Color(0x88000000),
+            color: subtitleColor,
           ),
           googleFont: font,
           position: const Offset(80, 420),
@@ -766,17 +770,17 @@ class ScreenshotPresets {
       ],
     );
 
-    // Slide 4: right-offset, dark purple
+    // Slide 4: text-top, slightly offset phone, purple accent
     final slide4 = ScreenshotDesign(
-      backgroundColor: Color(0xFF1E1B4B),
+      backgroundColor: Color(0xFF100E1F),
       backgroundGradient: LinearGradient(
-        begin: Alignment.bottomLeft,
-        end: Alignment.topRight,
-        colors: [Color(0xFF1E1B4B), Color(0xFF4C1D95)],
+        begin: Alignment.topLeft,
+        end: Alignment.bottomRight,
+        colors: [Color(0xFF100E1F), Color(0xFF1E1640)],
       ),
       padding: 200,
-      imagePosition: const Offset(200, 300),
-      frameRotation: 3.0,
+      imagePosition: const Offset(100, 300),
+      frameRotation: 0.0524, // 3 degrees in radians
       overlays: [
         TextOverlay(
           id: 'dprem_3_title',
@@ -796,11 +800,11 @@ class ScreenshotPresets {
     // Slide 5: pill slide, dark
     final slide5 = _moreFeaturesPill(
       id: 'dprem_4',
-      bgColor: darkBg,
+      bgColor: Color(0xFF0A0A0F),
       gradient: LinearGradient(
         begin: Alignment.topCenter,
         end: Alignment.bottomCenter,
-        colors: [Color(0xFF0A0A0F), Color(0xFF1A1A2E)],
+        colors: [Color(0xFF0A0A0F), Color(0xFF12101F)],
       ),
       headline: 'And so\nmuch more.',
       headlineColor: titleColor,
@@ -904,7 +908,7 @@ class ScreenshotPresets {
       backgroundColor: Color(0xFFF0FDF4),
       padding: 200,
       imagePosition: const Offset(-200, 300),
-      frameRotation: -3.0,
+      frameRotation: -0.0524, // -3 degrees in radians
       overlays: [
         TextOverlay(
           id: 'hero_2_title',
@@ -1007,7 +1011,7 @@ class ScreenshotPresets {
     required List<String> titles,
     required List<String> subtitles,
     List<IconOverlay> Function(int index, String id)? iconBuilder,
-    int contrastSlideIndex = 2,
+    int contrastSlideIndex = -1,
   }) {
     final isCenter = titleAlign == TextAlign.center;
     // For centered text, position at x=0 and use full canvas width to center.

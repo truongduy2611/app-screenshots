@@ -1,3 +1,4 @@
+import 'package:app_screenshots/core/services/command_server.dart';
 import 'package:app_screenshots/core/services/file_open_service.dart';
 import 'package:app_screenshots/core/services/icloud_backup_service.dart';
 import 'package:app_screenshots/core/services/icloud_sync_service.dart';
@@ -78,6 +79,9 @@ void _registerServices(ICloudSyncService syncService) {
   sl.registerLazySingleton(() => TranslationService(sl(), sl()));
   sl.registerLazySingleton(() => AscUploadService(sl()));
   sl.registerLazySingleton(() => DesignFileService());
+  sl.registerLazySingleton(
+    () => CommandServer(persistenceService: sl(), designFileService: sl()),
+  );
 }
 
 // ─────────────────────────────────────────────────────────────────────────────

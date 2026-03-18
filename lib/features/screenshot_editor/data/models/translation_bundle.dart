@@ -20,6 +20,11 @@ class TranslationBundle extends Equatable {
   /// Stores per-locale position/size/scale adjustments for text overlays.
   final Map<String, Map<String, OverlayOverride>> overrides;
 
+  /// locale → imageFilePath
+  /// Stores per-locale screenshot images so each locale can show a different
+  /// app screenshot inside the device frame.
+  final Map<String, String> localeImages;
+
   /// Optional user-provided app context (e.g. "This is a fitness tracking app
   /// for runners") that is injected into the translation prompt to improve
   /// domain-specific translation quality.
@@ -30,6 +35,7 @@ class TranslationBundle extends Equatable {
     this.targetLocales = const [],
     this.translations = const {},
     this.overrides = const {},
+    this.localeImages = const {},
     this.customPrompt,
   });
 
@@ -38,6 +44,7 @@ class TranslationBundle extends Equatable {
     List<String>? targetLocales,
     Map<String, Map<String, String>>? translations,
     Map<String, Map<String, OverlayOverride>>? overrides,
+    Map<String, String>? localeImages,
     String? customPrompt,
   }) {
     return TranslationBundle(
@@ -45,6 +52,7 @@ class TranslationBundle extends Equatable {
       targetLocales: targetLocales ?? this.targetLocales,
       translations: translations ?? this.translations,
       overrides: overrides ?? this.overrides,
+      localeImages: localeImages ?? this.localeImages,
       customPrompt: customPrompt ?? this.customPrompt,
     );
   }
@@ -66,7 +74,11 @@ class TranslationBundle extends Equatable {
     );
     updated.putIfAbsent(locale, () => {});
     updated[locale]![overlayId] = text;
-    return copyWith(translations: updated);
+    final targets = (targetLocales.contains(locale) || locale == sourceLocale)
+        ? targetLocales 
+        : [...targetLocales, locale];
+
+    return copyWith(translations: updated, targetLocales: targets);
   }
 
   /// Returns a new bundle with all translations for a locale replaced.
@@ -78,7 +90,12 @@ class TranslationBundle extends Equatable {
       translations.map((k, v) => MapEntry(k, Map<String, String>.from(v))),
     );
     updated[locale] = localeTranslations;
-    return copyWith(translations: updated);
+    
+    final targets = (targetLocales.contains(locale) || locale == sourceLocale)
+        ? targetLocales 
+        : [...targetLocales, locale];
+
+    return copyWith(translations: updated, targetLocales: targets);
   }
 
   // ── Overlay overrides ──
@@ -101,7 +118,33 @@ class TranslationBundle extends Equatable {
     );
     updated.putIfAbsent(locale, () => {});
     updated[locale]![overlayId] = override;
-    return copyWith(overrides: updated);
+    final targets = (targetLocales.contains(locale) || locale == sourceLocale)
+        ? targetLocales 
+        : [...targetLocales, locale];
+
+    return copyWith(overrides: updated, targetLocales: targets);
+  }
+
+  // ── Per-locale images ──
+
+  /// Get the locale-specific screenshot image path.
+  String? getLocaleImage(String locale) => localeImages[locale];
+
+  /// Set (or replace) the screenshot image path for a locale.
+  TranslationBundle setLocaleImage(String locale, String filePath) {
+    final updated = Map<String, String>.from(localeImages);
+    updated[locale] = filePath;
+    final targets = (targetLocales.contains(locale) || locale == sourceLocale)
+        ? targetLocales 
+        : [...targetLocales, locale];
+
+    return copyWith(localeImages: updated, targetLocales: targets);
+  }
+
+  /// Remove the screenshot image for a locale.
+  TranslationBundle removeLocaleImage(String locale) {
+    final updated = Map<String, String>.from(localeImages)..remove(locale);
+    return copyWith(localeImages: updated);
   }
 
   /// Remove a locale entirely — drops it from targetLocales, translations,
@@ -115,10 +158,12 @@ class TranslationBundle extends Equatable {
         (k, v) => MapEntry(k, Map<String, OverlayOverride>.from(v)),
       ),
     )..remove(locale);
+    final updatedImages = Map<String, String>.from(localeImages)..remove(locale);
     return copyWith(
       targetLocales: targetLocales.where((l) => l != locale).toList(),
       translations: updatedTranslations,
       overrides: updatedOverrides,
+      localeImages: updatedImages,
     );
   }
 
@@ -130,6 +175,7 @@ class TranslationBundle extends Equatable {
       (locale, overlayMap) =>
           MapEntry(locale, overlayMap.map((id, o) => MapEntry(id, o.toJson()))),
     ),
+    if (localeImages.isNotEmpty) 'localeImages': localeImages,
     if (customPrompt != null) 'customPrompt': customPrompt,
   };
 
@@ -156,6 +202,10 @@ class TranslationBundle extends Equatable {
             ),
           ) ??
           {},
+      localeImages: (json['localeImages'] as Map<String, dynamic>?)?.map(
+            (k, v) => MapEntry(k, v as String),
+          ) ??
+          {},
       customPrompt: json['customPrompt'] as String?,
     );
   }
@@ -166,6 +216,7 @@ class TranslationBundle extends Equatable {
     targetLocales,
     translations,
     overrides,
+    localeImages,
     customPrompt,
   ];
 }

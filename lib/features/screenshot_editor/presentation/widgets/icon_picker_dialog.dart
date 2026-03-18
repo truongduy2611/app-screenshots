@@ -1027,3 +1027,49 @@ final Map<String, List<_SFIconEntry>> _sfCategories = {
     _SFIconEntry('square.and.arrow.down', SFIcons.sf_square_and_arrow_down),
   ],
 };
+
+// =============================================================================
+// Public catalog accessor for CLI
+// =============================================================================
+
+/// Returns the curated icon catalog for CLI/API consumption.
+/// Each entry has: name, codePoint, fontFamily, fontPackage, category.
+List<Map<String, dynamic>> getIconCatalog({String? query, String? style}) {
+  final results = <Map<String, dynamic>>[];
+
+  if (style == null || style == 'material') {
+    for (final entry in _materialCategories.entries) {
+      for (final icon in entry.value) {
+        final name = icon.name;
+        if (query != null && !name.toLowerCase().contains(query.toLowerCase())) continue;
+        results.add({
+          'name': name,
+          'codePoint': icon.iconData.codePoint,
+          'fontFamily': icon.iconData.fontFamily ?? 'MaterialIcons',
+          'fontPackage': icon.iconData.fontPackage ?? '',
+          'category': entry.key,
+          'style': 'material',
+        });
+      }
+    }
+  }
+
+  if (style == null || style == 'sf') {
+    for (final entry in _sfCategories.entries) {
+      for (final icon in entry.value) {
+        final name = icon.name;
+        if (query != null && !name.toLowerCase().contains(query.toLowerCase())) continue;
+        results.add({
+          'name': name,
+          'codePoint': icon.iconData.codePoint,
+          'fontFamily': icon.iconData.fontFamily ?? 'SFIcons',
+          'fontPackage': icon.iconData.fontPackage ?? 'flutter_sficon',
+          'category': entry.key,
+          'style': 'sf',
+        });
+      }
+    }
+  }
+
+  return results;
+}

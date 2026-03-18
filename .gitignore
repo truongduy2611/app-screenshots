@@ -67,3 +67,7 @@ scripts.swift
 
 # Release builds
 *.dmg
+
+# Build artifacts
+*.dmg
+*.tar.gz

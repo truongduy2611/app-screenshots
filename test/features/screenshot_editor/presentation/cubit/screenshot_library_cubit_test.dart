@@ -10,8 +10,9 @@ import 'package:mocktail/mocktail.dart';
 class MockPersistenceService extends Mock
     implements ScreenshotPersistenceService {}
 
-
 void main() {
+  TestWidgetsFlutterBinding.ensureInitialized();
+
   late MockPersistenceService mockService;
 
   setUp(() {
@@ -50,6 +51,20 @@ void main() {
     ),
   ];
 
+  /// Helper: stubs both getAllDesigns and getAllFolders with test data.
+  void stubLoadAll() {
+    when(() => mockService.getAllDesigns())
+        .thenAnswer((_) async => testDesigns);
+    when(() => mockService.getAllFolders())
+        .thenAnswer((_) async => testFolders);
+  }
+
+  /// Helper: stubs getAllDesigns and getAllFolders with empty lists.
+  void stubLoadEmpty() {
+    when(() => mockService.getAllDesigns()).thenAnswer((_) async => []);
+    when(() => mockService.getAllFolders()).thenAnswer((_) async => []);
+  }
+
   group('ScreenshotLibraryCubit', () {
     test('initial state is ScreenshotLibraryInitial', () {
       final cubit = buildCubit();
@@ -61,12 +76,7 @@ void main() {
       blocTest<ScreenshotLibraryCubit, ScreenshotLibraryState>(
         'emits Loading then Loaded with root-level designs',
         build: () {
-          when(
-            () => mockService.getAllDesigns(),
-          ).thenAnswer((_) async => testDesigns);
-          when(
-            () => mockService.getAllFolders(),
-          ).thenAnswer((_) async => testFolders);
+          stubLoadAll();
           return buildCubit();
         },
         act: (cubit) => cubit.loadDesigns(),
@@ -104,17 +114,21 @@ void main() {
       blocTest<ScreenshotLibraryCubit, ScreenshotLibraryState>(
         'openFolder filters designs by folderId',
         build: () {
-          when(
-            () => mockService.getAllDesigns(),
-          ).thenAnswer((_) async => testDesigns);
-          when(
-            () => mockService.getAllFolders(),
-          ).thenAnswer((_) async => testFolders);
+          stubLoadAll();
           return buildCubit();
+        },
+        seed: () {
+          // Pre-seed with loaded state so _refilterCurrentData can work
+          stubLoadAll();
+          return ScreenshotLibraryLoaded(
+            designs: testDesigns.where((d) => d.folderId == null).toList(),
+            folders: testFolders,
+            allDesigns: testDesigns,
+            allFolders: testFolders,
+          );
         },
         act: (cubit) => cubit.openFolder('folder-1'),
         expect: () => [
-          isA<ScreenshotLibraryLoading>(),
           isA<ScreenshotLibraryLoaded>()
               .having(
                 (s) => s.designs.length,
@@ -128,28 +142,30 @@ void main() {
       blocTest<ScreenshotLibraryCubit, ScreenshotLibraryState>(
         'navigateBack resets to root',
         build: () {
-          when(
-            () => mockService.getAllDesigns(),
-          ).thenAnswer((_) async => testDesigns);
-          when(
-            () => mockService.getAllFolders(),
-          ).thenAnswer((_) async => testFolders);
+          stubLoadAll();
           return buildCubit();
+        },
+        seed: () {
+          stubLoadAll();
+          return ScreenshotLibraryLoaded(
+            designs: testDesigns.where((d) => d.folderId == null).toList(),
+            folders: testFolders,
+            allDesigns: testDesigns,
+            allFolders: testFolders,
+          );
         },
         act: (cubit) async {
           await cubit.openFolder('folder-1');
           await cubit.navigateBack();
         },
         expect: () => [
-          // openFolder
-          isA<ScreenshotLibraryLoading>(),
+          // openFolder — refilters to folder-1
           isA<ScreenshotLibraryLoaded>().having(
             (s) => s.currentFolderId,
             'in folder',
             'folder-1',
           ),
-          // navigateBack
-          isA<ScreenshotLibraryLoading>(),
+          // navigateBack — refilters to root
           isA<ScreenshotLibraryLoaded>().having(
             (s) => s.currentFolderId,
             'back to root',
@@ -175,8 +191,7 @@ void main() {
               createdAt: DateTime(2026),
             ),
           );
-          when(() => mockService.getAllDesigns()).thenAnswer((_) async => []);
-          when(() => mockService.getAllFolders()).thenAnswer((_) async => []);
+          stubLoadEmpty();
           return buildCubit();
         },
         act: (cubit) => cubit.createFolder('New Folder'),
@@ -195,8 +210,7 @@ void main() {
         'deleteFolder calls service and reloads',
         build: () {
           when(() => mockService.deleteFolder(any())).thenAnswer((_) async {});
-          when(() => mockService.getAllDesigns()).thenAnswer((_) async => []);
-          when(() => mockService.getAllFolders()).thenAnswer((_) async => []);
+          stubLoadEmpty();
           return buildCubit();
         },
         act: (cubit) => cubit.deleteFolder('folder-1'),
@@ -215,8 +229,7 @@ void main() {
           when(
             () => mockService.renameFolder(any(), any()),
           ).thenAnswer((_) async {});
-          when(() => mockService.getAllDesigns()).thenAnswer((_) async => []);
-          when(() => mockService.getAllFolders()).thenAnswer((_) async => []);
+          stubLoadEmpty();
           return buildCubit();
         },
         act: (cubit) => cubit.renameFolder('folder-1', 'Renamed'),
@@ -237,8 +250,7 @@ void main() {
         'deleteDesign calls service and reloads',
         build: () {
           when(() => mockService.deleteDesign(any())).thenAnswer((_) async {});
-          when(() => mockService.getAllDesigns()).thenAnswer((_) async => []);
-          when(() => mockService.getAllFolders()).thenAnswer((_) async => []);
+          stubLoadEmpty();
           return buildCubit();
         },
         act: (cubit) => cubit.deleteDesign('1'),
@@ -257,8 +269,7 @@ void main() {
           when(
             () => mockService.moveDesignToFolder(any(), any()),
           ).thenAnswer((_) async {});
-          when(() => mockService.getAllDesigns()).thenAnswer((_) async => []);
-          when(() => mockService.getAllFolders()).thenAnswer((_) async => []);
+          stubLoadEmpty();
           return buildCubit();
         },
         act: (cubit) => cubit.moveDesignToFolder('1', 'folder-1'),

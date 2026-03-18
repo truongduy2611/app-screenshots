@@ -1,7 +1,7 @@
 name: app_screenshots
 description: "App Screenshots — Design beautiful App Store screenshots."
 publish_to: 'none'
-version: 1.0.0+1
+version: 1.1.0+2
 
 environment:
   sdk: ^3.10.8
@@ -54,6 +54,8 @@ dependencies:
   path_provider_foundation: 2.5.1
   archive: ^4.0.9
   mesh_gradient: ^1.3.8
+  app_screenshots_shared:
+    path: packages/app_screenshots_shared
 
 
 dev_dependencies:

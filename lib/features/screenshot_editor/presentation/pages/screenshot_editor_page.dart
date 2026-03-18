@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:app_screenshots/core/extensions/context_extensions.dart';
 import 'package:app_screenshots/core/services/app_logger.dart';
+import 'package:app_screenshots/core/services/command_server.dart';
 import 'package:app_screenshots/core/services/menu_callbacks.dart';
 import 'package:app_screenshots/core/widgets/app_dialog.dart';
 import 'package:app_screenshots/core/widgets/app_popup_menu.dart';
@@ -129,6 +130,15 @@ class _ScreenshotEditorViewState extends State<ScreenshotEditorView> {
     // Register undo/redo for the macOS Edit menu
     MenuCallbacks.onUndo = () => _screenShotCubit.undo();
     MenuCallbacks.onRedo = () => _screenShotCubit.redo();
+
+    // Register cubits with the CLI command server.
+    final server = GetIt.I<CommandServer>();
+    server.registerEditor(_screenShotCubit);
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      if (mounted) {
+        server.registerTranslation(context.read<TranslationCubit>());
+      }
+    });
   }
 
   @override
@@ -136,6 +146,10 @@ class _ScreenshotEditorViewState extends State<ScreenshotEditorView> {
     // Unregister so stale callbacks don't fire
     MenuCallbacks.onUndo = null;
     MenuCallbacks.onRedo = null;
+
+    // Unregister cubits from the CLI command server.
+    final server = GetIt.I<CommandServer>();
+    server.unregisterEditor(_screenShotCubit);
     super.dispose();
   }
 

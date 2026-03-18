@@ -260,12 +260,6 @@ class _SettingsDialogState extends State<SettingsDialog> {
                   onTap: _sendFeedback,
                 ),
                 _SettingsTile(
-                  icon: Symbols.redeem_rounded,
-                  title: context.l10n.redeemCode,
-                  theme: theme,
-                  onTap: () => _openUrl(AppConstants.redeemUrl),
-                ),
-                _SettingsTile(
                   icon: Symbols.code_rounded,
                   title: 'GitHub',
                   subtitle: 'Open source repository',

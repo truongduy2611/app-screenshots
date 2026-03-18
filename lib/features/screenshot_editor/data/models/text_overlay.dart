@@ -132,7 +132,10 @@ class TextOverlay {
             ? Color(json['style']['color'])
             : null,
         fontWeight: json['style']['fontWeight'] != null
-            ? FontWeight.values[json['style']['fontWeight']]
+            ? FontWeight.values.firstWhere(
+                (w) => w.value == json['style']['fontWeight'],
+                orElse: () => FontWeight.w400,
+              )
             : null,
         fontStyle: json['style']['fontStyle'] != null
             ? FontStyle.values[json['style']['fontStyle']]

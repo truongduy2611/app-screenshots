@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:app_screenshots/core/di/service_locator.dart';
 import 'package:app_screenshots/core/extensions/context_extensions.dart';
+import 'package:app_screenshots/core/services/command_server.dart';
 import 'package:app_screenshots/core/widgets/app_dialog.dart';
 import 'package:app_screenshots/core/widgets/app_popup_menu.dart';
 import 'package:app_screenshots/core/widgets/app_snackbar.dart';
@@ -130,6 +131,10 @@ class _MultiScreenshotViewState extends State<_MultiScreenshotView>
   Animation<Matrix4>? _zoomAnimation;
   bool _isExporting = false;
   final _mobileControlsKey = GlobalKey<MobileEditorControlsState>();
+
+  // Cached references for safe disposal.
+  late final ScreenshotEditorCubit _editorCubit;
+  late final MultiScreenshotCubit _multiCubit;
 
   static const _gap = 200.0;
 
@@ -286,6 +291,8 @@ class _MultiScreenshotViewState extends State<_MultiScreenshotView>
   @override
   void initState() {
     super.initState();
+    _editorCubit = context.read<ScreenshotEditorCubit>();
+    _multiCubit = context.read<MultiScreenshotCubit>();
     _zoomAnimController = AnimationController(
       vsync: this,
       duration: const Duration(milliseconds: 400),
@@ -298,11 +305,29 @@ class _MultiScreenshotViewState extends State<_MultiScreenshotView>
     WidgetsBinding.instance.addPostFrameCallback((_) {
       _syncActiveDesign();
       _zoomToFit(animate: false);
+
+      // Register cubits with the CLI command server.
+      if (mounted) {
+        final server = GetIt.I<CommandServer>();
+        server.registerEditor(_editorCubit);
+        server.registerTranslation(context.read<TranslationCubit>());
+        server.registerMulti(_multiCubit);
+        server.registerCapture(
+          captureImage: captureImage,
+          syncChanges: () => _syncEditorChangesBack(),
+        );
+      }
     });
   }
 
   @override
   void dispose() {
+    // Unregister cubits from the CLI command server.
+    // Use cached references instead of context.read, which is unsafe during dispose.
+    final server = GetIt.I<CommandServer>();
+    server.unregisterEditor(_editorCubit);
+    server.unregisterMulti(_multiCubit);
+    server.unregisterCapture();
     _zoomAnimController.dispose();
     _transformController.dispose();
     super.dispose();

@@ -380,22 +380,18 @@ class _EditorCanvasState extends State<EditorCanvas> {
     ScreenshotEditorState state,
     Size canvasSize,
   ) {
-    final hasTranslationCubit =
-        context
-            .findAncestorWidgetOfExactType<BlocProvider<TranslationCubit>>() !=
-        null;
+    TranslationCubit? translationCubit;
+    try {
+      translationCubit = context.read<TranslationCubit>();
+    } catch (_) {}
+    final hasTranslationCubit = translationCubit != null;
 
     // Resolve design index for scoped translation keys.
     int? designIndex;
-    final hasMultiCubit =
-        context
-            .findAncestorWidgetOfExactType<
-              BlocProvider<MultiScreenshotCubit>
-            >() !=
-        null;
-    if (hasMultiCubit) {
-      designIndex = context.read<MultiScreenshotCubit>().state.activeIndex;
-    }
+    try {
+      final multiState = context.read<MultiScreenshotCubit>().state;
+      designIndex = multiState.activeIndex;
+    } catch (_) {}
 
     return state.design.overlays.map((overlay) {
       if (!hasTranslationCubit) {
@@ -550,6 +546,27 @@ class _EditorCanvasState extends State<EditorCanvas> {
   }
 
   Widget _buildImage(ScreenshotEditorState state, {BoxFit fit = BoxFit.cover}) {
+    // Check for per-locale image override via TranslationCubit.
+    TranslationCubit? tCubit;
+    try {
+      tCubit = context.read<TranslationCubit>();
+    } catch (_) {}
+    
+    if (tCubit != null) {
+      final localeImagePath = tCubit.currentLocaleImagePath;
+      if (localeImagePath != null) {
+        final localeFile = File(localeImagePath);
+        if (localeFile.existsSync()) {
+          return Image.file(
+            localeFile,
+            fit: fit,
+            errorBuilder: (_, _, _) =>
+                const Center(child: Icon(Symbols.error_rounded)),
+          );
+        }
+      }
+    }
+
     if (state.selectedImageFile != null) {
       return Image.file(
         state.selectedImageFile!,
