@@ -551,7 +551,7 @@ class _EditorCanvasState extends State<EditorCanvas> {
     try {
       tCubit = context.read<TranslationCubit>();
     } catch (_) {}
-    
+
     if (tCubit != null) {
       final localeImagePath = tCubit.currentLocaleImagePath;
       if (localeImagePath != null) {

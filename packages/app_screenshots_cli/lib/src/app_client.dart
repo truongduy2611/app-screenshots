@@ -19,7 +19,8 @@ class AppClient {
   /// Auto-discover the server port from the port file.
   static Future<AppClient> discover() async {
     final home = Platform.environment['HOME'] ?? '/tmp';
-    final portFile = File('$home/${AppConstants.configDirName}/${AppConstants.portFileName}');
+    final portFile = File(
+        '$home/${AppConstants.configDirName}/${AppConstants.portFileName}');
     if (await portFile.exists()) {
       final portStr = (await portFile.readAsString()).trim();
       final port = int.tryParse(portStr);
@@ -66,7 +67,7 @@ class AppClient {
         'ok': false,
         'error':
             'Server returned empty response (HTTP ${response.statusCode}). '
-            'Is App Screenshots running on port $port?',
+                'Is App Screenshots running on port $port?',
       };
     }
     try {
@@ -76,7 +77,7 @@ class AppClient {
         'ok': false,
         'error':
             'Server returned non-JSON response (HTTP ${response.statusCode}). '
-            'Another service may be running on port $port.',
+                'Another service may be running on port $port.',
       };
     }
   }

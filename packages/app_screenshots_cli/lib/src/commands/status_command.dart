@@ -9,7 +9,8 @@ class StatusCommand extends Command<int> {
   String get name => 'status';
 
   @override
-  String get description => 'Check connection to the running App Screenshots app';
+  String get description =>
+      'Check connection to the running App Screenshots app';
 
   @override
   Future<int> run() async {

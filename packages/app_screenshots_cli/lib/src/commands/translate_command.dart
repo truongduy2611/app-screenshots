@@ -29,8 +29,11 @@ class TranslateCommand extends Command<int> {
 }
 
 class _TranslateStateCommand extends Command<int> {
-  @override String get name => 'state';
-  @override String get description => 'Show current translation state (bundle, locales, statuses)';
+  @override
+  String get name => 'state';
+  @override
+  String get description =>
+      'Show current translation state (bundle, locales, statuses)';
 
   @override
   Future<int> run() async {
@@ -43,8 +46,11 @@ class _TranslateStateCommand extends Command<int> {
 }
 
 class _TranslateGetTextsCommand extends Command<int> {
-  @override String get name => 'get-texts';
-  @override String get description => 'Get all text overlays from all designs (for translation)';
+  @override
+  String get name => 'get-texts';
+  @override
+  String get description =>
+      'Get all text overlays from all designs (for translation)';
 
   @override
   Future<int> run() async {
@@ -57,12 +63,16 @@ class _TranslateGetTextsCommand extends Command<int> {
 }
 
 class _TranslateAllCommand extends Command<int> {
-  @override String get name => 'all';
-  @override String get description => 'AI-translate all text overlays to target locales';
+  @override
+  String get name => 'all';
+  @override
+  String get description => 'AI-translate all text overlays to target locales';
 
   _TranslateAllCommand() {
     argParser.addOption('from', help: 'Source locale', defaultsTo: 'en');
-    argParser.addOption('to', help: 'Comma-separated target locales (e.g. ja,ko,de)', mandatory: true);
+    argParser.addOption('to',
+        help: 'Comma-separated target locales (e.g. ja,ko,de)',
+        mandatory: true);
   }
 
   @override
@@ -80,11 +90,15 @@ class _TranslateAllCommand extends Command<int> {
 }
 
 class _TranslatePreviewCommand extends Command<int> {
-  @override String get name => 'preview';
-  @override String get description => 'Preview a locale in the editor (pass "none" to clear)';
+  @override
+  String get name => 'preview';
+  @override
+  String get description =>
+      'Preview a locale in the editor (pass "none" to clear)';
 
   _TranslatePreviewCommand() {
-    argParser.addOption('locale', abbr: 'l', help: 'Locale to preview (or "none")', mandatory: true);
+    argParser.addOption('locale',
+        abbr: 'l', help: 'Locale to preview (or "none")', mandatory: true);
   }
 
   @override
@@ -101,13 +115,18 @@ class _TranslatePreviewCommand extends Command<int> {
 }
 
 class _TranslateEditCommand extends Command<int> {
-  @override String get name => 'edit';
-  @override String get description => 'Edit a single overlay translation for a locale';
+  @override
+  String get name => 'edit';
+  @override
+  String get description => 'Edit a single overlay translation for a locale';
 
   _TranslateEditCommand() {
-    argParser.addOption('locale', abbr: 'l', help: 'Target locale', mandatory: true);
-    argParser.addOption('overlay-id', help: 'Overlay ID to update', mandatory: true);
-    argParser.addOption('text', abbr: 't', help: 'Translated text', mandatory: true);
+    argParser.addOption('locale',
+        abbr: 'l', help: 'Target locale', mandatory: true);
+    argParser.addOption('overlay-id',
+        help: 'Overlay ID to update', mandatory: true);
+    argParser.addOption('text',
+        abbr: 't', help: 'Translated text', mandatory: true);
   }
 
   @override
@@ -125,12 +144,19 @@ class _TranslateEditCommand extends Command<int> {
 }
 
 class _TranslateApplyManualCommand extends Command<int> {
-  @override String get name => 'apply-manual';
-  @override String get description => 'Apply manual translations for a locale (JSON map of overlayId→text)';
+  @override
+  String get name => 'apply-manual';
+  @override
+  String get description =>
+      'Apply manual translations for a locale (JSON map of overlayId→text)';
 
   _TranslateApplyManualCommand() {
-    argParser.addOption('locale', abbr: 'l', help: 'Target locale', mandatory: true);
-    argParser.addOption('translations', abbr: 't', help: 'JSON map: {"overlayId": "translated text", ...}', mandatory: true);
+    argParser.addOption('locale',
+        abbr: 'l', help: 'Target locale', mandatory: true);
+    argParser.addOption('translations',
+        abbr: 't',
+        help: 'JSON map: {"overlayId": "translated text", ...}',
+        mandatory: true);
   }
 
   @override
@@ -154,11 +180,15 @@ class _TranslateApplyManualCommand extends Command<int> {
 }
 
 class _TranslateRemoveLocaleCommand extends Command<int> {
-  @override String get name => 'remove-locale';
-  @override String get description => 'Remove all translations and overrides for a locale';
+  @override
+  String get name => 'remove-locale';
+  @override
+  String get description =>
+      'Remove all translations and overrides for a locale';
 
   _TranslateRemoveLocaleCommand() {
-    argParser.addOption('locale', abbr: 'l', help: 'Locale to remove', mandatory: true);
+    argParser.addOption('locale',
+        abbr: 'l', help: 'Locale to remove', mandatory: true);
   }
 
   @override
@@ -174,11 +204,14 @@ class _TranslateRemoveLocaleCommand extends Command<int> {
 }
 
 class _TranslateSetPromptCommand extends Command<int> {
-  @override String get name => 'set-prompt';
-  @override String get description => 'Set custom context/prompt for AI translations';
+  @override
+  String get name => 'set-prompt';
+  @override
+  String get description => 'Set custom context/prompt for AI translations';
 
   _TranslateSetPromptCommand() {
-    argParser.addOption('prompt', abbr: 'p', help: 'Custom prompt text (empty to clear)');
+    argParser.addOption('prompt',
+        abbr: 'p', help: 'Custom prompt text (empty to clear)');
   }
 
   @override
@@ -194,11 +227,14 @@ class _TranslateSetPromptCommand extends Command<int> {
 }
 
 class _TranslateOverrideOverlayCommand extends Command<int> {
-  @override String get name => 'override-overlay';
-  @override String get description => 'Set per-locale overlay style/position override';
+  @override
+  String get name => 'override-overlay';
+  @override
+  String get description => 'Set per-locale overlay style/position override';
 
   _TranslateOverrideOverlayCommand() {
-    argParser.addOption('locale', help: 'Target locale (e.g. de, ja)', mandatory: true);
+    argParser.addOption('locale',
+        help: 'Target locale (e.g. de, ja)', mandatory: true);
     argParser.addOption('overlay-id', help: 'Overlay ID', mandatory: true);
     argParser.addOption('font', help: 'Override Google Font name');
     argParser.addOption('font-size', help: 'Override font size');
@@ -208,7 +244,8 @@ class _TranslateOverrideOverlayCommand extends Command<int> {
     argParser.addOption('rotation', help: 'Override rotation');
     argParser.addOption('width', help: 'Override width');
     argParser.addOption('color', help: 'Override text color (hex)');
-    argParser.addOption('font-weight', help: 'Override font weight index (0-8)');
+    argParser.addOption('font-weight',
+        help: 'Override font weight index (0-8)');
   }
 
   @override
@@ -218,16 +255,22 @@ class _TranslateOverrideOverlayCommand extends Command<int> {
       'overlayId': argResults!['overlay-id'],
     };
     if (argResults?['font'] != null) body['font'] = argResults!['font'];
-    if (argResults?['font-size'] != null) body['fontSize'] = double.parse(argResults!['font-size']);
+    if (argResults?['font-size'] != null)
+      body['fontSize'] = double.parse(argResults!['font-size']);
     if (argResults?['x'] != null) body['x'] = double.parse(argResults!['x']);
     if (argResults?['y'] != null) body['y'] = double.parse(argResults!['y']);
-    if (argResults?['scale'] != null) body['scale'] = double.parse(argResults!['scale']);
-    if (argResults?['rotation'] != null) body['rotation'] = double.parse(argResults!['rotation']);
-    if (argResults?['width'] != null) body['width'] = double.parse(argResults!['width']);
+    if (argResults?['scale'] != null)
+      body['scale'] = double.parse(argResults!['scale']);
+    if (argResults?['rotation'] != null)
+      body['rotation'] = double.parse(argResults!['rotation']);
+    if (argResults?['width'] != null)
+      body['width'] = double.parse(argResults!['width']);
     if (argResults?['color'] != null) body['color'] = argResults!['color'];
-    if (argResults?['font-weight'] != null) body['fontWeightIndex'] = int.parse(argResults!['font-weight']);
+    if (argResults?['font-weight'] != null)
+      body['fontWeightIndex'] = int.parse(argResults!['font-weight']);
     final client = await AppClient.discover();
-    final result = await client.post(TranslateAction.overrideOverlay.path, body);
+    final result =
+        await client.post(TranslateAction.overrideOverlay.path, body);
     Output.print(result, json: Output.isJson(globalResults));
     client.close();
     return result['ok'] == true ? 0 : 1;
@@ -235,12 +278,16 @@ class _TranslateOverrideOverlayCommand extends Command<int> {
 }
 
 class _TranslateSetLocaleImageCommand extends Command<int> {
-  @override String get name => 'set-locale-image';
-  @override String get description => 'Set a per-locale screenshot image';
+  @override
+  String get name => 'set-locale-image';
+  @override
+  String get description => 'Set a per-locale screenshot image';
 
   _TranslateSetLocaleImageCommand() {
-    argParser.addOption('locale', help: 'Target locale (e.g. de, ja)', mandatory: true);
-    argParser.addOption('file', abbr: 'f', help: 'Path to the screenshot image file', mandatory: true);
+    argParser.addOption('locale',
+        help: 'Target locale (e.g. de, ja)', mandatory: true);
+    argParser.addOption('file',
+        abbr: 'f', help: 'Path to the screenshot image file', mandatory: true);
   }
 
   @override

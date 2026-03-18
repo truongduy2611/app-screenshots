@@ -75,7 +75,7 @@ class TranslationBundle extends Equatable {
     updated.putIfAbsent(locale, () => {});
     updated[locale]![overlayId] = text;
     final targets = (targetLocales.contains(locale) || locale == sourceLocale)
-        ? targetLocales 
+        ? targetLocales
         : [...targetLocales, locale];
 
     return copyWith(translations: updated, targetLocales: targets);
@@ -90,9 +90,9 @@ class TranslationBundle extends Equatable {
       translations.map((k, v) => MapEntry(k, Map<String, String>.from(v))),
     );
     updated[locale] = localeTranslations;
-    
+
     final targets = (targetLocales.contains(locale) || locale == sourceLocale)
-        ? targetLocales 
+        ? targetLocales
         : [...targetLocales, locale];
 
     return copyWith(translations: updated, targetLocales: targets);
@@ -119,7 +119,7 @@ class TranslationBundle extends Equatable {
     updated.putIfAbsent(locale, () => {});
     updated[locale]![overlayId] = override;
     final targets = (targetLocales.contains(locale) || locale == sourceLocale)
-        ? targetLocales 
+        ? targetLocales
         : [...targetLocales, locale];
 
     return copyWith(overrides: updated, targetLocales: targets);
@@ -135,7 +135,7 @@ class TranslationBundle extends Equatable {
     final updated = Map<String, String>.from(localeImages);
     updated[locale] = filePath;
     final targets = (targetLocales.contains(locale) || locale == sourceLocale)
-        ? targetLocales 
+        ? targetLocales
         : [...targetLocales, locale];
 
     return copyWith(localeImages: updated, targetLocales: targets);
@@ -158,7 +158,8 @@ class TranslationBundle extends Equatable {
         (k, v) => MapEntry(k, Map<String, OverlayOverride>.from(v)),
       ),
     )..remove(locale);
-    final updatedImages = Map<String, String>.from(localeImages)..remove(locale);
+    final updatedImages = Map<String, String>.from(localeImages)
+      ..remove(locale);
     return copyWith(
       targetLocales: targetLocales.where((l) => l != locale).toList(),
       translations: updatedTranslations,
@@ -202,7 +203,8 @@ class TranslationBundle extends Equatable {
             ),
           ) ??
           {},
-      localeImages: (json['localeImages'] as Map<String, dynamic>?)?.map(
+      localeImages:
+          (json['localeImages'] as Map<String, dynamic>?)?.map(
             (k, v) => MapEntry(k, v as String),
           ) ??
           {},

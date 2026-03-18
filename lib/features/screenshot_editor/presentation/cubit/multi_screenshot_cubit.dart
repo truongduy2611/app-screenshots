@@ -400,7 +400,9 @@ class MultiScreenshotCubit extends Cubit<MultiScreenshotState> {
     // Skip copy if the file is already in our managed directory.
     if (p.isWithin(stableDir.path, file.path)) return file;
 
-    final ext = p.extension(file.path).isNotEmpty ? p.extension(file.path) : '.png';
+    final ext = p.extension(file.path).isNotEmpty
+        ? p.extension(file.path)
+        : '.png';
     final stableFile = File(
       '${stableDir.path}/${DateTime.now().millisecondsSinceEpoch}_${p.basenameWithoutExtension(file.path)}$ext',
     );

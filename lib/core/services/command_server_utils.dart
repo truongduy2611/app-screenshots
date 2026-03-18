@@ -8,11 +8,15 @@ part of 'command_server.dart';
 class ServerResponse {
   const ServerResponse._();
 
-  static Map<String, dynamic> ok([dynamic data]) =>
-      {'ok': true, if (data != null) 'data': data};
+  static Map<String, dynamic> ok([dynamic data]) => {
+    'ok': true,
+    if (data != null) 'data': data,
+  };
 
-  static Map<String, dynamic> error(String message) =>
-      {'ok': false, 'error': message};
+  static Map<String, dynamic> error(String message) => {
+    'ok': false,
+    'error': message,
+  };
 
   static Map<String, dynamic> notReady(String what) =>
       error('No active $what. Open a design first.');

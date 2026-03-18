@@ -46,10 +46,13 @@ class Output {
         final id = item['id'] ?? '';
         final extra = <String>[];
         if (item.containsKey('lastModified')) extra.add(item['lastModified']);
-        if (item.containsKey('isMulti') && item['isMulti'] == true) extra.add('multi');
-        if (item.containsKey('designCount')) extra.add('${item['designCount']} designs');
+        if (item.containsKey('isMulti') && item['isMulti'] == true)
+          extra.add('multi');
+        if (item.containsKey('designCount'))
+          extra.add('${item['designCount']} designs');
 
-        stdout.writeln('  ${i + 1}. $name${extra.isNotEmpty ? ' (${extra.join(', ')})' : ''}');
+        stdout.writeln(
+            '  ${i + 1}. $name${extra.isNotEmpty ? ' (${extra.join(', ')})' : ''}');
         if (id.isNotEmpty && id != name) stdout.writeln('     ID: $id');
       } else {
         stdout.writeln('  ${i + 1}. $item');

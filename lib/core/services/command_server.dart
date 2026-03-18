@@ -85,8 +85,8 @@ class CommandServer {
   CommandServer({
     required ScreenshotPersistenceService persistenceService,
     DesignFileService? designFileService,
-  })  : _persistenceService = persistenceService,
-        _designFileService = designFileService ?? DesignFileService();
+  }) : _persistenceService = persistenceService,
+       _designFileService = designFileService ?? DesignFileService();
 
   int? get port => _port;
   bool get isRunning => _server != null;
@@ -173,10 +173,7 @@ class CommandServer {
     int port = defaultPort;
     for (int attempt = 0; attempt < 10; attempt++) {
       try {
-        _server = await HttpServer.bind(
-          InternetAddress.loopbackIPv4,
-          port,
-        );
+        _server = await HttpServer.bind(InternetAddress.loopbackIPv4, port);
         _port = port;
         break;
       } on SocketException {
@@ -247,19 +244,32 @@ class CommandServer {
       final result = await _route(request.method, path, request);
       _sendJson(request.response, result);
     } catch (e, st) {
-      AppLogger.error('Request error: $path', tag: _tag, error: e, stackTrace: st);
+      AppLogger.error(
+        'Request error: $path',
+        tag: _tag,
+        error: e,
+        stackTrace: st,
+      );
       _sendError(request.response, e.toString(), statusCode: 500);
     }
   }
 
-  void _sendJson(HttpResponse response, Map<String, dynamic> data, {int statusCode = 200}) {
+  void _sendJson(
+    HttpResponse response,
+    Map<String, dynamic> data, {
+    int statusCode = 200,
+  }) {
     response.statusCode = statusCode;
     response.headers.contentType = ContentType.json;
     response.write(jsonEncode(data));
     response.close();
   }
 
-  void _sendError(HttpResponse response, String message, {int statusCode = 400}) {
+  void _sendError(
+    HttpResponse response,
+    String message, {
+    int statusCode = 400,
+  }) {
     response.statusCode = statusCode;
     response.headers.contentType = ContentType.json;
     response.write(jsonEncode({'ok': false, 'error': message}));

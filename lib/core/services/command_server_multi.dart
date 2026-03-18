@@ -19,7 +19,9 @@ extension _MultiRoutes on CommandServer {
     // This must be handled before the cubit null-check because the purpose
     // of this command is to open the page when it doesn't exist yet.
     if (multiAction == MultiAction.open) {
-      final body = method == 'POST' ? await _readBody(request) : <String, dynamic>{};
+      final body = method == 'POST'
+          ? await _readBody(request)
+          : <String, dynamic>{};
       final displayType = body['displayType'] as String? ?? 'APP_IPHONE_67';
 
       if (_navigateToMultiCallback == null) {
@@ -41,7 +43,9 @@ extension _MultiRoutes on CommandServer {
       }
 
       if (_multiCubit == null) {
-        return ServerResponse.error('Timed out waiting for multi-editor to initialize');
+        return ServerResponse.error(
+          'Timed out waiting for multi-editor to initialize',
+        );
       }
 
       return ServerResponse.ok({
@@ -59,7 +63,7 @@ extension _MultiRoutes on CommandServer {
 
     switch (multiAction) {
       case MultiAction.open:
-        throw StateError('unreachable');  // handled above
+        throw StateError('unreachable'); // handled above
       case MultiAction.state:
         return ServerResponse.ok({
           'activeIndex': cubit.state.activeIndex,
@@ -67,14 +71,22 @@ extension _MultiRoutes on CommandServer {
           'canAddMore': cubit.state.canAddMore,
           'savedDesignId': cubit.state.savedDesignId,
           'savedDesignName': cubit.state.savedDesignName,
-          'designs': cubit.state.designs.asMap().entries.map((e) => {
-            'index': e.key,
-            'displayType': e.value.displayType,
-            'backgroundColor': colorToHex(e.value.backgroundColor),
-            'deviceFrame': e.value.deviceFrame?.name,
-            'overlayCount': e.value.overlays.length,
-            'hasImage': e.key < cubit.state.imageFiles.length && cubit.state.imageFiles[e.key] != null,
-          }).toList(),
+          'designs': cubit.state.designs
+              .asMap()
+              .entries
+              .map(
+                (e) => {
+                  'index': e.key,
+                  'displayType': e.value.displayType,
+                  'backgroundColor': colorToHex(e.value.backgroundColor),
+                  'deviceFrame': e.value.deviceFrame?.name,
+                  'overlayCount': e.value.overlays.length,
+                  'hasImage':
+                      e.key < cubit.state.imageFiles.length &&
+                      cubit.state.imageFiles[e.key] != null,
+                },
+              )
+              .toList(),
         });
 
       case MultiAction.switchDesign:
@@ -82,7 +94,9 @@ extension _MultiRoutes on CommandServer {
         final index = body['index'] as int?;
         if (index == null) return ServerResponse.error('Missing "index" (int)');
         if (index < 0 || index >= cubit.state.designs.length) {
-          return ServerResponse.error('Index out of range (0-${cubit.state.designs.length - 1})');
+          return ServerResponse.error(
+            'Index out of range (0-${cubit.state.designs.length - 1})',
+          );
         }
         cubit.setActiveIndex(index);
         return ServerResponse.ok({'activeIndex': index});
@@ -110,7 +124,8 @@ extension _MultiRoutes on CommandServer {
         final body = await _readBody(request);
         final from = body['from'] as int?;
         final to = body['to'] as int?;
-        if (from == null || to == null) return ServerResponse.error('Missing "from" and "to" (int)');
+        if (from == null || to == null)
+          return ServerResponse.error('Missing "from" and "to" (int)');
         cubit.reorderDesigns(from, to);
         return ServerResponse.ok();
 
@@ -118,10 +133,16 @@ extension _MultiRoutes on CommandServer {
         final body = await _readBody(request);
         final id = body['id'] as String?;
         if (id == null) return ServerResponse.error('Missing "id" (preset ID)');
-        final preset = ScreenshotPresets.all.where((p) => p.id == id).firstOrNull;
-        if (preset == null) return ServerResponse.error('Preset not found: $id');
+        final preset = ScreenshotPresets.all
+            .where((p) => p.id == id)
+            .firstOrNull;
+        if (preset == null)
+          return ServerResponse.error('Preset not found: $id');
         cubit.applyPreset(preset);
-        return ServerResponse.ok({'preset': id, 'designCount': cubit.state.designs.length});
+        return ServerResponse.ok({
+          'preset': id,
+          'designCount': cubit.state.designs.length,
+        });
 
       case MultiAction.batch:
         if (_editorCubit == null) {
@@ -129,7 +150,8 @@ extension _MultiRoutes on CommandServer {
         }
         final body = await _readBody(request);
         final batchAction = body['action'] as String?;
-        if (batchAction == null) return ServerResponse.error('Missing "action"');
+        if (batchAction == null)
+          return ServerResponse.error('Missing "action"');
         final originalIndex = cubit.state.activeIndex;
         final results = <Map<String, dynamic>>[];
         for (int i = 0; i < cubit.state.designs.length; i++) {
@@ -141,7 +163,10 @@ extension _MultiRoutes on CommandServer {
               if (colorStr != null) {
                 final color = parseHexColor(colorStr);
                 if (color != null) {
-                  cubit.updateDesignForSlot(i, design.copyWith(backgroundColor: color));
+                  cubit.updateDesignForSlot(
+                    i,
+                    design.copyWith(backgroundColor: color),
+                  );
                   results.add({'index': i, 'ok': true});
                 }
               }
@@ -154,11 +179,18 @@ extension _MultiRoutes on CommandServer {
             case 'set-corner-radius':
               final radius = (body['radius'] as num?)?.toDouble();
               if (radius != null) {
-                cubit.updateDesignForSlot(i, design.copyWith(cornerRadius: radius));
+                cubit.updateDesignForSlot(
+                  i,
+                  design.copyWith(cornerRadius: radius),
+                );
                 results.add({'index': i, 'ok': true});
               }
             default:
-              results.add({'index': i, 'ok': false, 'error': 'Unsupported batch action: $batchAction'});
+              results.add({
+                'index': i,
+                'ok': false,
+                'error': 'Unsupported batch action: $batchAction',
+              });
           }
         }
         cubit.setActiveIndex(originalIndex);
@@ -173,22 +205,30 @@ extension _MultiRoutes on CommandServer {
         if (base64Data != null) {
           final bytes = base64Decode(base64Data);
           final tempDir = Directory.systemTemp;
-          final fileName = 'cli_multi_${index}_${DateTime.now().millisecondsSinceEpoch}.png';
+          final fileName =
+              'cli_multi_${index}_${DateTime.now().millisecondsSinceEpoch}.png';
           imageFile = File('${tempDir.path}/$fileName');
           await imageFile.writeAsBytes(bytes);
         } else if (filePath != null) {
           imageFile = File(filePath);
-          if (!await imageFile.exists()) return ServerResponse.error('File not found: $filePath');
+          if (!await imageFile.exists())
+            return ServerResponse.error('File not found: $filePath');
         } else {
-          return ServerResponse.error('Missing "file" (path) or "data" (base64)');
+          return ServerResponse.error(
+            'Missing "file" (path) or "data" (base64)',
+          );
         }
         cubit.setActiveIndex(index);
         cubit.syncActiveImage(imageFile);
         return ServerResponse.ok({'index': index, 'file': imageFile.path});
 
       case MultiAction.saveDesign:
-        final body = method == 'POST' ? await _readBody(request) : <String, dynamic>{};
-        final name = body['name'] as String? ?? 'Multi Design ${DateTime.now().toIso8601String().substring(0, 16)}';
+        final body = method == 'POST'
+            ? await _readBody(request)
+            : <String, dynamic>{};
+        final name =
+            body['name'] as String? ??
+            'Multi Design ${DateTime.now().toIso8601String().substring(0, 16)}';
         // Capture thumbnail if callback available
         Uint8List thumbnailBytes = Uint8List(0);
         if (_captureCallback != null) {
@@ -199,8 +239,8 @@ extension _MultiRoutes on CommandServer {
         }
         final override = body['override'] == true;
         await cubit.saveDesign(
-          name, 
-          thumbnailBytes, 
+          name,
+          thumbnailBytes,
           override: override,
           translationBundle: _translationCubit?.state.bundle,
           ascAppConfig: cubit.state.ascAppConfig,

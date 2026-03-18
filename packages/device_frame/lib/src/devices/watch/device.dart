@@ -1,6 +1,5 @@
 // ignore_for_file: non_constant_identifier_names
 
-
 import 'package:device_frame/src/info/device_type.dart';
 import 'package:device_frame/src/info/identifier.dart';
 import 'package:device_frame/src/info/info.dart';
@@ -10,7 +9,8 @@ import 'package:flutter/material.dart';
 Path _buildScreenPath(Rect screenRect, double cornerRadius) {
   return Path()
     ..addRRect(
-        RRect.fromRectAndRadius(screenRect, Radius.circular(cornerRadius)),);
+      RRect.fromRectAndRadius(screenRect, Radius.circular(cornerRadius)),
+    );
 }
 
 // ─── Apple Watch S11 42mm ───────────────────────────────────────

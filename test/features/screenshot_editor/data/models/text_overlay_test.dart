@@ -28,7 +28,8 @@ void main() {
       return TextOverlay(
         id: 'test-1',
         text: 'Hello',
-        style: style ??
+        style:
+            style ??
             const TextStyle(
               fontSize: 24,
               color: Color(0xFFFFFFFF),
@@ -94,9 +95,7 @@ void main() {
       }
 
       test('null fontWeight remains null', () {
-        final overlay = buildOverlay(
-          style: const TextStyle(fontSize: 16),
-        );
+        final overlay = buildOverlay(style: const TextStyle(fontSize: 16));
         final json = overlay.toJson();
         final restored = TextOverlay.fromJson(json);
         expect(restored.style.fontWeight, isNull);
@@ -134,7 +133,9 @@ void main() {
 
     group('_parseDecoration', () {
       test('underline', () {
-        final json = buildOverlay(decoration: TextDecoration.underline).toJson();
+        final json = buildOverlay(
+          decoration: TextDecoration.underline,
+        ).toJson();
         expect(TextOverlay.fromJson(json).decoration, TextDecoration.underline);
       });
 
@@ -144,10 +145,13 @@ void main() {
       });
 
       test('lineThrough', () {
-        final json =
-            buildOverlay(decoration: TextDecoration.lineThrough).toJson();
+        final json = buildOverlay(
+          decoration: TextDecoration.lineThrough,
+        ).toJson();
         expect(
-            TextOverlay.fromJson(json).decoration, TextDecoration.lineThrough);
+          TextOverlay.fromJson(json).decoration,
+          TextDecoration.lineThrough,
+        );
       });
 
       test('none', () {

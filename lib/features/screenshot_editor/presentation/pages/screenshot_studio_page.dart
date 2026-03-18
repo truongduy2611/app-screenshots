@@ -239,15 +239,15 @@ class _ScreenshotStudioViewState extends State<ScreenshotStudioView> {
                 context.read<ScreenshotLibraryCubit>().toggleSelectionMode(),
           ),
         Builder(
-            builder: (btnContext) => IconButton(
-              icon: const Icon(Symbols.create_new_folder_rounded),
-              tooltip: context.l10n.newFolder,
-              onPressed: () => _showCreateFolderDialog(
-                context,
-                sourceRect: rectFromContext(btnContext),
-              ),
+          builder: (btnContext) => IconButton(
+            icon: const Icon(Symbols.create_new_folder_rounded),
+            tooltip: context.l10n.newFolder,
+            onPressed: () => _showCreateFolderDialog(
+              context,
+              sourceRect: rectFromContext(btnContext),
             ),
           ),
+        ),
         Hero(
           tag: 'view_toggle_action',
           child: IconButton(

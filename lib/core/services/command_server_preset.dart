@@ -18,20 +18,27 @@ extension _PresetRoutes on CommandServer {
     switch (presetAction) {
       case PresetAction.list:
         return ServerResponse.ok(
-          ScreenshotPresets.all.map((p) => {
-            'id': p.id,
-            'name': p.name,
-            'description': p.description,
-            'designCount': p.designs.length,
-          }).toList(),
+          ScreenshotPresets.all
+              .map(
+                (p) => {
+                  'id': p.id,
+                  'name': p.name,
+                  'description': p.description,
+                  'designCount': p.designs.length,
+                },
+              )
+              .toList(),
         );
 
       case PresetAction.show:
         final body = await _readBody(request);
         final id = body['id'] as String? ?? request.uri.queryParameters['id'];
         if (id == null) return ServerResponse.error('Missing "id"');
-        final preset = ScreenshotPresets.all.where((p) => p.id == id).firstOrNull;
-        if (preset == null) return ServerResponse.error('Preset not found: $id');
+        final preset = ScreenshotPresets.all
+            .where((p) => p.id == id)
+            .firstOrNull;
+        if (preset == null)
+          return ServerResponse.error('Preset not found: $id');
         return ServerResponse.ok(preset.toJson());
     }
   }

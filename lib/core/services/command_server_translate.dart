@@ -36,7 +36,8 @@ extension _TranslationRoutes on CommandServer {
         final body = await _readBody(request);
         final from = body['from'] as String? ?? 'en';
         final to = (body['to'] as List?)?.cast<String>() ?? [];
-        if (to.isEmpty) return ServerResponse.error('Missing "to" (list of target locales)');
+        if (to.isEmpty)
+          return ServerResponse.error('Missing "to" (list of target locales)');
 
         final sourceTexts = <String, String>{};
         for (final overlay in eCubit.state.design.overlays) {
@@ -68,7 +69,9 @@ extension _TranslationRoutes on CommandServer {
         final overlayId = body['overlayId'] as String?;
         final text = body['text'] as String?;
         if (locale == null || overlayId == null || text == null) {
-          return ServerResponse.error('Missing "locale", "overlayId", or "text"');
+          return ServerResponse.error(
+            'Missing "locale", "overlayId", or "text"',
+          );
         }
         tCubit.updateTranslation(locale, overlayId, text);
         return ServerResponse.ok();
@@ -119,12 +122,18 @@ extension _TranslationRoutes on CommandServer {
       case TranslateAction.applyManual:
         final body = await _readBody(request);
         final locale = body['locale'] as String?;
-        final translations = (body['translations'] as Map?)?.cast<String, String>();
+        final translations = (body['translations'] as Map?)
+            ?.cast<String, String>();
         if (locale == null || translations == null) {
-          return ServerResponse.error('Missing "locale" and "translations" ({overlayId: text})');
+          return ServerResponse.error(
+            'Missing "locale" and "translations" ({overlayId: text})',
+          );
         }
         tCubit.applyManualTranslation(locale, translations);
-        return ServerResponse.ok({'locale': locale, 'count': translations.length});
+        return ServerResponse.ok({
+          'locale': locale,
+          'count': translations.length,
+        });
 
       case TranslateAction.overrideOverlay:
         final body = await _readBody(request);
@@ -158,7 +167,9 @@ extension _TranslationRoutes on CommandServer {
         final locale = body['locale'] as String?;
         final data = body['data'] as String?;
         if (locale == null || data == null) {
-          return ServerResponse.error('Missing "locale" and/or "data" (base64)');
+          return ServerResponse.error(
+            'Missing "locale" and/or "data" (base64)',
+          );
         }
         try {
           final bytes = base64Decode(data);
@@ -168,10 +179,7 @@ extension _TranslationRoutes on CommandServer {
           );
           await file.writeAsBytes(bytes);
           tCubit.setLocaleImage(locale, file.path);
-          return ServerResponse.ok({
-            'locale': locale,
-            'imagePath': file.path,
-          });
+          return ServerResponse.ok({'locale': locale, 'imagePath': file.path});
         } catch (e) {
           return ServerResponse.error('Failed to save locale image: $e');
         }

@@ -578,7 +578,6 @@ class DoodleControls extends StatelessWidget {
                   _buildPresetChips(context, settings),
                   const SizedBox(height: 12),
                   _buildCustomIconPicker(context, settings),
-
                 ],
               ),
 
@@ -810,7 +809,6 @@ class DoodleControls extends StatelessWidget {
                             : FontWeight.normal,
                       ),
                     ),
-
                   ],
                 ),
               ),
@@ -895,7 +893,6 @@ class DoodleControls extends StatelessWidget {
                             : FontWeight.normal,
                       ),
                     ),
-
                   ],
                 ),
               ),

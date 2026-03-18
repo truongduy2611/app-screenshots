@@ -831,10 +831,7 @@ class _MultiScreenshotViewState extends State<_MultiScreenshotView>
       context: context,
       builder: (_) => BlocProvider(
         create: (_) => sl<AscUploadCubit>()
-          ..init(
-            savedAppConfig: savedConfig,
-            designDisplayType: displayType,
-          ),
+          ..init(savedAppConfig: savedConfig, designDisplayType: displayType),
         child: Dialog(
           child: AscUploadSheet(
             localeScreenshots: localeScreenshots,
@@ -905,18 +902,22 @@ class _MultiScreenshotViewState extends State<_MultiScreenshotView>
     // deviceFrame, displayType, orientation, imageOverlays, magnifierOverlays,
     // gridSettings, doodleSettings, transparentBackground, and meshGradient
     // are all editor-session state that should NOT be baked into a template.
-    final cleanDesigns = designs.map((d) => ScreenshotDesign(
-      backgroundColor: d.backgroundColor,
-      backgroundGradient: d.backgroundGradient,
-      overlays: d.overlays,
-      iconOverlays: d.iconOverlays,
-      padding: d.padding,
-      imagePosition: d.imagePosition,
-      frameRotation: d.frameRotation,
-      frameRotationX: d.frameRotationX,
-      frameRotationY: d.frameRotationY,
-      cornerRadius: d.cornerRadius,
-    )).toList();
+    final cleanDesigns = designs
+        .map(
+          (d) => ScreenshotDesign(
+            backgroundColor: d.backgroundColor,
+            backgroundGradient: d.backgroundGradient,
+            overlays: d.overlays,
+            iconOverlays: d.iconOverlays,
+            padding: d.padding,
+            imagePosition: d.imagePosition,
+            frameRotation: d.frameRotation,
+            frameRotationX: d.frameRotationX,
+            frameRotationY: d.frameRotationY,
+            cornerRadius: d.cornerRadius,
+          ),
+        )
+        .toList();
 
     final id = 'custom_${DateTime.now().millisecondsSinceEpoch}';
     final colors = designs.first.backgroundGradient != null

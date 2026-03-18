@@ -8,6 +8,7 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
 
 class MockTranslationService extends Mock implements TranslationService {}
+
 class MockTranslationProvider extends Mock implements TranslationProvider {}
 
 void main() {
@@ -18,7 +19,9 @@ void main() {
     setUp(() {
       mockService = MockTranslationService();
       mockProvider = MockTranslationProvider();
-      when(() => mockService.getActiveProvider()).thenAnswer((_) async => mockProvider);
+      when(
+        () => mockService.getActiveProvider(),
+      ).thenAnswer((_) async => mockProvider);
     });
 
     test('initial state is correct', () {
@@ -32,17 +35,34 @@ void main() {
       'loadBundle restores bundle and updates successful locale statuses',
       build: () => TranslationCubit(mockService),
       act: (cubit) {
-        final bundle = const TranslationBundle(targetLocales: ['fr', 'es', 'de'])
-            .setTranslation('fr', 'o1', 'Salut')
-            .setTranslation('es', 'o1', 'Hola');
+        final bundle =
+            const TranslationBundle(targetLocales: ['fr', 'es', 'de'])
+                .setTranslation('fr', 'o1', 'Salut')
+                .setTranslation('es', 'o1', 'Hola');
         cubit.loadBundle(bundle);
       },
       expect: () => [
         isA<TranslationState>()
-            .having((s) => s.bundle?.targetLocales, 'targets', ['fr', 'es', 'de'])
-            .having((s) => s.localeStatuses['fr'], 'fr status', TranslationStatus.done)
-            .having((s) => s.localeStatuses['es'], 'es status', TranslationStatus.done)
-            .having((s) => s.localeStatuses.containsKey('de'), 'de status', isFalse),
+            .having((s) => s.bundle?.targetLocales, 'targets', [
+              'fr',
+              'es',
+              'de',
+            ])
+            .having(
+              (s) => s.localeStatuses['fr'],
+              'fr status',
+              TranslationStatus.done,
+            )
+            .having(
+              (s) => s.localeStatuses['es'],
+              'es status',
+              TranslationStatus.done,
+            )
+            .having(
+              (s) => s.localeStatuses.containsKey('de'),
+              'de status',
+              isFalse,
+            ),
       ],
     );
 
@@ -62,12 +82,14 @@ void main() {
     blocTest<TranslationCubit, TranslationState>(
       'translateAll sets translating, calls provider, and updates translations',
       build: () {
-        when(() => mockProvider.translate(
-              texts: any(named: 'texts'),
-              from: any(named: 'from'),
-              to: any(named: 'to'),
-              context: any(named: 'context'),
-            )).thenAnswer((_) async => {'o1': 'Bonjour'});
+        when(
+          () => mockProvider.translate(
+            texts: any(named: 'texts'),
+            from: any(named: 'from'),
+            to: any(named: 'to'),
+            context: any(named: 'context'),
+          ),
+        ).thenAnswer((_) async => {'o1': 'Bonjour'});
         return TranslationCubit(mockService);
       },
       act: (cubit) => cubit.translateAll(
@@ -76,39 +98,73 @@ void main() {
         targetLocales: ['fr'],
       ),
       expect: () => [
-        isA<TranslationState>().having((s) => s.bundle?.sourceLocale, 'sourceLocale', 'en'),
-        isA<TranslationState>().having((s) => s.localeStatuses['fr'], 'fr status', TranslationStatus.translating),
-        isA<TranslationState>().having((s) => s.bundle?.translations['fr']!['o1'], 'translated fr', 'Bonjour'),
-        isA<TranslationState>().having((s) => s.localeStatuses['fr'], 'fr status', TranslationStatus.done),
+        isA<TranslationState>().having(
+          (s) => s.bundle?.sourceLocale,
+          'sourceLocale',
+          'en',
+        ),
+        isA<TranslationState>().having(
+          (s) => s.localeStatuses['fr'],
+          'fr status',
+          TranslationStatus.translating,
+        ),
+        isA<TranslationState>().having(
+          (s) => s.bundle?.translations['fr']!['o1'],
+          'translated fr',
+          'Bonjour',
+        ),
+        isA<TranslationState>().having(
+          (s) => s.localeStatuses['fr'],
+          'fr status',
+          TranslationStatus.done,
+        ),
       ],
       verify: (_) {
-        verify(() => mockProvider.translate(
-              texts: {'o1': 'Hello'},
-              from: 'en',
-              to: 'fr',
-              context: null,
-            )).called(1);
+        verify(
+          () => mockProvider.translate(
+            texts: {'o1': 'Hello'},
+            from: 'en',
+            to: 'fr',
+            context: null,
+          ),
+        ).called(1);
       },
     );
 
     blocTest<TranslationCubit, TranslationState>(
       'retryLocale translates just that one locale',
       build: () {
-        when(() => mockProvider.translate(
-              texts: any(named: 'texts'),
-              from: any(named: 'from'),
-              to: any(named: 'to'),
-              context: any(named: 'context'),
-            )).thenAnswer((_) async => {'o1': '¡Hola! retry'});
+        when(
+          () => mockProvider.translate(
+            texts: any(named: 'texts'),
+            from: any(named: 'from'),
+            to: any(named: 'to'),
+            context: any(named: 'context'),
+          ),
+        ).thenAnswer((_) async => {'o1': '¡Hola! retry'});
         final cubit = TranslationCubit(mockService);
-        cubit.loadBundle(const TranslationBundle(sourceLocale: 'en', targetLocales: ['es']));
+        cubit.loadBundle(
+          const TranslationBundle(sourceLocale: 'en', targetLocales: ['es']),
+        );
         return cubit;
       },
       act: (cubit) => cubit.retryLocale('es', {'o1': 'Hello retry'}),
       expect: () => [
-        isA<TranslationState>().having((s) => s.localeStatuses['es'], 'translating', TranslationStatus.translating),
-        isA<TranslationState>().having((s) => s.bundle?.translations['es']?['o1'], 'translated', '¡Hola! retry'),
-        isA<TranslationState>().having((s) => s.localeStatuses['es'], 'done', TranslationStatus.done),
+        isA<TranslationState>().having(
+          (s) => s.localeStatuses['es'],
+          'translating',
+          TranslationStatus.translating,
+        ),
+        isA<TranslationState>().having(
+          (s) => s.bundle?.translations['es']?['o1'],
+          'translated',
+          '¡Hola! retry',
+        ),
+        isA<TranslationState>().having(
+          (s) => s.localeStatuses['es'],
+          'done',
+          TranslationStatus.done,
+        ),
       ],
     );
 
@@ -116,12 +172,18 @@ void main() {
       'updateTranslation modifies single overlay translation',
       build: () {
         final cubit = TranslationCubit(mockService);
-        cubit.loadBundle(const TranslationBundle().setTranslation('ja', 'o1', 'old'));
+        cubit.loadBundle(
+          const TranslationBundle().setTranslation('ja', 'o1', 'old'),
+        );
         return cubit;
       },
       act: (cubit) => cubit.updateTranslation('ja', 'o1', 'new'),
       expect: () => [
-        isA<TranslationState>().having((s) => s.bundle?.translations['ja']!['o1'], 'o1', 'new'),
+        isA<TranslationState>().having(
+          (s) => s.bundle?.translations['ja']!['o1'],
+          'o1',
+          'new',
+        ),
       ],
     );
 
@@ -130,31 +192,48 @@ void main() {
       build: () => TranslationCubit(mockService),
       act: (cubit) => cubit.applyManualTranslation('es', {'o1': 'Manuel'}),
       expect: () => [
-        isA<TranslationState>().having((s) => s.bundle?.translations['es']!['o1'], 'o1', 'Manuel'),
-        isA<TranslationState>().having((s) => s.localeStatuses['es'], 'status', TranslationStatus.done),
+        isA<TranslationState>().having(
+          (s) => s.bundle?.translations['es']!['o1'],
+          'o1',
+          'Manuel',
+        ),
+        isA<TranslationState>().having(
+          (s) => s.localeStatuses['es'],
+          'status',
+          TranslationStatus.done,
+        ),
       ],
     );
 
-    test('removeLocale cleans up status, clear bundle and clears preview locale if active', () {
-      final cubit = TranslationCubit(mockService);
-      cubit.loadBundle(const TranslationBundle().setTranslation('es', 'o1', 'Hola'));
-      cubit.applyManualTranslation('es', {'o1': 'Hola'});
-      cubit.setPreviewLocale('es');
-      
-      expect(cubit.state.localeStatuses['es'], TranslationStatus.done);
-      expect(cubit.state.previewLocale, 'es');
+    test(
+      'removeLocale cleans up status, clear bundle and clears preview locale if active',
+      () {
+        final cubit = TranslationCubit(mockService);
+        cubit.loadBundle(
+          const TranslationBundle().setTranslation('es', 'o1', 'Hola'),
+        );
+        cubit.applyManualTranslation('es', {'o1': 'Hola'});
+        cubit.setPreviewLocale('es');
 
-      cubit.removeLocale('es');
+        expect(cubit.state.localeStatuses['es'], TranslationStatus.done);
+        expect(cubit.state.previewLocale, 'es');
 
-      expect(cubit.state.bundle?.targetLocales, isEmpty);
-      expect(cubit.state.localeStatuses.containsKey('es'), isFalse);
-      expect(cubit.state.previewLocale, isNull);
-    });
+        cubit.removeLocale('es');
+
+        expect(cubit.state.bundle?.targetLocales, isEmpty);
+        expect(cubit.state.localeStatuses.containsKey('es'), isFalse);
+        expect(cubit.state.previewLocale, isNull);
+      },
+    );
 
     test('updateOverlayOverride works correctly', () {
       final cubit = TranslationCubit(mockService);
-      cubit.updateOverlayOverride('ja', 'o1', const OverlayOverride(position: Offset(10, 50)));
-      
+      cubit.updateOverlayOverride(
+        'ja',
+        'o1',
+        const OverlayOverride(position: Offset(10, 50)),
+      );
+
       expect(cubit.state.bundle?.getOverride('ja', 'o1')?.position?.dx, 10);
       expect(cubit.state.bundle?.getOverride('ja', 'o1')?.position?.dy, 50);
     });

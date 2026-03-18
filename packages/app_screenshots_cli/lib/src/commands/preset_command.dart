@@ -18,8 +18,10 @@ class PresetCommand extends Command<int> {
 }
 
 class _PresetListCommand extends Command<int> {
-  @override String get name => 'list';
-  @override String get description => 'List all available presets';
+  @override
+  String get name => 'list';
+  @override
+  String get description => 'List all available presets';
 
   @override
   Future<int> run() async {
@@ -32,8 +34,10 @@ class _PresetListCommand extends Command<int> {
 }
 
 class _PresetShowCommand extends Command<int> {
-  @override String get name => 'show';
-  @override String get description => 'Show details of a specific preset';
+  @override
+  String get name => 'show';
+  @override
+  String get description => 'Show details of a specific preset';
 
   _PresetShowCommand() {
     argParser.addOption('id', help: 'Preset ID', mandatory: true);
@@ -42,7 +46,8 @@ class _PresetShowCommand extends Command<int> {
   @override
   Future<int> run() async {
     final client = await AppClient.discover();
-    final result = await client.post(PresetAction.show.path, {'id': argResults!['id']});
+    final result =
+        await client.post(PresetAction.show.path, {'id': argResults!['id']});
     Output.print(result, json: Output.isJson(globalResults));
     client.close();
     return result['ok'] == true ? 0 : 1;

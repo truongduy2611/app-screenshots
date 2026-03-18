@@ -20,9 +20,7 @@ void main() {
   });
 
   ScreenshotLibraryCubit buildCubit() {
-    return ScreenshotLibraryCubit(
-      persistenceService: mockService,
-    );
+    return ScreenshotLibraryCubit(persistenceService: mockService);
   }
 
   final testDesigns = [
@@ -53,10 +51,12 @@ void main() {
 
   /// Helper: stubs both getAllDesigns and getAllFolders with test data.
   void stubLoadAll() {
-    when(() => mockService.getAllDesigns())
-        .thenAnswer((_) async => testDesigns);
-    when(() => mockService.getAllFolders())
-        .thenAnswer((_) async => testFolders);
+    when(
+      () => mockService.getAllDesigns(),
+    ).thenAnswer((_) async => testDesigns);
+    when(
+      () => mockService.getAllFolders(),
+    ).thenAnswer((_) async => testFolders);
   }
 
   /// Helper: stubs getAllDesigns and getAllFolders with empty lists.

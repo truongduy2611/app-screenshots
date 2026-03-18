@@ -23,7 +23,8 @@ class CliRunner {
       '🖼️  App Screenshots CLI — remote-control your screenshot editor',
     )
       ..argParser.addFlag('json', help: 'Output raw JSON', defaultsTo: false)
-      ..argParser.addOption('port', help: 'Server port override', defaultsTo: null)
+      ..argParser
+          .addOption('port', help: 'Server port override', defaultsTo: null)
       ..addCommand(StatusCommand())
       ..addCommand(EditorCommand())
       ..addCommand(LibraryCommand())
@@ -49,7 +50,8 @@ class CliRunner {
     // Check connection
     final status = await client.get('/api/status');
     if (status['ok'] != true) {
-      stderr.writeln('❌ Cannot connect to App Screenshots. Is the app running?');
+      stderr
+          .writeln('❌ Cannot connect to App Screenshots. Is the app running?');
       return 1;
     }
 

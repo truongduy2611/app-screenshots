@@ -107,10 +107,7 @@ void _registerCubits() {
     () => ScreenshotEditorCubit(persistenceService: sl(), prefs: sl()),
   );
   sl.registerFactory(
-    () => ScreenshotLibraryCubit(
-      persistenceService: sl(),
-      syncService: sl(),
-    ),
+    () => ScreenshotLibraryCubit(persistenceService: sl(), syncService: sl()),
   );
   sl.registerFactory(() => TranslationCubit(sl()));
   sl.registerFactory(() => AscUploadCubit(sl(), sl()));

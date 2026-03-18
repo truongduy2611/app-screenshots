@@ -1041,7 +1041,8 @@ List<Map<String, dynamic>> getIconCatalog({String? query, String? style}) {
     for (final entry in _materialCategories.entries) {
       for (final icon in entry.value) {
         final name = icon.name;
-        if (query != null && !name.toLowerCase().contains(query.toLowerCase())) continue;
+        if (query != null && !name.toLowerCase().contains(query.toLowerCase()))
+          continue;
         results.add({
           'name': name,
           'codePoint': icon.iconData.codePoint,
@@ -1058,7 +1059,8 @@ List<Map<String, dynamic>> getIconCatalog({String? query, String? style}) {
     for (final entry in _sfCategories.entries) {
       for (final icon in entry.value) {
         final name = icon.name;
-        if (query != null && !name.toLowerCase().contains(query.toLowerCase())) continue;
+        if (query != null && !name.toLowerCase().contains(query.toLowerCase()))
+          continue;
         results.add({
           'name': name,
           'codePoint': icon.iconData.codePoint,

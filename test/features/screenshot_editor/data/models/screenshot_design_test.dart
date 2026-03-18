@@ -75,10 +75,7 @@ void main() {
     });
 
     test('copyWith preserves unmodified fields and applies new values', () {
-      const original = ScreenshotDesign(
-        padding: 16.0,
-        cornerRadius: 8.0,
-      );
+      const original = ScreenshotDesign(padding: 16.0, cornerRadius: 8.0);
 
       final modified = original.copyWith(padding: 24.0);
       expect(modified.padding, 24.0);
@@ -97,9 +94,7 @@ void main() {
     });
 
     test('copyWith clearDeviceFrame sets deviceFrame to null', () {
-      final original = ScreenshotDesign(
-        deviceFrame: Devices.all.first,
-      );
+      final original = ScreenshotDesign(deviceFrame: Devices.all.first);
 
       final cleared = original.copyWith(clearDeviceFrame: true);
       expect(cleared.deviceFrame, isNull);
@@ -160,9 +155,7 @@ void main() {
     });
 
     test('known device frame round-trips through name', () {
-      final original = ScreenshotDesign(
-        deviceFrame: Devices.all.first,
-      );
+      final original = ScreenshotDesign(deviceFrame: Devices.all.first);
 
       final json = original.toJson();
       final restored = ScreenshotDesign.fromJson(json);

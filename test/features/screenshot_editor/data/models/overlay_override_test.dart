@@ -82,10 +82,7 @@ void main() {
       test('returns false when any field is set', () {
         expect(const OverlayOverride(fontSize: 18).isEmpty, false);
         expect(const OverlayOverride(scale: 1.0).isEmpty, false);
-        expect(
-          const OverlayOverride(position: Offset(0, 0)).isEmpty,
-          false,
-        );
+        expect(const OverlayOverride(position: Offset(0, 0)).isEmpty, false);
       });
     });
 
@@ -166,23 +163,27 @@ void main() {
 
       test('textDecoration resolves all variants', () {
         expect(
-          const OverlayOverride(decoration: 'TextDecoration.underline')
-              .textDecoration,
+          const OverlayOverride(
+            decoration: 'TextDecoration.underline',
+          ).textDecoration,
           TextDecoration.underline,
         );
         expect(
-          const OverlayOverride(decoration: 'TextDecoration.overline')
-              .textDecoration,
+          const OverlayOverride(
+            decoration: 'TextDecoration.overline',
+          ).textDecoration,
           TextDecoration.overline,
         );
         expect(
-          const OverlayOverride(decoration: 'TextDecoration.lineThrough')
-              .textDecoration,
+          const OverlayOverride(
+            decoration: 'TextDecoration.lineThrough',
+          ).textDecoration,
           TextDecoration.lineThrough,
         );
         expect(
-          const OverlayOverride(decoration: 'TextDecoration.none')
-              .textDecoration,
+          const OverlayOverride(
+            decoration: 'TextDecoration.none',
+          ).textDecoration,
           TextDecoration.none,
         );
         expect(

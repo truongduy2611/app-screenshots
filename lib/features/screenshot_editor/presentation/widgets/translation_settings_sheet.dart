@@ -197,10 +197,8 @@ class _TranslationSettingsDialogState extends State<TranslationSettingsDialog> {
                       const SizedBox(height: 20),
 
                       // ── API Key field (hidden for Apple FM) ──
-                      if (_config.activeProvider !=
-                              AIProviderType.appleFM &&
-                          _config.activeProvider !=
-                              AIProviderType.manual) ...[
+                      if (_config.activeProvider != AIProviderType.appleFM &&
+                          _config.activeProvider != AIProviderType.manual) ...[
                         _buildTextField(
                           controller: _apiKeyController,
                           label: context.l10n.apiKey,
@@ -245,8 +243,7 @@ class _TranslationSettingsDialogState extends State<TranslationSettingsDialog> {
                       ],
 
                       // ── Custom endpoint fields ──
-                      if (_config.activeProvider ==
-                          AIProviderType.custom) ...[
+                      if (_config.activeProvider == AIProviderType.custom) ...[
                         _buildTextField(
                           controller: _endpointController,
                           label: context.l10n.endpointUrl,
@@ -258,10 +255,8 @@ class _TranslationSettingsDialogState extends State<TranslationSettingsDialog> {
                       ],
 
                       // ── Model name (OpenAI, Gemini, Custom) ──
-                      if (_config.activeProvider !=
-                              AIProviderType.appleFM &&
-                          _config.activeProvider !=
-                              AIProviderType.deepl) ...[
+                      if (_config.activeProvider != AIProviderType.appleFM &&
+                          _config.activeProvider != AIProviderType.deepl) ...[
                         _buildTextField(
                           controller: _modelController,
                           label: context.l10n.model,

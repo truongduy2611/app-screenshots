@@ -1,4 +1,3 @@
-
 import 'package:device_frame/src/info/device_type.dart';
 import 'package:device_frame/src/info/identifier.dart';
 import 'package:device_frame/src/info/info.dart';
@@ -10,7 +9,8 @@ const _assetBase = 'assets/iphone_air';
 Path _buildScreenPath(Rect screenRect, double cornerRadius) {
   return Path()
     ..addRRect(
-        RRect.fromRectAndRadius(screenRect, Radius.circular(cornerRadius)),);
+      RRect.fromRectAndRadius(screenRect, Radius.circular(cornerRadius)),
+    );
 }
 
 // Frame size: 1380 x 2880

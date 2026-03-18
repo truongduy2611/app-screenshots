@@ -9,8 +9,8 @@ enum LibraryAction {
   createFolder,
   deleteFolder,
   move,
-  import_,   // trailing underscore to avoid Dart keyword
-  export_;   // trailing underscore to avoid Dart keyword
+  import_, // trailing underscore to avoid Dart keyword
+  export_; // trailing underscore to avoid Dart keyword
 
   /// Convert enum name to kebab-case action name.
   String get actionName {

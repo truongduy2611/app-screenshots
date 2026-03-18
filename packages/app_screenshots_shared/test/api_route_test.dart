@@ -9,7 +9,8 @@ void main() {
       });
 
       test('matches editor prefix', () {
-        expect(ApiRoute.fromPath('/api/editor/set-background'), ApiRoute.editor);
+        expect(
+            ApiRoute.fromPath('/api/editor/set-background'), ApiRoute.editor);
       });
 
       test('matches library prefix', () {

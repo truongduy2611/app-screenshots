@@ -77,7 +77,8 @@ class _AiKeysSectionState extends State<_AiKeysSection> {
       final isChina = ChinaLocaleHelper.isChinaMainland(
         Localizations.localeOf(context),
       );
-      final effectiveProvider = isChina &&
+      final effectiveProvider =
+          isChina &&
               (_config.activeProvider == AIProviderType.openai ||
                   _config.activeProvider == AIProviderType.gemini ||
                   _config.activeProvider == AIProviderType.deepl)

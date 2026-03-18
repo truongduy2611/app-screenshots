@@ -1,4 +1,3 @@
-
 import 'package:device_frame/src/info/device_type.dart';
 import 'package:device_frame/src/info/identifier.dart';
 import 'package:device_frame/src/info/info.dart';
@@ -11,7 +10,8 @@ const _assetBase = 'assets/iphone_17';
 Path _buildScreenPath(Rect screenRect, double cornerRadius) {
   return Path()
     ..addRRect(
-        RRect.fromRectAndRadius(screenRect, Radius.circular(cornerRadius)),);
+      RRect.fromRectAndRadius(screenRect, Radius.circular(cornerRadius)),
+    );
 }
 
 // Frame size in pixels: 1350 x 2760

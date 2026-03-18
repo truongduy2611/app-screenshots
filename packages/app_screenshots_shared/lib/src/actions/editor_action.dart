@@ -40,7 +40,7 @@ enum EditorAction {
   redo,
   saveDesign,
   loadDesign,
-  export_,     // trailing underscore to avoid Dart keyword
+  export_, // trailing underscore to avoid Dart keyword
   exportAll;
 
   /// Convert enum name to kebab-case action name.

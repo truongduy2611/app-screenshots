@@ -23,11 +23,16 @@ void main() {
           'de': {'overlay_1': 'Test', 'overlay_2': 'Probe'},
         },
         overrides: {
-          'ja': {'overlay_1': const OverlayOverride(position: Offset(1, 2), width: 100, scale: 1.5, fontSize: 24)},
+          'ja': {
+            'overlay_1': const OverlayOverride(
+              position: Offset(1, 2),
+              width: 100,
+              scale: 1.5,
+              fontSize: 24,
+            ),
+          },
         },
-        localeImages: {
-          'ja': '/path/to/ja.png',
-        },
+        localeImages: {'ja': '/path/to/ja.png'},
         customPrompt: 'Test context',
       );
 
@@ -65,20 +70,23 @@ void main() {
       expect(bundle.getTranslation('ja', 'overlay_999'), isNull);
     });
 
-    test('setTranslation adds/updates translation and updates targetLocales', () {
-      const bundle = TranslationBundle();
-      final updated = bundle.setTranslation('ja', 'overlay_1', '新しい');
+    test(
+      'setTranslation adds/updates translation and updates targetLocales',
+      () {
+        const bundle = TranslationBundle();
+        final updated = bundle.setTranslation('ja', 'overlay_1', '新しい');
 
-      expect(updated.getTranslation('ja', 'overlay_1'), '新しい');
-      expect(updated.targetLocales, contains('ja'));
+        expect(updated.getTranslation('ja', 'overlay_1'), '新しい');
+        expect(updated.targetLocales, contains('ja'));
 
-      // Original is unchanged
-      expect(bundle.getTranslation('ja', 'overlay_1'), isNull);
-      
-      // Update existing
-      final updated2 = updated.setTranslation('ja', 'overlay_1', '更新');
-      expect(updated2.getTranslation('ja', 'overlay_1'), '更新');
-    });
+        // Original is unchanged
+        expect(bundle.getTranslation('ja', 'overlay_1'), isNull);
+
+        // Update existing
+        final updated2 = updated.setTranslation('ja', 'overlay_1', '更新');
+        expect(updated2.getTranslation('ja', 'overlay_1'), '更新');
+      },
+    );
 
     test('setLocaleTranslations replaces all translations for a locale', () {
       final bundle = TranslationBundle(
@@ -116,7 +124,10 @@ void main() {
     });
 
     test('removeLocaleImage removes only the image', () {
-      final bundle = const TranslationBundle().setLocaleImage('ja', '/path.png');
+      final bundle = const TranslationBundle().setLocaleImage(
+        'ja',
+        '/path.png',
+      );
       final updated = bundle.removeLocaleImage('ja');
 
       expect(updated.getLocaleImage('ja'), isNull);
@@ -126,7 +137,11 @@ void main() {
     test('removeLocale completely removes a locale from all maps', () {
       final bundle = const TranslationBundle()
           .setTranslation('de', 'overlay_1', 'Hallo')
-          .setOverride('de', 'overlay_1', const OverlayOverride(position: Offset(0, 0)))
+          .setOverride(
+            'de',
+            'overlay_1',
+            const OverlayOverride(position: Offset(0, 0)),
+          )
           .setLocaleImage('de', '/path.png');
 
       expect(bundle.targetLocales, contains('de'));

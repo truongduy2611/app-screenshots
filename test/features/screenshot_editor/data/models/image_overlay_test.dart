@@ -53,9 +53,7 @@ void main() {
     });
 
     test('fromJson with minimal data uses defaults', () {
-      final restored = ImageOverlay.fromJson({
-        'id': 'min-1',
-      });
+      final restored = ImageOverlay.fromJson({'id': 'min-1'});
       expect(restored.id, 'min-1');
       expect(restored.position, Offset.zero);
       expect(restored.scale, 1.0);
@@ -88,10 +86,7 @@ void main() {
     });
 
     test('null shadow color serializes and deserializes correctly', () {
-      final overlay = ImageOverlay(
-        id: 'no-shadow',
-        position: Offset.zero,
-      );
+      final overlay = ImageOverlay(id: 'no-shadow', position: Offset.zero);
       final json = overlay.toJson();
       final restored = ImageOverlay.fromJson(json);
       expect(restored.shadowColor, isNull);

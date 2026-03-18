@@ -41,31 +41,31 @@ class BackgroundControls extends StatelessWidget {
 
             // Transparent toggle
             ControlCard(
-                children: [
-                  Row(
-                    children: [
-                      const Icon(Symbols.texture_rounded, size: 18),
-                      const SizedBox(width: 8),
-                      Text(
-                        context.l10n.transparent,
-                        style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                          fontWeight: FontWeight.w500,
-                        ),
+              children: [
+                Row(
+                  children: [
+                    const Icon(Symbols.texture_rounded, size: 18),
+                    const SizedBox(width: 8),
+                    Text(
+                      context.l10n.transparent,
+                      style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                        fontWeight: FontWeight.w500,
                       ),
-                      const SizedBox(width: 6),
-                      const Spacer(),
-                      AppSwitch(
-                        value: isTransparent,
-                        onChanged: (value) {
-                          cubit.updateTransparentBackground(value);
-                          if (value) {
-                            cubit.updateBackgroundGradient(null);
-                          }
-                        },
-                      ),
-                    ],
-                  ),
-                ],
+                    ),
+                    const SizedBox(width: 6),
+                    const Spacer(),
+                    AppSwitch(
+                      value: isTransparent,
+                      onChanged: (value) {
+                        cubit.updateTransparentBackground(value);
+                        if (value) {
+                          cubit.updateBackgroundGradient(null);
+                        }
+                      },
+                    ),
+                  ],
+                ),
+              ],
             ),
 
             // Color / Gradient controls (hidden when transparent)
@@ -606,7 +606,9 @@ class BackgroundControls extends StatelessWidget {
                     border: Border.all(
                       color: sel
                           ? theme.colorScheme.primary
-                          : theme.colorScheme.outlineVariant.withValues(alpha: 0.4),
+                          : theme.colorScheme.outlineVariant.withValues(
+                              alpha: 0.4,
+                            ),
                       width: sel ? 2.5 : 1,
                     ),
                   ),

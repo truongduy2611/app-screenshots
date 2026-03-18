@@ -251,11 +251,15 @@ class _TextOverlayWidgetState extends State<TextOverlayWidget> {
                 ),
                 border: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(4),
-                  borderSide: BorderSide(color: editColor.withValues(alpha: 0.5)),
+                  borderSide: BorderSide(
+                    color: editColor.withValues(alpha: 0.5),
+                  ),
                 ),
                 enabledBorder: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(4),
-                  borderSide: BorderSide(color: editColor.withValues(alpha: 0.5)),
+                  borderSide: BorderSide(
+                    color: editColor.withValues(alpha: 0.5),
+                  ),
                 ),
                 focusedBorder: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(4),

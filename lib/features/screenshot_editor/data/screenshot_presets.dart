@@ -1027,7 +1027,9 @@ class ScreenshotPresets {
 
     // Derive contrast colors based on background luminance.
     final bool isDark = bg.computeLuminance() < 0.4;
-    final contrastBg = isDark ? const Color(0xFFF5F5F5) : const Color(0xFF0F0F0F);
+    final contrastBg = isDark
+        ? const Color(0xFFF5F5F5)
+        : const Color(0xFF0F0F0F);
     final contrastTitleColor = isDark ? const Color(0xFF1A1A1A) : Colors.white;
     final contrastSubtitleColor = isDark
         ? const Color(0xFF757575)
@@ -1043,9 +1045,12 @@ class ScreenshotPresets {
         final isContrast = i == contrastSlideIndex;
 
         final effectiveBg = isContrast ? contrastBg : bg;
-        final effectiveTitleColor = isContrast ? contrastTitleColor : titleColor;
-        final effectiveSubtitleColor =
-            isContrast ? contrastSubtitleColor : subtitleColor;
+        final effectiveTitleColor = isContrast
+            ? contrastTitleColor
+            : titleColor;
+        final effectiveSubtitleColor = isContrast
+            ? contrastSubtitleColor
+            : subtitleColor;
         // Drop gradient on contrast slide for a clean inversion.
         final effectiveGradient = isContrast ? null : gradient;
 

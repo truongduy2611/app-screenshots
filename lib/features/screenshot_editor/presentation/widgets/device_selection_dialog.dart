@@ -111,10 +111,8 @@ class DeviceSelectionDialog extends StatefulWidget {
       }
       return Navigator.of(context).push<String>(
         MaterialPageRoute(
-          builder: (_) => DeviceSelectionDialog(
-            excludedTypes: excludedTypes,
-            asPage: true,
-          ),
+          builder: (_) =>
+              DeviceSelectionDialog(excludedTypes: excludedTypes, asPage: true),
         ),
       );
     }

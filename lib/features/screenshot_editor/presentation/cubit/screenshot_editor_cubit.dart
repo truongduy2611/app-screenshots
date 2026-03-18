@@ -348,7 +348,6 @@ class ScreenshotEditorCubit extends Cubit<ScreenshotEditorState> {
 
   /// Adds a text overlay.
   bool addTextOverlay() {
-
     final overlay = TextOverlay(
       id: const Uuid().v4(),
       text: 'New Text',
@@ -553,25 +552,36 @@ class ScreenshotEditorCubit extends Cubit<ScreenshotEditorState> {
       (e) => e!.id == id,
       orElse: () => null,
     );
-    if (text != null) { _overlayClipboard = text; return true; }
+    if (text != null) {
+      _overlayClipboard = text;
+      return true;
+    }
 
     final image = state.design.imageOverlays.cast<ImageOverlay?>().firstWhere(
       (e) => e!.id == id,
       orElse: () => null,
     );
-    if (image != null) { _overlayClipboard = image; return true; }
+    if (image != null) {
+      _overlayClipboard = image;
+      return true;
+    }
 
     final icon = state.design.iconOverlays.cast<IconOverlay?>().firstWhere(
       (e) => e!.id == id,
       orElse: () => null,
     );
-    if (icon != null) { _overlayClipboard = icon; return true; }
+    if (icon != null) {
+      _overlayClipboard = icon;
+      return true;
+    }
 
-    final mag = state.design.magnifierOverlays.cast<MagnifierOverlay?>().firstWhere(
-      (e) => e!.id == id,
-      orElse: () => null,
-    );
-    if (mag != null) { _overlayClipboard = mag; return true; }
+    final mag = state.design.magnifierOverlays
+        .cast<MagnifierOverlay?>()
+        .firstWhere((e) => e!.id == id, orElse: () => null);
+    if (mag != null) {
+      _overlayClipboard = mag;
+      return true;
+    }
 
     return false;
   }
@@ -636,7 +646,8 @@ class ScreenshotEditorCubit extends Cubit<ScreenshotEditorState> {
         shadowOffset: source.shadowOffset,
         behindFrame: source.behindFrame,
       );
-      final overlays = List<ImageOverlay>.from(state.design.imageOverlays)..add(copy);
+      final overlays = List<ImageOverlay>.from(state.design.imageOverlays)
+        ..add(copy);
       _updateDesign(
         state.design.copyWith(imageOverlays: overlays),
         selectedOverlayId: newId,
@@ -666,7 +677,8 @@ class ScreenshotEditorCubit extends Cubit<ScreenshotEditorState> {
         shadowOffset: source.shadowOffset,
         behindFrame: source.behindFrame,
       );
-      final overlays = List<IconOverlay>.from(state.design.iconOverlays)..add(copy);
+      final overlays = List<IconOverlay>.from(state.design.iconOverlays)
+        ..add(copy);
       _updateDesign(
         state.design.copyWith(iconOverlays: overlays),
         selectedOverlayId: newId,
@@ -693,7 +705,9 @@ class ScreenshotEditorCubit extends Cubit<ScreenshotEditorState> {
         cornerRadius: source.cornerRadius,
         starPoints: source.starPoints,
       );
-      final overlays = List<MagnifierOverlay>.from(state.design.magnifierOverlays)..add(copy);
+      final overlays = List<MagnifierOverlay>.from(
+        state.design.magnifierOverlays,
+      )..add(copy);
       _updateDesign(
         state.design.copyWith(magnifierOverlays: overlays),
         selectedOverlayId: newId,

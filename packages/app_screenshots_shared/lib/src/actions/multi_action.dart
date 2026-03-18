@@ -14,9 +14,9 @@ enum MultiAction {
 
   /// Convert enum name to kebab-case action name.
   String get actionName => name.replaceAllMapped(
-    RegExp(r'[A-Z]'),
-    (m) => '-${m[0]!.toLowerCase()}',
-  );
+        RegExp(r'[A-Z]'),
+        (m) => '-${m[0]!.toLowerCase()}',
+      );
 
   /// Full API path, e.g. `/api/multi/switch-design`.
   String get path => '/api/multi/$actionName';

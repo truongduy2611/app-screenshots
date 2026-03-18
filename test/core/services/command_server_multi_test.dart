@@ -14,12 +14,17 @@ import 'package:http/http.dart' as http;
 
 import 'dart:typed_data';
 
-class MockScreenshotPersistenceService extends Mock implements ScreenshotPersistenceService {}
+class MockScreenshotPersistenceService extends Mock
+    implements ScreenshotPersistenceService {}
+
 class MockDesignFileService extends Mock implements DesignFileService {}
+
 class MockMultiScreenshotCubit extends Mock implements MultiScreenshotCubit {}
+
 class MockScreenshotEditorCubit extends Mock implements ScreenshotEditorCubit {}
 
 class FakeScreenshotPreset extends Fake implements ScreenshotPreset {}
+
 class FakeAscAppConfig extends Fake implements AscAppConfig {}
 
 void main() {
@@ -41,20 +46,22 @@ void main() {
       mockPersistence = MockScreenshotPersistenceService();
       mockMultiCubit = MockMultiScreenshotCubit();
       mockEditorCubit = MockScreenshotEditorCubit();
-      
-      when(() => mockMultiCubit.state).thenReturn(const MultiScreenshotState(
-        designs: [ScreenshotDesign()],
-        activeIndex: 0,
-      ));
+
+      when(() => mockMultiCubit.state).thenReturn(
+        const MultiScreenshotState(
+          designs: [ScreenshotDesign()],
+          activeIndex: 0,
+        ),
+      );
 
       server = CommandServer(
         persistenceService: mockPersistence,
         designFileService: MockDesignFileService(),
       );
-      
+
       server.registerMulti(mockMultiCubit);
       server.registerEditor(mockEditorCubit);
-      
+
       await server.start();
       httpClient = http.Client();
     });
@@ -65,11 +72,16 @@ void main() {
     });
 
     Future<Map<String, dynamic>> getApi(String path) async {
-      final res = await httpClient.get(Uri.parse('http://localhost:${server.port}$path'));
+      final res = await httpClient.get(
+        Uri.parse('http://localhost:${server.port}$path'),
+      );
       return jsonDecode(res.body);
     }
 
-    Future<Map<String, dynamic>> postApi(String path, Map<String, dynamic> body) async {
+    Future<Map<String, dynamic>> postApi(
+      String path,
+      Map<String, dynamic> body,
+    ) async {
       final res = await httpClient.post(
         Uri.parse('http://localhost:${server.port}$path'),
         headers: {'Content-Type': 'application/json'},
@@ -102,7 +114,7 @@ void main() {
       expect(json['ok'], isTrue);
       verify(() => mockMultiCubit.removeDesign(0)).called(1);
     });
-    
+
     test('multi applyPreset calls cubit.applyPreset', () async {
       final presetId = ScreenshotPresets.all.first.id;
       final json = await postApi('/api/multi/apply-preset', {'id': presetId});
@@ -111,38 +123,64 @@ void main() {
     });
 
     test('multi saveDesign calls cubit.saveDesign', () async {
-      when(() => mockMultiCubit.saveDesign(any(), any(), override: any(named: 'override'), ascAppConfig: any(named: 'ascAppConfig')))
-          .thenAnswer((_) async {});
+      when(
+        () => mockMultiCubit.saveDesign(
+          any(),
+          any(),
+          override: any(named: 'override'),
+          ascAppConfig: any(named: 'ascAppConfig'),
+        ),
+      ).thenAnswer((_) async {});
 
-      final json = await postApi('/api/multi/save-design', {'name': 'Test Design', 'override': true});
-      expect(json['ok'], isTrue);
-      verify(() => mockMultiCubit.saveDesign('Test Design', any(), override: true, ascAppConfig: any(named: 'ascAppConfig'))).called(1);
-    });
-
-    test('multi batch operations require editorCubit and perform updates', () async {
-      // Setup the cubit to allow state updates
-      when(() => mockMultiCubit.updateDesignForSlot(any(), any())).thenAnswer((_) {});
-      
-      final json = await postApi('/api/multi/batch', {
-        'action': 'set-padding',
-        'padding': 50
+      final json = await postApi('/api/multi/save-design', {
+        'name': 'Test Design',
+        'override': true,
       });
       expect(json['ok'], isTrue);
-      expect(json['data']['results'].length, 1);
-      expect(json['data']['results'][0]['ok'], isTrue);
-      verify(() => mockMultiCubit.setActiveIndex(any())).called(2); // once to switch to 0, once to restore original index
-      verify(() => mockMultiCubit.updateDesignForSlot(0, any())).called(1);
+      verify(
+        () => mockMultiCubit.saveDesign(
+          'Test Design',
+          any(),
+          override: true,
+          ascAppConfig: any(named: 'ascAppConfig'),
+        ),
+      ).called(1);
     });
-    
+
+    test(
+      'multi batch operations require editorCubit and perform updates',
+      () async {
+        // Setup the cubit to allow state updates
+        when(
+          () => mockMultiCubit.updateDesignForSlot(any(), any()),
+        ).thenAnswer((_) {});
+
+        final json = await postApi('/api/multi/batch', {
+          'action': 'set-padding',
+          'padding': 50,
+        });
+        expect(json['ok'], isTrue);
+        expect(json['data']['results'].length, 1);
+        expect(json['data']['results'][0]['ok'], isTrue);
+        verify(
+          () => mockMultiCubit.setActiveIndex(any()),
+        ).called(2); // once to switch to 0, once to restore original index
+        verify(() => mockMultiCubit.updateDesignForSlot(0, any())).called(1);
+      },
+    );
+
     test('multi batch returns error if editorCubit is null', () async {
       server.unregisterEditor(mockEditorCubit);
-      
+
       final json = await postApi('/api/multi/batch', {
         'action': 'set-padding',
-        'padding': 50
+        'padding': 50,
       });
       expect(json['ok'], isFalse);
-      expect(json['error'], 'No active editor for batch operations. Open a design first.');
+      expect(
+        json['error'],
+        'No active editor for batch operations. Open a design first.',
+      );
     });
   });
 }
