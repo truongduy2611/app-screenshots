@@ -139,6 +139,12 @@ appshots editor export-all --dir ~/Desktop/shots   # Export all
 
 📖 **Full CLI reference**: [packages/app_screenshots_cli/README.md](packages/app_screenshots_cli/README.md)
 
+### 🤖 AI Agent Skills
+
+Drop-in skills that teach AI agents (Gemini, Cursor, etc.) how to use the CLI for automated screenshot design. Includes research-backed design guidelines, step-by-step workflows, and best practices.
+
+👉 **[app-screenshots-cli-skills](https://github.com/truongduy2611/app-screenshots-cli-skills)**
+
 ## 🤝 Contributing
 
 Contributions are welcome! See [CONTRIBUTING.md](CONTRIBUTING.md) for details.
