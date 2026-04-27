@@ -19,6 +19,7 @@ import 'package:app_screenshots/features/screenshot_editor/presentation/cubit/sc
 import 'package:app_screenshots/features/screenshot_editor/presentation/cubit/translation_cubit.dart';
 import 'package:app_screenshots/features/screenshot_editor/presentation/widgets/asc_credentials_dialog.dart';
 import 'package:app_screenshots/features/screenshot_editor/presentation/widgets/asc_upload_sheet.dart';
+import 'package:app_screenshots/features/screenshot_editor/presentation/widgets/asc_locale_picker_dialog.dart';
 import 'package:app_screenshots/features/settings/domain/repositories/settings_repository.dart';
 import 'package:app_screenshots/features/screenshot_editor/presentation/widgets/locale_switcher.dart';
 import 'package:app_screenshots/features/screenshot_editor/presentation/helpers/multi_screenshot_actions.dart';
@@ -62,6 +63,7 @@ enum _MultiMenuAction {
   copy,
   shareDesign,
   uploadToAsc,
+  uploadExistingToAsc,
 }
 
 /// Multi-screenshot editor page – horizontal row of artboards.
@@ -783,6 +785,8 @@ class _MultiScreenshotViewState extends State<_MultiScreenshotView>
         shareDesignFile(context);
       case _MultiMenuAction.uploadToAsc:
         _showUploadSheet(context);
+      case _MultiMenuAction.uploadExistingToAsc:
+        _uploadExistingFolder(context);
       case _MultiMenuAction.saveAsTemplate:
         _saveAsTemplate(context);
       case _MultiMenuAction.grid:
@@ -790,10 +794,88 @@ class _MultiScreenshotViewState extends State<_MultiScreenshotView>
     }
   }
 
+  /// Opens the ASC upload sheet for an existing folder of pre-rendered screenshots.
+  /// Skips the rendering step and parses the folder directly.
+  Future<void> _uploadExistingFolder(BuildContext context) async {
+    // 1) Check credentials — prompt dialog if missing.
+    final repo = sl<SettingsRepository>();
+    final creds = await repo.getAscCredentials();
+    if (creds == null || !creds.isValid) {
+      if (!context.mounted) return;
+      final saved = await AscCredentialsDialog.show(context);
+      if (!saved || !context.mounted) return;
+    }
+
+    if (!context.mounted) return;
+
+    // 2) Pick directory
+    final path = await FilePicker.platform.getDirectoryPath(
+      dialogTitle: context.l10n.uploadExistingFolderToAsc,
+    );
+    if (path == null || !context.mounted) return;
+
+    final dir = Directory(path);
+    if (!dir.existsSync()) return;
+
+    // 3) Parse directory
+    final localeScreenshots = <String, List<File>>{};
+
+    // Scan subdirectories for locales
+    for (final entity in dir.listSync()) {
+      if (entity is Directory) {
+        final locale = entity.path.split(Platform.pathSeparator).last;
+        final files = entity.listSync().whereType<File>().where((f) {
+          final ext = f.path.toLowerCase();
+          return ext.endsWith('.png') ||
+              ext.endsWith('.jpg') ||
+              ext.endsWith('.jpeg');
+        }).toList();
+
+        if (files.isNotEmpty) {
+          // Sort files alphabetically to maintain order
+          files.sort((a, b) => a.path.compareTo(b.path));
+          localeScreenshots[locale] = files;
+        }
+      }
+    }
+
+    if (!context.mounted) return;
+
+    if (localeScreenshots.isEmpty) {
+      context.showAppSnackbar(
+        context.l10n.noImagesFoundInFolder,
+        type: AppSnackbarType.error,
+      );
+      return;
+    }
+
+    // 4) Show upload sheet
+    final captureProvider = ScreenshotCaptureProvider.of(context);
+    final savedConfig = captureProvider?.ascAppConfig;
+    final displayType = context.read<MultiScreenshotCubit>().displayType;
+    if (!context.mounted) return;
+
+    showDialog(
+      context: context,
+      builder: (_) => BlocProvider(
+        create: (_) => sl<AscUploadCubit>()
+          ..init(savedAppConfig: savedConfig, designDisplayType: displayType),
+        child: Dialog(
+          child: AscUploadSheet(
+            localeScreenshots: localeScreenshots,
+            ascAppConfig: savedConfig,
+            onAppConfigChanged: captureProvider?.onAscAppConfigChanged,
+          ),
+        ),
+      ),
+    );
+  }
+
   /// Opens the ASC upload sheet from the export menu.
   ///
-  /// Checks credentials first and prompts if missing, then captures
-  /// locale screenshots and shows the upload dialog.
+  /// Shows a locale picker first so the user can choose which locales
+  /// to render, then captures only those locales before opening the
+  /// upload sheet.
   Future<void> _showUploadSheet(BuildContext context) async {
     // 1) Check credentials — prompt dialog if missing.
     final repo = sl<SettingsRepository>();
@@ -804,12 +886,34 @@ class _MultiScreenshotViewState extends State<_MultiScreenshotView>
       if (!saved || !context.mounted) return;
     }
 
-    // 2) Capture locale screenshots.
+    // 2) Show locale picker — let user choose which locales to render.
+    if (!context.mounted) return;
+    final translationCubit = context.read<TranslationCubit>();
+    final bundle = translationCubit.state.bundle;
+    final hasTranslations = bundle != null && bundle.translations.isNotEmpty;
+    final sourceLocale = bundle?.sourceLocale ?? 'en-US';
+    final allLocales = hasTranslations
+        ? [sourceLocale, ...bundle.targetLocales]
+        : [sourceLocale];
+
+    Set<String>? selectedLocales;
+    // Only show picker when there are multiple locales.
+    if (allLocales.length > 1) {
+      selectedLocales = await AscLocalePickerDialog.show(
+        context: context,
+        allLocales: allLocales,
+        sourceLocale: sourceLocale,
+      );
+      if (selectedLocales == null || !context.mounted) return;
+    }
+
+    // 3) Capture locale screenshots (only selected locales).
     final captureProvider = ScreenshotCaptureProvider.of(context);
     if (captureProvider == null) return;
 
     final localeScreenshots = await captureProvider.captureAllLocaleScreenshots(
       context,
+      selectedLocales: selectedLocales,
     );
 
     if (!context.mounted) return;
@@ -822,7 +926,7 @@ class _MultiScreenshotViewState extends State<_MultiScreenshotView>
       return;
     }
 
-    // 3) Show upload sheet — pass saved app config for auto-selection.
+    // 4) Show upload sheet — pass saved app config for auto-selection.
     final savedConfig = captureProvider.ascAppConfig;
     final displayType = context.read<MultiScreenshotCubit>().displayType;
     if (!context.mounted) return;

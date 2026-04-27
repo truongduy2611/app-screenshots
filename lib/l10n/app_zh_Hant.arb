@@ -468,5 +468,15 @@
   "aiSuggestionEmojiDoodle": "使用emoji塗鴉圖案",
   "aiSuggestionAdd3DTilt": "新增3D透視傾斜",
   "aiSuggestionTransparentBg": "背景透明",
-  "aiSuggestionLandscapeMode": "切換橫向模式"
+  "aiSuggestionLandscapeMode": "切換橫向模式",
+  "onlySelectedLocalesWillBeRendered": "僅渲染選定的語言",
+  "renderNLocales": "渲染 {count} 種語言",
+  "source": "來源",
+  "supportTheDeveloper": "支持開發者",
+  "supportTheDeveloperDescription": "喜歡這款應用嗎？請我喝杯咖啡吧！ {price}",
+  "enableCliServer": "啟用CLI伺服器",
+  "enableCliServerDescription": "啟動本地伺服器以使用CLI工具。",
+  "cliLearnMoreButton": "閱讀文檔",
+  "cliCompanionTitle": "命令列工具",
+  "cliCompanionDescription": "使用配套的 CLI 工具從終端機自動化截圖。請參閱文件了解設定說明。"
 }

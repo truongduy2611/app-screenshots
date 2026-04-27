@@ -2291,6 +2291,18 @@ abstract class AppLocalizations {
   /// **'Upload to ASC'**
   String get uploadToAsc;
 
+  /// Action to upload an existing folder of screenshots to ASC without rendering
+  ///
+  /// In en, this message translates to:
+  /// **'Upload Existing Folder...'**
+  String get uploadExistingFolderToAsc;
+
+  /// Error message when the selected folder for ASC upload contains no valid images
+  ///
+  /// In en, this message translates to:
+  /// **'No valid screenshot images found in selected folder'**
+  String get noImagesFoundInFolder;
+
   /// Action to add more target languages
   ///
   /// In en, this message translates to:
@@ -2938,6 +2950,66 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Behind Frame'**
   String get behindFrame;
+
+  /// Subtitle in the locale picker dialog explaining rendering optimization
+  ///
+  /// In en, this message translates to:
+  /// **'Only selected locales will be rendered'**
+  String get onlySelectedLocalesWillBeRendered;
+
+  /// Button label showing how many locales will be rendered for upload
+  ///
+  /// In en, this message translates to:
+  /// **'Render {count} {count, plural, =1{Locale} other{Locales}}'**
+  String renderNLocales(int count);
+
+  /// Badge label for the source locale in locale picker
+  ///
+  /// In en, this message translates to:
+  /// **'Source'**
+  String get source;
+
+  /// Title for the support me card in settings
+  ///
+  /// In en, this message translates to:
+  /// **'Support the Developer'**
+  String get supportTheDeveloper;
+
+  /// Description for the support me card in settings
+  ///
+  /// In en, this message translates to:
+  /// **'Love the app? Treat me to a coffee! {price}'**
+  String supportTheDeveloperDescription(String price);
+
+  /// Toggle title to enable or disable the CLI server
+  ///
+  /// In en, this message translates to:
+  /// **'Enable CLI Server'**
+  String get enableCliServer;
+
+  /// Description for the CLI server toggle
+  ///
+  /// In en, this message translates to:
+  /// **'Start the local loopback server to use the CLI tool.'**
+  String get enableCliServerDescription;
+
+  /// Button text to open the CLI documentation
+  ///
+  /// In en, this message translates to:
+  /// **'Read Documentation'**
+  String get cliLearnMoreButton;
+
+  /// Title for the companion CLI tool section in settings
+  ///
+  /// In en, this message translates to:
+  /// **'Command-Line Tool'**
+  String get cliCompanionTitle;
+
+  /// Description of the companion CLI tool, directing users to documentation
+  ///
+  /// In en, this message translates to:
+  /// **'Automate screenshots from the terminal with the companion CLI tool. See the documentation for setup instructions.'**
+  String get cliCompanionDescription;
 }
 
 class _AppLocalizationsDelegate

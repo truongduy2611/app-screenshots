@@ -19,6 +19,7 @@ import 'package:app_screenshots/features/settings/data/repositories/settings_rep
 import 'package:app_screenshots/features/settings/data/services/app_icon_service.dart';
 import 'package:app_screenshots/features/settings/domain/repositories/settings_repository.dart';
 import 'package:app_screenshots/features/settings/presentation/cubit/app_icon_cubit.dart';
+import 'package:app_screenshots/features/settings/presentation/cubit/cli_cubit.dart';
 import 'package:app_screenshots/features/settings/presentation/cubit/theme_cubit.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:get_it/get_it.dart';
@@ -113,4 +114,5 @@ void _registerCubits() {
   sl.registerFactory(() => AscUploadCubit(sl(), sl()));
   sl.registerLazySingleton(() => AppIconCubit(sl(), sl())..load());
   sl.registerLazySingleton(() => BackupCubit(sl())..init());
+  sl.registerLazySingleton(() => CliCubit(sl()));
 }

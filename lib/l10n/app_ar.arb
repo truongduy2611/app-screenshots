@@ -468,5 +468,15 @@
   "aiSuggestionEmojiDoodle": "استخدام نمط إيموجي",
   "aiSuggestionAdd3DTilt": "إضافة ميل ثلاثي الأبعاد",
   "aiSuggestionTransparentBg": "خلفية شفافة",
-  "aiSuggestionLandscapeMode": "التبديل إلى الوضع الأفقي"
+  "aiSuggestionLandscapeMode": "التبديل إلى الوضع الأفقي",
+  "onlySelectedLocalesWillBeRendered": "سيتم عرض اللغات المحددة فقط",
+  "renderNLocales": "عرض {count} لغة",
+  "source": "المصدر",
+  "supportTheDeveloper": "ادعم المطور",
+  "supportTheDeveloperDescription": "هل أعجبك التطبيق؟ عاملني بقهوة! {price}",
+  "enableCliServer": "تمكين خادم CLI",
+  "enableCliServerDescription": "ابدأ الخادم المحلي لاستخدام أداة CLI.",
+  "cliLearnMoreButton": "قراءة الوثائق",
+  "cliCompanionTitle": "أداة سطر الأوامر",
+  "cliCompanionDescription": "يمكنك أتمتة لقطات الشاشة من الطرفية باستخدام أداة سطر الأوامر المرافقة. تعرف على المزيد من الوثائق."
 }

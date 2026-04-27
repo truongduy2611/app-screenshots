@@ -468,5 +468,15 @@
   "aiSuggestionEmojiDoodle": "Utiliser un motif emoji",
   "aiSuggestionAdd3DTilt": "Ajouter une perspective 3D",
   "aiSuggestionTransparentBg": "Rendre le fond transparent",
-  "aiSuggestionLandscapeMode": "Passer en mode paysage"
+  "aiSuggestionLandscapeMode": "Passer en mode paysage",
+  "onlySelectedLocalesWillBeRendered": "Seules les langues sélectionnées seront rendues",
+  "renderNLocales": "Rendre {count} {count, plural, =1{langue} other{langues}}",
+  "source": "Source",
+  "supportTheDeveloper": "Soutenir le développeur",
+  "supportTheDeveloperDescription": "Vous aimez l'application ? Offrez-moi un café ! {price}",
+  "enableCliServer": "Activer le serveur CLI",
+  "enableCliServerDescription": "Démarrez le serveur local pour utiliser l'outil CLI.",
+  "cliLearnMoreButton": "Lire la documentation",
+  "cliCompanionTitle": "Outil en ligne de commande",
+  "cliCompanionDescription": "Automatisez les captures d'écran depuis le terminal avec l'outil CLI compagnon. Consultez la documentation pour les instructions de configuration."
 }

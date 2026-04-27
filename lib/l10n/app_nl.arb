@@ -468,5 +468,15 @@
   "aiSuggestionEmojiDoodle": "Emoji-doodlepatroon gebruiken",
   "aiSuggestionAdd3DTilt": "3D-perspectiefkanteling toevoegen",
   "aiSuggestionTransparentBg": "Achtergrond transparant maken",
-  "aiSuggestionLandscapeMode": "Naar liggend formaat wisselen"
+  "aiSuggestionLandscapeMode": "Naar liggend formaat wisselen",
+  "onlySelectedLocalesWillBeRendered": "Alleen geselecteerde talen worden gerenderd",
+  "renderNLocales": "{count} {count, plural, =1{taal} other{talen}} renderen",
+  "source": "Bron",
+  "supportTheDeveloper": "Ondersteun de ontwikkelaar",
+  "supportTheDeveloperDescription": "Vind je de app leuk? Trakteer me op een koffie! {price}",
+  "enableCliServer": "CLI-server inschakelen",
+  "enableCliServerDescription": "Start de lokale server om de CLI-tool te gebruiken.",
+  "cliLearnMoreButton": "Documentatie lezen",
+  "cliCompanionTitle": "Opdrachtregeltool",
+  "cliCompanionDescription": "Automatiseer schermafbeeldingen vanuit de terminal met de bijbehorende CLI-tool. Zie de documentatie voor installatie-instructies."
 }

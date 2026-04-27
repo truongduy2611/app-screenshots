@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:app_screenshots/core/di/service_locator.dart';
 import 'package:app_screenshots/core/services/command_server.dart';
+import 'package:app_screenshots/features/settings/domain/repositories/settings_repository.dart';
 import 'package:app_screenshots/app.dart';
 import 'package:app_screenshots/l10n/filtering_flutter_binding.dart';
 import 'package:flutter/material.dart';
@@ -20,11 +21,15 @@ void main() async {
 
   await initServiceLocator();
 
-  // Start the CLI command server on desktop only (non-blocking, non-fatal).
+  // Start the CLI command server on desktop only if enabled.
   if (!Platform.isIOS) {
-    sl<CommandServer>().start().catchError((_) {
-      // Server failed to start — app continues normally without CLI support.
-    });
+    final settingsRepo = sl<SettingsRepository>();
+    final isCliEnabled = await settingsRepo.isCliServerEnabled();
+    if (isCliEnabled) {
+      sl<CommandServer>().start().catchError((_) {
+        // Server failed to start — app continues normally without CLI support.
+      });
+    }
   }
 
   runApp(const App());

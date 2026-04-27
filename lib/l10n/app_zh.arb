@@ -468,5 +468,15 @@
   "aiSuggestionEmojiDoodle": "使用emoji涂鸦图案",
   "aiSuggestionAdd3DTilt": "添加3D透视倾斜",
   "aiSuggestionTransparentBg": "背景透明",
-  "aiSuggestionLandscapeMode": "切换横屏模式"
+  "aiSuggestionLandscapeMode": "切换横屏模式",
+  "onlySelectedLocalesWillBeRendered": "仅渲染选定的语言",
+  "renderNLocales": "渲染 {count} 种语言",
+  "source": "源",
+  "supportTheDeveloper": "支持开发者",
+  "supportTheDeveloperDescription": "喜欢这款应用吗？请我喝杯咖啡吧！ {price}",
+  "enableCliServer": "启用CLI服务器",
+  "enableCliServerDescription": "启动本地服务器以使用CLI工具。",
+  "cliLearnMoreButton": "阅读文档",
+  "cliCompanionTitle": "命令行工具",
+  "cliCompanionDescription": "使用配套的 CLI 工具从终端自动化截图。请查看文档了解设置说明。"
 }

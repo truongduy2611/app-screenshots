@@ -468,5 +468,15 @@
   "aiSuggestionEmojiDoodle": "Emoji desen kullan",
   "aiSuggestionAdd3DTilt": "3D perspektif eğimi ekle",
   "aiSuggestionTransparentBg": "Arka planı saydam yap",
-  "aiSuggestionLandscapeMode": "Yatay moda geç"
+  "aiSuggestionLandscapeMode": "Yatay moda geç",
+  "onlySelectedLocalesWillBeRendered": "Yalnızca seçilen diller oluşturulacak",
+  "renderNLocales": "{count} dil oluştur",
+  "source": "Kaynak",
+  "supportTheDeveloper": "Geliştiriciyi Destekle",
+  "supportTheDeveloperDescription": "Uygulamayı sevdiniz mi? Bana bir kahve ısmarlayın! {price}",
+  "enableCliServer": "CLI Sunucusunu Etkinleştir",
+  "enableCliServerDescription": "CLI aracını kullanmak için yerel sunucuyu başlatın.",
+  "cliLearnMoreButton": "Belgeleri Oku",
+  "cliCompanionTitle": "Komut Satırı Aracı",
+  "cliCompanionDescription": "Eşlik eden CLI aracıyla terminalden ekran görüntülerini otomatikleştirin. Kurulum talimatları için belgelere bakın."
 }

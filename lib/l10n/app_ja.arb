@@ -468,5 +468,15 @@
   "aiSuggestionEmojiDoodle": "絵文字ドゥードルパターンを使用",
   "aiSuggestionAdd3DTilt": "3Dパースペクティブ傾斜を追加",
   "aiSuggestionTransparentBg": "背景を透明にする",
-  "aiSuggestionLandscapeMode": "横向きモードに切替"
+  "aiSuggestionLandscapeMode": "横向きモードに切替",
+  "onlySelectedLocalesWillBeRendered": "選択した言語のみがレンダリングされます",
+  "renderNLocales": "{count}言語をレンダリング",
+  "source": "ソース",
+  "supportTheDeveloper": "開発者を支援する",
+  "supportTheDeveloperDescription": "アプリが気に入りましたか？コーヒーをおごってください！ {price}",
+  "enableCliServer": "CLIサーバーを有効にする",
+  "enableCliServerDescription": "CLIツールを使用するにはローカルサーバーを起動してください。",
+  "cliLearnMoreButton": "ドキュメントを読む",
+  "cliCompanionTitle": "コマンドラインツール",
+  "cliCompanionDescription": "コンパニオンCLIツールを使って、ターミナルからスクリーンショットを自動化できます。セットアップ手順はドキュメントをご覧ください。"
 }

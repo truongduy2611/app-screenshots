@@ -572,17 +572,27 @@ class _ScreenshotEditorViewState extends State<ScreenshotEditorView> {
   ///
   /// Returns `Map<locale, [File]>` — one screenshot per locale.
   /// When no translations exist, captures the source locale only.
+  ///
+  /// When [selectedLocales] is provided, only those locales are rendered.
   Future<Map<String, List<File>>?> _captureAllLocaleScreenshots(
-    BuildContext context,
-  ) async {
+    BuildContext context, {
+    Set<String>? selectedLocales,
+  }) async {
     final translationCubit = context.read<TranslationCubit>();
     final bundle = translationCubit.state.bundle;
 
     final hasTranslations = bundle != null && bundle.translations.isNotEmpty;
     final sourceLocale = bundle?.sourceLocale ?? 'en-US';
-    final allLocales = hasTranslations
+    var allLocales = hasTranslations
         ? [sourceLocale, ...bundle.targetLocales]
         : [sourceLocale];
+
+    // Filter to only selected locales when provided.
+    if (selectedLocales != null && selectedLocales.isNotEmpty) {
+      allLocales = allLocales
+          .where((l) => selectedLocales.contains(l))
+          .toList();
+    }
 
     try {
       final tempDir = await getTemporaryDirectory();

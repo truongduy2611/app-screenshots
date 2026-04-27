@@ -22,7 +22,19 @@
     {
       "layers" : [
         {
-          "hidden" : false,
+          "glass" : false,
+          "image-name" : "Image 2.png",
+          "name" : "Image 2",
+          "position" : {
+            "scale" : 0.65,
+            "translation-in-points" : [
+              -10.980000000000018,
+              22.457187499999918
+            ]
+          }
+        },
+        {
+          "hidden" : true,
           "image-name" : "image-mi8vSklIWoc1TGdEC4eyJ1iQJ4iAZK.png",
           "name" : "image-mi8vSklIWoc1TGdEC4eyJ1iQJ4iAZK",
           "position" : {
@@ -52,20 +64,8 @@
           "position" : {
             "scale" : 0.3,
             "translation-in-points" : [
-              7.45187500000003,
-              4.390000000000043
-            ]
-          }
-        },
-        {
-          "glass" : false,
-          "image-name" : "screenshot_1771649915436.png",
-          "name" : "screenshot_1771649915436",
-          "position" : {
-            "scale" : 0.4,
-            "translation-in-points" : [
-              8.549999999999955,
-              0.9578124999998181
+              210.88497927713917,
+              -199.9765660910387
             ]
           }
         },
@@ -86,10 +86,10 @@
           "image-name" : "image-LfpfRdF2BugZEEpTgPQNhXOgbpJBMo.png",
           "name" : "image-LfpfRdF2BugZEEpTgPQNhXOgbpJBMo",
           "position" : {
-            "scale" : 0.05,
+            "scale" : 0.2,
             "translation-in-points" : [
-              -222.93875000000014,
-              -33.842812500000036
+              144.07999999999993,
+              201.331262147951
             ]
           }
         },

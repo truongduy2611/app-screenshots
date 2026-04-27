@@ -1560,6 +1560,14 @@
   "@uploadToAsc": {
     "description": "Menu item label to upload screenshots to App Store Connect"
   },
+  "uploadExistingFolderToAsc": "Upload Existing Folder...",
+  "@uploadExistingFolderToAsc": {
+    "description": "Action to upload an existing folder of screenshots to ASC without rendering"
+  },
+  "noImagesFoundInFolder": "No valid screenshot images found in selected folder",
+  "@noImagesFoundInFolder": {
+    "description": "Error message when the selected folder for ASC upload contains no valid images"
+  },
   "addMoreLanguages": "Add more languages",
   "@addMoreLanguages": {
     "description": "Action to add more target languages"
@@ -2093,5 +2101,55 @@
   "behindFrame": "Behind Frame",
   "@behindFrame": {
     "description": "Tooltip when magnifier is in front of frame and will move behind"
+  },
+  "onlySelectedLocalesWillBeRendered": "Only selected locales will be rendered",
+  "@onlySelectedLocalesWillBeRendered": {
+    "description": "Subtitle in the locale picker dialog explaining rendering optimization"
+  },
+  "renderNLocales": "Render {count} {count, plural, =1{Locale} other{Locales}}",
+  "@renderNLocales": {
+    "description": "Button label showing how many locales will be rendered for upload",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "source": "Source",
+  "@source": {
+    "description": "Badge label for the source locale in locale picker"
+  },
+  "supportTheDeveloper": "Support the Developer",
+  "supportTheDeveloperDescription": "Love the app? Treat me to a coffee! {price}",
+  "@supportTheDeveloper": {
+    "description": "Title for the support me card in settings"
+  },
+  "@supportTheDeveloperDescription": {
+    "description": "Description for the support me card in settings",
+    "placeholders": {
+      "price": {
+        "type": "String"
+      }
+    }
+  },
+  "enableCliServer": "Enable CLI Server",
+  "enableCliServerDescription": "Start the local loopback server to use the CLI tool.",
+  "@enableCliServer": {
+    "description": "Toggle title to enable or disable the CLI server"
+  },
+  "@enableCliServerDescription": {
+    "description": "Description for the CLI server toggle"
+  },
+  "cliLearnMoreButton": "Read Documentation",
+  "@cliLearnMoreButton": {
+    "description": "Button text to open the CLI documentation"
+  },
+  "cliCompanionTitle": "Command-Line Tool",
+  "cliCompanionDescription": "Automate screenshots from the terminal with the companion CLI tool. See the documentation for setup instructions.",
+  "@cliCompanionTitle": {
+    "description": "Title for the companion CLI tool section in settings"
+  },
+  "@cliCompanionDescription": {
+    "description": "Description of the companion CLI tool, directing users to documentation"
   }
 }

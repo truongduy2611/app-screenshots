@@ -1196,6 +1196,13 @@ class AppLocalizationsEn extends AppLocalizations {
   String get uploadToAsc => 'Upload to ASC';
 
   @override
+  String get uploadExistingFolderToAsc => 'Upload Existing Folder...';
+
+  @override
+  String get noImagesFoundInFolder =>
+      'No valid screenshot images found in selected folder';
+
+  @override
   String get addMoreLanguages => 'Add more languages';
 
   @override
@@ -1587,4 +1594,47 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get behindFrame => 'Behind Frame';
+
+  @override
+  String get onlySelectedLocalesWillBeRendered =>
+      'Only selected locales will be rendered';
+
+  @override
+  String renderNLocales(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: 'Locales',
+      one: 'Locale',
+    );
+    return 'Render $count $_temp0';
+  }
+
+  @override
+  String get source => 'Source';
+
+  @override
+  String get supportTheDeveloper => 'Support the Developer';
+
+  @override
+  String supportTheDeveloperDescription(String price) {
+    return 'Love the app? Treat me to a coffee! $price';
+  }
+
+  @override
+  String get enableCliServer => 'Enable CLI Server';
+
+  @override
+  String get enableCliServerDescription =>
+      'Start the local loopback server to use the CLI tool.';
+
+  @override
+  String get cliLearnMoreButton => 'Read Documentation';
+
+  @override
+  String get cliCompanionTitle => 'Command-Line Tool';
+
+  @override
+  String get cliCompanionDescription =>
+      'Automate screenshots from the terminal with the companion CLI tool. See the documentation for setup instructions.';
 }

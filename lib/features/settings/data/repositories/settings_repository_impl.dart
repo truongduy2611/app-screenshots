@@ -10,6 +10,7 @@ class SettingsRepositoryImpl implements SettingsRepository {
   static const _ascKeyIdKey = 'asc_key_id';
   static const _ascIssuerIdKey = 'asc_issuer_id';
   static const _ascPrivateKeyKey = 'asc_private_key_content';
+  static const _cliServerEnabledKey = 'cli_server_enabled';
 
   final SharedPreferences _prefs;
   final FlutterSecureStorage _secureStorage;
@@ -87,5 +88,15 @@ class SettingsRepositoryImpl implements SettingsRepository {
     await _secureStorage.delete(key: _ascKeyIdKey);
     await _secureStorage.delete(key: _ascIssuerIdKey);
     await _secureStorage.delete(key: _ascPrivateKeyKey);
+  }
+
+  @override
+  Future<bool> isCliServerEnabled() async {
+    return _prefs.getBool(_cliServerEnabledKey) ?? false;
+  }
+
+  @override
+  Future<void> setCliServerEnabled(bool enabled) async {
+    await _prefs.setBool(_cliServerEnabledKey, enabled);
   }
 }

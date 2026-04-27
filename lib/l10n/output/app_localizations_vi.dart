@@ -1190,6 +1190,13 @@ class AppLocalizationsVi extends AppLocalizations {
   String get uploadToAsc => 'Tải lên ASC';
 
   @override
+  String get uploadExistingFolderToAsc => 'Tải lên thư mục có sẵn...';
+
+  @override
+  String get noImagesFoundInFolder =>
+      'Không tìm thấy hình ảnh hợp lệ nào trong thư mục đã chọn';
+
+  @override
   String get addMoreLanguages => 'Thêm ngôn ngữ';
 
   @override
@@ -1574,4 +1581,41 @@ class AppLocalizationsVi extends AppLocalizations {
 
   @override
   String get behindFrame => 'Phía sau khung';
+
+  @override
+  String get onlySelectedLocalesWillBeRendered =>
+      'Chỉ các ngôn ngữ được chọn sẽ được xuất';
+
+  @override
+  String renderNLocales(int count) {
+    return 'Xuất $count ngôn ngữ';
+  }
+
+  @override
+  String get source => 'Nguồn';
+
+  @override
+  String get supportTheDeveloper => 'Ủng hộ nhà phát triển';
+
+  @override
+  String supportTheDeveloperDescription(String price) {
+    return 'Bạn thích ứng dụng này? Hãy mời tôi một ly cà phê nhé! $price';
+  }
+
+  @override
+  String get enableCliServer => 'Bật máy chủ CLI';
+
+  @override
+  String get enableCliServerDescription =>
+      'Khởi động máy chủ cục bộ để sử dụng công cụ CLI.';
+
+  @override
+  String get cliLearnMoreButton => 'Đọc tài liệu';
+
+  @override
+  String get cliCompanionTitle => 'Công cụ dòng lệnh';
+
+  @override
+  String get cliCompanionDescription =>
+      'Tự động hóa ảnh chụp màn hình từ terminal với công cụ CLI đi kèm. Xem tài liệu để biết hướng dẫn cài đặt.';
 }

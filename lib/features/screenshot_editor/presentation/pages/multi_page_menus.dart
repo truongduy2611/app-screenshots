@@ -76,6 +76,11 @@ class _SaveExportMenu extends StatelessWidget {
           title: context.l10n.uploadToAsc,
         ),
         AppPopupMenuItem(
+          value: _MultiMenuAction.uploadExistingToAsc,
+          icon: Symbols.folder_zip_rounded,
+          title: context.l10n.uploadExistingFolderToAsc,
+        ),
+        AppPopupMenuItem(
           value: _MultiMenuAction.shareDesign,
           icon: Symbols.share_rounded,
           title: context.l10n.shareDesignFile,

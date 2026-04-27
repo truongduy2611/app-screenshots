@@ -1203,6 +1203,13 @@ class AppLocalizationsTr extends AppLocalizations {
   String get uploadToAsc => 'ASC\'ye yükle';
 
   @override
+  String get uploadExistingFolderToAsc => 'Upload Existing Folder...';
+
+  @override
+  String get noImagesFoundInFolder =>
+      'No valid screenshot images found in selected folder';
+
+  @override
   String get addMoreLanguages => 'Daha fazla dil ekle';
 
   @override
@@ -1593,4 +1600,41 @@ class AppLocalizationsTr extends AppLocalizations {
 
   @override
   String get behindFrame => 'Çerçevenin arkasında';
+
+  @override
+  String get onlySelectedLocalesWillBeRendered =>
+      'Yalnızca seçilen diller oluşturulacak';
+
+  @override
+  String renderNLocales(int count) {
+    return '$count dil oluştur';
+  }
+
+  @override
+  String get source => 'Kaynak';
+
+  @override
+  String get supportTheDeveloper => 'Geliştiriciyi Destekle';
+
+  @override
+  String supportTheDeveloperDescription(String price) {
+    return 'Uygulamayı sevdiniz mi? Bana bir kahve ısmarlayın! $price';
+  }
+
+  @override
+  String get enableCliServer => 'CLI Sunucusunu Etkinleştir';
+
+  @override
+  String get enableCliServerDescription =>
+      'CLI aracını kullanmak için yerel sunucuyu başlatın.';
+
+  @override
+  String get cliLearnMoreButton => 'Belgeleri Oku';
+
+  @override
+  String get cliCompanionTitle => 'Komut Satırı Aracı';
+
+  @override
+  String get cliCompanionDescription =>
+      'Eşlik eden CLI aracıyla terminalden ekran görüntülerini otomatikleştirin. Kurulum talimatları için belgelere bakın.';
 }

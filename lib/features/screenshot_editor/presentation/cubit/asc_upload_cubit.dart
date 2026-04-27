@@ -163,6 +163,8 @@ class AscUploadCubit extends Cubit<AscUploadState> {
         defaultDisplayType = 'APP_DESKTOP';
       case 'WATCH_OS':
         defaultDisplayType = 'APP_WATCH_ULTRA';
+      case 'IMESSAGE':
+        defaultDisplayType = 'IMESSAGE_APP_IPHONE_67';
       default:
         defaultDisplayType = 'APP_IPHONE_67';
     }
@@ -279,6 +281,7 @@ class AscUploadCubit extends Cubit<AscUploadState> {
     final lower = displayType.toLowerCase();
     if (lower.contains('desktop')) return 'MAC_OS';
     if (lower.contains('watch')) return 'WATCH_OS';
+    if (lower.startsWith('imessage_')) return 'IMESSAGE';
     if (lower.contains('iphone') || lower.contains('ipad')) return 'IOS';
     return null;
   }
@@ -288,7 +291,7 @@ class AscUploadCubit extends Cubit<AscUploadState> {
   /// Watch screenshots are uploaded under the iOS App Store version,
   /// so `WATCH_OS` → `IOS` for the API call.
   static String _apiPlatform(String platform) {
-    if (platform == 'WATCH_OS') return 'IOS';
+    if (platform == 'WATCH_OS' || platform == 'IMESSAGE') return 'IOS';
     return platform;
   }
 }

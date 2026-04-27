@@ -1203,6 +1203,13 @@ class AppLocalizationsNl extends AppLocalizations {
   String get uploadToAsc => 'Uploaden naar ASC';
 
   @override
+  String get uploadExistingFolderToAsc => 'Upload Existing Folder...';
+
+  @override
+  String get noImagesFoundInFolder =>
+      'No valid screenshot images found in selected folder';
+
+  @override
   String get addMoreLanguages => 'Meer talen toevoegen';
 
   @override
@@ -1593,4 +1600,47 @@ class AppLocalizationsNl extends AppLocalizations {
 
   @override
   String get behindFrame => 'Achter frame';
+
+  @override
+  String get onlySelectedLocalesWillBeRendered =>
+      'Alleen geselecteerde talen worden gerenderd';
+
+  @override
+  String renderNLocales(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: 'talen',
+      one: 'taal',
+    );
+    return '$count $_temp0 renderen';
+  }
+
+  @override
+  String get source => 'Bron';
+
+  @override
+  String get supportTheDeveloper => 'Ondersteun de ontwikkelaar';
+
+  @override
+  String supportTheDeveloperDescription(String price) {
+    return 'Vind je de app leuk? Trakteer me op een koffie! $price';
+  }
+
+  @override
+  String get enableCliServer => 'CLI-server inschakelen';
+
+  @override
+  String get enableCliServerDescription =>
+      'Start de lokale server om de CLI-tool te gebruiken.';
+
+  @override
+  String get cliLearnMoreButton => 'Documentatie lezen';
+
+  @override
+  String get cliCompanionTitle => 'Opdrachtregeltool';
+
+  @override
+  String get cliCompanionDescription =>
+      'Automatiseer schermafbeeldingen vanuit de terminal met de bijbehorende CLI-tool. Zie de documentatie voor installatie-instructies.';
 }

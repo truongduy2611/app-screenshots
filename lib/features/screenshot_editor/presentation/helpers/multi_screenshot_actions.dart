@@ -367,9 +367,12 @@ mixin MultiScreenshotActions<T extends StatefulWidget> on State<T> {
   /// to each locale's translations before capturing.
   ///
   /// If no translations exist, captures the current (source) locale only.
+  ///
+  /// When [selectedLocales] is provided, only those locales are rendered.
   Future<Map<String, List<File>>?> captureAllLocaleScreenshots(
-    BuildContext context,
-  ) async {
+    BuildContext context, {
+    Set<String>? selectedLocales,
+  }) async {
     final multiCubit = context.read<MultiScreenshotCubit>();
     final editorCubit = context.read<ScreenshotEditorCubit>();
     final translationCubit = context.read<TranslationCubit>();
@@ -381,9 +384,16 @@ mixin MultiScreenshotActions<T extends StatefulWidget> on State<T> {
     // If no translations, capture source locale only (no switching needed).
     final hasTranslations = bundle != null && bundle.translations.isNotEmpty;
     final sourceLocale = bundle?.sourceLocale ?? 'en-US';
-    final allLocales = hasTranslations
+    var allLocales = hasTranslations
         ? [sourceLocale, ...bundle.targetLocales]
         : [sourceLocale];
+
+    // Filter to only selected locales when provided.
+    if (selectedLocales != null && selectedLocales.isNotEmpty) {
+      allLocales = allLocales
+          .where((l) => selectedLocales.contains(l))
+          .toList();
+    }
 
     setExporting(true);
 

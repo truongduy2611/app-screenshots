@@ -1167,6 +1167,13 @@ class AppLocalizationsTh extends AppLocalizations {
   String get uploadToAsc => 'อัปโหลดไป ASC';
 
   @override
+  String get uploadExistingFolderToAsc => 'Upload Existing Folder...';
+
+  @override
+  String get noImagesFoundInFolder =>
+      'No valid screenshot images found in selected folder';
+
+  @override
   String get addMoreLanguages => 'เพิ่มภาษาอื่น';
 
   @override
@@ -1540,4 +1547,41 @@ class AppLocalizationsTh extends AppLocalizations {
 
   @override
   String get behindFrame => 'ด้านหลังเฟรม';
+
+  @override
+  String get onlySelectedLocalesWillBeRendered =>
+      'เฉพาะภาษาที่เลือกเท่านั้นที่จะถูกเรนเดอร์';
+
+  @override
+  String renderNLocales(int count) {
+    return 'เรนเดอร์ $count ภาษา';
+  }
+
+  @override
+  String get source => 'ต้นฉบับ';
+
+  @override
+  String get supportTheDeveloper => 'สนับสนุนนักพัฒนา';
+
+  @override
+  String supportTheDeveloperDescription(String price) {
+    return 'ชอบแอปนี้ไหม? เลี้ยงกาแฟฉันสิ! $price';
+  }
+
+  @override
+  String get enableCliServer => 'เปิดใช้งานเซิร์ฟเวอร์ CLI';
+
+  @override
+  String get enableCliServerDescription =>
+      'เริ่มต้นเซิร์ฟเวอร์ในเครื่องเพื่อใช้เครื่องมือ CLI';
+
+  @override
+  String get cliLearnMoreButton => 'อ่านเอกสารประกอบ';
+
+  @override
+  String get cliCompanionTitle => 'เครื่องมือบรรทัดคำสั่ง';
+
+  @override
+  String get cliCompanionDescription =>
+      'สร้างภาพหน้าจออัตโนมัติจากเทอร์มินัลด้วยเครื่องมือ CLI ที่มาพร้อมกัน ดูคำแนะนำการตั้งค่าในเอกสารประกอบ';
 }

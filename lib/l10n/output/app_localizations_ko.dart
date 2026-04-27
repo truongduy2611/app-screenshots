@@ -1159,6 +1159,13 @@ class AppLocalizationsKo extends AppLocalizations {
   String get uploadToAsc => 'ASC에 업로드';
 
   @override
+  String get uploadExistingFolderToAsc => 'Upload Existing Folder...';
+
+  @override
+  String get noImagesFoundInFolder =>
+      'No valid screenshot images found in selected folder';
+
+  @override
   String get addMoreLanguages => '언어 추가';
 
   @override
@@ -1520,4 +1527,39 @@ class AppLocalizationsKo extends AppLocalizations {
 
   @override
   String get behindFrame => '프레임 뒤';
+
+  @override
+  String get onlySelectedLocalesWillBeRendered => '선택한 언어만 렌더링됩니다';
+
+  @override
+  String renderNLocales(int count) {
+    return '$count개 언어 렌더링';
+  }
+
+  @override
+  String get source => '소스';
+
+  @override
+  String get supportTheDeveloper => '개발자 후원하기';
+
+  @override
+  String supportTheDeveloperDescription(String price) {
+    return '앱이 마음에 드시나요? 커피 한 잔 사주세요! $price';
+  }
+
+  @override
+  String get enableCliServer => 'CLI 서버 활성화';
+
+  @override
+  String get enableCliServerDescription => 'CLI 도구를 사용하려면 로컬 서버를 시작하세요.';
+
+  @override
+  String get cliLearnMoreButton => '문서 읽기';
+
+  @override
+  String get cliCompanionTitle => '명령줄 도구';
+
+  @override
+  String get cliCompanionDescription =>
+      '컴패니언 CLI 도구를 사용하여 터미널에서 스크린샷을 자동화하세요. 설정 방법은 문서를 참조하세요.';
 }
