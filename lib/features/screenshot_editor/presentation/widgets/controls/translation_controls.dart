@@ -10,6 +10,7 @@ import 'package:app_screenshots/features/screenshot_editor/presentation/cubit/sc
 import 'package:app_screenshots/features/screenshot_editor/presentation/cubit/translation_cubit.dart';
 import 'package:app_screenshots/features/screenshot_editor/presentation/widgets/asc_credentials_dialog.dart';
 import 'package:app_screenshots/features/screenshot_editor/presentation/widgets/asc_upload_sheet.dart';
+import 'package:app_screenshots/features/screenshot_editor/presentation/widgets/asc_locale_picker_dialog.dart';
 import 'package:app_screenshots/features/settings/domain/repositories/settings_repository.dart';
 import 'package:app_screenshots/features/screenshot_editor/presentation/widgets/controls/app_context_dialog.dart';
 import 'package:app_screenshots/features/screenshot_editor/presentation/widgets/controls/control_styles.dart';
@@ -317,7 +318,9 @@ class _TranslationControlsState extends State<TranslationControls> {
 
   /// Opens the ASC upload sheet after capturing locale screenshots.
   ///
-  /// Checks credentials first and prompts if missing.
+  /// Shows a locale picker first so the user can choose which locales
+  /// to render, then captures only those locales before opening the
+  /// upload sheet.
   Future<void> _showUploadSheet() async {
     // Capture context-dependent values upfront.
     final captureProvider = ScreenshotCaptureProvider.of(context);
@@ -343,10 +346,32 @@ class _TranslationControlsState extends State<TranslationControls> {
       if (!saved || !context.mounted) return;
     }
 
-    // 2) Capture locale screenshots.
+    // 2) Show locale picker — let user choose which locales to render.
+    if (!context.mounted) return;
+    final translationCubit = context.read<TranslationCubit>();
+    final bundle = translationCubit.state.bundle;
+    final hasTranslations = bundle != null && bundle.translations.isNotEmpty;
+    final sourceLocale = bundle?.sourceLocale ?? 'en-US';
+    final allLocales = hasTranslations
+        ? [sourceLocale, ...bundle.targetLocales]
+        : [sourceLocale];
+
+    Set<String>? selectedLocales;
+    // Only show picker when there are multiple locales.
+    if (allLocales.length > 1) {
+      selectedLocales = await AscLocalePickerDialog.show(
+        context: context,
+        allLocales: allLocales,
+        sourceLocale: sourceLocale,
+      );
+      if (selectedLocales == null || !context.mounted) return;
+    }
+
+    // 3) Capture locale screenshots (only selected locales).
     if (!context.mounted) return;
     final localeScreenshots = await captureProvider.captureAllLocaleScreenshots(
       context,
+      selectedLocales: selectedLocales,
     );
 
     if (!context.mounted) return;
@@ -359,7 +384,7 @@ class _TranslationControlsState extends State<TranslationControls> {
       return;
     }
 
-    // 3) Show upload sheet — pass saved app config for auto-selection.
+    // 4) Show upload sheet — pass saved app config for auto-selection.
     final savedConfig = captureProvider.ascAppConfig;
 
     if (!context.mounted) return;

@@ -10,28 +10,33 @@ import 'package:app_screenshots/features/screenshot_editor/data/models/ai_provid
 import 'package:app_screenshots/features/screenshot_editor/domain/repositories/ai_provider_repository.dart';
 import 'package:app_screenshots/features/screenshot_editor/presentation/widgets/translation_settings_sheet.dart';
 import 'package:app_screenshots/features/settings/domain/repositories/settings_repository.dart';
+import 'package:app_screenshots/features/screenshot_editor/presentation/widgets/controls/app_switch.dart';
 import 'package:app_screenshots/core/widgets/app_snackbar.dart';
 import 'package:app_screenshots/core/widgets/app_list_tile.dart';
 import 'package:app_screenshots/core/widgets/genie_dialog_route.dart';
 import 'package:app_screenshots/core/extensions/context_extensions.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:app_screenshots/features/settings/presentation/cubit/cli_cubit.dart';
 import 'package:in_app_review/in_app_review.dart';
 import 'package:intl/intl.dart';
 import 'package:material_symbols_icons/symbols.dart';
+import 'package:in_app_purchase/in_app_purchase.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 import '../cubit/app_icon_cubit.dart';
 import '../cubit/backup_cubit.dart';
 import '../cubit/theme_cubit.dart';
-import 'package:app_screenshots/features/screenshot_editor/presentation/widgets/controls/app_switch.dart';
 
 part 'settings_review_card.dart';
 part 'settings_app_icon.dart';
 part 'settings_asc_credentials.dart';
 part 'settings_icloud_backup.dart';
 part 'settings_ai_keys.dart';
+part 'settings_support_card.dart';
+part 'settings_cli_card.dart';
 
 class SettingsDialog extends StatefulWidget {
   const SettingsDialog({super.key, this.asPage = false});
@@ -243,6 +248,12 @@ class _SettingsDialogState extends State<SettingsDialog> {
             const SizedBox(height: 24),
             _SectionHeader(title: context.l10n.support),
             const SizedBox(height: 8),
+            if (Platform.isMacOS) ...[
+              _SettingsCliCard(isDark: isDark, theme: theme),
+              const SizedBox(height: 12),
+            ],
+            _SupportMeCard(isDark: isDark, theme: theme),
+            const SizedBox(height: 16),
             _SettingsTileGroup(
               isDark: isDark,
               theme: theme,

@@ -23,4 +23,10 @@ abstract class SettingsRepository {
 
   /// Clears stored ASC API credentials.
   Future<void> clearAscCredentials();
+
+  /// Returns whether the CLI local server should be started.
+  Future<bool> isCliServerEnabled();
+
+  /// Persists the CLI server enabled state.
+  Future<void> setCliServerEnabled(bool enabled);
 }

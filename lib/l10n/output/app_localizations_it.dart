@@ -1204,6 +1204,13 @@ class AppLocalizationsIt extends AppLocalizations {
   String get uploadToAsc => 'Carica su ASC';
 
   @override
+  String get uploadExistingFolderToAsc => 'Upload Existing Folder...';
+
+  @override
+  String get noImagesFoundInFolder =>
+      'No valid screenshot images found in selected folder';
+
+  @override
   String get addMoreLanguages => 'Aggiungi altre lingue';
 
   @override
@@ -1594,4 +1601,47 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get behindFrame => 'Dietro la cornice';
+
+  @override
+  String get onlySelectedLocalesWillBeRendered =>
+      'Verranno renderizzate solo le lingue selezionate';
+
+  @override
+  String renderNLocales(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: 'lingue',
+      one: 'lingua',
+    );
+    return 'Renderizza $count $_temp0';
+  }
+
+  @override
+  String get source => 'Sorgente';
+
+  @override
+  String get supportTheDeveloper => 'Supporta lo sviluppatore';
+
+  @override
+  String supportTheDeveloperDescription(String price) {
+    return 'Ti piace l\'app? Offrimi un caffè! $price';
+  }
+
+  @override
+  String get enableCliServer => 'Abilita server CLI';
+
+  @override
+  String get enableCliServerDescription =>
+      'Avvia il server locale per utilizzare lo strumento CLI.';
+
+  @override
+  String get cliLearnMoreButton => 'Leggi la documentazione';
+
+  @override
+  String get cliCompanionTitle => 'Strumento da riga di comando';
+
+  @override
+  String get cliCompanionDescription =>
+      'Automatizza gli screenshot dal terminale con lo strumento CLI companion. Consulta la documentazione per le istruzioni di configurazione.';
 }

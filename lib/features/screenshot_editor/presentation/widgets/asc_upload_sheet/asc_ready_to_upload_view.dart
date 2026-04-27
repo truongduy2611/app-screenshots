@@ -58,6 +58,8 @@ class _ReadyToUploadView extends StatelessWidget {
     final theme = Theme.of(context);
     final Map<String, String> displayTypes;
     switch (platform) {
+      case 'IMESSAGE':
+        displayTypes = _iMessageDisplayTypes;
       case 'MAC_OS':
         displayTypes = _macDisplayTypes;
       case 'WATCH_OS':
@@ -150,6 +152,11 @@ class _ReadyToUploadView extends StatelessWidget {
               value: 'IOS',
               label: const Text('iOS'),
               icon: SFIcon(SFIcons.sf_iphone, fontSize: 16),
+            ),
+            ButtonSegment(
+              value: 'IMESSAGE',
+              label: const Text('iMessage'),
+              icon: SFIcon(SFIcons.sf_message_fill, fontSize: 16),
             ),
             ButtonSegment(
               value: 'MAC_OS',

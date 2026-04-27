@@ -1,57 +1,21 @@
 #!/bin/bash
-set -euo pipefail
+set -e
 
-# ─────────────────────────────────────────────────────────────────
-# build_cli.sh — Compile the appshots CLI to a native binary
-# Usage:
-#   ./scripts/build_cli.sh
-#
-# Output:
-#   appshots-{version}-macos-arm64.tar.gz (in project root)
-# ─────────────────────────────────────────────────────────────────
+# Change directory to the root of the project
+cd "$(dirname "$0")/.."
 
-CLI_DIR="packages/app_screenshots_cli"
-VERSION=$(grep '^version:' "$CLI_DIR/pubspec.yaml" | sed 's/version: //')
-ARCH=$(uname -m)
-BINARY_NAME="appshots"
-TARBALL_NAME="appshots-${VERSION}-macos-${ARCH}.tar.gz"
+echo "Compiling app_screenshots_cli..."
 
-echo "╔══════════════════════════════════════════════════╗"
-echo "║  App Screenshots CLI — Build Native Binary       ║"
-echo "║  Version: $VERSION"
-echo "║  Arch:    $ARCH"
-echo "╚══════════════════════════════════════════════════╝"
-echo ""
+# Navigate to the CLI package
+cd packages/app_screenshots_cli
 
-# ── Step 1: Get dependencies ─────────────────────────────────────
-echo "📦 Getting dependencies..."
-(cd "$CLI_DIR" && dart pub get)
-echo "   ✅ Dependencies resolved"
-echo ""
+# Run dart pub get to ensure dependencies are resolved
+dart pub get
 
-# ── Step 2: Compile to native binary ─────────────────────────────
-echo "🔨 Compiling to native binary..."
-dart compile exe "$CLI_DIR/bin/appshots.dart" -o "$BINARY_NAME"
-echo "   ✅ Compiled: $BINARY_NAME ($(du -h "$BINARY_NAME" | cut -f1))"
-echo ""
+# Compile the CLI into a standalone executable
+dart compile exe bin/appshots.dart -o ../../appshots
 
-# ── Step 3: Package as tarball ────────────────────────────────────
-echo "📦 Creating tarball: $TARBALL_NAME"
-tar -czf "$TARBALL_NAME" "$BINARY_NAME"
-rm "$BINARY_NAME"
+# Make sure the executable has execution permissions
+chmod +x ../../appshots
 
-# Print SHA256 for Homebrew formula
-SHA256=$(shasum -a 256 "$TARBALL_NAME" | cut -d' ' -f1)
-echo "   ✅ Tarball created: $TARBALL_NAME ($(du -h "$TARBALL_NAME" | cut -f1))"
-echo ""
-
-# ── Done ──────────────────────────────────────────────────────────
-echo "╔══════════════════════════════════════════════════╗"
-echo "║  ✅ CLI build complete!                          ║"
-echo "║                                                  ║"
-echo "║  Output:  $TARBALL_NAME"
-echo "║  SHA256:  $SHA256"
-echo "║                                                  ║"
-echo "║  Update the Homebrew formula with this SHA256:   ║"
-echo "║  homebrew-tap/Formula/appshots.rb                ║"
-echo "╚══════════════════════════════════════════════════╝"
+echo "Successfully compiled CLI to appshots"

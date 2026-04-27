@@ -468,5 +468,15 @@
   "aiSuggestionEmojiDoodle": "Использовать эмодзи-паттерн",
   "aiSuggestionAdd3DTilt": "Добавить 3D-наклон",
   "aiSuggestionTransparentBg": "Прозрачный фон",
-  "aiSuggestionLandscapeMode": "Альбомная ориентация"
+  "aiSuggestionLandscapeMode": "Альбомная ориентация",
+  "onlySelectedLocalesWillBeRendered": "Будут отрендерены только выбранные языки",
+  "renderNLocales": "Отрендерить {count} {count, plural, =1{язык} few{языка} other{языков}}",
+  "source": "Источник",
+  "supportTheDeveloper": "Поддержать разработчика",
+  "supportTheDeveloperDescription": "Нравится приложение? Угостите меня кофе! {price}",
+  "enableCliServer": "Включить сервер CLI",
+  "enableCliServerDescription": "Запустите локальный сервер для использования инструмента CLI.",
+  "cliLearnMoreButton": "Читать документацию",
+  "cliCompanionTitle": "Инструмент командной строки",
+  "cliCompanionDescription": "Автоматизируйте создание снимков экрана из терминала с помощью CLI-инструмента. Инструкции по настройке см. в документации."
 }

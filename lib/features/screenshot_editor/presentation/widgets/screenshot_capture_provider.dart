@@ -4,8 +4,14 @@ import 'package:app_screenshots/features/screenshot_editor/data/models/asc_app_c
 import 'package:flutter/material.dart';
 
 /// Callback type for capturing all locale screenshots.
+///
+/// When [selectedLocales] is provided, only those locales are rendered.
+/// When null, all locales from the translation bundle are rendered.
 typedef CaptureAllLocaleScreenshots =
-    Future<Map<String, List<File>>?> Function(BuildContext context);
+    Future<Map<String, List<File>>?> Function(
+      BuildContext context, {
+      Set<String>? selectedLocales,
+    });
 
 /// Provides a [captureAllLocaleScreenshots] callback to descendants.
 ///

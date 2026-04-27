@@ -1202,6 +1202,13 @@ class AppLocalizationsRu extends AppLocalizations {
   String get uploadToAsc => 'Загрузить в ASC';
 
   @override
+  String get uploadExistingFolderToAsc => 'Upload Existing Folder...';
+
+  @override
+  String get noImagesFoundInFolder =>
+      'No valid screenshot images found in selected folder';
+
+  @override
   String get addMoreLanguages => 'Добавить ещё языки';
 
   @override
@@ -1591,4 +1598,48 @@ class AppLocalizationsRu extends AppLocalizations {
 
   @override
   String get behindFrame => 'За рамкой';
+
+  @override
+  String get onlySelectedLocalesWillBeRendered =>
+      'Будут отрендерены только выбранные языки';
+
+  @override
+  String renderNLocales(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: 'языков',
+      few: 'языка',
+      one: 'язык',
+    );
+    return 'Отрендерить $count $_temp0';
+  }
+
+  @override
+  String get source => 'Источник';
+
+  @override
+  String get supportTheDeveloper => 'Поддержать разработчика';
+
+  @override
+  String supportTheDeveloperDescription(String price) {
+    return 'Нравится приложение? Угостите меня кофе! $price';
+  }
+
+  @override
+  String get enableCliServer => 'Включить сервер CLI';
+
+  @override
+  String get enableCliServerDescription =>
+      'Запустите локальный сервер для использования инструмента CLI.';
+
+  @override
+  String get cliLearnMoreButton => 'Читать документацию';
+
+  @override
+  String get cliCompanionTitle => 'Инструмент командной строки';
+
+  @override
+  String get cliCompanionDescription =>
+      'Автоматизируйте создание снимков экрана из терминала с помощью CLI-инструмента. Инструкции по настройке см. в документации.';
 }

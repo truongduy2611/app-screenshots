@@ -468,5 +468,15 @@
   "aiSuggestionEmojiDoodle": "이모지 두들 패턴 사용",
   "aiSuggestionAdd3DTilt": "3D 원근감 기울기 추가",
   "aiSuggestionTransparentBg": "배경 투명하게",
-  "aiSuggestionLandscapeMode": "가로 모드로 전환"
+  "aiSuggestionLandscapeMode": "가로 모드로 전환",
+  "onlySelectedLocalesWillBeRendered": "선택한 언어만 렌더링됩니다",
+  "renderNLocales": "{count}개 언어 렌더링",
+  "source": "소스",
+  "supportTheDeveloper": "개발자 후원하기",
+  "supportTheDeveloperDescription": "앱이 마음에 드시나요? 커피 한 잔 사주세요! {price}",
+  "enableCliServer": "CLI 서버 활성화",
+  "enableCliServerDescription": "CLI 도구를 사용하려면 로컬 서버를 시작하세요.",
+  "cliLearnMoreButton": "문서 읽기",
+  "cliCompanionTitle": "명령줄 도구",
+  "cliCompanionDescription": "컴패니언 CLI 도구를 사용하여 터미널에서 스크린샷을 자동화하세요. 설정 방법은 문서를 참조하세요."
 }

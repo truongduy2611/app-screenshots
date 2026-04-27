@@ -468,5 +468,15 @@
   "aiSuggestionEmojiDoodle": "Usar padrão de emojis",
   "aiSuggestionAdd3DTilt": "Adicionar inclinação 3D",
   "aiSuggestionTransparentBg": "Fundo transparente",
-  "aiSuggestionLandscapeMode": "Mudar para paisagem"
+  "aiSuggestionLandscapeMode": "Mudar para paisagem",
+  "onlySelectedLocalesWillBeRendered": "Apenas os idiomas selecionados serão renderizados",
+  "renderNLocales": "Renderizar {count} {count, plural, =1{idioma} other{idiomas}}",
+  "source": "Origem",
+  "supportTheDeveloper": "Apoiar o desenvolvedor",
+  "supportTheDeveloperDescription": "Gostou do aplicativo? Pague-me um café! {price}",
+  "enableCliServer": "Ativar servidor CLI",
+  "enableCliServerDescription": "Inicie o servidor local para usar a ferramenta CLI.",
+  "cliLearnMoreButton": "Ler documentação",
+  "cliCompanionTitle": "Ferramenta de linha de comando",
+  "cliCompanionDescription": "Automatize capturas de tela pelo terminal com a ferramenta CLI complementar. Consulte a documentação para instruções de configuração."
 }

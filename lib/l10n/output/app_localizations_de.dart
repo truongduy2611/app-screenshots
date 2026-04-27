@@ -1206,6 +1206,13 @@ class AppLocalizationsDe extends AppLocalizations {
   String get uploadToAsc => 'In ASC hochladen';
 
   @override
+  String get uploadExistingFolderToAsc => 'Upload Existing Folder...';
+
+  @override
+  String get noImagesFoundInFolder =>
+      'No valid screenshot images found in selected folder';
+
+  @override
   String get addMoreLanguages => 'Weitere Sprachen hinzufügen';
 
   @override
@@ -1598,4 +1605,47 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String get behindFrame => 'Hinter dem Rahmen';
+
+  @override
+  String get onlySelectedLocalesWillBeRendered =>
+      'Nur ausgewählte Sprachen werden gerendert';
+
+  @override
+  String renderNLocales(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: 'Sprachen',
+      one: 'Sprache',
+    );
+    return '$count $_temp0 rendern';
+  }
+
+  @override
+  String get source => 'Quelle';
+
+  @override
+  String get supportTheDeveloper => 'Entwickler unterstützen';
+
+  @override
+  String supportTheDeveloperDescription(String price) {
+    return 'Gefällt dir die App? Spendier mir einen Kaffee! $price';
+  }
+
+  @override
+  String get enableCliServer => 'CLI-Server aktivieren';
+
+  @override
+  String get enableCliServerDescription =>
+      'Starte den lokalen Server, um das CLI-Tool zu verwenden.';
+
+  @override
+  String get cliLearnMoreButton => 'Dokumentation lesen';
+
+  @override
+  String get cliCompanionTitle => 'Befehlszeilen-Tool';
+
+  @override
+  String get cliCompanionDescription =>
+      'Automatisieren Sie Screenshots über das Terminal mit dem Begleit-Befehlszeilen-Tool. Weitere Informationen finden Sie in der Dokumentation.';
 }

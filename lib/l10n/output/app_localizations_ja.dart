@@ -1159,6 +1159,13 @@ class AppLocalizationsJa extends AppLocalizations {
   String get uploadToAsc => 'ASCにアップロード';
 
   @override
+  String get uploadExistingFolderToAsc => 'Upload Existing Folder...';
+
+  @override
+  String get noImagesFoundInFolder =>
+      'No valid screenshot images found in selected folder';
+
+  @override
   String get addMoreLanguages => '言語を追加';
 
   @override
@@ -1522,4 +1529,39 @@ class AppLocalizationsJa extends AppLocalizations {
 
   @override
   String get behindFrame => 'フレームの背面';
+
+  @override
+  String get onlySelectedLocalesWillBeRendered => '選択した言語のみがレンダリングされます';
+
+  @override
+  String renderNLocales(int count) {
+    return '$count言語をレンダリング';
+  }
+
+  @override
+  String get source => 'ソース';
+
+  @override
+  String get supportTheDeveloper => '開発者を支援する';
+
+  @override
+  String supportTheDeveloperDescription(String price) {
+    return 'アプリが気に入りましたか？コーヒーをおごってください！ $price';
+  }
+
+  @override
+  String get enableCliServer => 'CLIサーバーを有効にする';
+
+  @override
+  String get enableCliServerDescription => 'CLIツールを使用するにはローカルサーバーを起動してください。';
+
+  @override
+  String get cliLearnMoreButton => 'ドキュメントを読む';
+
+  @override
+  String get cliCompanionTitle => 'コマンドラインツール';
+
+  @override
+  String get cliCompanionDescription =>
+      'コンパニオンCLIツールを使って、ターミナルからスクリーンショットを自動化できます。セットアップ手順はドキュメントをご覧ください。';
 }

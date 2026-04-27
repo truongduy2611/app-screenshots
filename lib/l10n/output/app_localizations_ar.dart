@@ -1200,6 +1200,13 @@ class AppLocalizationsAr extends AppLocalizations {
   String get uploadToAsc => 'رفع إلى ASC';
 
   @override
+  String get uploadExistingFolderToAsc => 'Upload Existing Folder...';
+
+  @override
+  String get noImagesFoundInFolder =>
+      'No valid screenshot images found in selected folder';
+
+  @override
   String get addMoreLanguages => 'إضافة لغات أخرى';
 
   @override
@@ -1588,4 +1595,40 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get behindFrame => 'خلف الإطار';
+
+  @override
+  String get onlySelectedLocalesWillBeRendered => 'سيتم عرض اللغات المحددة فقط';
+
+  @override
+  String renderNLocales(int count) {
+    return 'عرض $count لغة';
+  }
+
+  @override
+  String get source => 'المصدر';
+
+  @override
+  String get supportTheDeveloper => 'ادعم المطور';
+
+  @override
+  String supportTheDeveloperDescription(String price) {
+    return 'هل أعجبك التطبيق؟ عاملني بقهوة! $price';
+  }
+
+  @override
+  String get enableCliServer => 'تمكين خادم CLI';
+
+  @override
+  String get enableCliServerDescription =>
+      'ابدأ الخادم المحلي لاستخدام أداة CLI.';
+
+  @override
+  String get cliLearnMoreButton => 'قراءة الوثائق';
+
+  @override
+  String get cliCompanionTitle => 'أداة سطر الأوامر';
+
+  @override
+  String get cliCompanionDescription =>
+      'يمكنك أتمتة لقطات الشاشة من الطرفية باستخدام أداة سطر الأوامر المرافقة. تعرف على المزيد من الوثائق.';
 }

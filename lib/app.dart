@@ -6,6 +6,7 @@ import 'package:app_screenshots/core/services/menu_callbacks.dart';
 import 'package:app_screenshots/core/theme/app_theme.dart';
 import 'package:app_screenshots/features/settings/presentation/cubit/app_icon_cubit.dart';
 import 'package:app_screenshots/features/settings/presentation/cubit/backup_cubit.dart';
+import 'package:app_screenshots/features/settings/presentation/cubit/cli_cubit.dart';
 import 'package:app_screenshots/features/settings/presentation/cubit/theme_cubit.dart';
 import 'package:app_screenshots/features/settings/presentation/pages/settings_page.dart';
 import 'package:app_screenshots/home_screen.dart';
@@ -74,6 +75,7 @@ class _AppState extends State<App> {
         BlocProvider<ThemeCubit>(create: (_) => sl<ThemeCubit>()..loadTheme()),
         BlocProvider<AppIconCubit>.value(value: sl<AppIconCubit>()),
         BlocProvider<BackupCubit>.value(value: sl<BackupCubit>()),
+        BlocProvider<CliCubit>.value(value: sl<CliCubit>()),
       ],
       child: BlocBuilder<ThemeCubit, ThemeState>(
         builder: (context, state) {

@@ -468,5 +468,15 @@
   "aiSuggestionEmojiDoodle": "ใช้ลายอิโมจิ",
   "aiSuggestionAdd3DTilt": "เพิ่มเอียง 3D",
   "aiSuggestionTransparentBg": "พื้นหลังโปร่งใส",
-  "aiSuggestionLandscapeMode": "สลับเป็นแนวนอน"
+  "aiSuggestionLandscapeMode": "สลับเป็นแนวนอน",
+  "onlySelectedLocalesWillBeRendered": "เฉพาะภาษาที่เลือกเท่านั้นที่จะถูกเรนเดอร์",
+  "renderNLocales": "เรนเดอร์ {count} ภาษา",
+  "source": "ต้นฉบับ",
+  "supportTheDeveloper": "สนับสนุนนักพัฒนา",
+  "supportTheDeveloperDescription": "ชอบแอปนี้ไหม? เลี้ยงกาแฟฉันสิ! {price}",
+  "enableCliServer": "เปิดใช้งานเซิร์ฟเวอร์ CLI",
+  "enableCliServerDescription": "เริ่มต้นเซิร์ฟเวอร์ในเครื่องเพื่อใช้เครื่องมือ CLI",
+  "cliLearnMoreButton": "อ่านเอกสารประกอบ",
+  "cliCompanionTitle": "เครื่องมือบรรทัดคำสั่ง",
+  "cliCompanionDescription": "สร้างภาพหน้าจออัตโนมัติจากเทอร์มินัลด้วยเครื่องมือ CLI ที่มาพร้อมกัน ดูคำแนะนำการตั้งค่าในเอกสารประกอบ"
 }

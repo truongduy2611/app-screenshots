@@ -12,7 +12,7 @@ env:
 jobs:
   analyze-and-test:
     name: Analyze & Test
-    runs-on: macos-latest
+    runs-on: ubuntu-latest
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -20,7 +20,7 @@ jobs:
       - name: Setup Flutter
         uses: subosito/flutter-action@v2
         with:
-          channel: stable
+          flutter-version: '3.41.7'
           cache: true
 
       - name: Install dependencies
@@ -46,7 +46,7 @@ jobs:
       - name: Setup Flutter
         uses: subosito/flutter-action@v2
         with:
-          channel: stable
+          flutter-version: '3.41.7'
           cache: true
 
       - name: Install dependencies

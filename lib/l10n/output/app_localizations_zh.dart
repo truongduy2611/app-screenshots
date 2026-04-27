@@ -1154,6 +1154,13 @@ class AppLocalizationsZh extends AppLocalizations {
   String get uploadToAsc => '上传至ASC';
 
   @override
+  String get uploadExistingFolderToAsc => 'Upload Existing Folder...';
+
+  @override
+  String get noImagesFoundInFolder =>
+      'No valid screenshot images found in selected folder';
+
+  @override
   String get addMoreLanguages => '添加更多语言';
 
   @override
@@ -1513,6 +1520,40 @@ class AppLocalizationsZh extends AppLocalizations {
 
   @override
   String get behindFrame => '在边框后面';
+
+  @override
+  String get onlySelectedLocalesWillBeRendered => '仅渲染选定的语言';
+
+  @override
+  String renderNLocales(int count) {
+    return '渲染 $count 种语言';
+  }
+
+  @override
+  String get source => '源';
+
+  @override
+  String get supportTheDeveloper => '支持开发者';
+
+  @override
+  String supportTheDeveloperDescription(String price) {
+    return '喜欢这款应用吗？请我喝杯咖啡吧！ $price';
+  }
+
+  @override
+  String get enableCliServer => '启用CLI服务器';
+
+  @override
+  String get enableCliServerDescription => '启动本地服务器以使用CLI工具。';
+
+  @override
+  String get cliLearnMoreButton => '阅读文档';
+
+  @override
+  String get cliCompanionTitle => '命令行工具';
+
+  @override
+  String get cliCompanionDescription => '使用配套的 CLI 工具从终端自动化截图。请查看文档了解设置说明。';
 }
 
 /// The translations for Chinese, using the Han script (`zh_Hant`).
@@ -3024,4 +3065,38 @@ class AppLocalizationsZhHant extends AppLocalizationsZh {
 
   @override
   String get behindFrame => '在邊框後面';
+
+  @override
+  String get onlySelectedLocalesWillBeRendered => '僅渲染選定的語言';
+
+  @override
+  String renderNLocales(int count) {
+    return '渲染 $count 種語言';
+  }
+
+  @override
+  String get source => '來源';
+
+  @override
+  String get supportTheDeveloper => '支持開發者';
+
+  @override
+  String supportTheDeveloperDescription(String price) {
+    return '喜歡這款應用嗎？請我喝杯咖啡吧！ $price';
+  }
+
+  @override
+  String get enableCliServer => '啟用CLI伺服器';
+
+  @override
+  String get enableCliServerDescription => '啟動本地伺服器以使用CLI工具。';
+
+  @override
+  String get cliLearnMoreButton => '閱讀文檔';
+
+  @override
+  String get cliCompanionTitle => '命令列工具';
+
+  @override
+  String get cliCompanionDescription => '使用配套的 CLI 工具從終端機自動化截圖。請參閱文件了解設定說明。';
 }

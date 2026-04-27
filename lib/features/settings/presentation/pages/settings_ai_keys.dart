@@ -37,6 +37,7 @@ class _AiKeysSectionState extends State<_AiKeysSection> {
 
   String _maskedApiKey(String? key) {
     if (key == null || key.isEmpty) return '';
+    if (key.length <= 4) return '••••';
     if (key.length <= 8) return '••••${key.substring(key.length - 4)}';
     return '${key.substring(0, 4)}••••${key.substring(key.length - 4)}';
   }

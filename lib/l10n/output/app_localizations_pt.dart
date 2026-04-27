@@ -1207,6 +1207,13 @@ class AppLocalizationsPt extends AppLocalizations {
   String get uploadToAsc => 'Enviar para ASC';
 
   @override
+  String get uploadExistingFolderToAsc => 'Upload Existing Folder...';
+
+  @override
+  String get noImagesFoundInFolder =>
+      'No valid screenshot images found in selected folder';
+
+  @override
   String get addMoreLanguages => 'Adicionar mais idiomas';
 
   @override
@@ -1598,4 +1605,47 @@ class AppLocalizationsPt extends AppLocalizations {
 
   @override
   String get behindFrame => 'Atrás da moldura';
+
+  @override
+  String get onlySelectedLocalesWillBeRendered =>
+      'Apenas os idiomas selecionados serão renderizados';
+
+  @override
+  String renderNLocales(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: 'idiomas',
+      one: 'idioma',
+    );
+    return 'Renderizar $count $_temp0';
+  }
+
+  @override
+  String get source => 'Origem';
+
+  @override
+  String get supportTheDeveloper => 'Apoiar o desenvolvedor';
+
+  @override
+  String supportTheDeveloperDescription(String price) {
+    return 'Gostou do aplicativo? Pague-me um café! $price';
+  }
+
+  @override
+  String get enableCliServer => 'Ativar servidor CLI';
+
+  @override
+  String get enableCliServerDescription =>
+      'Inicie o servidor local para usar a ferramenta CLI.';
+
+  @override
+  String get cliLearnMoreButton => 'Ler documentação';
+
+  @override
+  String get cliCompanionTitle => 'Ferramenta de linha de comando';
+
+  @override
+  String get cliCompanionDescription =>
+      'Automatize capturas de tela pelo terminal com a ferramenta CLI complementar. Consulte a documentação para instruções de configuração.';
 }

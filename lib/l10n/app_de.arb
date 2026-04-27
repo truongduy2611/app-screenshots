@@ -468,5 +468,15 @@
   "aiSuggestionEmojiDoodle": "Emoji-Doodle-Muster verwenden",
   "aiSuggestionAdd3DTilt": "3D-Perspektive hinzufügen",
   "aiSuggestionTransparentBg": "Hintergrund transparent machen",
-  "aiSuggestionLandscapeMode": "Auf Querformat wechseln"
+  "aiSuggestionLandscapeMode": "Auf Querformat wechseln",
+  "onlySelectedLocalesWillBeRendered": "Nur ausgewählte Sprachen werden gerendert",
+  "renderNLocales": "{count} {count, plural, =1{Sprache} other{Sprachen}} rendern",
+  "source": "Quelle",
+  "supportTheDeveloper": "Entwickler unterstützen",
+  "supportTheDeveloperDescription": "Gefällt dir die App? Spendier mir einen Kaffee! {price}",
+  "enableCliServer": "CLI-Server aktivieren",
+  "enableCliServerDescription": "Starte den lokalen Server, um das CLI-Tool zu verwenden.",
+  "cliLearnMoreButton": "Dokumentation lesen",
+  "cliCompanionTitle": "Befehlszeilen-Tool",
+  "cliCompanionDescription": "Automatisieren Sie Screenshots über das Terminal mit dem Begleit-Befehlszeilen-Tool. Weitere Informationen finden Sie in der Dokumentation."
 }
