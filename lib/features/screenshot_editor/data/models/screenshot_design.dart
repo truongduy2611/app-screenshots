@@ -120,7 +120,7 @@ class ScreenshotDesign {
       'backgroundGradient': backgroundGradient != null
           ? _gradientToJson(backgroundGradient!)
           : null,
-      'deviceFrame': deviceFrame?.name, // Use name for simplicity in matching
+      'deviceFrame': deviceFrame?.identifier.toString(),
       'overlays': overlays.map((e) => e.toJson()).toList(),
       'padding': padding,
       'imagePosition': {'dx': imagePosition.dx, 'dy': imagePosition.dy},
@@ -291,10 +291,35 @@ class ScreenshotDesign {
     }
   }
 
+  /// Builds the full list of devices including all color variants.
+  /// Cached as a static field to avoid rebuilding on every lookup.
+  static List<DeviceInfo>? _allDevicesWithColors;
+  static List<DeviceInfo> get _allDevices {
+    return _allDevicesWithColors ??= [
+      ...Devices.all,
+      // iOS color variants not in Devices.all
+      ...Devices.ios.iPhone17ProMaxColors,
+      ...Devices.ios.iPhone17ProColors,
+      ...Devices.ios.iPhone17Colors,
+      ...Devices.ios.iPhoneAirColors,
+      // Watch band/color variants not in Devices.all
+      ...Devices.watch.all42mm,
+      ...Devices.watch.all46mm,
+      ...Devices.watch.allUltra3,
+    ];
+  }
+
   static DeviceInfo? _findDeviceByName(String? name) {
     if (name == null) return null;
     try {
-      return Devices.all.firstWhere((d) => d.name == name);
+      // Try identifier match first (new format: "ios_phone_iphone-17-pro-max-silver")
+      final byIdentifier = _allDevices
+          .where((d) => d.identifier.toString() == name)
+          .firstOrNull;
+      if (byIdentifier != null) return byIdentifier;
+
+      // Fallback: legacy name-based match ("iPhone 17 Pro Max (Silver)")
+      return _allDevices.firstWhere((d) => d.name == name);
     } catch (_) {
       return null;
     }
