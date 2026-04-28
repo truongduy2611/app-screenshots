@@ -52,12 +52,15 @@ class _SettingsCliCard extends StatelessWidget {
                   subtitle: Text(
                     context.l10n.enableCliServerDescription,
                     style: theme.textTheme.bodySmall?.copyWith(
-                      color: theme.colorScheme.onSurface.withValues(alpha: 0.55),
+                      color: theme.colorScheme.onSurface.withValues(
+                        alpha: 0.55,
+                      ),
                     ),
                   ),
                   trailing: AppSwitch(
                     value: isEnabled,
-                    onChanged: (value) => context.read<CliCubit>().toggle(value),
+                    onChanged: (value) =>
+                        context.read<CliCubit>().toggle(value),
                   ),
                   onTap: () => context.read<CliCubit>().toggle(!isEnabled),
                 ),
@@ -107,7 +110,9 @@ class _SettingsCliCard extends StatelessWidget {
                                 ),
                                 onPressed: () {
                                   launchUrl(
-                                    Uri.parse('http://localhost:19222/api/docs'),
+                                    Uri.parse(
+                                      'http://localhost:19222/api/docs',
+                                    ),
                                   );
                                 },
                               ),

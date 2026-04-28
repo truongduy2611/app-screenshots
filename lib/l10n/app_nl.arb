@@ -482,5 +482,7 @@
   "icloudSync": "iCloud-synchronisatie",
   "icloudSyncSubtitle": "Synchroniseer ontwerpen tussen apparaten via iCloud",
   "icloudSyncDisabled": "iCloud-synchronisatie is uitgeschakeld",
-  "restartRequired": "Start de app opnieuw om wijzigingen toe te passen"
+  "restartRequired": "Start de app opnieuw om wijzigingen toe te passen",
+  "uploadExistingFolderToAsc": "Bestaande map uploaden...",
+  "noImagesFoundInFolder": "Geen geldige schermafbeeldingen gevonden in de geselecteerde map"
 }

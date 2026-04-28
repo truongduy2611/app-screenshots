@@ -271,8 +271,9 @@ class _EditorAddTextCommand extends Command<int> {
     if (argResults?['color'] != null) body['color'] = argResults!['color'];
     if (argResults?['x'] != null) body['x'] = double.parse(argResults!['x']);
     if (argResults?['y'] != null) body['y'] = double.parse(argResults!['y']);
-    if (argResults?['width'] != null)
+    if (argResults?['width'] != null) {
       body['width'] = double.parse(argResults!['width']);
+    }
     if (argResults?['align'] != null) body['align'] = argResults!['align'];
 
     final client = await AppClient.discover();
@@ -306,20 +307,25 @@ class _EditorUpdateTextCommand extends Command<int> {
   @override
   Future<int> run() async {
     final body = <String, dynamic>{'id': argResults!['id']};
-    if (argResults?['text'] != null)
+    if (argResults?['text'] != null) {
       body['text'] = (argResults!['text'] as String).replaceAll(r'\n', '\n');
+    }
     if (argResults?['font'] != null) body['font'] = argResults!['font'];
-    if (argResults?['size'] != null)
+    if (argResults?['size'] != null) {
       body['fontSize'] = double.parse(argResults!['size']);
+    }
     if (argResults?['color'] != null) body['color'] = argResults!['color'];
     if (argResults?['x'] != null) body['x'] = double.parse(argResults!['x']);
     if (argResults?['y'] != null) body['y'] = double.parse(argResults!['y']);
-    if (argResults?['scale'] != null)
+    if (argResults?['scale'] != null) {
       body['scale'] = double.parse(argResults!['scale']);
-    if (argResults?['rotation'] != null)
+    }
+    if (argResults?['rotation'] != null) {
       body['rotation'] = double.parse(argResults!['rotation']);
-    if (argResults?['width'] != null)
+    }
+    if (argResults?['width'] != null) {
       body['width'] = double.parse(argResults!['width']);
+    }
     if (argResults?['align'] != null) body['align'] = argResults!['align'];
 
     final client = await AppClient.discover();
@@ -350,10 +356,12 @@ class _EditorAddImageCommand extends Command<int> {
     final body = <String, dynamic>{'file': argResults!['file']};
     if (argResults?['x'] != null) body['x'] = double.parse(argResults!['x']);
     if (argResults?['y'] != null) body['y'] = double.parse(argResults!['y']);
-    if (argResults?['width'] != null)
+    if (argResults?['width'] != null) {
       body['width'] = double.parse(argResults!['width']);
-    if (argResults?['height'] != null)
+    }
+    if (argResults?['height'] != null) {
       body['height'] = double.parse(argResults!['height']);
+    }
 
     final client = await AppClient.discover();
     final result = await client.post(EditorAction.addImage.path, body);
@@ -774,8 +782,9 @@ class _EditorSetDoodleCommand extends Command<int> {
       'iconOpacity': double.parse(argResults!['opacity']),
       'rotation': double.parse(argResults!['rotation']),
     };
-    if (argResults?['color'] != null)
+    if (argResults?['color'] != null) {
       body['iconColor'] = int.tryParse(argResults!['color']) ?? 0xFFFFFFFF;
+    }
     final result = await client.post(EditorAction.setDoodle.path, body);
     Output.print(result, json: Output.isJson(globalResults));
     client.close();
@@ -835,13 +844,16 @@ class _EditorUpdateIconCommand extends Command<int> {
     final body = <String, dynamic>{'id': argResults!['id']};
     if (argResults?['x'] != null) body['x'] = double.parse(argResults!['x']);
     if (argResults?['y'] != null) body['y'] = double.parse(argResults!['y']);
-    if (argResults?['size'] != null)
+    if (argResults?['size'] != null) {
       body['size'] = double.parse(argResults!['size']);
+    }
     if (argResults?['color'] != null) body['color'] = argResults!['color'];
-    if (argResults?['rotation'] != null)
+    if (argResults?['rotation'] != null) {
       body['rotation'] = double.parse(argResults!['rotation']);
-    if (argResults?['opacity'] != null)
+    }
+    if (argResults?['opacity'] != null) {
       body['opacity'] = double.parse(argResults!['opacity']);
+    }
     final client = await AppClient.discover();
     final result = await client.post(EditorAction.updateIcon.path, body);
     Output.print(result, json: Output.isJson(globalResults));
@@ -871,14 +883,18 @@ class _EditorUpdateMagnifierCommand extends Command<int> {
     final body = <String, dynamic>{'id': argResults!['id']};
     if (argResults?['x'] != null) body['x'] = double.parse(argResults!['x']);
     if (argResults?['y'] != null) body['y'] = double.parse(argResults!['y']);
-    if (argResults?['width'] != null)
+    if (argResults?['width'] != null) {
       body['width'] = double.parse(argResults!['width']);
-    if (argResults?['height'] != null)
+    }
+    if (argResults?['height'] != null) {
       body['height'] = double.parse(argResults!['height']);
-    if (argResults?['zoom'] != null)
+    }
+    if (argResults?['zoom'] != null) {
       body['zoomLevel'] = double.parse(argResults!['zoom']);
-    if (argResults?['corner-radius'] != null)
+    }
+    if (argResults?['corner-radius'] != null) {
       body['cornerRadius'] = double.parse(argResults!['corner-radius']);
+    }
     final client = await AppClient.discover();
     final result = await client.post(EditorAction.updateMagnifier.path, body);
     Output.print(result, json: Output.isJson(globalResults));
@@ -1108,16 +1124,21 @@ class _EditorUpdateImageCommand extends Command<int> {
     final body = <String, dynamic>{'id': argResults!['id']};
     if (argResults?['x'] != null) body['x'] = double.parse(argResults!['x']);
     if (argResults?['y'] != null) body['y'] = double.parse(argResults!['y']);
-    if (argResults?['width'] != null)
+    if (argResults?['width'] != null) {
       body['width'] = double.parse(argResults!['width']);
-    if (argResults?['height'] != null)
+    }
+    if (argResults?['height'] != null) {
       body['height'] = double.parse(argResults!['height']);
-    if (argResults?['scale'] != null)
+    }
+    if (argResults?['scale'] != null) {
       body['scale'] = double.parse(argResults!['scale']);
-    if (argResults?['rotation'] != null)
+    }
+    if (argResults?['rotation'] != null) {
       body['rotation'] = double.parse(argResults!['rotation']);
-    if (argResults?['opacity'] != null)
+    }
+    if (argResults?['opacity'] != null) {
       body['opacity'] = double.parse(argResults!['opacity']);
+    }
     final client = await AppClient.discover();
     final result = await client.post(EditorAction.updateImage.path, body);
     Output.print(result, json: Output.isJson(globalResults));

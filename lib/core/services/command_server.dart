@@ -244,7 +244,11 @@ class CommandServer {
     // Intercept OpenAPI documentation routes
     if (path == '/api/docs/openapi.yaml') {
       request.response.statusCode = 200;
-      request.response.headers.contentType = ContentType('text', 'yaml', charset: 'utf-8');
+      request.response.headers.contentType = ContentType(
+        'text',
+        'yaml',
+        charset: 'utf-8',
+      );
       request.response.write(_openApiYaml);
       await request.response.close();
       return;

@@ -47,7 +47,7 @@ class _ICloudBackupSection extends StatelessWidget {
                   ? () => _toggleSync(context, !state.isSyncEnabled)
                   : null,
             ),
-            
+
             if (state.isSyncEnabled) ...[
               // Auto-backup toggle
               AppListTile(
@@ -102,7 +102,9 @@ class _ICloudBackupSection extends StatelessWidget {
                 icon: Symbols.restore_rounded,
                 title: context.l10n.restoreFromBackup,
                 theme: theme,
-                onTap: state.isAvailable ? () => _showRestoreDialog(context) : null,
+                onTap: state.isAvailable
+                    ? () => _showRestoreDialog(context)
+                    : null,
               ),
             ],
           ],

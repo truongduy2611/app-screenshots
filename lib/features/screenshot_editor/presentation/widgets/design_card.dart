@@ -71,265 +71,278 @@ class _DesignCardState extends State<DesignCard> {
     final tertiary = theme.colorScheme.tertiary;
     final displayType = widget.design.design.displayType;
 
-    return BlocSelector<ScreenshotLibraryCubit, ScreenshotLibraryState,
-        ({bool selectionMode, bool selected})>(
+    return BlocSelector<
+      ScreenshotLibraryCubit,
+      ScreenshotLibraryState,
+      ({bool selectionMode, bool selected})
+    >(
       selector: (state) => (
         selectionMode:
             state is ScreenshotLibraryLoaded && state.isSelectionMode,
-        selected: state is ScreenshotLibraryLoaded &&
+        selected:
+            state is ScreenshotLibraryLoaded &&
             state.selectedDesignIds.contains(widget.design.id),
       ),
       builder: (context, sel) {
         final isSelectionMode = sel.selectionMode;
         final isSelected = sel.selected;
 
-    return MouseRegion(
-      cursor: SystemMouseCursors.click,
-      onEnter: (_) => setState(() => _isHovering = true),
-      onExit: (_) => setState(() => _isHovering = false),
-      child: GestureDetector(
-        onSecondaryTapDown: (details) =>
-            _showContextMenu(context, position: details.globalPosition),
-        child: AnimatedScale(
-          scale: _isHovering ? 1.03 : 1.0,
-          duration: const Duration(milliseconds: 200),
-          curve: Curves.easeOutCubic,
-          child: AnimatedContainer(
-            duration: const Duration(milliseconds: 200),
-            curve: Curves.easeOutCubic,
-            decoration: BoxDecoration(
-              gradient: LinearGradient(
-                begin: Alignment.topLeft,
-                end: Alignment.bottomRight,
-                colors: isSelected
-                    ? [
-                        primary.withValues(alpha: isDark ? 0.25 : 0.15),
-                        tertiary.withValues(alpha: isDark ? 0.15 : 0.08),
-                      ]
-                    : [
-                        primary.withValues(alpha: isDark ? 0.08 : 0.04),
-                        tertiary.withValues(alpha: isDark ? 0.05 : 0.02),
-                      ],
-              ),
-              borderRadius: BorderRadius.circular(16),
-              border: Border.all(
-                color: isSelected
-                    ? primary
-                    : _isHovering
-                    ? primary.withValues(alpha: isDark ? 0.3 : 0.2)
-                    : primary.withValues(alpha: isDark ? 0.10 : 0.06),
-                width: isSelected ? 2 : 1,
-              ),
-              boxShadow: _isHovering || isSelected
-                  ? [
-                      BoxShadow(
-                        color: primary.withValues(
-                          alpha: isSelected ? 0.15 : 0.08,
-                        ),
-                        blurRadius: 20,
-                        spreadRadius: 2,
-                      ),
-                    ]
-                  : null,
-            ),
-            child: InkWell(
-              mouseCursor: SystemMouseCursors.click,
-              onTap: () {
-                if (isSelectionMode) {
-                  context.read<ScreenshotLibraryCubit>().toggleDesignSelection(
-                    widget.design.id,
-                  );
-                  return;
-                }
-                final Widget page;
-                if (widget.design.isMulti) {
-                  page = MultiScreenshotPage(
-                    initialSavedDesign: widget.design,
-                    displayType: widget.design.design.displayType,
-                  );
-                } else {
-                  page = ScreenshotEditorPage(initialDesign: widget.design);
-                }
-                final isLarge = MediaQuery.sizeOf(context).width >= 600;
-                final sourceRect = isLarge ? rectFromContext(context) : null;
-                Navigator.of(context)
-                    .push(
-                      sourceRect != null
-                          ? geniePageRoute(
-                              builder: (_) => page,
-                              sourceRect: sourceRect,
-                            )
-                          : MaterialPageRoute(builder: (_) => page),
-                    )
-                    .then((_) {
-                      if (context.mounted) {
-                        context.read<ScreenshotLibraryCubit>().loadDesigns();
-                      }
-                    });
-              },
-              onLongPress: () {
-                if (!isSelectionMode) {
-                  context.read<ScreenshotLibraryCubit>().toggleSelectionMode();
-                  context.read<ScreenshotLibraryCubit>().toggleDesignSelection(
-                    widget.design.id,
-                  );
-                } else {
-                  _showContextMenu(context);
-                }
-              },
-              borderRadius: BorderRadius.circular(16),
-              child: Stack(
-                children: [
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.stretch,
+        return MouseRegion(
+          cursor: SystemMouseCursors.click,
+          onEnter: (_) => setState(() => _isHovering = true),
+          onExit: (_) => setState(() => _isHovering = false),
+          child: GestureDetector(
+            onSecondaryTapDown: (details) =>
+                _showContextMenu(context, position: details.globalPosition),
+            child: AnimatedScale(
+              scale: _isHovering ? 1.03 : 1.0,
+              duration: const Duration(milliseconds: 200),
+              curve: Curves.easeOutCubic,
+              child: AnimatedContainer(
+                duration: const Duration(milliseconds: 200),
+                curve: Curves.easeOutCubic,
+                decoration: BoxDecoration(
+                  gradient: LinearGradient(
+                    begin: Alignment.topLeft,
+                    end: Alignment.bottomRight,
+                    colors: isSelected
+                        ? [
+                            primary.withValues(alpha: isDark ? 0.25 : 0.15),
+                            tertiary.withValues(alpha: isDark ? 0.15 : 0.08),
+                          ]
+                        : [
+                            primary.withValues(alpha: isDark ? 0.08 : 0.04),
+                            tertiary.withValues(alpha: isDark ? 0.05 : 0.02),
+                          ],
+                  ),
+                  borderRadius: BorderRadius.circular(16),
+                  border: Border.all(
+                    color: isSelected
+                        ? primary
+                        : _isHovering
+                        ? primary.withValues(alpha: isDark ? 0.3 : 0.2)
+                        : primary.withValues(alpha: isDark ? 0.10 : 0.06),
+                    width: isSelected ? 2 : 1,
+                  ),
+                  boxShadow: _isHovering || isSelected
+                      ? [
+                          BoxShadow(
+                            color: primary.withValues(
+                              alpha: isSelected ? 0.15 : 0.08,
+                            ),
+                            blurRadius: 20,
+                            spreadRadius: 2,
+                          ),
+                        ]
+                      : null,
+                ),
+                child: InkWell(
+                  mouseCursor: SystemMouseCursors.click,
+                  onTap: () {
+                    if (isSelectionMode) {
+                      context
+                          .read<ScreenshotLibraryCubit>()
+                          .toggleDesignSelection(widget.design.id);
+                      return;
+                    }
+                    final Widget page;
+                    if (widget.design.isMulti) {
+                      page = MultiScreenshotPage(
+                        initialSavedDesign: widget.design,
+                        displayType: widget.design.design.displayType,
+                      );
+                    } else {
+                      page = ScreenshotEditorPage(initialDesign: widget.design);
+                    }
+                    final isLarge = MediaQuery.sizeOf(context).width >= 600;
+                    final sourceRect = isLarge
+                        ? rectFromContext(context)
+                        : null;
+                    Navigator.of(context)
+                        .push(
+                          sourceRect != null
+                              ? geniePageRoute(
+                                  builder: (_) => page,
+                                  sourceRect: sourceRect,
+                                )
+                              : MaterialPageRoute(builder: (_) => page),
+                        )
+                        .then((_) {
+                          if (context.mounted) {
+                            context
+                                .read<ScreenshotLibraryCubit>()
+                                .loadDesigns();
+                          }
+                        });
+                  },
+                  onLongPress: () {
+                    if (!isSelectionMode) {
+                      context
+                          .read<ScreenshotLibraryCubit>()
+                          .toggleSelectionMode();
+                      context
+                          .read<ScreenshotLibraryCubit>()
+                          .toggleDesignSelection(widget.design.id);
+                    } else {
+                      _showContextMenu(context);
+                    }
+                  },
+                  borderRadius: BorderRadius.circular(16),
+                  child: Stack(
                     children: [
-                      Hero(
-                        tag: 'folder_thumb_${widget.design.id}',
-                        flightShuttleBuilder:
-                            (_, animation, direction, fromCtx, toCtx) {
-                              return AnimatedBuilder(
-                                animation: animation,
-                                builder: (context, child) {
-                                  final t = animation.value;
-                                  return Material(
-                                    color: Colors.transparent,
-                                    elevation: 8 * (1 - t),
-                                    borderRadius: BorderRadius.circular(
-                                      10 + (0 - 10) * t,
-                                    ),
-                                    clipBehavior: Clip.antiAlias,
-                                    child: child,
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.stretch,
+                        children: [
+                          Hero(
+                            tag: 'folder_thumb_${widget.design.id}',
+                            flightShuttleBuilder:
+                                (_, animation, direction, fromCtx, toCtx) {
+                                  return AnimatedBuilder(
+                                    animation: animation,
+                                    builder: (context, child) {
+                                      final t = animation.value;
+                                      return Material(
+                                        color: Colors.transparent,
+                                        elevation: 8 * (1 - t),
+                                        borderRadius: BorderRadius.circular(
+                                          10 + (0 - 10) * t,
+                                        ),
+                                        clipBehavior: Clip.antiAlias,
+                                        child: child,
+                                      );
+                                    },
+                                    child: direction == HeroFlightDirection.push
+                                        ? toCtx.widget
+                                        : fromCtx.widget,
                                   );
                                 },
-                                child: direction == HeroFlightDirection.push
-                                    ? toCtx.widget
-                                    : fromCtx.widget,
-                              );
-                            },
-                        child: Padding(
-                          padding: const EdgeInsets.all(8),
-                          child: ClipRRect(
-                            borderRadius: BorderRadius.circular(10),
-                            child: Image.file(
-                              File(widget.design.thumbnailPath),
-                              key: ValueKey(
-                                '${widget.design.id}_${widget.design.lastModified.millisecondsSinceEpoch}',
-                              ),
-                              fit: BoxFit.fitWidth,
-                              cacheWidth: 400,
-                              gaplessPlayback: true,
-                              width: double.infinity,
-                              errorBuilder: (_, _, _) => AspectRatio(
-                                aspectRatio: 9 / 16,
-                                child: Container(
-                                  decoration: BoxDecoration(
-                                    gradient: LinearGradient(
-                                      begin: Alignment.topLeft,
-                                      end: Alignment.bottomRight,
-                                      colors: [
-                                        primary.withValues(
-                                          alpha: isDark ? 0.12 : 0.06,
-                                        ),
-                                        tertiary.withValues(
-                                          alpha: isDark ? 0.08 : 0.04,
-                                        ),
-                                      ],
-                                    ),
+                            child: Padding(
+                              padding: const EdgeInsets.all(8),
+                              child: ClipRRect(
+                                borderRadius: BorderRadius.circular(10),
+                                child: Image.file(
+                                  File(widget.design.thumbnailPath),
+                                  key: ValueKey(
+                                    '${widget.design.id}_${widget.design.lastModified.millisecondsSinceEpoch}',
                                   ),
-                                  child: Center(
-                                    child: Icon(
-                                      Symbols.broken_image_rounded,
-                                      color: theme.colorScheme.onSurface
-                                          .withValues(alpha: 0.25),
-                                      size: 32,
+                                  fit: BoxFit.fitWidth,
+                                  cacheWidth: 400,
+                                  gaplessPlayback: true,
+                                  width: double.infinity,
+                                  errorBuilder: (_, _, _) => AspectRatio(
+                                    aspectRatio: 9 / 16,
+                                    child: Container(
+                                      decoration: BoxDecoration(
+                                        gradient: LinearGradient(
+                                          begin: Alignment.topLeft,
+                                          end: Alignment.bottomRight,
+                                          colors: [
+                                            primary.withValues(
+                                              alpha: isDark ? 0.12 : 0.06,
+                                            ),
+                                            tertiary.withValues(
+                                              alpha: isDark ? 0.08 : 0.04,
+                                            ),
+                                          ],
+                                        ),
+                                      ),
+                                      child: Center(
+                                        child: Icon(
+                                          Symbols.broken_image_rounded,
+                                          color: theme.colorScheme.onSurface
+                                              .withValues(alpha: 0.25),
+                                          size: 32,
+                                        ),
+                                      ),
                                     ),
                                   ),
                                 ),
                               ),
                             ),
                           ),
-                        ),
-                      ),
-                      // Info section
-                      Padding(
-                        padding: const EdgeInsets.fromLTRB(12, 0, 12, 12),
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text(
-                              widget.design.name,
-                              style: theme.textTheme.titleSmall?.copyWith(
-                                fontWeight: FontWeight.w600,
-                              ),
-                              maxLines: 1,
-                              overflow: TextOverflow.ellipsis,
-                            ),
-                            const SizedBox(height: 4),
-                            Row(
+                          // Info section
+                          Padding(
+                            padding: const EdgeInsets.fromLTRB(12, 0, 12, 12),
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
                                 Text(
-                                  DateFormat.yMMMd().format(
-                                    widget.design.lastModified,
+                                  widget.design.name,
+                                  style: theme.textTheme.titleSmall?.copyWith(
+                                    fontWeight: FontWeight.w600,
                                   ),
-                                  style: theme.textTheme.bodySmall?.copyWith(
-                                    color: theme.colorScheme.onSurface
-                                        .withValues(alpha: 0.45),
-                                  ),
+                                  maxLines: 1,
+                                  overflow: TextOverflow.ellipsis,
                                 ),
-                                if (displayType != null &&
-                                    displayType.isNotEmpty) ...[
-                                  const SizedBox(width: 8),
-                                  Flexible(
-                                    child: _DeviceChip(
-                                      label: _formatDisplayType(displayType),
-                                      primary: primary,
-                                      isDark: isDark,
+                                const SizedBox(height: 4),
+                                Row(
+                                  children: [
+                                    Text(
+                                      DateFormat.yMMMd().format(
+                                        widget.design.lastModified,
+                                      ),
+                                      style: theme.textTheme.bodySmall
+                                          ?.copyWith(
+                                            color: theme.colorScheme.onSurface
+                                                .withValues(alpha: 0.45),
+                                          ),
                                     ),
-                                  ),
-                                ],
+                                    if (displayType != null &&
+                                        displayType.isNotEmpty) ...[
+                                      const SizedBox(width: 8),
+                                      Flexible(
+                                        child: _DeviceChip(
+                                          label: _formatDisplayType(
+                                            displayType,
+                                          ),
+                                          primary: primary,
+                                          isDark: isDark,
+                                        ),
+                                      ),
+                                    ],
+                                  ],
+                                ),
                               ],
                             ),
-                          ],
-                        ),
-                      ),
-                    ], // End Column children
-                  ), // End Column
-                  if (isSelectionMode)
-                    Positioned(
-                      top: 8,
-                      right: 8,
-                      child: AnimatedContainer(
-                        duration: const Duration(milliseconds: 200),
-                        width: 24,
-                        height: 24,
-                        decoration: BoxDecoration(
-                          shape: BoxShape.circle,
-                          color: isSelected ? primary : Colors.transparent,
-                          border: Border.all(
-                            color: isSelected
-                                ? Colors.transparent
-                                : theme.colorScheme.onSurface.withValues(
-                                    alpha: 0.3,
-                                  ),
-                            width: 2,
+                          ),
+                        ], // End Column children
+                      ), // End Column
+                      if (isSelectionMode)
+                        Positioned(
+                          top: 8,
+                          right: 8,
+                          child: AnimatedContainer(
+                            duration: const Duration(milliseconds: 200),
+                            width: 24,
+                            height: 24,
+                            decoration: BoxDecoration(
+                              shape: BoxShape.circle,
+                              color: isSelected ? primary : Colors.transparent,
+                              border: Border.all(
+                                color: isSelected
+                                    ? Colors.transparent
+                                    : theme.colorScheme.onSurface.withValues(
+                                        alpha: 0.3,
+                                      ),
+                                width: 2,
+                              ),
+                            ),
+                            child: isSelected
+                                ? Icon(
+                                    Symbols.check_rounded,
+                                    size: 16,
+                                    color: theme.colorScheme.onPrimary,
+                                  )
+                                : null,
                           ),
                         ),
-                        child: isSelected
-                            ? Icon(
-                                Symbols.check_rounded,
-                                size: 16,
-                                color: theme.colorScheme.onPrimary,
-                              )
-                            : null,
-                      ),
-                    ),
-                ], // End Stack children
-              ), // End Stack
-            ), // End InkWell
-          ), // End AnimatedContainer
-        ), // End AnimatedScale
-      ), // End GestureDetector
-    ); // End MouseRegion
+                    ], // End Stack children
+                  ), // End Stack
+                ), // End InkWell
+              ), // End AnimatedContainer
+            ), // End AnimatedScale
+          ), // End GestureDetector
+        ); // End MouseRegion
       }, // End BlocSelector builder
     ); // End BlocSelector
   }

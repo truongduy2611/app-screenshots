@@ -36,8 +36,9 @@ extension _TranslationRoutes on CommandServer {
         final body = await _readBody(request);
         final from = body['from'] as String? ?? 'en';
         final to = (body['to'] as List?)?.cast<String>() ?? [];
-        if (to.isEmpty)
+        if (to.isEmpty) {
           return ServerResponse.error('Missing "to" (list of target locales)');
+        }
 
         final sourceTexts = <String, String>{};
         for (final overlay in eCubit.state.design.overlays) {

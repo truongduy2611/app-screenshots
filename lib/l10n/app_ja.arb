@@ -482,5 +482,7 @@
   "icloudSync": "iCloud同期",
   "icloudSyncSubtitle": "iCloudを使ってデバイス間でデザインを同期",
   "icloudSyncDisabled": "iCloud同期がオフです",
-  "restartRequired": "変更を適用するにはアプリを再起動してください"
+  "restartRequired": "変更を適用するにはアプリを再起動してください",
+  "uploadExistingFolderToAsc": "既存のフォルダーをアップロード...",
+  "noImagesFoundInFolder": "選択したフォルダーに有効なスクリーンショット画像が見つかりませんでした"
 }

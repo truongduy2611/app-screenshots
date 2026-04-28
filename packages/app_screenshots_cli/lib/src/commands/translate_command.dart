@@ -255,19 +255,24 @@ class _TranslateOverrideOverlayCommand extends Command<int> {
       'overlayId': argResults!['overlay-id'],
     };
     if (argResults?['font'] != null) body['font'] = argResults!['font'];
-    if (argResults?['font-size'] != null)
+    if (argResults?['font-size'] != null) {
       body['fontSize'] = double.parse(argResults!['font-size']);
+    }
     if (argResults?['x'] != null) body['x'] = double.parse(argResults!['x']);
     if (argResults?['y'] != null) body['y'] = double.parse(argResults!['y']);
-    if (argResults?['scale'] != null)
+    if (argResults?['scale'] != null) {
       body['scale'] = double.parse(argResults!['scale']);
-    if (argResults?['rotation'] != null)
+    }
+    if (argResults?['rotation'] != null) {
       body['rotation'] = double.parse(argResults!['rotation']);
-    if (argResults?['width'] != null)
+    }
+    if (argResults?['width'] != null) {
       body['width'] = double.parse(argResults!['width']);
+    }
     if (argResults?['color'] != null) body['color'] = argResults!['color'];
-    if (argResults?['font-weight'] != null)
+    if (argResults?['font-weight'] != null) {
       body['fontWeightIndex'] = int.parse(argResults!['font-weight']);
+    }
     final client = await AppClient.discover();
     final result =
         await client.post(TranslateAction.overrideOverlay.path, body);

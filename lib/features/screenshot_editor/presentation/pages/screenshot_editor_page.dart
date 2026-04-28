@@ -512,8 +512,7 @@ class _ScreenshotEditorViewState extends State<ScreenshotEditorView> {
   Future<void> _shareDesignFile(BuildContext context) async {
     try {
       final state = context.read<ScreenshotEditorCubit>().state;
-      final translationBundle =
-          context.read<TranslationCubit>().state.bundle;
+      final translationBundle = context.read<TranslationCubit>().state.bundle;
       // Build a SavedDesign from the current editor state
       final design = SavedDesign(
         id: state.savedDesignId ?? 'unsaved',
@@ -546,8 +545,7 @@ class _ScreenshotEditorViewState extends State<ScreenshotEditorView> {
       final sourceFilePath = state.sourceFilePath;
       if (sourceFilePath == null) return;
 
-      final translationBundle =
-          context.read<TranslationCubit>().state.bundle;
+      final translationBundle = context.read<TranslationCubit>().state.bundle;
       final design = SavedDesign(
         id: state.savedDesignId ?? 'unsaved',
         name: state.savedDesignName ?? 'Screenshot Design',

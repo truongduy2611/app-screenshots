@@ -482,5 +482,7 @@
   "icloudSync": "iCloud 同步",
   "icloudSyncSubtitle": "透過 iCloud 在裝置之間同步設計",
   "icloudSyncDisabled": "iCloud 同步已關閉",
-  "restartRequired": "重新啟動應用程式以套用變更"
+  "restartRequired": "重新啟動應用程式以套用變更",
+  "uploadExistingFolderToAsc": "上傳現有資料夾...",
+  "noImagesFoundInFolder": "在選定資料夾中未找到有效的螢幕截圖圖像"
 }

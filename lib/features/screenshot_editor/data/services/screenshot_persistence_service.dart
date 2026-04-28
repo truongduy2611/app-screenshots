@@ -231,7 +231,9 @@ class ScreenshotPersistenceService {
     final designFiles = entities
         .whereType<File>()
         .where(
-          (f) => f.path.endsWith('.json') && !p.basename(f.path).startsWith('folder_'),
+          (f) =>
+              f.path.endsWith('.json') &&
+              !p.basename(f.path).startsWith('folder_'),
         )
         .toList();
 

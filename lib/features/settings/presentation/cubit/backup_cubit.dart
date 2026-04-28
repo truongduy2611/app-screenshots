@@ -11,7 +11,7 @@ class BackupCubit extends Cubit<BackupState> {
   final ICloudSyncService _syncService;
 
   BackupCubit(this._backupService, this._syncService)
-      : super(const BackupState());
+    : super(const BackupState());
 
   /// Initializes the cubit: checks availability and triggers auto-backup.
   Future<void> init() async {
@@ -69,10 +69,12 @@ class BackupCubit extends Cubit<BackupState> {
       // Also disable auto-backup when sync is off
       await _backupService.setAutoBackupEnabled(false);
     }
-    emit(state.copyWith(
-      isSyncEnabled: enabled,
-      isEnabled: enabled ? state.isEnabled : false,
-    ));
+    emit(
+      state.copyWith(
+        isSyncEnabled: enabled,
+        isEnabled: enabled ? state.isEnabled : false,
+      ),
+    );
   }
 
   /// Creates a manual backup immediately.

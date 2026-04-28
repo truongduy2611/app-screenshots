@@ -482,5 +482,7 @@
   "icloudSync": "iCloud Senkronizasyonu",
   "icloudSyncSubtitle": "Tasarımları iCloud üzerinden cihazlar arasında senkronize edin",
   "icloudSyncDisabled": "iCloud senkronizasyonu devre dışı",
-  "restartRequired": "Değişikliklerin geçerli olması için uygulamayı yeniden başlatın"
+  "restartRequired": "Değişikliklerin geçerli olması için uygulamayı yeniden başlatın",
+  "uploadExistingFolderToAsc": "Mevcut Klasörü Yükle...",
+  "noImagesFoundInFolder": "Seçilen klasörde geçerli ekran görüntüsü resmi bulunamadı"
 }

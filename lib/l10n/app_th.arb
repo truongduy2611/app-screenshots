@@ -482,5 +482,7 @@
   "icloudSync": "การซิงค์ iCloud",
   "icloudSyncSubtitle": "ซิงค์การออกแบบระหว่างอุปกรณ์ผ่าน iCloud",
   "icloudSyncDisabled": "การซิงค์ iCloud ถูกปิด",
-  "restartRequired": "รีสตาร์ทแอปเพื่อให้การเปลี่ยนแปลงมีผล"
+  "restartRequired": "รีสตาร์ทแอปเพื่อให้การเปลี่ยนแปลงมีผล",
+  "uploadExistingFolderToAsc": "อัปโหลดโฟลเดอร์ที่มีอยู่...",
+  "noImagesFoundInFolder": "ไม่พบภาพหน้าจอที่ถูกต้องในโฟลเดอร์ที่เลือก"
 }

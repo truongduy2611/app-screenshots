@@ -45,216 +45,236 @@ class _FolderCardState extends State<FolderCard> {
     final primary = theme.colorScheme.primary;
     final tertiary = theme.colorScheme.tertiary;
 
-    return BlocSelector<ScreenshotLibraryCubit, ScreenshotLibraryState,
-        ({bool selectionMode, bool selected})>(
+    return BlocSelector<
+      ScreenshotLibraryCubit,
+      ScreenshotLibraryState,
+      ({bool selectionMode, bool selected})
+    >(
       selector: (state) => (
         selectionMode:
             state is ScreenshotLibraryLoaded && state.isSelectionMode,
-        selected: state is ScreenshotLibraryLoaded &&
+        selected:
+            state is ScreenshotLibraryLoaded &&
             state.selectedFolderIds.contains(widget.folder.id),
       ),
       builder: (context, sel) {
         final isSelectionMode = sel.selectionMode;
         final isSelected = sel.selected;
 
-    return DragTarget<SavedDesign>(
-      onWillAcceptWithDetails: (details) {
-        HapticFeedback.selectionClick();
-        return true;
-      },
-      onAcceptWithDetails: (details) {
-        HapticFeedback.mediumImpact();
-        widget.onDrop(details.data);
-      },
-      builder: (context, candidateData, rejectedData) {
-        final isDragHovered = candidateData.isNotEmpty;
+        return DragTarget<SavedDesign>(
+          onWillAcceptWithDetails: (details) {
+            HapticFeedback.selectionClick();
+            return true;
+          },
+          onAcceptWithDetails: (details) {
+            HapticFeedback.mediumImpact();
+            widget.onDrop(details.data);
+          },
+          builder: (context, candidateData, rejectedData) {
+            final isDragHovered = candidateData.isNotEmpty;
 
-        return MouseRegion(
-          cursor: SystemMouseCursors.click,
-          onEnter: (_) => setState(() => _isHovering = true),
-          onExit: (_) => setState(() => _isHovering = false),
-          child: GestureDetector(
-            onSecondaryTapDown: (details) =>
-                _showContextMenu(context, position: details.globalPosition),
-            child: AnimatedScale(
-              scale: _isHovering ? 1.03 : 1.0,
-              duration: const Duration(milliseconds: 200),
-              curve: Curves.easeOutCubic,
-              child: AnimatedContainer(
-                duration: const Duration(milliseconds: 200),
-                curve: Curves.easeOutCubic,
-                decoration: BoxDecoration(
-                  gradient: LinearGradient(
-                    begin: Alignment.topLeft,
-                    end: Alignment.bottomRight,
-                    colors: isSelected
-                        ? [
-                            primary.withValues(alpha: isDark ? 0.25 : 0.15),
-                            tertiary.withValues(alpha: isDark ? 0.15 : 0.08),
-                          ]
-                        : isDragHovered
-                        ? [
-                            primary.withValues(alpha: isDark ? 0.25 : 0.15),
-                            tertiary.withValues(alpha: isDark ? 0.15 : 0.08),
-                          ]
-                        : [
-                            primary.withValues(alpha: isDark ? 0.08 : 0.05),
-                            tertiary.withValues(alpha: isDark ? 0.05 : 0.03),
-                          ],
-                  ),
-                  borderRadius: BorderRadius.circular(16),
-                  border: Border.all(
-                    color: isSelected
-                        ? primary
-                        : isDragHovered
-                        ? primary.withValues(alpha: 0.5)
-                        : _isHovering
-                        ? primary.withValues(alpha: isDark ? 0.3 : 0.2)
-                        : primary.withValues(alpha: isDark ? 0.12 : 0.08),
-                    width: isSelected || isDragHovered ? 2 : 1,
-                  ),
-                  boxShadow: _isHovering || isDragHovered || isSelected
-                      ? [
-                          BoxShadow(
-                            color: primary.withValues(
-                              alpha: (isDragHovered || isSelected)
-                                  ? 0.15
-                                  : 0.08,
-                            ),
-                            blurRadius: 20,
-                            spreadRadius: 2,
-                          ),
-                        ]
-                      : null,
-                ),
-                child: InkWell(
-                  mouseCursor: SystemMouseCursors.click,
-                  onTap: () {
-                    if (isSelectionMode) {
-                      context
-                          .read<ScreenshotLibraryCubit>()
-                          .toggleFolderSelection(widget.folder.id);
-                    } else {
-                      widget.onTap();
-                    }
-                  },
-                  onLongPress: () {
-                    if (!isSelectionMode) {
-                      context
-                          .read<ScreenshotLibraryCubit>()
-                          .toggleSelectionMode();
-                      context
-                          .read<ScreenshotLibraryCubit>()
-                          .toggleFolderSelection(widget.folder.id);
-                    } else {
-                      _showContextMenu(context);
-                    }
-                  },
-                  borderRadius: BorderRadius.circular(16),
-                  child: Stack(
-                    children: [
-                      Column(
-                        crossAxisAlignment: CrossAxisAlignment.stretch,
+            return MouseRegion(
+              cursor: SystemMouseCursors.click,
+              onEnter: (_) => setState(() => _isHovering = true),
+              onExit: (_) => setState(() => _isHovering = false),
+              child: GestureDetector(
+                onSecondaryTapDown: (details) =>
+                    _showContextMenu(context, position: details.globalPosition),
+                child: AnimatedScale(
+                  scale: _isHovering ? 1.03 : 1.0,
+                  duration: const Duration(milliseconds: 200),
+                  curve: Curves.easeOutCubic,
+                  child: AnimatedContainer(
+                    duration: const Duration(milliseconds: 200),
+                    curve: Curves.easeOutCubic,
+                    decoration: BoxDecoration(
+                      gradient: LinearGradient(
+                        begin: Alignment.topLeft,
+                        end: Alignment.bottomRight,
+                        colors: isSelected
+                            ? [
+                                primary.withValues(alpha: isDark ? 0.25 : 0.15),
+                                tertiary.withValues(
+                                  alpha: isDark ? 0.15 : 0.08,
+                                ),
+                              ]
+                            : isDragHovered
+                            ? [
+                                primary.withValues(alpha: isDark ? 0.25 : 0.15),
+                                tertiary.withValues(
+                                  alpha: isDark ? 0.15 : 0.08,
+                                ),
+                              ]
+                            : [
+                                primary.withValues(alpha: isDark ? 0.08 : 0.05),
+                                tertiary.withValues(
+                                  alpha: isDark ? 0.05 : 0.03,
+                                ),
+                              ],
+                      ),
+                      borderRadius: BorderRadius.circular(16),
+                      border: Border.all(
+                        color: isSelected
+                            ? primary
+                            : isDragHovered
+                            ? primary.withValues(alpha: 0.5)
+                            : _isHovering
+                            ? primary.withValues(alpha: isDark ? 0.3 : 0.2)
+                            : primary.withValues(alpha: isDark ? 0.12 : 0.08),
+                        width: isSelected || isDragHovered ? 2 : 1,
+                      ),
+                      boxShadow: _isHovering || isDragHovered || isSelected
+                          ? [
+                              BoxShadow(
+                                color: primary.withValues(
+                                  alpha: (isDragHovered || isSelected)
+                                      ? 0.15
+                                      : 0.08,
+                                ),
+                                blurRadius: 20,
+                                spreadRadius: 2,
+                              ),
+                            ]
+                          : null,
+                    ),
+                    child: InkWell(
+                      mouseCursor: SystemMouseCursors.click,
+                      onTap: () {
+                        if (isSelectionMode) {
+                          context
+                              .read<ScreenshotLibraryCubit>()
+                              .toggleFolderSelection(widget.folder.id);
+                        } else {
+                          widget.onTap();
+                        }
+                      },
+                      onLongPress: () {
+                        if (!isSelectionMode) {
+                          context
+                              .read<ScreenshotLibraryCubit>()
+                              .toggleSelectionMode();
+                          context
+                              .read<ScreenshotLibraryCubit>()
+                              .toggleFolderSelection(widget.folder.id);
+                        } else {
+                          _showContextMenu(context);
+                        }
+                      },
+                      borderRadius: BorderRadius.circular(16),
+                      child: Stack(
                         children: [
-                          // Thumbnail stack or empty folder icon
-                          Padding(
-                            padding: const EdgeInsets.all(6),
-                            child: widget.thumbnailPaths.isNotEmpty
-                                ? _FolderThumbnailStack(
-                                    thumbnailPaths: widget.thumbnailPaths,
-                                    thumbnailDesignIds:
-                                        widget.thumbnailDesignIds,
-                                    primary: primary,
-                                    isDark: isDark,
-                                  )
-                                : AspectRatio(
-                                    aspectRatio: 1,
-                                    child: Container(
-                                      decoration: BoxDecoration(
-                                        color: primary.withValues(
-                                          alpha: isDark ? 0.05 : 0.03,
-                                        ),
-                                        borderRadius: BorderRadius.circular(12),
-                                      ),
-                                      child: Center(
-                                        child: Icon(
-                                          Symbols.folder_open_rounded,
-                                          size: 48,
-                                          color: primary.withValues(
-                                            alpha: isDark ? 0.3 : 0.2,
+                          Column(
+                            crossAxisAlignment: CrossAxisAlignment.stretch,
+                            children: [
+                              // Thumbnail stack or empty folder icon
+                              Padding(
+                                padding: const EdgeInsets.all(6),
+                                child: widget.thumbnailPaths.isNotEmpty
+                                    ? _FolderThumbnailStack(
+                                        thumbnailPaths: widget.thumbnailPaths,
+                                        thumbnailDesignIds:
+                                            widget.thumbnailDesignIds,
+                                        primary: primary,
+                                        isDark: isDark,
+                                      )
+                                    : AspectRatio(
+                                        aspectRatio: 1,
+                                        child: Container(
+                                          decoration: BoxDecoration(
+                                            color: primary.withValues(
+                                              alpha: isDark ? 0.05 : 0.03,
+                                            ),
+                                            borderRadius: BorderRadius.circular(
+                                              12,
+                                            ),
+                                          ),
+                                          child: Center(
+                                            child: Icon(
+                                              Symbols.folder_open_rounded,
+                                              size: 48,
+                                              color: primary.withValues(
+                                                alpha: isDark ? 0.3 : 0.2,
+                                              ),
+                                            ),
                                           ),
                                         ),
                                       ),
-                                    ),
-                                  ),
-                          ),
-                          // Folder name & item count
-                          Padding(
-                            padding: const EdgeInsets.fromLTRB(12, 0, 12, 12),
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Text(
-                                  widget.folder.name,
-                                  style: theme.textTheme.titleSmall?.copyWith(
-                                    fontWeight: FontWeight.w600,
-                                  ),
-                                  maxLines: 1,
-                                  overflow: TextOverflow.ellipsis,
+                              ),
+                              // Folder name & item count
+                              Padding(
+                                padding: const EdgeInsets.fromLTRB(
+                                  12,
+                                  0,
+                                  12,
+                                  12,
                                 ),
-                                if (widget.itemCount > 0) ...[
-                                  const SizedBox(height: 4),
-                                  Text(
-                                    '${widget.itemCount} ${widget.itemCount == 1 ? 'item' : 'items'}',
-                                    style: theme.textTheme.bodySmall?.copyWith(
-                                      color: theme.colorScheme.onSurface
-                                          .withValues(alpha: 0.45),
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Text(
+                                      widget.folder.name,
+                                      style: theme.textTheme.titleSmall
+                                          ?.copyWith(
+                                            fontWeight: FontWeight.w600,
+                                          ),
+                                      maxLines: 1,
+                                      overflow: TextOverflow.ellipsis,
                                     ),
-                                  ),
-                                ],
-                              ],
-                            ),
-                          ),
-                        ],
-                      ),
-                      if (isSelectionMode)
-                        Positioned(
-                          top: 8,
-                          right: 8,
-                          child: AnimatedContainer(
-                            duration: const Duration(milliseconds: 200),
-                            width: 24,
-                            height: 24,
-                            decoration: BoxDecoration(
-                              shape: BoxShape.circle,
-                              color: isSelected ? primary : Colors.transparent,
-                              border: Border.all(
-                                color: isSelected
-                                    ? Colors.transparent
-                                    : theme.colorScheme.onSurface.withValues(
-                                        alpha: 0.3,
+                                    if (widget.itemCount > 0) ...[
+                                      const SizedBox(height: 4),
+                                      Text(
+                                        '${widget.itemCount} ${widget.itemCount == 1 ? 'item' : 'items'}',
+                                        style: theme.textTheme.bodySmall
+                                            ?.copyWith(
+                                              color: theme.colorScheme.onSurface
+                                                  .withValues(alpha: 0.45),
+                                            ),
                                       ),
-                                width: 2,
+                                    ],
+                                  ],
+                                ),
+                              ),
+                            ],
+                          ),
+                          if (isSelectionMode)
+                            Positioned(
+                              top: 8,
+                              right: 8,
+                              child: AnimatedContainer(
+                                duration: const Duration(milliseconds: 200),
+                                width: 24,
+                                height: 24,
+                                decoration: BoxDecoration(
+                                  shape: BoxShape.circle,
+                                  color: isSelected
+                                      ? primary
+                                      : Colors.transparent,
+                                  border: Border.all(
+                                    color: isSelected
+                                        ? Colors.transparent
+                                        : theme.colorScheme.onSurface
+                                              .withValues(alpha: 0.3),
+                                    width: 2,
+                                  ),
+                                ),
+                                child: isSelected
+                                    ? Icon(
+                                        Symbols.check_rounded,
+                                        size: 16,
+                                        color: theme.colorScheme.onPrimary,
+                                      )
+                                    : null,
                               ),
                             ),
-                            child: isSelected
-                                ? Icon(
-                                    Symbols.check_rounded,
-                                    size: 16,
-                                    color: theme.colorScheme.onPrimary,
-                                  )
-                                : null,
-                          ),
-                        ),
-                    ], // Stack children
-                  ), // Stack
-                ), // InkWell
-              ), // AnimatedContainer
-            ), // AnimatedScale
-          ), // GestureDetector
-        ); // MouseRegion
-      },
-    ); // DragTarget
+                        ], // Stack children
+                      ), // Stack
+                    ), // InkWell
+                  ), // AnimatedContainer
+                ), // AnimatedScale
+              ), // GestureDetector
+            ); // MouseRegion
+          },
+        ); // DragTarget
       }, // BlocSelector builder
     ); // BlocSelector
   }

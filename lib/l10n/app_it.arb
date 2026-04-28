@@ -482,5 +482,7 @@
   "icloudSync": "Sincronizzazione iCloud",
   "icloudSyncSubtitle": "Sincronizza i design tra i tuoi dispositivi tramite iCloud",
   "icloudSyncDisabled": "La sincronizzazione iCloud è disattivata",
-  "restartRequired": "Riavvia l'app per applicare le modifiche"
+  "restartRequired": "Riavvia l'app per applicare le modifiche",
+  "uploadExistingFolderToAsc": "Carica cartella esistente...",
+  "noImagesFoundInFolder": "Nessuna immagine di screenshot valida trovata nella cartella selezionata"
 }

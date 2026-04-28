@@ -124,8 +124,9 @@ extension _MultiRoutes on CommandServer {
         final body = await _readBody(request);
         final from = body['from'] as int?;
         final to = body['to'] as int?;
-        if (from == null || to == null)
+        if (from == null || to == null) {
           return ServerResponse.error('Missing "from" and "to" (int)');
+        }
         cubit.reorderDesigns(from, to);
         return ServerResponse.ok();
 
@@ -136,8 +137,9 @@ extension _MultiRoutes on CommandServer {
         final preset = ScreenshotPresets.all
             .where((p) => p.id == id)
             .firstOrNull;
-        if (preset == null)
+        if (preset == null) {
           return ServerResponse.error('Preset not found: $id');
+        }
         cubit.applyPreset(preset);
         return ServerResponse.ok({
           'preset': id,
@@ -150,8 +152,9 @@ extension _MultiRoutes on CommandServer {
         }
         final body = await _readBody(request);
         final batchAction = body['action'] as String?;
-        if (batchAction == null)
+        if (batchAction == null) {
           return ServerResponse.error('Missing "action"');
+        }
         final originalIndex = cubit.state.activeIndex;
         final results = <Map<String, dynamic>>[];
         for (int i = 0; i < cubit.state.designs.length; i++) {
@@ -211,8 +214,9 @@ extension _MultiRoutes on CommandServer {
           await imageFile.writeAsBytes(bytes);
         } else if (filePath != null) {
           imageFile = File(filePath);
-          if (!await imageFile.exists())
+          if (!await imageFile.exists()) {
             return ServerResponse.error('File not found: $filePath');
+          }
         } else {
           return ServerResponse.error(
             'Missing "file" (path) or "data" (base64)',

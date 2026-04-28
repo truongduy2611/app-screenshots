@@ -213,8 +213,7 @@ mixin MultiScreenshotActions<T extends StatefulWidget> on State<T> {
     try {
       syncEditorChangesBack();
       final multiState = context.read<MultiScreenshotCubit>().state;
-      final translationBundle =
-          context.read<TranslationCubit>().state.bundle;
+      final translationBundle = context.read<TranslationCubit>().state.bundle;
       final designs = multiState.designs;
       final design = SavedDesign(
         id: multiState.savedDesignId ?? 'unsaved',
@@ -223,9 +222,7 @@ mixin MultiScreenshotActions<T extends StatefulWidget> on State<T> {
         thumbnailPath: '',
         design: designs.first,
         multiDesigns: designs.length > 1 ? designs : null,
-        imagePaths: multiState.imageFiles
-            .map((f) => f?.path)
-            .toList(),
+        imagePaths: multiState.imageFiles.map((f) => f?.path).toList(),
         translationBundle: translationBundle,
         ascAppConfig: multiState.ascAppConfig,
       );
@@ -256,8 +253,7 @@ mixin MultiScreenshotActions<T extends StatefulWidget> on State<T> {
       final sourceFilePath = multiState.sourceFilePath;
       if (sourceFilePath == null) return;
 
-      final translationBundle =
-          context.read<TranslationCubit>().state.bundle;
+      final translationBundle = context.read<TranslationCubit>().state.bundle;
       final designs = multiState.designs;
       final design = SavedDesign(
         id: multiState.savedDesignId ?? 'unsaved',
@@ -266,9 +262,7 @@ mixin MultiScreenshotActions<T extends StatefulWidget> on State<T> {
         thumbnailPath: '',
         design: designs.first,
         multiDesigns: designs.length > 1 ? designs : null,
-        imagePaths: multiState.imageFiles
-            .map((f) => f?.path)
-            .toList(),
+        imagePaths: multiState.imageFiles.map((f) => f?.path).toList(),
         translationBundle: translationBundle,
         ascAppConfig: multiState.ascAppConfig,
       );

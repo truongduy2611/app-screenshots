@@ -482,5 +482,7 @@
   "icloudSync": "مزامنة iCloud",
   "icloudSyncSubtitle": "مزامنة التصاميم بين أجهزتك عبر iCloud",
   "icloudSyncDisabled": "مزامنة iCloud معطلة",
-  "restartRequired": "أعد تشغيل التطبيق لتطبيق التغييرات"
+  "restartRequired": "أعد تشغيل التطبيق لتطبيق التغييرات",
+  "uploadExistingFolderToAsc": "تحميل مجلد موجود...",
+  "noImagesFoundInFolder": "لم يتم العثور على صور لقطات شاشة صالحة في المجلد المحدد"
 }

@@ -482,5 +482,7 @@
   "icloudSync": "Синхронизация iCloud",
   "icloudSyncSubtitle": "Синхронизация дизайнов между устройствами через iCloud",
   "icloudSyncDisabled": "Синхронизация iCloud отключена",
-  "restartRequired": "Перезапустите приложение для применения изменений"
+  "restartRequired": "Перезапустите приложение для применения изменений",
+  "uploadExistingFolderToAsc": "Загрузить существующую папку...",
+  "noImagesFoundInFolder": "В выбранной папке не найдено допустимых снимков экрана"
 }
