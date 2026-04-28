@@ -242,28 +242,18 @@ class ScreenshotPersistenceService {
       designFiles.map((f) => f.readAsString()),
     );
 
-    // Offload heavy JSON decode + model construction to a background isolate.
-    final designs = await Isolate.run(() {
-      return _parseDesignJsons(contents, dirPath);
-    });
+    // Offload heavy JSON string → Map parsing to a background isolate.
+    // NOTE: SavedDesign.fromJson must run on the main isolate because
+    // ScreenshotDesign.fromJson resolves DeviceInfo objects that contain
+    // dart:ui types (Path, CustomPainter) which are unavailable in
+    // background isolates.
+    final rawMaps = await Isolate.run(() => _decodeJsonStrings(contents));
 
-    designs.sort((a, b) => b.lastModified.compareTo(a.lastModified));
-    return designs;
-  }
-
-  /// Pure function for background isolate — parses raw JSON strings into
-  /// [SavedDesign] objects with resolved absolute paths.
-  static List<SavedDesign> _parseDesignJsons(
-    List<String> jsonStrings,
-    String dirPath,
-  ) {
-    final List<SavedDesign> results = [];
-    for (final content in jsonStrings) {
+    final List<SavedDesign> designs = [];
+    for (final json in rawMaps) {
       try {
-        final json = jsonDecode(content);
-        if (json.containsKey('createdAt')) continue; // skip folder files
         final design = SavedDesign.fromJson(json);
-        results.add(
+        designs.add(
           design.copyWith(
             thumbnailPath: _toAbsolute(dirPath, design.thumbnailPath),
             imagePath: _toAbsoluteNullable(dirPath, design.imagePath),
@@ -272,8 +262,35 @@ class ScreenshotPersistenceService {
                 .toList(),
           ),
         );
+      } catch (e, st) {
+        AppLogger.error(
+          'Error loading design',
+          tag: 'Persistence',
+          error: e,
+          stackTrace: st,
+        );
+      }
+    }
+
+    designs.sort((a, b) => b.lastModified.compareTo(a.lastModified));
+    return designs;
+  }
+
+  /// Pure function for background isolate — decodes raw JSON strings into
+  /// Maps, filtering out folder files. Only raw parsing happens here;
+  /// model construction happens on the main isolate.
+  static List<Map<String, dynamic>> _decodeJsonStrings(
+    List<String> jsonStrings,
+  ) {
+    final List<Map<String, dynamic>> results = [];
+    for (final content in jsonStrings) {
+      try {
+        final json = jsonDecode(content) as Map<String, dynamic>;
+        if (!json.containsKey('createdAt')) {
+          results.add(json);
+        }
       } catch (_) {
-        // Skip corrupt files — error is not observable from isolate.
+        // Skip corrupt files.
       }
     }
     return results;
