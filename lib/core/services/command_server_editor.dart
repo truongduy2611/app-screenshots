@@ -332,7 +332,7 @@ extension _EditorRoutes on CommandServer {
         final file = File(filePath);
         if (!await file.exists())
           return ServerResponse.error('File not found: $filePath');
-        final success = cubit.addImageOverlay(file);
+        final success = await cubit.addImageOverlay(file);
         if (!success)
           return ServerResponse.error('Image overlay limit reached (max 10)');
         final overlay = cubit.state.design.imageOverlays.last;

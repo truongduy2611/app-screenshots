@@ -15,6 +15,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:http/http.dart' as http;
 import 'package:path_provider/path_provider.dart';
+import 'package:path/path.dart' as p;
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:uuid/uuid.dart';
 
@@ -160,8 +161,9 @@ class ScreenshotEditorCubit extends Cubit<ScreenshotEditorState> {
     }
   }
 
-  void updateImageFile(File file) {
-    emit(state.copyWith(selectedImageFile: file, selectedImageUrl: null));
+  Future<void> updateImageFile(File file) async {
+    final stable = await _copyToStableStorage(file);
+    emit(state.copyWith(selectedImageFile: stable, selectedImageUrl: null));
   }
 
   static DeviceInfo _getDefaultDeviceFrame(String? displayType) {
@@ -371,12 +373,13 @@ class ScreenshotEditorCubit extends Cubit<ScreenshotEditorState> {
   }
 
   /// Adds an image overlay.
-  bool addImageOverlay(File file) {
+  Future<bool> addImageOverlay(File file) async {
     if (state.design.imageOverlays.length >= 10) return false;
 
+    final stable = await _copyToStableStorage(file);
     final overlay = ImageOverlay(
       id: const Uuid().v4(),
-      filePath: file.path,
+      filePath: stable.path,
       position: const Offset(100, 100),
       width: 150,
       height: 150,
@@ -1007,5 +1010,26 @@ class ScreenshotEditorCubit extends Cubit<ScreenshotEditorState> {
       );
       _gridSettingsBeforeCapture = null;
     }
+  }
+
+  /// Copies [file] to a stable app-managed directory so it won't be lost
+  /// if the original source (e.g. Downloads, temp) is cleaned up.
+  static Future<File> _copyToStableStorage(File file) async {
+    final appDir = await getApplicationDocumentsDirectory();
+    final stableDir = Directory('${appDir.path}/screenshot_images');
+    if (!await stableDir.exists()) {
+      await stableDir.create(recursive: true);
+    }
+
+    // Skip copy if the file is already in our managed directory.
+    if (p.isWithin(stableDir.path, file.path)) return file;
+
+    final ext = p.extension(file.path).isNotEmpty
+        ? p.extension(file.path)
+        : '.png';
+    final stableFile = File(
+      '${stableDir.path}/${DateTime.now().millisecondsSinceEpoch}_${p.basenameWithoutExtension(file.path)}$ext',
+    );
+    return file.copy(stableFile.path);
   }
 }
