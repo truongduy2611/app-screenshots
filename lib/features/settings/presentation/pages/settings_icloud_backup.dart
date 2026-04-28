@@ -34,8 +34,7 @@ class _ICloudBackupSection extends StatelessWidget {
               subtitle: Text(
                 context.l10n.icloudSyncSubtitle,
                 style: theme.textTheme.bodySmall?.copyWith(
-                  color:
-                      theme.colorScheme.onSurface.withValues(alpha: 0.55),
+                  color: theme.colorScheme.onSurface.withValues(alpha: 0.55),
                 ),
               ),
               trailing: AppSwitch(
@@ -48,72 +47,64 @@ class _ICloudBackupSection extends StatelessWidget {
                   ? () => _toggleSync(context, !state.isSyncEnabled)
                   : null,
             ),
-            // Auto-backup toggle (disabled when sync is off)
-            AppListTile(
-              leading: Icon(
-                Symbols.cloud_sync_rounded,
-                size: 20,
-                color: state.isSyncEnabled
-                    ? theme.colorScheme.onSurface
-                    : theme.colorScheme.onSurface.withValues(alpha: 0.35),
-              ),
-              title: Text(
-                context.l10n.backupsAutomatic,
-                style: theme.textTheme.bodyMedium?.copyWith(
-                  fontWeight: FontWeight.w500,
-                  color: state.isSyncEnabled
-                      ? null
-                      : theme.colorScheme.onSurface.withValues(alpha: 0.35),
+            
+            if (state.isSyncEnabled) ...[
+              // Auto-backup toggle
+              AppListTile(
+                leading: Icon(
+                  Symbols.cloud_sync_rounded,
+                  size: 20,
+                  color: theme.colorScheme.onSurface,
                 ),
-              ),
-              trailing: AppSwitch(
-                value: state.isEnabled && state.isSyncEnabled,
-                onChanged: state.isAvailable && state.isSyncEnabled
-                    ? (v) => context.read<BackupCubit>().toggleAutoBackup(v)
+                title: Text(
+                  context.l10n.backupsAutomatic,
+                  style: theme.textTheme.bodyMedium?.copyWith(
+                    fontWeight: FontWeight.w500,
+                  ),
+                ),
+                trailing: AppSwitch(
+                  value: state.isEnabled,
+                  onChanged: state.isAvailable
+                      ? (v) => context.read<BackupCubit>().toggleAutoBackup(v)
+                      : null,
+                ),
+                onTap: state.isAvailable
+                    ? () => context.read<BackupCubit>().toggleAutoBackup(
+                        !state.isEnabled,
+                      )
                     : null,
               ),
-              onTap: state.isAvailable && state.isSyncEnabled
-                  ? () => context.read<BackupCubit>().toggleAutoBackup(
-                      !state.isEnabled,
-                    )
-                  : null,
-            ),
-            // Last backup info
-            _SettingsTile(
-              icon: Symbols.cloud_done_rounded,
-              title: context.l10n.lastBackup,
-              subtitle: state.lastBackupDate != null
-                  ? DateFormat.yMMMd().add_jm().format(state.lastBackupDate!)
-                  : context.l10n.noBackupsAvailable,
-              theme: theme,
-            ),
-            // Backup now
-            _SettingsTile(
-              icon: state.isBackingUp
-                  ? Symbols.sync_rounded
-                  : Symbols.backup_rounded,
-              title: context.l10n.backupNow,
-              subtitle: !state.isAvailable
-                  ? context.l10n.icloudNotAvailable
-                  : !state.isSyncEnabled
-                      ? context.l10n.icloudSyncDisabled
-                      : null,
-              theme: theme,
-              onTap: state.isAvailable &&
-                      state.isSyncEnabled &&
-                      !state.isBackingUp
-                  ? () => _backupNow(context)
-                  : null,
-            ),
-            // Restore from backup
-            _SettingsTile(
-              icon: Symbols.restore_rounded,
-              title: context.l10n.restoreFromBackup,
-              theme: theme,
-              onTap: state.isAvailable && state.isSyncEnabled
-                  ? () => _showRestoreDialog(context)
-                  : null,
-            ),
+              // Last backup info
+              _SettingsTile(
+                icon: Symbols.cloud_done_rounded,
+                title: context.l10n.lastBackup,
+                subtitle: state.lastBackupDate != null
+                    ? DateFormat.yMMMd().add_jm().format(state.lastBackupDate!)
+                    : context.l10n.noBackupsAvailable,
+                theme: theme,
+              ),
+              // Backup now
+              _SettingsTile(
+                icon: state.isBackingUp
+                    ? Symbols.sync_rounded
+                    : Symbols.backup_rounded,
+                title: context.l10n.backupNow,
+                subtitle: !state.isAvailable
+                    ? context.l10n.icloudNotAvailable
+                    : null,
+                theme: theme,
+                onTap: state.isAvailable && !state.isBackingUp
+                    ? () => _backupNow(context)
+                    : null,
+              ),
+              // Restore from backup
+              _SettingsTile(
+                icon: Symbols.restore_rounded,
+                title: context.l10n.restoreFromBackup,
+                theme: theme,
+                onTap: state.isAvailable ? () => _showRestoreDialog(context) : null,
+              ),
+            ],
           ],
         );
       },
