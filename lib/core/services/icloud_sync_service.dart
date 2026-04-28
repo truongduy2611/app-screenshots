@@ -125,17 +125,6 @@ class ICloudSyncService {
         final removed = _castStringList(args?['removed']);
         final changed = _castStringList(args?['changed']);
 
-        AppLogger.d('Remote change detected', tag: 'iCloudSync');
-        if (added.isNotEmpty) {
-          AppLogger.d('  ➕ Added: $added', tag: 'iCloudSync');
-        }
-        if (removed.isNotEmpty) {
-          AppLogger.d('  ➖ Removed: $removed', tag: 'iCloudSync');
-        }
-        if (changed.isNotEmpty) {
-          AppLogger.d('  ✏️ Changed: $changed', tag: 'iCloudSync');
-        }
-
         // Only trigger refresh for design files, not backup zips etc.
         final allFiles = [...added, ...removed, ...changed];
         final hasDesignChanges = allFiles.any(
@@ -144,11 +133,6 @@ class ICloudSyncService {
 
         if (hasDesignChanges) {
           _remoteChangeController.add(null);
-        } else {
-          AppLogger.d(
-            '  ⏭️ Skipped — no design file changes',
-            tag: 'iCloudSync',
-          );
         }
       }
     });

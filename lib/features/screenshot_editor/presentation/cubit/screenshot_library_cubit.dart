@@ -36,7 +36,6 @@ class ScreenshotLibraryCubit extends Cubit<ScreenshotLibraryState> {
        super(ScreenshotLibraryInitial()) {
     // Listen for remote iCloud changes and auto-refresh (without flash).
     _remoteChangeSub = _syncService?.onRemoteChange.listen((_) {
-      AppLogger.d('Remote iCloud change detected, refreshing...', tag: _tag);
       _silentRefresh();
     });
   }
@@ -116,7 +115,6 @@ class ScreenshotLibraryCubit extends Cubit<ScreenshotLibraryState> {
         final sameDesigns = _designListEquals(currentState.allDesigns, designs);
         final sameFolders = _folderListEquals(currentState.allFolders, folders);
         if (sameDesigns && sameFolders) {
-          AppLogger.d('Silent refresh — no data changes', tag: _tag);
           return;
         }
       }
