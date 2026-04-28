@@ -478,5 +478,9 @@
   "enableCliServerDescription": "Démarrez le serveur local pour utiliser l'outil CLI.",
   "cliLearnMoreButton": "Lire la documentation",
   "cliCompanionTitle": "Outil en ligne de commande",
-  "cliCompanionDescription": "Automatisez les captures d'écran depuis le terminal avec l'outil CLI compagnon. Consultez la documentation pour les instructions de configuration."
+  "cliCompanionDescription": "Automatisez les captures d'écran depuis le terminal avec l'outil CLI compagnon. Consultez la documentation pour les instructions de configuration.",
+  "icloudSync": "Synchronisation iCloud",
+  "icloudSyncSubtitle": "Synchroniser les designs entre vos appareils via iCloud",
+  "icloudSyncDisabled": "La synchronisation iCloud est désactivée",
+  "restartRequired": "Redémarrez l'application pour appliquer les modifications"
 }

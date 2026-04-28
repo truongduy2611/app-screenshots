@@ -478,5 +478,9 @@
   "enableCliServerDescription": "啟動本地伺服器以使用CLI工具。",
   "cliLearnMoreButton": "閱讀文檔",
   "cliCompanionTitle": "命令列工具",
-  "cliCompanionDescription": "使用配套的 CLI 工具從終端機自動化截圖。請參閱文件了解設定說明。"
+  "cliCompanionDescription": "使用配套的 CLI 工具從終端機自動化截圖。請參閱文件了解設定說明。",
+  "icloudSync": "iCloud 同步",
+  "icloudSyncSubtitle": "透過 iCloud 在裝置之間同步設計",
+  "icloudSyncDisabled": "iCloud 同步已關閉",
+  "restartRequired": "重新啟動應用程式以套用變更"
 }

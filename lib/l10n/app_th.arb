@@ -478,5 +478,9 @@
   "enableCliServerDescription": "เริ่มต้นเซิร์ฟเวอร์ในเครื่องเพื่อใช้เครื่องมือ CLI",
   "cliLearnMoreButton": "อ่านเอกสารประกอบ",
   "cliCompanionTitle": "เครื่องมือบรรทัดคำสั่ง",
-  "cliCompanionDescription": "สร้างภาพหน้าจออัตโนมัติจากเทอร์มินัลด้วยเครื่องมือ CLI ที่มาพร้อมกัน ดูคำแนะนำการตั้งค่าในเอกสารประกอบ"
+  "cliCompanionDescription": "สร้างภาพหน้าจออัตโนมัติจากเทอร์มินัลด้วยเครื่องมือ CLI ที่มาพร้อมกัน ดูคำแนะนำการตั้งค่าในเอกสารประกอบ",
+  "icloudSync": "การซิงค์ iCloud",
+  "icloudSyncSubtitle": "ซิงค์การออกแบบระหว่างอุปกรณ์ผ่าน iCloud",
+  "icloudSyncDisabled": "การซิงค์ iCloud ถูกปิด",
+  "restartRequired": "รีสตาร์ทแอปเพื่อให้การเปลี่ยนแปลงมีผล"
 }

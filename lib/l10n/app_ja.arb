@@ -478,5 +478,9 @@
   "enableCliServerDescription": "CLIツールを使用するにはローカルサーバーを起動してください。",
   "cliLearnMoreButton": "ドキュメントを読む",
   "cliCompanionTitle": "コマンドラインツール",
-  "cliCompanionDescription": "コンパニオンCLIツールを使って、ターミナルからスクリーンショットを自動化できます。セットアップ手順はドキュメントをご覧ください。"
+  "cliCompanionDescription": "コンパニオンCLIツールを使って、ターミナルからスクリーンショットを自動化できます。セットアップ手順はドキュメントをご覧ください。",
+  "icloudSync": "iCloud同期",
+  "icloudSyncSubtitle": "iCloudを使ってデバイス間でデザインを同期",
+  "icloudSyncDisabled": "iCloud同期がオフです",
+  "restartRequired": "変更を適用するにはアプリを再起動してください"
 }

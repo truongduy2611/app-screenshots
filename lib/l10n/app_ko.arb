@@ -478,5 +478,9 @@
   "enableCliServerDescription": "CLI 도구를 사용하려면 로컬 서버를 시작하세요.",
   "cliLearnMoreButton": "문서 읽기",
   "cliCompanionTitle": "명령줄 도구",
-  "cliCompanionDescription": "컴패니언 CLI 도구를 사용하여 터미널에서 스크린샷을 자동화하세요. 설정 방법은 문서를 참조하세요."
+  "cliCompanionDescription": "컴패니언 CLI 도구를 사용하여 터미널에서 스크린샷을 자동화하세요. 설정 방법은 문서를 참조하세요.",
+  "icloudSync": "iCloud 동기화",
+  "icloudSyncSubtitle": "iCloud를 통해 기기 간 디자인 동기화",
+  "icloudSyncDisabled": "iCloud 동기화가 비활성화되어 있습니다",
+  "restartRequired": "변경 사항을 적용하려면 앱을 다시 시작하세요"
 }

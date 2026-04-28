@@ -1653,4 +1653,18 @@ class AppLocalizationsFr extends AppLocalizations {
   @override
   String get cliCompanionDescription =>
       'Automatisez les captures d\'écran depuis le terminal avec l\'outil CLI compagnon. Consultez la documentation pour les instructions de configuration.';
+
+  @override
+  String get icloudSync => 'Synchronisation iCloud';
+
+  @override
+  String get icloudSyncSubtitle =>
+      'Synchroniser les designs entre vos appareils via iCloud';
+
+  @override
+  String get icloudSyncDisabled => 'La synchronisation iCloud est désactivée';
+
+  @override
+  String get restartRequired =>
+      'Redémarrez l\'application pour appliquer les modifications';
 }

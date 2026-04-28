@@ -18,26 +18,61 @@ class _ICloudBackupSection extends StatelessWidget {
           isDark: isDark,
           theme: theme,
           children: [
-            // Auto-backup toggle
+            // Master iCloud sync toggle
+            AppListTile(
+              leading: Icon(
+                Symbols.cloud_rounded,
+                size: 20,
+                color: theme.colorScheme.onSurface,
+              ),
+              title: Text(
+                context.l10n.icloudSync,
+                style: theme.textTheme.bodyMedium?.copyWith(
+                  fontWeight: FontWeight.w500,
+                ),
+              ),
+              subtitle: Text(
+                context.l10n.icloudSyncSubtitle,
+                style: theme.textTheme.bodySmall?.copyWith(
+                  color:
+                      theme.colorScheme.onSurface.withValues(alpha: 0.55),
+                ),
+              ),
+              trailing: AppSwitch(
+                value: state.isSyncEnabled,
+                onChanged: state.isAvailable
+                    ? (v) => _toggleSync(context, v)
+                    : null,
+              ),
+              onTap: state.isAvailable
+                  ? () => _toggleSync(context, !state.isSyncEnabled)
+                  : null,
+            ),
+            // Auto-backup toggle (disabled when sync is off)
             AppListTile(
               leading: Icon(
                 Symbols.cloud_sync_rounded,
                 size: 20,
-                color: theme.colorScheme.onSurface,
+                color: state.isSyncEnabled
+                    ? theme.colorScheme.onSurface
+                    : theme.colorScheme.onSurface.withValues(alpha: 0.35),
               ),
               title: Text(
                 context.l10n.backupsAutomatic,
                 style: theme.textTheme.bodyMedium?.copyWith(
                   fontWeight: FontWeight.w500,
+                  color: state.isSyncEnabled
+                      ? null
+                      : theme.colorScheme.onSurface.withValues(alpha: 0.35),
                 ),
               ),
               trailing: AppSwitch(
-                value: state.isEnabled,
-                onChanged: state.isAvailable
+                value: state.isEnabled && state.isSyncEnabled,
+                onChanged: state.isAvailable && state.isSyncEnabled
                     ? (v) => context.read<BackupCubit>().toggleAutoBackup(v)
                     : null,
               ),
-              onTap: state.isAvailable
+              onTap: state.isAvailable && state.isSyncEnabled
                   ? () => context.read<BackupCubit>().toggleAutoBackup(
                       !state.isEnabled,
                     )
@@ -60,9 +95,13 @@ class _ICloudBackupSection extends StatelessWidget {
               title: context.l10n.backupNow,
               subtitle: !state.isAvailable
                   ? context.l10n.icloudNotAvailable
-                  : null,
+                  : !state.isSyncEnabled
+                      ? context.l10n.icloudSyncDisabled
+                      : null,
               theme: theme,
-              onTap: state.isAvailable && !state.isBackingUp
+              onTap: state.isAvailable &&
+                      state.isSyncEnabled &&
+                      !state.isBackingUp
                   ? () => _backupNow(context)
                   : null,
             ),
@@ -71,7 +110,7 @@ class _ICloudBackupSection extends StatelessWidget {
               icon: Symbols.restore_rounded,
               title: context.l10n.restoreFromBackup,
               theme: theme,
-              onTap: state.isAvailable
+              onTap: state.isAvailable && state.isSyncEnabled
                   ? () => _showRestoreDialog(context)
                   : null,
             ),
@@ -79,6 +118,17 @@ class _ICloudBackupSection extends StatelessWidget {
         );
       },
     );
+  }
+
+  void _toggleSync(BuildContext context, bool enabled) {
+    context.read<BackupCubit>().toggleICloudSync(enabled);
+    if (!enabled) {
+      // Show restart notice
+      context.showAppSnackbar(
+        context.l10n.restartRequired,
+        type: AppSnackbarType.info,
+      );
+    }
   }
 
   Future<void> _backupNow(BuildContext context) async {

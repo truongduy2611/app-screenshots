@@ -1584,4 +1584,16 @@ class AppLocalizationsTh extends AppLocalizations {
   @override
   String get cliCompanionDescription =>
       'สร้างภาพหน้าจออัตโนมัติจากเทอร์มินัลด้วยเครื่องมือ CLI ที่มาพร้อมกัน ดูคำแนะนำการตั้งค่าในเอกสารประกอบ';
+
+  @override
+  String get icloudSync => 'การซิงค์ iCloud';
+
+  @override
+  String get icloudSyncSubtitle => 'ซิงค์การออกแบบระหว่างอุปกรณ์ผ่าน iCloud';
+
+  @override
+  String get icloudSyncDisabled => 'การซิงค์ iCloud ถูกปิด';
+
+  @override
+  String get restartRequired => 'รีสตาร์ทแอปเพื่อให้การเปลี่ยนแปลงมีผล';
 }

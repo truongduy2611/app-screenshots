@@ -478,5 +478,9 @@
   "enableCliServerDescription": "CLI aracını kullanmak için yerel sunucuyu başlatın.",
   "cliLearnMoreButton": "Belgeleri Oku",
   "cliCompanionTitle": "Komut Satırı Aracı",
-  "cliCompanionDescription": "Eşlik eden CLI aracıyla terminalden ekran görüntülerini otomatikleştirin. Kurulum talimatları için belgelere bakın."
+  "cliCompanionDescription": "Eşlik eden CLI aracıyla terminalden ekran görüntülerini otomatikleştirin. Kurulum talimatları için belgelere bakın.",
+  "icloudSync": "iCloud Senkronizasyonu",
+  "icloudSyncSubtitle": "Tasarımları iCloud üzerinden cihazlar arasında senkronize edin",
+  "icloudSyncDisabled": "iCloud senkronizasyonu devre dışı",
+  "restartRequired": "Değişikliklerin geçerli olması için uygulamayı yeniden başlatın"
 }

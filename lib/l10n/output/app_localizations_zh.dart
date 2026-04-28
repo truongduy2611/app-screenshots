@@ -1554,6 +1554,18 @@ class AppLocalizationsZh extends AppLocalizations {
 
   @override
   String get cliCompanionDescription => '使用配套的 CLI 工具从终端自动化截图。请查看文档了解设置说明。';
+
+  @override
+  String get icloudSync => 'iCloud 同步';
+
+  @override
+  String get icloudSyncSubtitle => '通过 iCloud 在设备之间同步设计';
+
+  @override
+  String get icloudSyncDisabled => 'iCloud 同步已关闭';
+
+  @override
+  String get restartRequired => '重新启动应用以应用更改';
 }
 
 /// The translations for Chinese, using the Han script (`zh_Hant`).
@@ -3099,4 +3111,16 @@ class AppLocalizationsZhHant extends AppLocalizationsZh {
 
   @override
   String get cliCompanionDescription => '使用配套的 CLI 工具從終端機自動化截圖。請參閱文件了解設定說明。';
+
+  @override
+  String get icloudSync => 'iCloud 同步';
+
+  @override
+  String get icloudSyncSubtitle => '透過 iCloud 在裝置之間同步設計';
+
+  @override
+  String get icloudSyncDisabled => 'iCloud 同步已關閉';
+
+  @override
+  String get restartRequired => '重新啟動應用程式以套用變更';
 }

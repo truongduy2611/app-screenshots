@@ -1648,4 +1648,17 @@ class AppLocalizationsDe extends AppLocalizations {
   @override
   String get cliCompanionDescription =>
       'Automatisieren Sie Screenshots über das Terminal mit dem Begleit-Befehlszeilen-Tool. Weitere Informationen finden Sie in der Dokumentation.';
+
+  @override
+  String get icloudSync => 'iCloud-Synchronisierung';
+
+  @override
+  String get icloudSyncSubtitle =>
+      'Designs über iCloud zwischen Geräten synchronisieren';
+
+  @override
+  String get icloudSyncDisabled => 'iCloud-Synchronisierung ist deaktiviert';
+
+  @override
+  String get restartRequired => 'App neu starten, um Änderungen zu übernehmen';
 }

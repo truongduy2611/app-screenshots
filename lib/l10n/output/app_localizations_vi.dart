@@ -1618,4 +1618,17 @@ class AppLocalizationsVi extends AppLocalizations {
   @override
   String get cliCompanionDescription =>
       'Tự động hóa ảnh chụp màn hình từ terminal với công cụ CLI đi kèm. Xem tài liệu để biết hướng dẫn cài đặt.';
+
+  @override
+  String get icloudSync => 'Đồng bộ iCloud';
+
+  @override
+  String get icloudSyncSubtitle =>
+      'Đồng bộ thiết kế giữa các thiết bị qua iCloud';
+
+  @override
+  String get icloudSyncDisabled => 'Đồng bộ iCloud đã tắt';
+
+  @override
+  String get restartRequired => 'Khởi động lại ứng dụng để áp dụng thay đổi';
 }
