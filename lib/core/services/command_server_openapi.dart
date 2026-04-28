@@ -10,7 +10,7 @@ info:
   description: Local API for controlling the App Screenshots editor.
   version: 1.0.0
 servers:
-  - url: http://localhost:19222
+  - url: /
 components:
   schemas:
     SuccessResponse:

@@ -11,7 +11,7 @@ void main() {
   );
   buffer.writeln('  version: 1.0.0');
   buffer.writeln('servers:');
-  buffer.writeln('  - url: http://localhost:19222');
+  buffer.writeln('  - url: /');
   buffer.writeln('components:');
   buffer.writeln('  schemas:');
   buffer.writeln('    SuccessResponse:');
