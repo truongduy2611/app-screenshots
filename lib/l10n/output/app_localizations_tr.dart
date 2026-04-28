@@ -1637,4 +1637,18 @@ class AppLocalizationsTr extends AppLocalizations {
   @override
   String get cliCompanionDescription =>
       'Eşlik eden CLI aracıyla terminalden ekran görüntülerini otomatikleştirin. Kurulum talimatları için belgelere bakın.';
+
+  @override
+  String get icloudSync => 'iCloud Senkronizasyonu';
+
+  @override
+  String get icloudSyncSubtitle =>
+      'Tasarımları iCloud üzerinden cihazlar arasında senkronize edin';
+
+  @override
+  String get icloudSyncDisabled => 'iCloud senkronizasyonu devre dışı';
+
+  @override
+  String get restartRequired =>
+      'Değişikliklerin geçerli olması için uygulamayı yeniden başlatın';
 }

@@ -1642,4 +1642,18 @@ class AppLocalizationsRu extends AppLocalizations {
   @override
   String get cliCompanionDescription =>
       'Автоматизируйте создание снимков экрана из терминала с помощью CLI-инструмента. Инструкции по настройке см. в документации.';
+
+  @override
+  String get icloudSync => 'Синхронизация iCloud';
+
+  @override
+  String get icloudSyncSubtitle =>
+      'Синхронизация дизайнов между устройствами через iCloud';
+
+  @override
+  String get icloudSyncDisabled => 'Синхронизация iCloud отключена';
+
+  @override
+  String get restartRequired =>
+      'Перезапустите приложение для применения изменений';
 }

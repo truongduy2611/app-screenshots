@@ -1562,4 +1562,16 @@ class AppLocalizationsKo extends AppLocalizations {
   @override
   String get cliCompanionDescription =>
       '컴패니언 CLI 도구를 사용하여 터미널에서 스크린샷을 자동화하세요. 설정 방법은 문서를 참조하세요.';
+
+  @override
+  String get icloudSync => 'iCloud 동기화';
+
+  @override
+  String get icloudSyncSubtitle => 'iCloud를 통해 기기 간 디자인 동기화';
+
+  @override
+  String get icloudSyncDisabled => 'iCloud 동기화가 비활성화되어 있습니다';
+
+  @override
+  String get restartRequired => '변경 사항을 적용하려면 앱을 다시 시작하세요';
 }

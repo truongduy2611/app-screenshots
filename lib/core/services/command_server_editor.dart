@@ -66,13 +66,15 @@ extension _EditorRoutes on CommandServer {
       case EditorAction.setBackground:
         final body = await _readBody(request);
         final colorStr = body['color'] as String?;
-        if (colorStr == null)
+        if (colorStr == null) {
           return ServerResponse.error(
             'Missing "color" (hex string e.g. "#FF5733")',
           );
+        }
         final color = parseHexColor(colorStr);
-        if (color == null)
+        if (color == null) {
           return ServerResponse.error('Invalid color format: $colorStr');
+        }
         cubit.updateBackgroundColor(color);
         return ServerResponse.ok({'color': colorStr});
 
@@ -156,16 +158,18 @@ extension _EditorRoutes on CommandServer {
       case EditorAction.setPadding:
         final body = await _readBody(request);
         final padding = (body['padding'] as num?)?.toDouble();
-        if (padding == null)
+        if (padding == null) {
           return ServerResponse.error('Missing "padding" (number)');
+        }
         cubit.updatePadding(padding);
         return ServerResponse.ok({'padding': padding});
 
       case EditorAction.setCornerRadius:
         final body = await _readBody(request);
         final radius = (body['radius'] as num?)?.toDouble();
-        if (radius == null)
+        if (radius == null) {
           return ServerResponse.error('Missing "radius" (number)');
+        }
         cubit.updateCornerRadius(radius);
         return ServerResponse.ok({'radius': radius});
 
@@ -188,11 +192,13 @@ extension _EditorRoutes on CommandServer {
       case EditorAction.setImage:
         final body = await _readBody(request);
         final filePath = body['file'] as String?;
-        if (filePath == null)
+        if (filePath == null) {
           return ServerResponse.error('Missing "file" (path)');
+        }
         final file = File(filePath);
-        if (!await file.exists())
+        if (!await file.exists()) {
           return ServerResponse.error('File not found: $filePath');
+        }
         cubit.updateImageFile(file);
         return ServerResponse.ok({'file': filePath});
 
@@ -206,8 +212,9 @@ extension _EditorRoutes on CommandServer {
       case EditorAction.setImageBase64:
         final body = await _readBody(request);
         final base64Data = body['data'] as String?;
-        if (base64Data == null)
+        if (base64Data == null) {
           return ServerResponse.error('Missing "data" (base64 PNG/JPG)');
+        }
         try {
           final bytes = base64Decode(base64Data);
           final tempDir = Directory.systemTemp;
@@ -268,17 +275,20 @@ extension _EditorRoutes on CommandServer {
       case EditorAction.updateText:
         final body = await _readBody(request);
         final id = body['id'] as String?;
-        if (id == null)
+        if (id == null) {
           return ServerResponse.error('Missing "id" (overlay ID)');
+        }
         final existing = cubit.state.design.overlays
             .where((o) => o.id == id)
             .firstOrNull;
-        if (existing == null)
+        if (existing == null) {
           return ServerResponse.error('Overlay not found: $id');
+        }
 
         var updated = existing;
-        if (body.containsKey('text'))
+        if (body.containsKey('text')) {
           updated = updated.copyWith(text: body['text'] as String);
+        }
         if (body.containsKey('fontSize')) {
           updated = updated.copyWith(
             style: updated.style.copyWith(
@@ -288,11 +298,13 @@ extension _EditorRoutes on CommandServer {
         }
         if (body.containsKey('color')) {
           final c = parseHexColor(body['color'] as String);
-          if (c != null)
+          if (c != null) {
             updated = updated.copyWith(style: updated.style.copyWith(color: c));
+          }
         }
-        if (body.containsKey('font'))
+        if (body.containsKey('font')) {
           updated = updated.copyWith(googleFont: body['font'] as String);
+        }
         if (body.containsKey('x') || body.containsKey('y')) {
           updated = updated.copyWith(
             position: Offset(
@@ -327,14 +339,17 @@ extension _EditorRoutes on CommandServer {
       case EditorAction.addImage:
         final body = await _readBody(request);
         final filePath = body['file'] as String?;
-        if (filePath == null)
+        if (filePath == null) {
           return ServerResponse.error('Missing "file" (path)');
+        }
         final file = File(filePath);
-        if (!await file.exists())
+        if (!await file.exists()) {
           return ServerResponse.error('File not found: $filePath');
-        final success = cubit.addImageOverlay(file);
-        if (!success)
+        }
+        final success = await cubit.addImageOverlay(file);
+        if (!success) {
           return ServerResponse.error('Image overlay limit reached (max 10)');
+        }
         final overlay = cubit.state.design.imageOverlays.last;
         if (body.containsKey('x') ||
             body.containsKey('y') ||
@@ -361,8 +376,9 @@ extension _EditorRoutes on CommandServer {
         final existing = cubit.state.design.imageOverlays
             .where((o) => o.id == id)
             .firstOrNull;
-        if (existing == null)
+        if (existing == null) {
           return ServerResponse.error('Image overlay not found: $id');
+        }
         var updated = existing;
         if (body.containsKey('x') || body.containsKey('y')) {
           updated = updated.copyWith(
@@ -372,34 +388,41 @@ extension _EditorRoutes on CommandServer {
             ),
           );
         }
-        if (body.containsKey('width'))
+        if (body.containsKey('width')) {
           updated = updated.copyWith(width: (body['width'] as num).toDouble());
-        if (body.containsKey('height'))
+        }
+        if (body.containsKey('height')) {
           updated = updated.copyWith(
             height: (body['height'] as num).toDouble(),
           );
-        if (body.containsKey('scale'))
+        }
+        if (body.containsKey('scale')) {
           updated = updated.copyWith(scale: (body['scale'] as num).toDouble());
-        if (body.containsKey('rotation'))
+        }
+        if (body.containsKey('rotation')) {
           updated = updated.copyWith(
             rotation: (body['rotation'] as num).toDouble(),
           );
-        if (body.containsKey('opacity'))
+        }
+        if (body.containsKey('opacity')) {
           updated = updated.copyWith(
             opacity: (body['opacity'] as num).toDouble(),
           );
-        if (body.containsKey('cornerRadius'))
+        }
+        if (body.containsKey('cornerRadius')) {
           updated = updated.copyWith(
             cornerRadius: (body['cornerRadius'] as num).toDouble(),
           );
+        }
         cubit.updateImageOverlay(id, updated);
         return ServerResponse.ok({'overlayId': id});
 
       case EditorAction.addIcon:
         final body = await _readBody(request);
         final codePoint = body['codePoint'] as int?;
-        if (codePoint == null)
+        if (codePoint == null) {
           return ServerResponse.error('Missing "codePoint" (int)');
+        }
         final fontFamily = body['fontFamily'] as String? ?? 'MaterialIcons';
         final fontPackage = body['fontPackage'] as String? ?? '';
         final colorStr = body['color'] as String?;
@@ -430,10 +453,11 @@ extension _EditorRoutes on CommandServer {
       case EditorAction.setDisplayType:
         final body = await _readBody(request);
         final displayType = body['displayType'] as String?;
-        if (displayType == null)
+        if (displayType == null) {
           return ServerResponse.error(
             'Missing "displayType" (e.g. APP_IPHONE_69)',
           );
+        }
         final design = cubit.state.design.copyWith(displayType: displayType);
         cubit.replaceDesign(design);
         return ServerResponse.ok({'displayType': displayType});
@@ -519,8 +543,9 @@ extension _EditorRoutes on CommandServer {
         final preset = ScreenshotPresets.all
             .where((p) => p.id == id)
             .firstOrNull;
-        if (preset == null)
+        if (preset == null) {
           return ServerResponse.error('Preset not found: $id');
+        }
         cubit.applyPreset(preset);
         return ServerResponse.ok({'preset': id, 'name': preset.name});
 
@@ -570,8 +595,9 @@ extension _EditorRoutes on CommandServer {
         final existing = cubit.state.design.iconOverlays
             .where((o) => o.id == id)
             .firstOrNull;
-        if (existing == null)
+        if (existing == null) {
           return ServerResponse.error('Icon overlay not found: $id');
+        }
         var updated = existing;
         if (body.containsKey('x') || body.containsKey('y')) {
           updated = updated.copyWith(
@@ -581,20 +607,23 @@ extension _EditorRoutes on CommandServer {
             ),
           );
         }
-        if (body.containsKey('size'))
+        if (body.containsKey('size')) {
           updated = updated.copyWith(size: (body['size'] as num).toDouble());
+        }
         if (body.containsKey('color')) {
           final c = parseHexColor(body['color'] as String);
           if (c != null) updated = updated.copyWith(color: c);
         }
-        if (body.containsKey('rotation'))
+        if (body.containsKey('rotation')) {
           updated = updated.copyWith(
             rotation: (body['rotation'] as num).toDouble(),
           );
-        if (body.containsKey('opacity'))
+        }
+        if (body.containsKey('opacity')) {
           updated = updated.copyWith(
             opacity: (body['opacity'] as num).toDouble(),
           );
+        }
         cubit.updateIconOverlay(id, updated);
         return ServerResponse.ok({'overlayId': id});
 
@@ -605,8 +634,9 @@ extension _EditorRoutes on CommandServer {
         final existing = cubit.state.design.magnifierOverlays
             .where((o) => o.id == id)
             .firstOrNull;
-        if (existing == null)
+        if (existing == null) {
           return ServerResponse.error('Magnifier overlay not found: $id');
+        }
         var updated = existing;
         if (body.containsKey('x') || body.containsKey('y')) {
           updated = updated.copyWith(
@@ -616,20 +646,24 @@ extension _EditorRoutes on CommandServer {
             ),
           );
         }
-        if (body.containsKey('width'))
+        if (body.containsKey('width')) {
           updated = updated.copyWith(width: (body['width'] as num).toDouble());
-        if (body.containsKey('height'))
+        }
+        if (body.containsKey('height')) {
           updated = updated.copyWith(
             height: (body['height'] as num).toDouble(),
           );
-        if (body.containsKey('zoomLevel'))
+        }
+        if (body.containsKey('zoomLevel')) {
           updated = updated.copyWith(
             zoomLevel: (body['zoomLevel'] as num).toDouble(),
           );
-        if (body.containsKey('cornerRadius'))
+        }
+        if (body.containsKey('cornerRadius')) {
           updated = updated.copyWith(
             cornerRadius: (body['cornerRadius'] as num).toDouble(),
           );
+        }
         cubit.updateMagnifierOverlay(id, updated);
         return ServerResponse.ok({'overlayId': id});
 
@@ -684,11 +718,13 @@ extension _EditorRoutes on CommandServer {
       case EditorAction.loadDesign:
         final body = await _readBody(request);
         final id = body['id'] as String?;
-        if (id == null)
+        if (id == null) {
           return ServerResponse.error('Missing "id" (saved design ID)');
+        }
         final savedDesign = await _persistenceService.getDesignById(id);
-        if (savedDesign == null)
+        if (savedDesign == null) {
           return ServerResponse.error('Design not found: $id');
+        }
         cubit.loadDesignIntoEditor(savedDesign);
         return ServerResponse.ok({'id': id, 'name': savedDesign.name});
 

@@ -17,7 +17,6 @@ import 'package:app_screenshots/core/widgets/genie_dialog_route.dart';
 import 'package:app_screenshots/core/extensions/context_extensions.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:app_screenshots/features/settings/presentation/cubit/cli_cubit.dart';
 import 'package:in_app_review/in_app_review.dart';
@@ -145,9 +144,8 @@ class _SettingsDialogState extends State<SettingsDialog> {
         return ListView(
           padding: const EdgeInsets.all(20),
           children: [
-            // Pro Section
+            _SupportMeCard(isDark: isDark, theme: theme),
             const SizedBox(height: 24),
-
             // ── Appearance ──
             _SectionHeader(title: context.l10n.appearance),
             const SizedBox(height: 8),
@@ -228,8 +226,8 @@ class _SettingsDialogState extends State<SettingsDialog> {
 
             const SizedBox(height: 24),
 
-            // ── iCloud Backup ──
-            _SectionHeader(title: context.l10n.icloudBackup),
+            // ── iCloud ──
+            _SectionHeader(title: 'iCloud'),
             const SizedBox(height: 8),
             _ICloudBackupSection(isDark: isDark, theme: theme),
             const SizedBox(height: 24),
@@ -250,10 +248,8 @@ class _SettingsDialogState extends State<SettingsDialog> {
             const SizedBox(height: 8),
             if (Platform.isMacOS) ...[
               _SettingsCliCard(isDark: isDark, theme: theme),
-              const SizedBox(height: 12),
+              const SizedBox(height: 16),
             ],
-            _SupportMeCard(isDark: isDark, theme: theme),
-            const SizedBox(height: 16),
             _SettingsTileGroup(
               isDark: isDark,
               theme: theme,

@@ -113,6 +113,8 @@ void _registerCubits() {
   sl.registerFactory(() => TranslationCubit(sl()));
   sl.registerFactory(() => AscUploadCubit(sl(), sl()));
   sl.registerLazySingleton(() => AppIconCubit(sl(), sl())..load());
-  sl.registerLazySingleton(() => BackupCubit(sl())..init());
+  sl.registerLazySingleton(
+    () => BackupCubit(sl(), sl<ICloudSyncService>())..init(),
+  );
   sl.registerLazySingleton(() => CliCubit(sl()));
 }

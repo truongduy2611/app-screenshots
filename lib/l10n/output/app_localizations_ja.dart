@@ -1564,4 +1564,16 @@ class AppLocalizationsJa extends AppLocalizations {
   @override
   String get cliCompanionDescription =>
       'コンパニオンCLIツールを使って、ターミナルからスクリーンショットを自動化できます。セットアップ手順はドキュメントをご覧ください。';
+
+  @override
+  String get icloudSync => 'iCloud同期';
+
+  @override
+  String get icloudSyncSubtitle => 'iCloudを使ってデバイス間でデザインを同期';
+
+  @override
+  String get icloudSyncDisabled => 'iCloud同期がオフです';
+
+  @override
+  String get restartRequired => '変更を適用するにはアプリを再起動してください';
 }

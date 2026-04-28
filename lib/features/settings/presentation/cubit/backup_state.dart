@@ -6,6 +6,9 @@ class BackupState {
   /// Whether iCloud is available on this device.
   final bool isAvailable;
 
+  /// Whether master iCloud sync is enabled by the user.
+  final bool isSyncEnabled;
+
   /// Whether auto-backup is enabled by the user.
   final bool isEnabled;
 
@@ -26,6 +29,7 @@ class BackupState {
 
   const BackupState({
     this.isAvailable = false,
+    this.isSyncEnabled = true,
     this.isEnabled = true,
     this.isBackingUp = false,
     this.isRestoring = false,
@@ -36,6 +40,7 @@ class BackupState {
 
   BackupState copyWith({
     bool? isAvailable,
+    bool? isSyncEnabled,
     bool? isEnabled,
     bool? isBackingUp,
     bool? isRestoring,
@@ -46,6 +51,7 @@ class BackupState {
   }) {
     return BackupState(
       isAvailable: isAvailable ?? this.isAvailable,
+      isSyncEnabled: isSyncEnabled ?? this.isSyncEnabled,
       isEnabled: isEnabled ?? this.isEnabled,
       isBackingUp: isBackingUp ?? this.isBackingUp,
       isRestoring: isRestoring ?? this.isRestoring,

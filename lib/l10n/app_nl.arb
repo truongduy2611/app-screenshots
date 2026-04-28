@@ -478,5 +478,11 @@
   "enableCliServerDescription": "Start de lokale server om de CLI-tool te gebruiken.",
   "cliLearnMoreButton": "Documentatie lezen",
   "cliCompanionTitle": "Opdrachtregeltool",
-  "cliCompanionDescription": "Automatiseer schermafbeeldingen vanuit de terminal met de bijbehorende CLI-tool. Zie de documentatie voor installatie-instructies."
+  "cliCompanionDescription": "Automatiseer schermafbeeldingen vanuit de terminal met de bijbehorende CLI-tool. Zie de documentatie voor installatie-instructies.",
+  "icloudSync": "iCloud-synchronisatie",
+  "icloudSyncSubtitle": "Synchroniseer ontwerpen tussen apparaten via iCloud",
+  "icloudSyncDisabled": "iCloud-synchronisatie is uitgeschakeld",
+  "restartRequired": "Start de app opnieuw om wijzigingen toe te passen",
+  "uploadExistingFolderToAsc": "Bestaande map uploaden...",
+  "noImagesFoundInFolder": "Geen geldige schermafbeeldingen gevonden in de geselecteerde map"
 }

@@ -478,5 +478,11 @@
   "enableCliServerDescription": "CLIツールを使用するにはローカルサーバーを起動してください。",
   "cliLearnMoreButton": "ドキュメントを読む",
   "cliCompanionTitle": "コマンドラインツール",
-  "cliCompanionDescription": "コンパニオンCLIツールを使って、ターミナルからスクリーンショットを自動化できます。セットアップ手順はドキュメントをご覧ください。"
+  "cliCompanionDescription": "コンパニオンCLIツールを使って、ターミナルからスクリーンショットを自動化できます。セットアップ手順はドキュメントをご覧ください。",
+  "icloudSync": "iCloud同期",
+  "icloudSyncSubtitle": "iCloudを使ってデバイス間でデザインを同期",
+  "icloudSyncDisabled": "iCloud同期がオフです",
+  "restartRequired": "変更を適用するにはアプリを再起動してください",
+  "uploadExistingFolderToAsc": "既存のフォルダーをアップロード...",
+  "noImagesFoundInFolder": "選択したフォルダーに有効なスクリーンショット画像が見つかりませんでした"
 }

@@ -478,5 +478,11 @@
   "enableCliServerDescription": "Inicie el servidor local para usar la herramienta CLI.",
   "cliLearnMoreButton": "Leer documentación",
   "cliCompanionTitle": "Herramienta de línea de comandos",
-  "cliCompanionDescription": "Automatiza capturas de pantalla desde la terminal con la herramienta CLI complementaria. Consulta la documentación para las instrucciones de configuración."
+  "cliCompanionDescription": "Automatiza capturas de pantalla desde la terminal con la herramienta CLI complementaria. Consulta la documentación para las instrucciones de configuración.",
+  "icloudSync": "Sincronización iCloud",
+  "icloudSyncSubtitle": "Sincroniza diseños entre tus dispositivos mediante iCloud",
+  "icloudSyncDisabled": "La sincronización de iCloud está desactivada",
+  "restartRequired": "Reinicia la aplicación para aplicar los cambios",
+  "uploadExistingFolderToAsc": "Subir carpeta existente...",
+  "noImagesFoundInFolder": "No se encontraron imágenes de captura de pantalla válidas en la carpeta seleccionada"
 }

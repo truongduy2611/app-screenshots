@@ -54,8 +54,9 @@ extension _LibraryRoutes on CommandServer {
         final id = body['id'] as String? ?? request.uri.queryParameters['id'];
         if (id == null) return ServerResponse.error('Missing "id"');
         final design = await _persistenceService.getDesignById(id);
-        if (design == null)
+        if (design == null) {
           return ServerResponse.error('Design not found: $id');
+        }
         return ServerResponse.ok(design.toJson());
 
       case LibraryAction.delete:
@@ -114,14 +115,17 @@ extension _LibraryRoutes on CommandServer {
       case LibraryAction.import_:
         final body = await _readBody(request);
         final filePath = body['file'] as String?;
-        if (filePath == null)
+        if (filePath == null) {
           return ServerResponse.error('Missing "file" (path to .appshots)');
+        }
         final file = File(filePath);
-        if (!await file.exists())
+        if (!await file.exists()) {
           return ServerResponse.error('File not found: $filePath');
+        }
         final imported = await _designFileService.parseExportFile(file);
-        if (imported == null)
+        if (imported == null) {
           return ServerResponse.error('Failed to parse .appshots file');
+        }
         return ServerResponse.ok({'name': imported.name, 'id': imported.id});
 
       case LibraryAction.export_:
@@ -129,8 +133,9 @@ extension _LibraryRoutes on CommandServer {
         final id = body['id'] as String?;
         if (id == null) return ServerResponse.error('Missing "id"');
         final design = await _persistenceService.getDesignById(id);
-        if (design == null)
+        if (design == null) {
           return ServerResponse.error('Design not found: $id');
+        }
         final exportFile = await _designFileService.createExportFile(design);
         return ServerResponse.ok({'file': exportFile.path});
 

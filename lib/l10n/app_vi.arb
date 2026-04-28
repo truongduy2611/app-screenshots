@@ -480,5 +480,9 @@
   "enableCliServerDescription": "Khởi động máy chủ cục bộ để sử dụng công cụ CLI.",
   "cliLearnMoreButton": "Đọc tài liệu",
   "cliCompanionTitle": "Công cụ dòng lệnh",
-  "cliCompanionDescription": "Tự động hóa ảnh chụp màn hình từ terminal với công cụ CLI đi kèm. Xem tài liệu để biết hướng dẫn cài đặt."
+  "cliCompanionDescription": "Tự động hóa ảnh chụp màn hình từ terminal với công cụ CLI đi kèm. Xem tài liệu để biết hướng dẫn cài đặt.",
+  "icloudSync": "Đồng bộ iCloud",
+  "icloudSyncSubtitle": "Đồng bộ thiết kế giữa các thiết bị qua iCloud",
+  "icloudSyncDisabled": "Đồng bộ iCloud đã tắt",
+  "restartRequired": "Khởi động lại ứng dụng để áp dụng thay đổi"
 }

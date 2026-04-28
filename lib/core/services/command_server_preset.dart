@@ -37,8 +37,9 @@ extension _PresetRoutes on CommandServer {
         final preset = ScreenshotPresets.all
             .where((p) => p.id == id)
             .firstOrNull;
-        if (preset == null)
+        if (preset == null) {
           return ServerResponse.error('Preset not found: $id');
+        }
         return ServerResponse.ok(preset.toJson());
     }
   }

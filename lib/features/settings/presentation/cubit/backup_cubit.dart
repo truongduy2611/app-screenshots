@@ -1,4 +1,5 @@
 import 'package:app_screenshots/core/services/icloud_backup_service.dart';
+import 'package:app_screenshots/core/services/icloud_sync_service.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -7,20 +8,24 @@ part 'backup_state.dart';
 /// Cubit for managing iCloud backup and restore operations.
 class BackupCubit extends Cubit<BackupState> {
   final ICloudBackupService _backupService;
+  final ICloudSyncService _syncService;
 
-  BackupCubit(this._backupService) : super(const BackupState());
+  BackupCubit(this._backupService, this._syncService)
+    : super(const BackupState());
 
   /// Initializes the cubit: checks availability and triggers auto-backup.
   Future<void> init() async {
     final isAvailable = await _backupService.isAvailable();
     final lastBackup = _backupService.lastBackupDate;
     final isEnabled = _backupService.isAutoBackupEnabled;
+    final isSyncEnabled = _syncService.isUserEnabled;
 
     emit(
       state.copyWith(
         isAvailable: isAvailable,
         lastBackupDate: lastBackup,
         isEnabled: isEnabled,
+        isSyncEnabled: isSyncEnabled,
       ),
     );
 
@@ -53,6 +58,23 @@ class BackupCubit extends Cubit<BackupState> {
         }
       });
     }
+  }
+
+  /// Toggles master iCloud sync on/off.
+  Future<void> toggleICloudSync(bool enabled) async {
+    if (enabled) {
+      await _syncService.enableSync();
+    } else {
+      await _syncService.disableSync();
+      // Also disable auto-backup when sync is off
+      await _backupService.setAutoBackupEnabled(false);
+    }
+    emit(
+      state.copyWith(
+        isSyncEnabled: enabled,
+        isEnabled: enabled ? state.isEnabled : false,
+      ),
+    );
   }
 
   /// Creates a manual backup immediately.

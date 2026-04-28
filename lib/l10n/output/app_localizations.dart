@@ -3010,6 +3010,30 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Automate screenshots from the terminal with the companion CLI tool. See the documentation for setup instructions.'**
   String get cliCompanionDescription;
+
+  /// Settings label for the master iCloud sync toggle
+  ///
+  /// In en, this message translates to:
+  /// **'iCloud Sync'**
+  String get icloudSync;
+
+  /// Subtitle explaining iCloud sync functionality
+  ///
+  /// In en, this message translates to:
+  /// **'Sync designs across your devices via iCloud'**
+  String get icloudSyncSubtitle;
+
+  /// Message shown when iCloud sync is turned off
+  ///
+  /// In en, this message translates to:
+  /// **'iCloud sync is disabled'**
+  String get icloudSyncDisabled;
+
+  /// Message telling user to restart the app after changing iCloud settings
+  ///
+  /// In en, this message translates to:
+  /// **'Restart the app for changes to take effect'**
+  String get restartRequired;
 }
 
 class _AppLocalizationsDelegate

@@ -2151,5 +2151,21 @@
   },
   "@cliCompanionDescription": {
     "description": "Description of the companion CLI tool, directing users to documentation"
+  },
+  "icloudSync": "iCloud Sync",
+  "@icloudSync": {
+    "description": "Settings label for the master iCloud sync toggle"
+  },
+  "icloudSyncSubtitle": "Sync designs across your devices via iCloud",
+  "@icloudSyncSubtitle": {
+    "description": "Subtitle explaining iCloud sync functionality"
+  },
+  "icloudSyncDisabled": "iCloud sync is disabled",
+  "@icloudSyncDisabled": {
+    "description": "Message shown when iCloud sync is turned off"
+  },
+  "restartRequired": "Restart the app for changes to take effect",
+  "@restartRequired": {
+    "description": "Message telling user to restart the app after changing iCloud settings"
   }
 }

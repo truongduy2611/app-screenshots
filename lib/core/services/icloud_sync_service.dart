@@ -14,6 +14,7 @@ class ICloudSyncService {
   );
 
   static const String _migrationKey = 'icloud_sync_migration_complete';
+  static const String _iCloudEnabledKey = 'icloud_sync_enabled';
 
   final SharedPreferences _prefs;
 
@@ -21,14 +22,23 @@ class ICloudSyncService {
   late final String designsPath;
 
   /// Whether iCloud sync is active on this device.
-  bool get isSyncEnabled => _iCloudAvailable;
+  bool get isSyncEnabled => _iCloudActive;
 
   bool _iCloudAvailable = false;
+  bool _iCloudActive = false;
 
   final _remoteChangeController = StreamController<void>.broadcast();
 
   /// Emits when another device pushes changes via iCloud.
   Stream<void> get onRemoteChange => _remoteChangeController.stream;
+
+  /// Whether the user has iCloud sync enabled in settings.
+  /// Defaults to true (opt-out model).
+  bool get isUserEnabled => _prefs.getBool(_iCloudEnabledKey) ?? true;
+
+  /// Persists the user's iCloud sync preference.
+  Future<void> setUserEnabled(bool enabled) =>
+      _prefs.setBool(_iCloudEnabledKey, enabled);
 
   ICloudSyncService(this._prefs);
 
@@ -37,10 +47,11 @@ class ICloudSyncService {
   ///
   /// Must be called before accessing [designsPath].
   Future<void> init() async {
-    // 1. Check iCloud availability
+    // 1. Check iCloud availability and user preference
     _iCloudAvailable = await _isICloudAvailable();
+    final userEnabled = isUserEnabled;
 
-    if (_iCloudAvailable) {
+    if (_iCloudAvailable && userEnabled) {
       // 2a. Get the iCloud designs path
       final iCloudPath = await _getICloudDesignsPath();
       if (iCloudPath != null) {
@@ -54,6 +65,7 @@ class ICloudSyncService {
         await _startMonitoring();
 
         AppLogger.i('Using iCloud path: $designsPath', tag: 'iCloudSync');
+        _iCloudActive = true;
         return;
       }
     }
@@ -68,6 +80,21 @@ class ICloudSyncService {
   Future<void> dispose() async {
     await _stopMonitoring();
     await _remoteChangeController.close();
+  }
+
+  /// Disables iCloud sync at runtime — stops monitoring.
+  /// The storage path switch takes effect on next app launch.
+  Future<void> disableSync() async {
+    await setUserEnabled(false);
+    _iCloudActive = false;
+    await _stopMonitoring();
+    AppLogger.i('iCloud sync disabled by user', tag: 'iCloudSync');
+  }
+
+  /// Enables iCloud sync at runtime — takes effect on next app launch.
+  Future<void> enableSync() async {
+    await setUserEnabled(true);
+    AppLogger.i('iCloud sync enabled — restart required', tag: 'iCloudSync');
   }
 
   // ---------------------------------------------------------------------------
@@ -125,17 +152,6 @@ class ICloudSyncService {
         final removed = _castStringList(args?['removed']);
         final changed = _castStringList(args?['changed']);
 
-        AppLogger.d('Remote change detected', tag: 'iCloudSync');
-        if (added.isNotEmpty) {
-          AppLogger.d('  ➕ Added: $added', tag: 'iCloudSync');
-        }
-        if (removed.isNotEmpty) {
-          AppLogger.d('  ➖ Removed: $removed', tag: 'iCloudSync');
-        }
-        if (changed.isNotEmpty) {
-          AppLogger.d('  ✏️ Changed: $changed', tag: 'iCloudSync');
-        }
-
         // Only trigger refresh for design files, not backup zips etc.
         final allFiles = [...added, ...removed, ...changed];
         final hasDesignChanges = allFiles.any(
@@ -144,11 +160,6 @@ class ICloudSyncService {
 
         if (hasDesignChanges) {
           _remoteChangeController.add(null);
-        } else {
-          AppLogger.d(
-            '  ⏭️ Skipped — no design file changes',
-            tag: 'iCloudSync',
-          );
         }
       }
     });

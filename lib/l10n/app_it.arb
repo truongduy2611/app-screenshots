@@ -478,5 +478,11 @@
   "enableCliServerDescription": "Avvia il server locale per utilizzare lo strumento CLI.",
   "cliLearnMoreButton": "Leggi la documentazione",
   "cliCompanionTitle": "Strumento da riga di comando",
-  "cliCompanionDescription": "Automatizza gli screenshot dal terminale con lo strumento CLI companion. Consulta la documentazione per le istruzioni di configurazione."
+  "cliCompanionDescription": "Automatizza gli screenshot dal terminale con lo strumento CLI companion. Consulta la documentazione per le istruzioni di configurazione.",
+  "icloudSync": "Sincronizzazione iCloud",
+  "icloudSyncSubtitle": "Sincronizza i design tra i tuoi dispositivi tramite iCloud",
+  "icloudSyncDisabled": "La sincronizzazione iCloud è disattivata",
+  "restartRequired": "Riavvia l'app per applicare le modifiche",
+  "uploadExistingFolderToAsc": "Carica cartella esistente...",
+  "noImagesFoundInFolder": "Nessuna immagine di screenshot valida trovata nella cartella selezionata"
 }

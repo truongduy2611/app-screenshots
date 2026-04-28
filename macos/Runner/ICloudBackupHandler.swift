@@ -200,7 +200,6 @@ class ICloudBackupHandler: NSObject {
                 "removed": removedNames,
                 "changed": changedNames,
             ]
-            NSLog("[ICloudBackupHandler] iCloud files changed — added: \(addedNames), removed: \(removedNames), changed: \(changedNames)")
             self?.channel?.invokeMethod("onICloudFilesChanged", arguments: args)
         }
     }

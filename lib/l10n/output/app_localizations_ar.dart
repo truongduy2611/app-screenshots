@@ -1631,4 +1631,16 @@ class AppLocalizationsAr extends AppLocalizations {
   @override
   String get cliCompanionDescription =>
       'يمكنك أتمتة لقطات الشاشة من الطرفية باستخدام أداة سطر الأوامر المرافقة. تعرف على المزيد من الوثائق.';
+
+  @override
+  String get icloudSync => 'مزامنة iCloud';
+
+  @override
+  String get icloudSyncSubtitle => 'مزامنة التصاميم بين أجهزتك عبر iCloud';
+
+  @override
+  String get icloudSyncDisabled => 'مزامنة iCloud معطلة';
+
+  @override
+  String get restartRequired => 'أعد تشغيل التطبيق لتطبيق التغييرات';
 }

@@ -1643,4 +1643,18 @@ class AppLocalizationsNl extends AppLocalizations {
   @override
   String get cliCompanionDescription =>
       'Automatiseer schermafbeeldingen vanuit de terminal met de bijbehorende CLI-tool. Zie de documentatie voor installatie-instructies.';
+
+  @override
+  String get icloudSync => 'iCloud-synchronisatie';
+
+  @override
+  String get icloudSyncSubtitle =>
+      'Synchroniseer ontwerpen tussen apparaten via iCloud';
+
+  @override
+  String get icloudSyncDisabled => 'iCloud-synchronisatie is uitgeschakeld';
+
+  @override
+  String get restartRequired =>
+      'Start de app opnieuw om wijzigingen toe te passen';
 }

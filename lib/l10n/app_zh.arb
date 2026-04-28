@@ -478,5 +478,11 @@
   "enableCliServerDescription": "启动本地服务器以使用CLI工具。",
   "cliLearnMoreButton": "阅读文档",
   "cliCompanionTitle": "命令行工具",
-  "cliCompanionDescription": "使用配套的 CLI 工具从终端自动化截图。请查看文档了解设置说明。"
+  "cliCompanionDescription": "使用配套的 CLI 工具从终端自动化截图。请查看文档了解设置说明。",
+  "icloudSync": "iCloud 同步",
+  "icloudSyncSubtitle": "通过 iCloud 在设备之间同步设计",
+  "icloudSyncDisabled": "iCloud 同步已关闭",
+  "restartRequired": "重新启动应用以应用更改",
+  "uploadExistingFolderToAsc": "上传现有文件夹...",
+  "noImagesFoundInFolder": "在选定文件夹中未找到有效的屏幕截图图像"
 }

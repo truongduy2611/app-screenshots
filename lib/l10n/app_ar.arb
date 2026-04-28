@@ -478,5 +478,11 @@
   "enableCliServerDescription": "ابدأ الخادم المحلي لاستخدام أداة CLI.",
   "cliLearnMoreButton": "قراءة الوثائق",
   "cliCompanionTitle": "أداة سطر الأوامر",
-  "cliCompanionDescription": "يمكنك أتمتة لقطات الشاشة من الطرفية باستخدام أداة سطر الأوامر المرافقة. تعرف على المزيد من الوثائق."
+  "cliCompanionDescription": "يمكنك أتمتة لقطات الشاشة من الطرفية باستخدام أداة سطر الأوامر المرافقة. تعرف على المزيد من الوثائق.",
+  "icloudSync": "مزامنة iCloud",
+  "icloudSyncSubtitle": "مزامنة التصاميم بين أجهزتك عبر iCloud",
+  "icloudSyncDisabled": "مزامنة iCloud معطلة",
+  "restartRequired": "أعد تشغيل التطبيق لتطبيق التغييرات",
+  "uploadExistingFolderToAsc": "تحميل مجلد موجود...",
+  "noImagesFoundInFolder": "لم يتم العثور على صور لقطات شاشة صالحة في المجلد المحدد"
 }
