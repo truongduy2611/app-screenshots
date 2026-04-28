@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'dart:io';
+import 'dart:isolate';
 import 'dart:typed_data';
 
 import 'package:app_screenshots/features/screenshot_editor/data/models/asc_app_config.dart';
@@ -94,36 +95,9 @@ class ScreenshotPersistenceService {
       final savedImageFile = File('${dir.path}/${id}_source.$extension');
       await originalImageFile.copy(savedImageFile.path);
       imagePath = savedImageFile.path;
-    } else if (existingId != null) {
-      try {
-        final existingJsonFile = File('${dir.path}/$existingId.json');
-        if (await existingJsonFile.exists()) {
-          final content = await existingJsonFile.readAsString();
-          final json = jsonDecode(content);
-          final existing = SavedDesign.fromJson(json);
-          imagePath ??= existing.imagePath;
-        }
-      } catch (e) {
-        AppLogger.w('Error preserving existing image', tag: 'Persistence');
-      }
     }
 
-    // Preserve folder assignment when overriding an existing design.
-    if (existingId != null && folderId == null) {
-      try {
-        final existingJsonFile = File('${dir.path}/$existingId.json');
-        if (await existingJsonFile.exists()) {
-          final content = await existingJsonFile.readAsString();
-          final json = jsonDecode(content);
-          final existing = SavedDesign.fromJson(json);
-          folderId = existing.folderId;
-        }
-      } catch (e) {
-        AppLogger.w('Error preserving folder assignment', tag: 'Persistence');
-      }
-    }
-
-    // Preserve translationBundle and ascAppConfig from existing save.
+    // Preserve fields from existing save (read once, reuse).
     if (existingId != null) {
       try {
         final existingJsonFile = File('${dir.path}/$existingId.json');
@@ -131,12 +105,14 @@ class ScreenshotPersistenceService {
           final content = await existingJsonFile.readAsString();
           final json = jsonDecode(content);
           final existing = SavedDesign.fromJson(json);
+          imagePath ??= existing.imagePath;
+          folderId ??= existing.folderId;
           translationBundle ??= existing.translationBundle;
           ascAppConfig ??= existing.ascAppConfig;
         }
       } catch (e) {
         AppLogger.w(
-          'Error preserving translation/ASC config',
+          'Error preserving existing design data',
           tag: 'Persistence',
         );
       }
@@ -250,39 +226,57 @@ class ScreenshotPersistenceService {
     final dir = await _designsDir;
     final dirPath = dir.path;
     final entities = dir.listSync();
-    final List<SavedDesign> designs = [];
 
-    for (var entity in entities) {
-      if (entity is File && entity.path.endsWith('.json')) {
-        try {
-          final content = await entity.readAsString();
-          final json = jsonDecode(content);
-          if (!json.containsKey('createdAt')) {
-            final design = SavedDesign.fromJson(json);
-            // Resolve relative filenames to absolute paths for runtime use.
-            designs.add(
-              design.copyWith(
-                thumbnailPath: _toAbsolute(dirPath, design.thumbnailPath),
-                imagePath: _toAbsoluteNullable(dirPath, design.imagePath),
-                imagePaths: design.imagePaths
-                    ?.map((p) => _toAbsoluteNullable(dirPath, p))
-                    .toList(),
-              ),
-            );
-          }
-        } catch (e, st) {
-          AppLogger.error(
-            'Error loading design ${entity.path}',
-            tag: 'Persistence',
-            error: e,
-            stackTrace: st,
-          );
-        }
-      }
-    }
+    // Collect design JSON file paths (exclude folder files).
+    final designFiles = entities
+        .whereType<File>()
+        .where(
+          (f) => f.path.endsWith('.json') && !p.basename(f.path).startsWith('folder_'),
+        )
+        .toList();
+
+    if (designFiles.isEmpty) return [];
+
+    // Read all files in parallel.
+    final contents = await Future.wait(
+      designFiles.map((f) => f.readAsString()),
+    );
+
+    // Offload heavy JSON decode + model construction to a background isolate.
+    final designs = await Isolate.run(() {
+      return _parseDesignJsons(contents, dirPath);
+    });
 
     designs.sort((a, b) => b.lastModified.compareTo(a.lastModified));
     return designs;
+  }
+
+  /// Pure function for background isolate — parses raw JSON strings into
+  /// [SavedDesign] objects with resolved absolute paths.
+  static List<SavedDesign> _parseDesignJsons(
+    List<String> jsonStrings,
+    String dirPath,
+  ) {
+    final List<SavedDesign> results = [];
+    for (final content in jsonStrings) {
+      try {
+        final json = jsonDecode(content);
+        if (json.containsKey('createdAt')) continue; // skip folder files
+        final design = SavedDesign.fromJson(json);
+        results.add(
+          design.copyWith(
+            thumbnailPath: _toAbsolute(dirPath, design.thumbnailPath),
+            imagePath: _toAbsoluteNullable(dirPath, design.imagePath),
+            imagePaths: design.imagePaths
+                ?.map((path) => _toAbsoluteNullable(dirPath, path))
+                .toList(),
+          ),
+        );
+      } catch (_) {
+        // Skip corrupt files — error is not observable from isolate.
+      }
+    }
+    return results;
   }
 
   Future<void> deleteDesign(String id) async {
@@ -329,24 +323,36 @@ class ScreenshotPersistenceService {
   Future<List<DesignFolder>> getAllFolders() async {
     final dir = await _designsDir;
     final entities = dir.listSync();
-    final List<DesignFolder> folders = [];
 
-    for (var entity in entities) {
-      if (entity is File &&
-          entity.path.endsWith('.json') &&
-          entity.path.contains('folder_')) {
-        try {
-          final content = await entity.readAsString();
-          final json = jsonDecode(content);
-          folders.add(DesignFolder.fromJson(json));
-        } catch (e, st) {
-          AppLogger.error(
-            'Error loading folder ${entity.path}',
-            tag: 'Persistence',
-            error: e,
-            stackTrace: st,
-          );
-        }
+    // Collect folder JSON file paths.
+    final folderFiles = entities
+        .whereType<File>()
+        .where(
+          (f) =>
+              f.path.endsWith('.json') &&
+              p.basename(f.path).startsWith('folder_'),
+        )
+        .toList();
+
+    if (folderFiles.isEmpty) return [];
+
+    // Read all files in parallel.
+    final contents = await Future.wait(
+      folderFiles.map((f) => f.readAsString()),
+    );
+
+    final List<DesignFolder> folders = [];
+    for (final content in contents) {
+      try {
+        final json = jsonDecode(content);
+        folders.add(DesignFolder.fromJson(json));
+      } catch (e, st) {
+        AppLogger.error(
+          'Error loading folder',
+          tag: 'Persistence',
+          error: e,
+          stackTrace: st,
+        );
       }
     }
 

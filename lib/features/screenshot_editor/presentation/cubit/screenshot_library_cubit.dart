@@ -72,8 +72,6 @@ class ScreenshotLibraryCubit extends Cubit<ScreenshotLibraryState> {
 
   Future<void> loadDesigns() async {
     emit(ScreenshotLibraryLoading());
-    // Clear cached thumbnail images so overridden saves show fresh thumbnails
-    PaintingBinding.instance.imageCache.clear();
     try {
       final designs = await _persistenceService.getAllDesigns();
       final folders = await _persistenceService.getAllFolders();

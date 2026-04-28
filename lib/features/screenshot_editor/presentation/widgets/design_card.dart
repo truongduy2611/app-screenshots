@@ -37,6 +37,7 @@ class DraggableDesignCard extends StatelessWidget {
               '${design.id}_${design.lastModified.millisecondsSinceEpoch}',
             ),
             fit: BoxFit.fitWidth,
+            cacheWidth: 280,
             gaplessPlayback: true,
             errorBuilder: (_, _, _) => const SizedBox(width: 140, height: 100),
           ),
@@ -70,12 +71,17 @@ class _DesignCardState extends State<DesignCard> {
     final tertiary = theme.colorScheme.tertiary;
     final displayType = widget.design.design.displayType;
 
-    final libraryState = context.watch<ScreenshotLibraryCubit>().state;
-    final isSelectionMode =
-        libraryState is ScreenshotLibraryLoaded && libraryState.isSelectionMode;
-    final isSelected =
-        libraryState is ScreenshotLibraryLoaded &&
-        libraryState.selectedDesignIds.contains(widget.design.id);
+    return BlocSelector<ScreenshotLibraryCubit, ScreenshotLibraryState,
+        ({bool selectionMode, bool selected})>(
+      selector: (state) => (
+        selectionMode:
+            state is ScreenshotLibraryLoaded && state.isSelectionMode,
+        selected: state is ScreenshotLibraryLoaded &&
+            state.selectedDesignIds.contains(widget.design.id),
+      ),
+      builder: (context, sel) {
+        final isSelectionMode = sel.selectionMode;
+        final isSelected = sel.selected;
 
     return MouseRegion(
       cursor: SystemMouseCursors.click,
@@ -210,6 +216,7 @@ class _DesignCardState extends State<DesignCard> {
                                 '${widget.design.id}_${widget.design.lastModified.millisecondsSinceEpoch}',
                               ),
                               fit: BoxFit.fitWidth,
+                              cacheWidth: 400,
                               gaplessPlayback: true,
                               width: double.infinity,
                               errorBuilder: (_, _, _) => AspectRatio(
@@ -323,6 +330,8 @@ class _DesignCardState extends State<DesignCard> {
         ), // End AnimatedScale
       ), // End GestureDetector
     ); // End MouseRegion
+      }, // End BlocSelector builder
+    ); // End BlocSelector
   }
 
   String _formatDisplayType(String displayType) {
