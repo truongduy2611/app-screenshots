@@ -6,7 +6,9 @@ void main() {
   buffer.writeln('openapi: 3.0.0');
   buffer.writeln('info:');
   buffer.writeln('  title: App Screenshots API');
-  buffer.writeln('  description: Local API for controlling the App Screenshots editor.');
+  buffer.writeln(
+    '  description: Local API for controlling the App Screenshots editor.',
+  );
   buffer.writeln('  version: 1.0.0');
   buffer.writeln('servers:');
   buffer.writeln('  - url: http://localhost:19222');
@@ -31,13 +33,19 @@ void main() {
   buffer.writeln('          example: "Invalid parameter"');
   buffer.writeln('paths:');
 
-  void writeAction(String tag, String path, String actionName, {Map<String, String>? schemaProps, List<String>? required}) {
+  void writeAction(
+    String tag,
+    String path,
+    String actionName, {
+    Map<String, String>? schemaProps,
+    List<String>? required,
+  }) {
     buffer.writeln('  $path:');
     buffer.writeln('    post:');
     buffer.writeln('      tags:');
     buffer.writeln('        - $tag');
     buffer.writeln('      summary: Execute $actionName');
-    
+
     if (schemaProps != null && schemaProps.isNotEmpty) {
       buffer.writeln('      requestBody:');
       buffer.writeln('        required: true');
@@ -60,33 +68,44 @@ void main() {
         }
       });
     }
-    
+
     buffer.writeln('      responses:');
     buffer.writeln('        "200":');
     buffer.writeln('          description: Successful execution');
     buffer.writeln('          content:');
     buffer.writeln('            application/json:');
     buffer.writeln('              schema:');
-    buffer.writeln('                \$ref: "#/components/schemas/SuccessResponse"');
+    buffer.writeln(
+      '                \$ref: "#/components/schemas/SuccessResponse"',
+    );
   }
 
   // --- Editor Core Schemas ---
   final Map<EditorAction, Map<String, dynamic>> editorSchemas = {
     EditorAction.setBackground: {
       'req': ['color'],
-      'props': { 'color': 'type: string\\nexample: "#FF5733"\\ndescription: Hex color code' }
+      'props': {
+        'color':
+            'type: string\\nexample: "#FF5733"\\ndescription: Hex color code',
+      },
     },
     EditorAction.setFrame: {
       'req': ['device'],
-      'props': { 'device': 'type: string\\nexample: "iPhone 16 Pro"\\ndescription: Device name string' }
+      'props': {
+        'device':
+            'type: string\\nexample: "iPhone 16 Pro"\\ndescription: Device name string',
+      },
     },
     EditorAction.setImage: {
       'req': ['file'],
-      'props': { 'file': 'type: string\\nexample: "/path/to/image.png"\\ndescription: Absolute path to image' }
+      'props': {
+        'file':
+            'type: string\\nexample: "/path/to/image.png"\\ndescription: Absolute path to image',
+      },
     },
     EditorAction.addText: {
       'req': ['text', 'fontSize'],
-      'props': { 
+      'props': {
         'text': 'type: string\\nexample: "Hello World"',
         'fontSize': 'type: number\\nexample: 40',
         'font': 'type: string\\nexample: "Inter"',
@@ -94,12 +113,12 @@ void main() {
         'x': 'type: number',
         'y': 'type: number',
         'width': 'type: number',
-        'align': 'type: string\\nenum: [left, center, right]'
-      }
+        'align': 'type: string\\nenum: [left, center, right]',
+      },
     },
     EditorAction.updateText: {
       'req': ['id'],
-      'props': { 
+      'props': {
         'id': 'type: string\\ndescription: Overlay ID',
         'text': 'type: string',
         'fontSize': 'type: number',
@@ -110,8 +129,8 @@ void main() {
         'width': 'type: number',
         'align': 'type: string',
         'scale': 'type: number',
-        'rotation': 'type: number'
-      }
+        'rotation': 'type: number',
+      },
     },
     EditorAction.addImage: {
       'req': ['file'],
@@ -120,14 +139,15 @@ void main() {
         'x': 'type: number',
         'y': 'type: number',
         'width': 'type: number',
-        'height': 'type: number'
-      }
+        'height': 'type: number',
+      },
     },
     EditorAction.setMeshGradient: {
       'req': [],
       'props': {
-        'mesh': 'type: object\\ndescription: JSON representing mesh gradient points'
-      }
+        'mesh':
+            'type: object\\ndescription: JSON representing mesh gradient points',
+      },
     },
     EditorAction.setDoodle: {
       'req': ['enabled'],
@@ -138,24 +158,26 @@ void main() {
         'spacing': 'type: number',
         'iconOpacity': 'type: number',
         'rotation': 'type: number',
-        'iconColor': 'type: integer'
-      }
+        'iconColor': 'type: integer',
+      },
     },
     EditorAction.export_: {
       'req': [],
-      'props': { 'path': 'type: string\\ndescription: Output file path (optional)' }
+      'props': {
+        'path': 'type: string\\ndescription: Output file path (optional)',
+      },
     },
     EditorAction.setPadding: {
       'req': ['padding'],
-      'props': { 'padding': 'type: number' }
+      'props': {'padding': 'type: number'},
     },
     EditorAction.setCornerRadius: {
       'req': ['radius'],
-      'props': { 'radius': 'type: number' }
+      'props': {'radius': 'type: number'},
     },
     EditorAction.setRotation: {
       'req': [],
-      'props': { 'x': 'type: number', 'y': 'type: number', 'z': 'type: number' }
+      'props': {'x': 'type: number', 'y': 'type: number', 'z': 'type: number'},
     },
   };
 
@@ -165,8 +187,9 @@ void main() {
       'req': ['locale', 'translations'],
       'props': {
         'locale': 'type: string\\nexample: "es"',
-        'translations': 'type: object\\nadditionalProperties: true\\ndescription: Map of overlayId to text'
-      }
+        'translations':
+            'type: object\\nadditionalProperties: true\\ndescription: Map of overlayId to text',
+      },
     },
     TranslateAction.overrideOverlay: {
       'req': ['locale', 'id'],
@@ -181,23 +204,20 @@ void main() {
         'y': 'type: number',
         'width': 'type: number',
         'scale': 'type: number',
-        'rotation': 'type: number'
-      }
+        'rotation': 'type: number',
+      },
     },
     TranslateAction.setLocaleImage: {
       'req': ['locale', 'file'],
-      'props': {
-        'locale': 'type: string',
-        'file': 'type: string'
-      }
-    }
+      'props': {'locale': 'type: string', 'file': 'type: string'},
+    },
   };
 
   // --- Multi Core Schemas ---
   final Map<MultiAction, Map<String, dynamic>> multiSchemas = {
     MultiAction.addDesign: {
       'req': ['displayType'],
-      'props': { 'displayType': 'type: string\\nexample: "APP_IPHONE_69"' }
+      'props': {'displayType': 'type: string\\nexample: "APP_IPHONE_69"'},
     },
     MultiAction.batch: {
       'req': ['action'],
@@ -205,43 +225,52 @@ void main() {
         'action': 'type: string\\nexample: "set-background"',
         'value': 'type: string',
         'color': 'type: string',
-        'file': 'type: string'
-      }
-    }
+        'file': 'type: string',
+      },
+    },
   };
 
   // Generate Editor
   for (final action in EditorAction.values) {
     final schema = editorSchemas[action];
-    writeAction('Editor', action.path, action.actionName, 
+    writeAction(
+      'Editor',
+      action.path,
+      action.actionName,
       schemaProps: (schema?['props'] as Map?)?.cast<String, String>(),
       required: (schema?['req'] as List?)?.cast<String>(),
     );
   }
-  
+
   // Generate Library
   for (final action in LibraryAction.values) {
     writeAction('Library', action.path, action.actionName);
   }
-  
+
   // Generate Multi
   for (final action in MultiAction.values) {
     final schema = multiSchemas[action];
-    writeAction('Multi', action.path, action.actionName,
+    writeAction(
+      'Multi',
+      action.path,
+      action.actionName,
       schemaProps: (schema?['props'] as Map?)?.cast<String, String>(),
       required: (schema?['req'] as List?)?.cast<String>(),
     );
   }
-  
+
   // Generate Translate
   for (final action in TranslateAction.values) {
     final schema = translateSchemas[action];
-    writeAction('Translate', action.path, action.actionName,
+    writeAction(
+      'Translate',
+      action.path,
+      action.actionName,
       schemaProps: (schema?['props'] as Map?)?.cast<String, String>(),
       required: (schema?['req'] as List?)?.cast<String>(),
     );
   }
-  
+
   // Generate Preset
   for (final action in PresetAction.values) {
     writeAction('Preset', action.path, action.actionName);
@@ -259,10 +288,12 @@ void main() {
   buffer.writeln('          content:');
   buffer.writeln('            application/json:');
   buffer.writeln('              schema:');
-  buffer.writeln('                \$ref: "#/components/schemas/SuccessResponse"');
+  buffer.writeln(
+    '                \$ref: "#/components/schemas/SuccessResponse"',
+  );
 
   final yamlContent = buffer.toString();
-  
+
   final dir = Directory('docs/api');
   if (!dir.existsSync()) {
     dir.createSync(recursive: true);
@@ -271,16 +302,17 @@ void main() {
   print('Generated docs/api/openapi.yaml');
 
   final dartFile = File('lib/core/services/command_server_openapi.dart');
-  final dartContent = '''
+  final dartContent =
+      '''
 // GENERATED FILE - DO NOT EDIT MANUALLY
 // Run `dart run scripts/generate_openapi.dart` to update
 
 part of 'command_server.dart';
 
-const String _openApiYaml = r\"\"\"
-\$yamlContent\"\"\";
+const String _openApiYaml = r"""
+${yamlContent}""";
 
-const String _swaggerUiHtml = r\"\"\"
+const String _swaggerUiHtml = r"""
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -311,8 +343,9 @@ window.onload = () => {
 </script>
 </body>
 </html>
-\"\"\";
+""";
 ''';
   dartFile.writeAsStringSync(dartContent);
+  // ignore: avoid_print
   print('Generated lib/core/services/command_server_openapi.dart');
 }
