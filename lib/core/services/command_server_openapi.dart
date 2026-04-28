@@ -1,0 +1,1424 @@
+// GENERATED FILE - DO NOT EDIT MANUALLY
+// Run `dart run scripts/generate_openapi.dart` to update
+
+part of 'command_server.dart';
+
+const String _openApiYaml = r'''
+openapi: 3.0.0
+info:
+  title: App Screenshots API
+  description: Local API for controlling the App Screenshots editor.
+  version: 1.0.0
+servers:
+  - url: http://localhost:19222
+paths:
+  /api/editor/state:
+    post:
+      tags:
+        - Editor
+      summary: Execute state
+      requestBody:
+        required: false
+        content:
+          application/json:
+            schema:
+              type: object
+      responses:
+        "200":
+          description: Successful execution
+          content:
+            application/json:
+              schema:
+                type: object
+  /api/editor/set-background:
+    post:
+      tags:
+        - Editor
+      summary: Execute set-background
+      requestBody:
+        required: false
+        content:
+          application/json:
+            schema:
+              type: object
+      responses:
+        "200":
+          description: Successful execution
+          content:
+            application/json:
+              schema:
+                type: object
+  /api/editor/set-gradient:
+    post:
+      tags:
+        - Editor
+      summary: Execute set-gradient
+      requestBody:
+        required: false
+        content:
+          application/json:
+            schema:
+              type: object
+      responses:
+        "200":
+          description: Successful execution
+          content:
+            application/json:
+              schema:
+                type: object
+  /api/editor/set-mesh-gradient:
+    post:
+      tags:
+        - Editor
+      summary: Execute set-mesh-gradient
+      requestBody:
+        required: false
+        content:
+          application/json:
+            schema:
+              type: object
+      responses:
+        "200":
+          description: Successful execution
+          content:
+            application/json:
+              schema:
+                type: object
+  /api/editor/set-transparent:
+    post:
+      tags:
+        - Editor
+      summary: Execute set-transparent
+      requestBody:
+        required: false
+        content:
+          application/json:
+            schema:
+              type: object
+      responses:
+        "200":
+          description: Successful execution
+          content:
+            application/json:
+              schema:
+                type: object
+  /api/editor/set-frame:
+    post:
+      tags:
+        - Editor
+      summary: Execute set-frame
+      requestBody:
+        required: false
+        content:
+          application/json:
+            schema:
+              type: object
+      responses:
+        "200":
+          description: Successful execution
+          content:
+            application/json:
+              schema:
+                type: object
+  /api/editor/list-devices:
+    post:
+      tags:
+        - Editor
+      summary: Execute list-devices
+      requestBody:
+        required: false
+        content:
+          application/json:
+            schema:
+              type: object
+      responses:
+        "200":
+          description: Successful execution
+          content:
+            application/json:
+              schema:
+                type: object
+  /api/editor/list-fonts:
+    post:
+      tags:
+        - Editor
+      summary: Execute list-fonts
+      requestBody:
+        required: false
+        content:
+          application/json:
+            schema:
+              type: object
+      responses:
+        "200":
+          description: Successful execution
+          content:
+            application/json:
+              schema:
+                type: object
+  /api/editor/list-icons:
+    post:
+      tags:
+        - Editor
+      summary: Execute list-icons
+      requestBody:
+        required: false
+        content:
+          application/json:
+            schema:
+              type: object
+      responses:
+        "200":
+          description: Successful execution
+          content:
+            application/json:
+              schema:
+                type: object
+  /api/editor/set-padding:
+    post:
+      tags:
+        - Editor
+      summary: Execute set-padding
+      requestBody:
+        required: false
+        content:
+          application/json:
+            schema:
+              type: object
+      responses:
+        "200":
+          description: Successful execution
+          content:
+            application/json:
+              schema:
+                type: object
+  /api/editor/set-corner-radius:
+    post:
+      tags:
+        - Editor
+      summary: Execute set-corner-radius
+      requestBody:
+        required: false
+        content:
+          application/json:
+            schema:
+              type: object
+      responses:
+        "200":
+          description: Successful execution
+          content:
+            application/json:
+              schema:
+                type: object
+  /api/editor/set-rotation:
+    post:
+      tags:
+        - Editor
+      summary: Execute set-rotation
+      requestBody:
+        required: false
+        content:
+          application/json:
+            schema:
+              type: object
+      responses:
+        "200":
+          description: Successful execution
+          content:
+            application/json:
+              schema:
+                type: object
+  /api/editor/set-orientation:
+    post:
+      tags:
+        - Editor
+      summary: Execute set-orientation
+      requestBody:
+        required: false
+        content:
+          application/json:
+            schema:
+              type: object
+      responses:
+        "200":
+          description: Successful execution
+          content:
+            application/json:
+              schema:
+                type: object
+  /api/editor/set-image:
+    post:
+      tags:
+        - Editor
+      summary: Execute set-image
+      requestBody:
+        required: false
+        content:
+          application/json:
+            schema:
+              type: object
+      responses:
+        "200":
+          description: Successful execution
+          content:
+            application/json:
+              schema:
+                type: object
+  /api/editor/set-image-position:
+    post:
+      tags:
+        - Editor
+      summary: Execute set-image-position
+      requestBody:
+        required: false
+        content:
+          application/json:
+            schema:
+              type: object
+      responses:
+        "200":
+          description: Successful execution
+          content:
+            application/json:
+              schema:
+                type: object
+  /api/editor/set-image-base64:
+    post:
+      tags:
+        - Editor
+      summary: Execute set-image-base64
+      requestBody:
+        required: false
+        content:
+          application/json:
+            schema:
+              type: object
+      responses:
+        "200":
+          description: Successful execution
+          content:
+            application/json:
+              schema:
+                type: object
+  /api/editor/set-display-type:
+    post:
+      tags:
+        - Editor
+      summary: Execute set-display-type
+      requestBody:
+        required: false
+        content:
+          application/json:
+            schema:
+              type: object
+      responses:
+        "200":
+          description: Successful execution
+          content:
+            application/json:
+              schema:
+                type: object
+  /api/editor/set-doodle:
+    post:
+      tags:
+        - Editor
+      summary: Execute set-doodle
+      requestBody:
+        required: false
+        content:
+          application/json:
+            schema:
+              type: object
+      responses:
+        "200":
+          description: Successful execution
+          content:
+            application/json:
+              schema:
+                type: object
+  /api/editor/set-grid:
+    post:
+      tags:
+        - Editor
+      summary: Execute set-grid
+      requestBody:
+        required: false
+        content:
+          application/json:
+            schema:
+              type: object
+      responses:
+        "200":
+          description: Successful execution
+          content:
+            application/json:
+              schema:
+                type: object
+  /api/editor/add-text:
+    post:
+      tags:
+        - Editor
+      summary: Execute add-text
+      requestBody:
+        required: false
+        content:
+          application/json:
+            schema:
+              type: object
+      responses:
+        "200":
+          description: Successful execution
+          content:
+            application/json:
+              schema:
+                type: object
+  /api/editor/update-text:
+    post:
+      tags:
+        - Editor
+      summary: Execute update-text
+      requestBody:
+        required: false
+        content:
+          application/json:
+            schema:
+              type: object
+      responses:
+        "200":
+          description: Successful execution
+          content:
+            application/json:
+              schema:
+                type: object
+  /api/editor/add-image:
+    post:
+      tags:
+        - Editor
+      summary: Execute add-image
+      requestBody:
+        required: false
+        content:
+          application/json:
+            schema:
+              type: object
+      responses:
+        "200":
+          description: Successful execution
+          content:
+            application/json:
+              schema:
+                type: object
+  /api/editor/update-image:
+    post:
+      tags:
+        - Editor
+      summary: Execute update-image
+      requestBody:
+        required: false
+        content:
+          application/json:
+            schema:
+              type: object
+      responses:
+        "200":
+          description: Successful execution
+          content:
+            application/json:
+              schema:
+                type: object
+  /api/editor/add-icon:
+    post:
+      tags:
+        - Editor
+      summary: Execute add-icon
+      requestBody:
+        required: false
+        content:
+          application/json:
+            schema:
+              type: object
+      responses:
+        "200":
+          description: Successful execution
+          content:
+            application/json:
+              schema:
+                type: object
+  /api/editor/update-icon:
+    post:
+      tags:
+        - Editor
+      summary: Execute update-icon
+      requestBody:
+        required: false
+        content:
+          application/json:
+            schema:
+              type: object
+      responses:
+        "200":
+          description: Successful execution
+          content:
+            application/json:
+              schema:
+                type: object
+  /api/editor/add-magnifier:
+    post:
+      tags:
+        - Editor
+      summary: Execute add-magnifier
+      requestBody:
+        required: false
+        content:
+          application/json:
+            schema:
+              type: object
+      responses:
+        "200":
+          description: Successful execution
+          content:
+            application/json:
+              schema:
+                type: object
+  /api/editor/update-magnifier:
+    post:
+      tags:
+        - Editor
+      summary: Execute update-magnifier
+      requestBody:
+        required: false
+        content:
+          application/json:
+            schema:
+              type: object
+      responses:
+        "200":
+          description: Successful execution
+          content:
+            application/json:
+              schema:
+                type: object
+  /api/editor/select-overlay:
+    post:
+      tags:
+        - Editor
+      summary: Execute select-overlay
+      requestBody:
+        required: false
+        content:
+          application/json:
+            schema:
+              type: object
+      responses:
+        "200":
+          description: Successful execution
+          content:
+            application/json:
+              schema:
+                type: object
+  /api/editor/delete-overlay:
+    post:
+      tags:
+        - Editor
+      summary: Execute delete-overlay
+      requestBody:
+        required: false
+        content:
+          application/json:
+            schema:
+              type: object
+      responses:
+        "200":
+          description: Successful execution
+          content:
+            application/json:
+              schema:
+                type: object
+  /api/editor/move-overlay:
+    post:
+      tags:
+        - Editor
+      summary: Execute move-overlay
+      requestBody:
+        required: false
+        content:
+          application/json:
+            schema:
+              type: object
+      responses:
+        "200":
+          description: Successful execution
+          content:
+            application/json:
+              schema:
+                type: object
+  /api/editor/copy-overlay:
+    post:
+      tags:
+        - Editor
+      summary: Execute copy-overlay
+      requestBody:
+        required: false
+        content:
+          application/json:
+            schema:
+              type: object
+      responses:
+        "200":
+          description: Successful execution
+          content:
+            application/json:
+              schema:
+                type: object
+  /api/editor/paste-overlay:
+    post:
+      tags:
+        - Editor
+      summary: Execute paste-overlay
+      requestBody:
+        required: false
+        content:
+          application/json:
+            schema:
+              type: object
+      responses:
+        "200":
+          description: Successful execution
+          content:
+            application/json:
+              schema:
+                type: object
+  /api/editor/bring-forward:
+    post:
+      tags:
+        - Editor
+      summary: Execute bring-forward
+      requestBody:
+        required: false
+        content:
+          application/json:
+            schema:
+              type: object
+      responses:
+        "200":
+          description: Successful execution
+          content:
+            application/json:
+              schema:
+                type: object
+  /api/editor/send-backward:
+    post:
+      tags:
+        - Editor
+      summary: Execute send-backward
+      requestBody:
+        required: false
+        content:
+          application/json:
+            schema:
+              type: object
+      responses:
+        "200":
+          description: Successful execution
+          content:
+            application/json:
+              schema:
+                type: object
+  /api/editor/list-overlays:
+    post:
+      tags:
+        - Editor
+      summary: Execute list-overlays
+      requestBody:
+        required: false
+        content:
+          application/json:
+            schema:
+              type: object
+      responses:
+        "200":
+          description: Successful execution
+          content:
+            application/json:
+              schema:
+                type: object
+  /api/editor/apply-preset:
+    post:
+      tags:
+        - Editor
+      summary: Execute apply-preset
+      requestBody:
+        required: false
+        content:
+          application/json:
+            schema:
+              type: object
+      responses:
+        "200":
+          description: Successful execution
+          content:
+            application/json:
+              schema:
+                type: object
+  /api/editor/undo:
+    post:
+      tags:
+        - Editor
+      summary: Execute undo
+      requestBody:
+        required: false
+        content:
+          application/json:
+            schema:
+              type: object
+      responses:
+        "200":
+          description: Successful execution
+          content:
+            application/json:
+              schema:
+                type: object
+  /api/editor/redo:
+    post:
+      tags:
+        - Editor
+      summary: Execute redo
+      requestBody:
+        required: false
+        content:
+          application/json:
+            schema:
+              type: object
+      responses:
+        "200":
+          description: Successful execution
+          content:
+            application/json:
+              schema:
+                type: object
+  /api/editor/save-design:
+    post:
+      tags:
+        - Editor
+      summary: Execute save-design
+      requestBody:
+        required: false
+        content:
+          application/json:
+            schema:
+              type: object
+      responses:
+        "200":
+          description: Successful execution
+          content:
+            application/json:
+              schema:
+                type: object
+  /api/editor/load-design:
+    post:
+      tags:
+        - Editor
+      summary: Execute load-design
+      requestBody:
+        required: false
+        content:
+          application/json:
+            schema:
+              type: object
+      responses:
+        "200":
+          description: Successful execution
+          content:
+            application/json:
+              schema:
+                type: object
+  /api/editor/export:
+    post:
+      tags:
+        - Editor
+      summary: Execute export
+      requestBody:
+        required: false
+        content:
+          application/json:
+            schema:
+              type: object
+      responses:
+        "200":
+          description: Successful execution
+          content:
+            application/json:
+              schema:
+                type: object
+  /api/editor/export-all:
+    post:
+      tags:
+        - Editor
+      summary: Execute export-all
+      requestBody:
+        required: false
+        content:
+          application/json:
+            schema:
+              type: object
+      responses:
+        "200":
+          description: Successful execution
+          content:
+            application/json:
+              schema:
+                type: object
+  /api/library/list:
+    post:
+      tags:
+        - Library
+      summary: Execute list
+      requestBody:
+        required: false
+        content:
+          application/json:
+            schema:
+              type: object
+      responses:
+        "200":
+          description: Successful execution
+          content:
+            application/json:
+              schema:
+                type: object
+  /api/library/folders:
+    post:
+      tags:
+        - Library
+      summary: Execute folders
+      requestBody:
+        required: false
+        content:
+          application/json:
+            schema:
+              type: object
+      responses:
+        "200":
+          description: Successful execution
+          content:
+            application/json:
+              schema:
+                type: object
+  /api/library/get:
+    post:
+      tags:
+        - Library
+      summary: Execute get
+      requestBody:
+        required: false
+        content:
+          application/json:
+            schema:
+              type: object
+      responses:
+        "200":
+          description: Successful execution
+          content:
+            application/json:
+              schema:
+                type: object
+  /api/library/delete:
+    post:
+      tags:
+        - Library
+      summary: Execute delete
+      requestBody:
+        required: false
+        content:
+          application/json:
+            schema:
+              type: object
+      responses:
+        "200":
+          description: Successful execution
+          content:
+            application/json:
+              schema:
+                type: object
+  /api/library/rename:
+    post:
+      tags:
+        - Library
+      summary: Execute rename
+      requestBody:
+        required: false
+        content:
+          application/json:
+            schema:
+              type: object
+      responses:
+        "200":
+          description: Successful execution
+          content:
+            application/json:
+              schema:
+                type: object
+  /api/library/search:
+    post:
+      tags:
+        - Library
+      summary: Execute search
+      requestBody:
+        required: false
+        content:
+          application/json:
+            schema:
+              type: object
+      responses:
+        "200":
+          description: Successful execution
+          content:
+            application/json:
+              schema:
+                type: object
+  /api/library/create-folder:
+    post:
+      tags:
+        - Library
+      summary: Execute create-folder
+      requestBody:
+        required: false
+        content:
+          application/json:
+            schema:
+              type: object
+      responses:
+        "200":
+          description: Successful execution
+          content:
+            application/json:
+              schema:
+                type: object
+  /api/library/delete-folder:
+    post:
+      tags:
+        - Library
+      summary: Execute delete-folder
+      requestBody:
+        required: false
+        content:
+          application/json:
+            schema:
+              type: object
+      responses:
+        "200":
+          description: Successful execution
+          content:
+            application/json:
+              schema:
+                type: object
+  /api/library/move:
+    post:
+      tags:
+        - Library
+      summary: Execute move
+      requestBody:
+        required: false
+        content:
+          application/json:
+            schema:
+              type: object
+      responses:
+        "200":
+          description: Successful execution
+          content:
+            application/json:
+              schema:
+                type: object
+  /api/library/import:
+    post:
+      tags:
+        - Library
+      summary: Execute import
+      requestBody:
+        required: false
+        content:
+          application/json:
+            schema:
+              type: object
+      responses:
+        "200":
+          description: Successful execution
+          content:
+            application/json:
+              schema:
+                type: object
+  /api/library/export:
+    post:
+      tags:
+        - Library
+      summary: Execute export
+      requestBody:
+        required: false
+        content:
+          application/json:
+            schema:
+              type: object
+      responses:
+        "200":
+          description: Successful execution
+          content:
+            application/json:
+              schema:
+                type: object
+  /api/multi/open:
+    post:
+      tags:
+        - Multi
+      summary: Execute open
+      requestBody:
+        required: false
+        content:
+          application/json:
+            schema:
+              type: object
+      responses:
+        "200":
+          description: Successful execution
+          content:
+            application/json:
+              schema:
+                type: object
+  /api/multi/state:
+    post:
+      tags:
+        - Multi
+      summary: Execute state
+      requestBody:
+        required: false
+        content:
+          application/json:
+            schema:
+              type: object
+      responses:
+        "200":
+          description: Successful execution
+          content:
+            application/json:
+              schema:
+                type: object
+  /api/multi/switch-design:
+    post:
+      tags:
+        - Multi
+      summary: Execute switch-design
+      requestBody:
+        required: false
+        content:
+          application/json:
+            schema:
+              type: object
+      responses:
+        "200":
+          description: Successful execution
+          content:
+            application/json:
+              schema:
+                type: object
+  /api/multi/add-design:
+    post:
+      tags:
+        - Multi
+      summary: Execute add-design
+      requestBody:
+        required: false
+        content:
+          application/json:
+            schema:
+              type: object
+      responses:
+        "200":
+          description: Successful execution
+          content:
+            application/json:
+              schema:
+                type: object
+  /api/multi/remove-design:
+    post:
+      tags:
+        - Multi
+      summary: Execute remove-design
+      requestBody:
+        required: false
+        content:
+          application/json:
+            schema:
+              type: object
+      responses:
+        "200":
+          description: Successful execution
+          content:
+            application/json:
+              schema:
+                type: object
+  /api/multi/duplicate-design:
+    post:
+      tags:
+        - Multi
+      summary: Execute duplicate-design
+      requestBody:
+        required: false
+        content:
+          application/json:
+            schema:
+              type: object
+      responses:
+        "200":
+          description: Successful execution
+          content:
+            application/json:
+              schema:
+                type: object
+  /api/multi/reorder:
+    post:
+      tags:
+        - Multi
+      summary: Execute reorder
+      requestBody:
+        required: false
+        content:
+          application/json:
+            schema:
+              type: object
+      responses:
+        "200":
+          description: Successful execution
+          content:
+            application/json:
+              schema:
+                type: object
+  /api/multi/apply-preset:
+    post:
+      tags:
+        - Multi
+      summary: Execute apply-preset
+      requestBody:
+        required: false
+        content:
+          application/json:
+            schema:
+              type: object
+      responses:
+        "200":
+          description: Successful execution
+          content:
+            application/json:
+              schema:
+                type: object
+  /api/multi/batch:
+    post:
+      tags:
+        - Multi
+      summary: Execute batch
+      requestBody:
+        required: false
+        content:
+          application/json:
+            schema:
+              type: object
+      responses:
+        "200":
+          description: Successful execution
+          content:
+            application/json:
+              schema:
+                type: object
+  /api/multi/set-image:
+    post:
+      tags:
+        - Multi
+      summary: Execute set-image
+      requestBody:
+        required: false
+        content:
+          application/json:
+            schema:
+              type: object
+      responses:
+        "200":
+          description: Successful execution
+          content:
+            application/json:
+              schema:
+                type: object
+  /api/multi/save-design:
+    post:
+      tags:
+        - Multi
+      summary: Execute save-design
+      requestBody:
+        required: false
+        content:
+          application/json:
+            schema:
+              type: object
+      responses:
+        "200":
+          description: Successful execution
+          content:
+            application/json:
+              schema:
+                type: object
+  /api/translate/state:
+    post:
+      tags:
+        - Translate
+      summary: Execute state
+      requestBody:
+        required: false
+        content:
+          application/json:
+            schema:
+              type: object
+      responses:
+        "200":
+          description: Successful execution
+          content:
+            application/json:
+              schema:
+                type: object
+  /api/translate/get-texts:
+    post:
+      tags:
+        - Translate
+      summary: Execute get-texts
+      requestBody:
+        required: false
+        content:
+          application/json:
+            schema:
+              type: object
+      responses:
+        "200":
+          description: Successful execution
+          content:
+            application/json:
+              schema:
+                type: object
+  /api/translate/all:
+    post:
+      tags:
+        - Translate
+      summary: Execute all
+      requestBody:
+        required: false
+        content:
+          application/json:
+            schema:
+              type: object
+      responses:
+        "200":
+          description: Successful execution
+          content:
+            application/json:
+              schema:
+                type: object
+  /api/translate/preview:
+    post:
+      tags:
+        - Translate
+      summary: Execute preview
+      requestBody:
+        required: false
+        content:
+          application/json:
+            schema:
+              type: object
+      responses:
+        "200":
+          description: Successful execution
+          content:
+            application/json:
+              schema:
+                type: object
+  /api/translate/edit:
+    post:
+      tags:
+        - Translate
+      summary: Execute edit
+      requestBody:
+        required: false
+        content:
+          application/json:
+            schema:
+              type: object
+      responses:
+        "200":
+          description: Successful execution
+          content:
+            application/json:
+              schema:
+                type: object
+  /api/translate/apply-manual:
+    post:
+      tags:
+        - Translate
+      summary: Execute apply-manual
+      requestBody:
+        required: false
+        content:
+          application/json:
+            schema:
+              type: object
+      responses:
+        "200":
+          description: Successful execution
+          content:
+            application/json:
+              schema:
+                type: object
+  /api/translate/remove-locale:
+    post:
+      tags:
+        - Translate
+      summary: Execute remove-locale
+      requestBody:
+        required: false
+        content:
+          application/json:
+            schema:
+              type: object
+      responses:
+        "200":
+          description: Successful execution
+          content:
+            application/json:
+              schema:
+                type: object
+  /api/translate/set-prompt:
+    post:
+      tags:
+        - Translate
+      summary: Execute set-prompt
+      requestBody:
+        required: false
+        content:
+          application/json:
+            schema:
+              type: object
+      responses:
+        "200":
+          description: Successful execution
+          content:
+            application/json:
+              schema:
+                type: object
+  /api/translate/override-overlay:
+    post:
+      tags:
+        - Translate
+      summary: Execute override-overlay
+      requestBody:
+        required: false
+        content:
+          application/json:
+            schema:
+              type: object
+      responses:
+        "200":
+          description: Successful execution
+          content:
+            application/json:
+              schema:
+                type: object
+  /api/translate/set-locale-image:
+    post:
+      tags:
+        - Translate
+      summary: Execute set-locale-image
+      requestBody:
+        required: false
+        content:
+          application/json:
+            schema:
+              type: object
+      responses:
+        "200":
+          description: Successful execution
+          content:
+            application/json:
+              schema:
+                type: object
+  /api/preset/list:
+    post:
+      tags:
+        - Preset
+      summary: Execute list
+      requestBody:
+        required: false
+        content:
+          application/json:
+            schema:
+              type: object
+      responses:
+        "200":
+          description: Successful execution
+          content:
+            application/json:
+              schema:
+                type: object
+  /api/preset/show:
+    post:
+      tags:
+        - Preset
+      summary: Execute show
+      requestBody:
+        required: false
+        content:
+          application/json:
+            schema:
+              type: object
+      responses:
+        "200":
+          description: Successful execution
+          content:
+            application/json:
+              schema:
+                type: object
+  /api/status:
+    get:
+      tags:
+        - Server
+      summary: Get server status
+      responses:
+        "200":
+          description: Successful execution
+''';
+
+const String _swaggerUiHtml = r'''
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <title>App Screenshots API Docs</title>
+  <link rel="stylesheet" href="https://unpkg.com/swagger-ui-dist@5.11.0/swagger-ui.css" />
+  <style>
+    body { margin: 0; padding: 0; }
+    .swagger-ui .topbar { display: none; }
+  </style>
+</head>
+<body>
+<div id="swagger-ui"></div>
+<script src="https://unpkg.com/swagger-ui-dist@5.11.0/swagger-ui-bundle.js"></script>
+<script src="https://unpkg.com/swagger-ui-dist@5.11.0/swagger-ui-standalone-preset.js"></script>
+<script>
+window.onload = () => {
+  window.ui = SwaggerUIBundle({
+    url: '/api/docs/openapi.yaml',
+    dom_id: '#swagger-ui',
+    presets: [
+      SwaggerUIBundle.presets.apis,
+      SwaggerUIStandalonePreset
+    ],
+    layout: "StandaloneLayout"
+  });
+};
+</script>
+</body>
+</html>
+''';

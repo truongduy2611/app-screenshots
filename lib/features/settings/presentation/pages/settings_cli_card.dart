@@ -90,26 +90,49 @@ class _SettingsCliCard extends StatelessWidget {
                         const SizedBox(height: 16),
                         Align(
                           alignment: Alignment.centerRight,
-                          child: FilledButton.tonalIcon(
-                            icon: const Icon(
-                              Symbols.open_in_new_rounded,
-                              size: 18,
-                            ),
-                            label: Text(context.l10n.cliLearnMoreButton),
-                            style: FilledButton.styleFrom(
-                              padding: const EdgeInsets.symmetric(
-                                horizontal: 16,
-                                vertical: 0,
-                              ),
-                              visualDensity: VisualDensity.compact,
-                            ),
-                            onPressed: () {
-                              launchUrl(
-                                Uri.parse(
-                                  'https://appscreenshots.progressiostudio.com/cli',
+                          child: Wrap(
+                            spacing: 8,
+                            runSpacing: 8,
+                            alignment: WrapAlignment.end,
+                            children: [
+                              FilledButton.tonalIcon(
+                                icon: const Icon(Symbols.api_rounded, size: 18),
+                                label: const Text('Open API Explorer'),
+                                style: FilledButton.styleFrom(
+                                  padding: const EdgeInsets.symmetric(
+                                    horizontal: 16,
+                                    vertical: 0,
+                                  ),
+                                  visualDensity: VisualDensity.compact,
                                 ),
-                              );
-                            },
+                                onPressed: () {
+                                  launchUrl(
+                                    Uri.parse('http://localhost:19222/api/docs'),
+                                  );
+                                },
+                              ),
+                              FilledButton.tonalIcon(
+                                icon: const Icon(
+                                  Symbols.open_in_new_rounded,
+                                  size: 18,
+                                ),
+                                label: Text(context.l10n.cliLearnMoreButton),
+                                style: FilledButton.styleFrom(
+                                  padding: const EdgeInsets.symmetric(
+                                    horizontal: 16,
+                                    vertical: 0,
+                                  ),
+                                  visualDensity: VisualDensity.compact,
+                                ),
+                                onPressed: () {
+                                  launchUrl(
+                                    Uri.parse(
+                                      'https://appscreenshots.progressiostudio.com/cli',
+                                    ),
+                                  );
+                                },
+                              ),
+                            ],
                           ),
                         ),
                       ],

@@ -21,12 +21,13 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:path_provider/path_provider.dart';
 
-part 'command_server_utils.dart';
 part 'command_server_editor.dart';
 part 'command_server_library.dart';
-part 'command_server_translate.dart';
-part 'command_server_preset.dart';
 part 'command_server_multi.dart';
+part 'command_server_preset.dart';
+part 'command_server_translate.dart';
+part 'command_server_utils.dart';
+part 'command_server_openapi.dart';
 
 /// Embedded HTTP server that exposes the app's editor API for CLI/agent control.
 ///
@@ -239,6 +240,23 @@ class CommandServer {
     }
 
     final path = request.uri.path;
+
+    // Intercept OpenAPI documentation routes
+    if (path == '/api/docs/openapi.yaml') {
+      request.response.statusCode = 200;
+      request.response.headers.contentType = ContentType('text', 'yaml', charset: 'utf-8');
+      request.response.write(_openApiYaml);
+      await request.response.close();
+      return;
+    }
+
+    if (path == '/api/docs' || path == '/api/docs/') {
+      request.response.statusCode = 200;
+      request.response.headers.contentType = ContentType.html;
+      request.response.write(_swaggerUiHtml);
+      await request.response.close();
+      return;
+    }
 
     try {
       final result = await _route(request.method, path, request);
