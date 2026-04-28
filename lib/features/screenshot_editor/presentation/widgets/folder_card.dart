@@ -45,12 +45,17 @@ class _FolderCardState extends State<FolderCard> {
     final primary = theme.colorScheme.primary;
     final tertiary = theme.colorScheme.tertiary;
 
-    final libraryState = context.watch<ScreenshotLibraryCubit>().state;
-    final isSelectionMode =
-        libraryState is ScreenshotLibraryLoaded && libraryState.isSelectionMode;
-    final isSelected =
-        libraryState is ScreenshotLibraryLoaded &&
-        libraryState.selectedFolderIds.contains(widget.folder.id);
+    return BlocSelector<ScreenshotLibraryCubit, ScreenshotLibraryState,
+        ({bool selectionMode, bool selected})>(
+      selector: (state) => (
+        selectionMode:
+            state is ScreenshotLibraryLoaded && state.isSelectionMode,
+        selected: state is ScreenshotLibraryLoaded &&
+            state.selectedFolderIds.contains(widget.folder.id),
+      ),
+      builder: (context, sel) {
+        final isSelectionMode = sel.selectionMode;
+        final isSelected = sel.selected;
 
     return DragTarget<SavedDesign>(
       onWillAcceptWithDetails: (details) {
@@ -249,7 +254,9 @@ class _FolderCardState extends State<FolderCard> {
           ), // GestureDetector
         ); // MouseRegion
       },
-    );
+    ); // DragTarget
+      }, // BlocSelector builder
+    ); // BlocSelector
   }
 
   void _showContextMenu(BuildContext context, {Offset? position}) {
@@ -641,6 +648,8 @@ class _FolderThumbnailStackState extends State<_FolderThumbnailStack> {
       fit: BoxFit.cover,
       width: w,
       height: h,
+      cacheWidth: 400,
+      gaplessPlayback: true,
       errorBuilder: (_, _, _) => Container(
         color: widget.primary.withValues(alpha: widget.isDark ? 0.15 : 0.08),
         child: Icon(
