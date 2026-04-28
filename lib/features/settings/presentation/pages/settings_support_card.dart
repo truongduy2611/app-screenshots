@@ -73,32 +73,84 @@ class _SupportMeCardState extends State<_SupportMeCard> {
 
   @override
   Widget build(BuildContext context) {
-    return AppListTile(
-      leading: Icon(
-        Symbols.favorite_rounded,
-        size: 20,
-        color: widget.theme.colorScheme.onSurface,
-      ),
-      title: Text(
-        context.l10n.supportTheDeveloper,
-        style: widget.theme.textTheme.bodyMedium?.copyWith(
-          fontWeight: FontWeight.w500,
+    if (!_isAvailable) {
+      return const SizedBox.shrink();
+    }
+
+    final borderRadius = BorderRadius.circular(14);
+    return Material(
+      color: Colors.transparent,
+      borderRadius: borderRadius,
+      clipBehavior: Clip.antiAlias,
+      child: DecoratedBox(
+        decoration: BoxDecoration(
+          gradient: LinearGradient(
+            colors: [
+              widget.theme.colorScheme.primary.withValues(
+                alpha: widget.isDark ? 0.12 : 0.08,
+              ),
+              widget.theme.colorScheme.tertiary.withValues(
+                alpha: widget.isDark ? 0.1 : 0.06,
+              ),
+            ],
+          ),
+          borderRadius: borderRadius,
+          border: Border.all(
+            color: widget.theme.colorScheme.primary.withValues(
+              alpha: widget.isDark ? 0.2 : 0.12,
+            ),
+          ),
+        ),
+        child: InkWell(
+          mouseCursor: SystemMouseCursors.click,
+          onTap: _buyConsumable,
+          borderRadius: borderRadius,
+          child: Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 14),
+            child: Row(
+              children: [
+                Icon(
+                  Symbols.favorite_rounded,
+                  size: 24,
+                  color: widget.theme.colorScheme.primary,
+                ),
+                const SizedBox(width: 16),
+                Expanded(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        context.l10n.supportTheDeveloper,
+                        style: widget.theme.textTheme.titleSmall?.copyWith(
+                          fontWeight: FontWeight.w600,
+                        ),
+                      ),
+                      const SizedBox(height: 2),
+                      Text(
+                        context.l10n.supportTheDeveloperDescription(
+                          _productDetails?.price ?? "",
+                        ),
+                        style: widget.theme.textTheme.bodySmall?.copyWith(
+                          color: widget.theme.colorScheme.onSurface.withValues(
+                            alpha: 0.55,
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+                Icon(
+                  Symbols.chevron_right_rounded,
+                  size: 18,
+                  color: widget.theme.colorScheme.onSurface.withValues(
+                    alpha: 0.35,
+                  ),
+                ),
+              ],
+            ),
+          ),
         ),
       ),
-      subtitle: Text(
-        context.l10n.supportTheDeveloperDescription(
-          _productDetails?.price ?? "",
-        ),
-        style: widget.theme.textTheme.bodySmall?.copyWith(
-          color: widget.theme.colorScheme.onSurface.withValues(alpha: 0.55),
-        ),
-      ),
-      trailing: Icon(
-        Symbols.chevron_right_rounded,
-        size: 18,
-        color: widget.theme.colorScheme.onSurface.withValues(alpha: 0.35),
-      ),
-      onTap: _isAvailable ? _buyConsumable : null,
     );
   }
 }

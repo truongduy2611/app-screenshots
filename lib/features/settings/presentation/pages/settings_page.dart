@@ -144,9 +144,8 @@ class _SettingsDialogState extends State<SettingsDialog> {
         return ListView(
           padding: const EdgeInsets.all(20),
           children: [
-            // Pro Section
+            _SupportMeCard(isDark: isDark, theme: theme),
             const SizedBox(height: 24),
-
             // ── Appearance ──
             _SectionHeader(title: context.l10n.appearance),
             const SizedBox(height: 8),
@@ -255,7 +254,6 @@ class _SettingsDialogState extends State<SettingsDialog> {
               isDark: isDark,
               theme: theme,
               children: [
-                _SupportMeCard(isDark: isDark, theme: theme),
                 _SettingsTile(
                   icon: Symbols.star_rounded,
                   title: context.l10n.rateOnAppStore,
