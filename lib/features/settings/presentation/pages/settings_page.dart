@@ -246,17 +246,13 @@ class _SettingsDialogState extends State<SettingsDialog> {
 
             const SizedBox(height: 24),
             _SectionHeader(title: context.l10n.support),
-            const SizedBox(height: 8),
-            if (Platform.isMacOS) ...[
-              _SettingsCliCard(isDark: isDark, theme: theme),
-              const SizedBox(height: 12),
-            ],
-            _SupportMeCard(isDark: isDark, theme: theme),
-            const SizedBox(height: 16),
             _SettingsTileGroup(
               isDark: isDark,
               theme: theme,
               children: [
+                if (Platform.isMacOS)
+                  _SettingsCliCard(isDark: isDark, theme: theme),
+                _SupportMeCard(isDark: isDark, theme: theme),
                 _SettingsTile(
                   icon: Symbols.star_rounded,
                   title: context.l10n.rateOnAppStore,
