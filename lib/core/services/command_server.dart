@@ -97,42 +97,42 @@ class CommandServer {
 
   void registerEditor(ScreenshotEditorCubit cubit) {
     _editorCubit = cubit;
-    AppLogger.d('Editor cubit registered', tag: _tag);
+    if (isRunning) AppLogger.d('Editor cubit registered', tag: _tag);
   }
 
   void unregisterEditor(ScreenshotEditorCubit cubit) {
     if (_editorCubit == cubit) {
       _editorCubit = null;
-      AppLogger.d('Editor cubit unregistered', tag: _tag);
+      if (isRunning) AppLogger.d('Editor cubit unregistered', tag: _tag);
     }
   }
 
   void registerMulti(MultiScreenshotCubit cubit) {
     _multiCubit = cubit;
-    AppLogger.d('Multi cubit registered', tag: _tag);
+    if (isRunning) AppLogger.d('Multi cubit registered', tag: _tag);
   }
 
   void unregisterMulti(MultiScreenshotCubit cubit) {
     if (_multiCubit == cubit) {
       _multiCubit = null;
-      AppLogger.d('Multi cubit unregistered', tag: _tag);
+      if (isRunning) AppLogger.d('Multi cubit unregistered', tag: _tag);
     }
   }
 
   void registerLibrary(ScreenshotLibraryCubit cubit) {
     _libraryCubit = cubit;
-    AppLogger.d('Library cubit registered', tag: _tag);
+    if (isRunning) AppLogger.d('Library cubit registered', tag: _tag);
   }
 
   void registerTranslation(TranslationCubit cubit) {
     _translationCubit = cubit;
-    AppLogger.d('Translation cubit registered', tag: _tag);
+    if (isRunning) AppLogger.d('Translation cubit registered', tag: _tag);
   }
 
   void unregisterTranslation(TranslationCubit cubit) {
     if (_translationCubit == cubit) {
       _translationCubit = null;
-      AppLogger.d('Translation cubit unregistered', tag: _tag);
+      if (isRunning) AppLogger.d('Translation cubit unregistered', tag: _tag);
     }
   }
 
@@ -143,13 +143,13 @@ class CommandServer {
   }) {
     _captureCallback = captureImage;
     _syncCallback = syncChanges;
-    AppLogger.d('Capture callback registered', tag: _tag);
+    if (isRunning) AppLogger.d('Capture callback registered', tag: _tag);
   }
 
   void unregisterCapture() {
     _captureCallback = null;
     _syncCallback = null;
-    AppLogger.d('Capture callback unregistered', tag: _tag);
+    if (isRunning) AppLogger.d('Capture callback unregistered', tag: _tag);
   }
 
   /// Register navigation callback from the studio page so CLI can open editors.
@@ -157,12 +157,12 @@ class CommandServer {
     required Future<void> Function(String displayType) openMulti,
   }) {
     _navigateToMultiCallback = openMulti;
-    AppLogger.d('Navigation callback registered', tag: _tag);
+    if (isRunning) AppLogger.d('Navigation callback registered', tag: _tag);
   }
 
   void unregisterNavigation() {
     _navigateToMultiCallback = null;
-    AppLogger.d('Navigation callback unregistered', tag: _tag);
+    if (isRunning) AppLogger.d('Navigation callback unregistered', tag: _tag);
   }
 
   // ═══════════════════════════════════════════════════════════════════════════
