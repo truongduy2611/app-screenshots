@@ -121,7 +121,7 @@ class BackgroundControls extends StatelessWidget {
                   label: context.l10n.padding,
                   value: state.design.padding,
                   min: 0,
-                  max: 400,
+                  max: 4000,
                   suffix: 'px',
                   onChanged: cubit.updatePadding,
                 ),
@@ -373,7 +373,7 @@ class BackgroundControls extends StatelessWidget {
         label: 'Scale',
         value: overlay.scale * 100,
         min: 10,
-        max: 500,
+        max: 5000,
         suffix: '%',
         onChanged: (v) => cubit.updateImageOverlay(
           overlay.id,
@@ -637,7 +637,7 @@ class BackgroundControls extends StatelessWidget {
         label: 'Size',
         value: overlay.size,
         min: 20,
-        max: 300,
+        max: 3000,
         suffix: 'px',
         onChanged: (v) =>
             cubit.updateIconOverlay(overlay.id, overlay.copyWith(size: v)),
@@ -968,8 +968,8 @@ class BackgroundControls extends StatelessWidget {
       Slider(
         value: overlay.zoomLevel,
         min: 1.5,
-        max: 5.0,
-        divisions: 14,
+        max: 50.0,
+        divisions: 194,
         label: '${overlay.zoomLevel.toStringAsFixed(1)}×',
         onChanged: (v) => cubit.updateMagnifierOverlay(
           overlay.id,

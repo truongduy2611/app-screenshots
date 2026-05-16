@@ -213,7 +213,7 @@ class _ImageOverlayWidgetState extends State<ImageOverlayWidget> {
     var newScale = widget.overlay.scale * scaleChange;
 
     if (newScale < 0.1) newScale = 0.1;
-    if (newScale > 5.0) newScale = 5.0;
+    if (newScale > 50.0) newScale = 50.0;
 
     context.read<ScreenshotEditorCubit>().updateImageOverlay(
       widget.overlay.id,

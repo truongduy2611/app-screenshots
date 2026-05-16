@@ -654,7 +654,7 @@ class TextControls extends StatelessWidget {
                         label: context.l10n.fontSize,
                         value: effectiveFontSize,
                         min: 10,
-                        max: 250,
+                        max: 2500,
                         suffix: 'px',
                         onChanged: (val) {
                           if (isLocalePreview) {
