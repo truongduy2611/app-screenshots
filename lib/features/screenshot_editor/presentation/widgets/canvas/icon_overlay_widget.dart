@@ -42,61 +42,61 @@ class _IconOverlayWidgetState extends State<IconOverlayWidget> {
         cursor: _isDragging
             ? SystemMouseCursors.grabbing
             : SystemMouseCursors.grab,
-        child: GestureDetector(
-          behavior: widget.isSelected ? HitTestBehavior.opaque : HitTestBehavior.deferToChild,
-          onScaleStart: (details) {
-            setState(() => _isDragging = true);
-            _rawPosition = overlay.position;
-            _startRotation = overlay.rotation;
-            _startScale = overlay.scale;
-            context.read<ScreenshotEditorCubit>().selectOverlay(overlay.id);
-          },
-          onScaleUpdate: (details) {
-            _rawPosition =
-                (_rawPosition ?? overlay.position) + details.focalPointDelta;
+        child: Opacity(
+          opacity: overlay.opacity.clamp(0.0, 1.0),
+          child: OverlaySelectionBorder(
+            isSelected: widget.isSelected,
+            child: Transform.rotate(
+              angle: overlay.rotation,
+              child: Transform.scale(
+                scale: overlay.scale,
+                child: GestureDetector(
+                  behavior: widget.isSelected ? HitTestBehavior.opaque : HitTestBehavior.deferToChild,
+                  onScaleStart: (details) {
+                    setState(() => _isDragging = true);
+                    _rawPosition = overlay.position;
+                    _startRotation = overlay.rotation;
+                    _startScale = overlay.scale;
+                    context.read<ScreenshotEditorCubit>().selectOverlay(overlay.id);
+                  },
+                  onScaleUpdate: (details) {
+                    _rawPosition =
+                        (_rawPosition ?? overlay.position) + details.focalPointDelta;
 
-            final cubit = context.read<ScreenshotEditorCubit>();
-            final canvasSize = ScreenshotUtils.getDimensions(
-              cubit.state.design.displayType ?? '',
-              cubit.state.design.orientation,
-            );
-            // Icon element size for center-based snap
-            final iconDim =
-                (overlay.size + overlay.padding * 2) * overlay.scale;
-            final snappedPos = cubit.snapOffset(
-              _rawPosition!,
-              canvasSize,
-              elementSize: Size(iconDim, iconDim),
-            );
-            widget.onSnapHaptics(_rawPosition!, snappedPos);
+                    final cubit = context.read<ScreenshotEditorCubit>();
+                    final canvasSize = ScreenshotUtils.getDimensions(
+                      cubit.state.design.displayType ?? '',
+                      cubit.state.design.orientation,
+                    );
+                    // Icon element size for center-based snap
+                    final iconDim =
+                        (overlay.size + overlay.padding * 2) * overlay.scale;
+                    final snappedPos = cubit.snapOffset(
+                      _rawPosition!,
+                      canvasSize,
+                      elementSize: Size(iconDim, iconDim),
+                    );
+                    widget.onSnapHaptics(_rawPosition!, snappedPos);
 
-            final newScale = _startScale * details.scale;
-            final newRotation = _startRotation + details.rotation;
+                    final newScale = _startScale * details.scale;
+                    final newRotation = _startRotation + details.rotation;
 
-            cubit.updateIconOverlay(
-              overlay.id,
-              overlay.copyWith(
-                position: snappedPos,
-                scale: newScale,
-                rotation: newRotation,
-              ),
-            );
-          },
-          onScaleEnd: (_) {
-            setState(() => _isDragging = false);
-            _rawPosition = null;
-            context.read<ScreenshotEditorCubit>().clearSnapLines();
-          },
-          onTap: () =>
-              context.read<ScreenshotEditorCubit>().selectOverlay(overlay.id),
-          child: Opacity(
-            opacity: overlay.opacity.clamp(0.0, 1.0),
-            child: OverlaySelectionBorder(
-              isSelected: widget.isSelected,
-              child: Transform.rotate(
-                angle: overlay.rotation,
-                child: Transform.scale(
-                  scale: overlay.scale,
+                    cubit.updateIconOverlay(
+                      overlay.id,
+                      overlay.copyWith(
+                        position: snappedPos,
+                        scale: newScale,
+                        rotation: newRotation,
+                      ),
+                    );
+                  },
+                  onScaleEnd: (_) {
+                    setState(() => _isDragging = false);
+                    _rawPosition = null;
+                    context.read<ScreenshotEditorCubit>().clearSnapLines();
+                  },
+                  onTap: () =>
+                      context.read<ScreenshotEditorCubit>().selectOverlay(overlay.id),
                   child: Container(
                     padding: EdgeInsets.all(overlay.padding),
                     decoration: BoxDecoration(

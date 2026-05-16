@@ -278,80 +278,80 @@ class _TextOverlayWidgetState extends State<TextOverlayWidget> {
       left: effectivePos.dx,
       top: effectivePos.dy,
       child: GrabCursorRegion(
-        child: GestureDetector(
-          behavior: isSelected ? HitTestBehavior.opaque : HitTestBehavior.deferToChild,
-          onPanStart: (_) {
-            // If editing, commit first before starting drag.
-            if (_isEditing) _commitEdit();
-            _rawPositions[overlay.id] = effectivePos;
-          },
-          onPanUpdate: (details) {
-            final rawPos =
-                (_rawPositions[overlay.id] ?? effectivePos) + details.delta;
-            _rawPositions[overlay.id] = rawPos;
-            final cubit = context.read<ScreenshotEditorCubit>();
+        child: OverlaySelectionBorder(
+          key: _keyFor(overlay.id),
+          isSelected: isSelected,
+          child: Transform.rotate(
+            angle: effectiveRotation,
+            child: Transform.scale(
+              scale: effectiveScale,
+              child: GestureDetector(
+                behavior: isSelected ? HitTestBehavior.opaque : HitTestBehavior.deferToChild,
+                onPanStart: (_) {
+                  // If editing, commit first before starting drag.
+                  if (_isEditing) _commitEdit();
+                  _rawPositions[overlay.id] = effectivePos;
+                },
+                onPanUpdate: (details) {
+                  final rawPos =
+                      (_rawPositions[overlay.id] ?? effectivePos) + details.delta;
+                  _rawPositions[overlay.id] = rawPos;
+                  final cubit = context.read<ScreenshotEditorCubit>();
 
-            // Measure actual rendered size via GlobalKey.
-            Size? elSize;
-            final key = _overlayKeys[overlay.id];
-            if (key?.currentContext != null) {
-              final box = key!.currentContext!.findRenderObject() as RenderBox?;
-              if (box != null && box.hasSize) {
-                elSize = box.size * effectiveScale;
-              }
-            }
+                  // Measure actual rendered size via GlobalKey.
+                  Size? elSize;
+                  final key = _overlayKeys[overlay.id];
+                  if (key?.currentContext != null) {
+                    final box = key!.currentContext!.findRenderObject() as RenderBox?;
+                    if (box != null && box.hasSize) {
+                      elSize = box.size * effectiveScale;
+                    }
+                  }
 
-            final snappedPosition = cubit.snapOffset(
-              rawPos,
-              widget.canvasSize,
-              elementSize: elSize,
-            );
-            widget.onSnapHaptics(rawPos, snappedPosition);
+                  final snappedPosition = cubit.snapOffset(
+                    rawPos,
+                    widget.canvasSize,
+                    elementSize: elSize,
+                  );
+                  widget.onSnapHaptics(rawPos, snappedPosition);
 
-            // Route to override or base depending on whether a preview
-            // locale is active.
-            if (previewLocale != null && tCubit != null) {
-              tCubit.updateOverlayOverride(
-                previewLocale,
-                translationKey,
-                (localeOverride ?? const OverlayOverride()).copyWith(
-                  position: snappedPosition,
-                ),
-              );
-            } else {
-              cubit.updateTextOverlay(
-                overlay.id,
-                overlay.copyWith(position: snappedPosition),
-              );
-            }
-          },
-          onPanEnd: (_) {
-            _rawPositions.remove(overlay.id);
-            context.read<ScreenshotEditorCubit>().clearSnapLines();
-          },
-          onPanCancel: () {
-            _rawPositions.remove(overlay.id);
-            context.read<ScreenshotEditorCubit>().clearSnapLines();
-          },
-          onTap: () {
-            if (!isSelected) {
-              context.read<ScreenshotEditorCubit>().selectOverlay(overlay.id);
-            }
-          },
-          onDoubleTap: () {
-            // Select if not already, then enter edit mode.
-            if (!isSelected) {
-              context.read<ScreenshotEditorCubit>().selectOverlay(overlay.id);
-            }
-            _enterEditMode(displayText);
-          },
-          child: OverlaySelectionBorder(
-            key: _keyFor(overlay.id),
-            isSelected: isSelected,
-            child: Transform.rotate(
-              angle: effectiveRotation,
-              child: Transform.scale(
-                scale: effectiveScale,
+                  // Route to override or base depending on whether a preview
+                  // locale is active.
+                  if (previewLocale != null && tCubit != null) {
+                    tCubit.updateOverlayOverride(
+                      previewLocale,
+                      translationKey,
+                      (localeOverride ?? const OverlayOverride()).copyWith(
+                        position: snappedPosition,
+                      ),
+                    );
+                  } else {
+                    cubit.updateTextOverlay(
+                      overlay.id,
+                      overlay.copyWith(position: snappedPosition),
+                    );
+                  }
+                },
+                onPanEnd: (_) {
+                  _rawPositions.remove(overlay.id);
+                  context.read<ScreenshotEditorCubit>().clearSnapLines();
+                },
+                onPanCancel: () {
+                  _rawPositions.remove(overlay.id);
+                  context.read<ScreenshotEditorCubit>().clearSnapLines();
+                },
+                onTap: () {
+                  if (!isSelected) {
+                    context.read<ScreenshotEditorCubit>().selectOverlay(overlay.id);
+                  }
+                },
+                onDoubleTap: () {
+                  // Select if not already, then enter edit mode.
+                  if (!isSelected) {
+                    context.read<ScreenshotEditorCubit>().selectOverlay(overlay.id);
+                  }
+                  _enterEditMode(displayText);
+                },
                 child: SizedBox(
                   width: effectiveWidth,
                   child: Container(

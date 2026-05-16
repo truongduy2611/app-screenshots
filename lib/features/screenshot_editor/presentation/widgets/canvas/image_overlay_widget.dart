@@ -38,63 +38,63 @@ class _ImageOverlayWidgetState extends State<ImageOverlayWidget> {
       cursor: _isDragging
           ? SystemMouseCursors.grabbing
           : SystemMouseCursors.move,
-      child: GestureDetector(
-        behavior: widget.isSelected ? HitTestBehavior.opaque : HitTestBehavior.deferToChild,
-        onScaleStart: (details) {
-          setState(() => _isDragging = true);
-          _startRotation = overlay.rotation;
-          _startScale = overlay.scale;
-          _rawPosition = overlay.position;
-          context.read<ScreenshotEditorCubit>().selectOverlay(overlay.id);
-        },
-        onScaleEnd: (_) {
-          setState(() => _isDragging = false);
-          _rawPosition = null;
-          context.read<ScreenshotEditorCubit>().clearSnapLines();
-        },
-        onScaleUpdate: (details) {
-          _rawPosition =
-              (_rawPosition ?? overlay.position) + details.focalPointDelta;
+      child: Opacity(
+        opacity: overlay.opacity.clamp(0.0, 1.0),
+        child: Transform.rotate(
+          angle: overlay.rotation,
+          child: Transform.scale(
+            scale: overlay.scale,
+            child: Transform.flip(
+              flipX: overlay.flipHorizontal,
+              flipY: overlay.flipVertical,
+              child: GestureDetector(
+                behavior: widget.isSelected ? HitTestBehavior.opaque : HitTestBehavior.deferToChild,
+                onScaleStart: (details) {
+                  setState(() => _isDragging = true);
+                  _startRotation = overlay.rotation;
+                  _startScale = overlay.scale;
+                  _rawPosition = overlay.position;
+                  context.read<ScreenshotEditorCubit>().selectOverlay(overlay.id);
+                },
+                onScaleEnd: (_) {
+                  setState(() => _isDragging = false);
+                  _rawPosition = null;
+                  context.read<ScreenshotEditorCubit>().clearSnapLines();
+                },
+                onScaleUpdate: (details) {
+                  _rawPosition =
+                      (_rawPosition ?? overlay.position) + details.focalPointDelta;
 
-          final cubit = context.read<ScreenshotEditorCubit>();
-          final canvasSize = ScreenshotUtils.getDimensions(
-            cubit.state.design.displayType ?? '',
-            cubit.state.design.orientation,
-          );
-          // Image overlay size for center-based snap
-          final elSize = Size(
-            overlay.width * overlay.scale,
-            overlay.height * overlay.scale,
-          );
-          final snappedPos = cubit.snapOffset(
-            _rawPosition!,
-            canvasSize,
-            elementSize: elSize,
-          );
+                  final cubit = context.read<ScreenshotEditorCubit>();
+                  final canvasSize = ScreenshotUtils.getDimensions(
+                    cubit.state.design.displayType ?? '',
+                    cubit.state.design.orientation,
+                  );
+                  // Image overlay size for center-based snap
+                  final elSize = Size(
+                    overlay.width * overlay.scale,
+                    overlay.height * overlay.scale,
+                  );
+                  final snappedPos = cubit.snapOffset(
+                    _rawPosition!,
+                    canvasSize,
+                    elementSize: elSize,
+                  );
 
-          widget.onPanUpdate?.call(_rawPosition!, snappedPos);
+                  widget.onPanUpdate?.call(_rawPosition!, snappedPos);
 
-          final newScale = _startScale * details.scale;
-          final newRotation = _startRotation + details.rotation;
+                  final newScale = _startScale * details.scale;
+                  final newRotation = _startRotation + details.rotation;
 
-          cubit.updateImageOverlay(
-            overlay.id,
-            overlay.copyWith(
-              position: snappedPos,
-              scale: newScale,
-              rotation: newRotation,
-            ),
-          );
-        },
-        child: Opacity(
-          opacity: overlay.opacity.clamp(0.0, 1.0),
-          child: Transform.rotate(
-            angle: overlay.rotation,
-            child: Transform.scale(
-              scale: overlay.scale,
-              child: Transform.flip(
-                flipX: overlay.flipHorizontal,
-                flipY: overlay.flipVertical,
+                  cubit.updateImageOverlay(
+                    overlay.id,
+                    overlay.copyWith(
+                      position: snappedPos,
+                      scale: newScale,
+                      rotation: newRotation,
+                    ),
+                  );
+                },
                 child: Stack(
                   clipBehavior: Clip.none,
                   children: [
