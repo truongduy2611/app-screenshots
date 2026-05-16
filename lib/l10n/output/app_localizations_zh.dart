@@ -1557,6 +1557,30 @@ class AppLocalizationsZh extends AppLocalizations {
 
   @override
   String get restartRequired => '重新启动应用以应用更改';
+
+  @override
+  String get lineHeight => '行高';
+
+  @override
+  String get letterSpacing => '字间距';
+
+  @override
+  String get uploadCachedFolderTitle => '上传缓存的截图';
+
+  @override
+  String get uploadCachedFolderMessage => '我们发现了最近渲染的截图。您想上传它们，还是选择其他文件夹？';
+
+  @override
+  String get useCached => '使用缓存';
+
+  @override
+  String get pickFolder => '选择文件夹';
+
+  @override
+  String get addImages => '添加图片';
+
+  @override
+  String get resetRotation => '重置';
 }
 
 /// The translations for Chinese, using the Han script (`zh_Hant`).
@@ -3112,4 +3136,28 @@ class AppLocalizationsZhHant extends AppLocalizationsZh {
 
   @override
   String get restartRequired => '重新啟動應用程式以套用變更';
+
+  @override
+  String get lineHeight => '行高';
+
+  @override
+  String get letterSpacing => '字間距';
+
+  @override
+  String get uploadCachedFolderTitle => '上傳快取的截圖';
+
+  @override
+  String get uploadCachedFolderMessage => '我們發現了最近渲染的截圖。您想上傳它們，還是選擇其他資料夾？';
+
+  @override
+  String get useCached => '使用快取';
+
+  @override
+  String get pickFolder => '選擇資料夾';
+
+  @override
+  String get addImages => '新增圖片';
+
+  @override
+  String get resetRotation => '重設';
 }

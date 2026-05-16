@@ -1588,4 +1588,29 @@ class AppLocalizationsTh extends AppLocalizations {
 
   @override
   String get restartRequired => 'รีสตาร์ทแอปเพื่อให้การเปลี่ยนแปลงมีผล';
+
+  @override
+  String get lineHeight => 'ความสูงของบรรทัด';
+
+  @override
+  String get letterSpacing => 'ระยะห่างระหว่างตัวอักษร';
+
+  @override
+  String get uploadCachedFolderTitle => 'อัปโหลดภาพหน้าจอที่แคชไว้';
+
+  @override
+  String get uploadCachedFolderMessage =>
+      'เราพบภาพหน้าจอที่เพิ่งเรนเดอร์ คุณต้องการอัปโหลดภาพเหล่านี้ หรือเลือกโฟลเดอร์อื่น?';
+
+  @override
+  String get useCached => 'ใช้แคช';
+
+  @override
+  String get pickFolder => 'เลือกโฟลเดอร์';
+
+  @override
+  String get addImages => 'เพิ่มรูปภาพ';
+
+  @override
+  String get resetRotation => 'รีเซ็ต';
 }

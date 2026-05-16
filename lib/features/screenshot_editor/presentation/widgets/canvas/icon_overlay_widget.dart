@@ -1,11 +1,16 @@
 import 'package:app_screenshots/features/screenshot_editor/data/models/screenshot_design.dart';
 import 'package:app_screenshots/features/screenshot_editor/presentation/cubit/screenshot_editor_cubit.dart';
 import 'package:app_screenshots/features/screenshot_editor/presentation/widgets/canvas/canvas_painters.dart';
+import 'package:app_screenshots/features/screenshot_editor/presentation/widgets/canvas/overlay_interaction_box.dart';
 import 'package:app_screenshots/features/screenshot_editor/utils/screenshot_utils.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-/// Positioned icon overlay with drag, rotate, and resize gestures.
+/// Positioned icon overlay with drag, rotate, and scale gestures.
+///
+/// During a gesture the transform is kept in local state and the cubit is
+/// committed only once on gesture end — so a drag never emits per frame and
+/// produces a single undo entry.
 class IconOverlayWidget extends StatefulWidget {
   const IconOverlayWidget({
     super.key,
@@ -25,113 +30,142 @@ class IconOverlayWidget extends StatefulWidget {
 }
 
 class _IconOverlayWidgetState extends State<IconOverlayWidget> {
-  Offset? _rawPosition;
+  bool _isDragging = false;
+
   double _startRotation = 0.0;
   double _startScale = 1.0;
-  bool _isDragging = false;
+  Offset _rawPosition = Offset.zero;
+  Offset _dragPosition = Offset.zero;
+  double _dragScale = 1.0;
+  double _dragRotation = 0.0;
+
+  ScreenshotEditorCubit get _cubit => context.read<ScreenshotEditorCubit>();
+
+  void _beginDrag() {
+    final o = widget.overlay;
+    _rawPosition = o.position;
+    _dragPosition = o.position;
+    _dragScale = o.scale;
+    _dragRotation = o.rotation;
+    _startScale = o.scale;
+    _startRotation = o.rotation;
+    setState(() => _isDragging = true);
+    _cubit.selectOverlay(o.id);
+  }
+
+  void _endDrag() {
+    if (!_isDragging) return;
+    final o = widget.overlay;
+    _cubit.updateIconOverlay(
+      o.id,
+      o.copyWith(
+        position: _dragPosition,
+        scale: _dragScale,
+        rotation: _dragRotation,
+      ),
+    );
+    _cubit.clearSnapLines();
+    setState(() => _isDragging = false);
+  }
 
   @override
   Widget build(BuildContext context) {
     final overlay = widget.overlay;
 
+    final position = _isDragging ? _dragPosition : overlay.position;
+    final scale = _isDragging ? _dragScale : overlay.scale;
+    final rotation = _isDragging ? _dragRotation : overlay.rotation;
+
+    // Intrinsic (unscaled) icon box: glyph + padding on each side.
+    final dim = overlay.size + overlay.padding * 2;
+    final contentSize = Size(dim, dim);
+
+    final aabbOffset = OverlayInteractionBox.aabbOffset(
+      contentSize,
+      scale,
+      rotation,
+    );
+
     return Positioned(
-      key: ValueKey(overlay.id),
-      left: overlay.position.dx,
-      top: overlay.position.dy,
-      child: MouseRegion(
-        cursor: _isDragging
-            ? SystemMouseCursors.grabbing
-            : SystemMouseCursors.grab,
-        child: GestureDetector(
-          onScaleStart: (details) {
-            setState(() => _isDragging = true);
-            _rawPosition = overlay.position;
-            _startRotation = overlay.rotation;
-            _startScale = overlay.scale;
-            context.read<ScreenshotEditorCubit>().selectOverlay(overlay.id);
-          },
-          onScaleUpdate: (details) {
-            _rawPosition =
-                (_rawPosition ?? overlay.position) + details.focalPointDelta;
+      left: position.dx,
+      top: position.dy,
+      child: RepaintBoundary(
+        child: Transform.translate(
+          offset: aabbOffset,
+          child: MouseRegion(
+            cursor: _isDragging
+                ? SystemMouseCursors.grabbing
+                : SystemMouseCursors.grab,
+            child: Opacity(
+              opacity: overlay.opacity.clamp(0.0, 1.0),
+              child: OverlaySelectionBorder(
+                isSelected: widget.isSelected,
+                child: OverlayInteractionBox(
+                  contentSize: contentSize,
+                  scale: scale,
+                  rotation: rotation,
+                  gestureChild: GestureDetector(
+                    behavior: HitTestBehavior.opaque,
+                    onScaleStart: (_) => _beginDrag(),
+                    onScaleUpdate: (details) {
+                      _rawPosition += details.focalPointDelta;
+                      _dragScale = _startScale * details.scale;
+                      _dragRotation = _startRotation + details.rotation;
 
-            final cubit = context.read<ScreenshotEditorCubit>();
-            final canvasSize = ScreenshotUtils.getDimensions(
-              cubit.state.design.displayType ?? '',
-              cubit.state.design.orientation,
-            );
-            // Icon element size for center-based snap
-            final iconDim =
-                (overlay.size + overlay.padding * 2) * overlay.scale;
-            final snappedPos = cubit.snapOffset(
-              _rawPosition!,
-              canvasSize,
-              elementSize: Size(iconDim, iconDim),
-            );
-            widget.onSnapHaptics(_rawPosition!, snappedPos);
-
-            final newScale = _startScale * details.scale;
-            final newRotation = _startRotation + details.rotation;
-
-            cubit.updateIconOverlay(
-              overlay.id,
-              overlay.copyWith(
-                position: snappedPos,
-                scale: newScale,
-                rotation: newRotation,
-              ),
-            );
-          },
-          onScaleEnd: (_) {
-            setState(() => _isDragging = false);
-            _rawPosition = null;
-            context.read<ScreenshotEditorCubit>().clearSnapLines();
-          },
-          onTap: () =>
-              context.read<ScreenshotEditorCubit>().selectOverlay(overlay.id),
-          child: Opacity(
-            opacity: overlay.opacity.clamp(0.0, 1.0),
-            child: OverlaySelectionBorder(
-              isSelected: widget.isSelected,
-              child: Transform.rotate(
-                angle: overlay.rotation,
-                child: Transform.scale(
-                  scale: overlay.scale,
-                  child: Container(
-                    padding: EdgeInsets.all(overlay.padding),
-                    decoration: BoxDecoration(
-                      color: overlay.backgroundColor,
-                      borderRadius: overlay.borderRadius > 0
-                          ? BorderRadius.circular(overlay.borderRadius)
-                          : null,
-                      boxShadow:
-                          overlay.shadowColor != null &&
-                              overlay.shadowBlurRadius > 0
-                          ? [
-                              BoxShadow(
-                                color: overlay.shadowColor!,
-                                blurRadius: overlay.shadowBlurRadius,
-                                offset: overlay.shadowOffset,
-                              ),
-                            ]
-                          : null,
-                    ),
-                    child: Text(
-                      String.fromCharCode(overlay.codePoint),
-                      style: TextStyle(
-                        fontFamily: overlay.fontFamily,
-                        package: overlay.fontPackage,
-                        fontSize: overlay.size,
-                        color: overlay.color,
-                        fontVariations: overlay.isSFSymbol
-                            ? null
-                            : [FontVariation('wght', overlay.fontWeight)],
-                      ),
-                    ),
+                      final canvasSize = ScreenshotUtils.getDimensions(
+                        _cubit.state.design.displayType ?? '',
+                        _cubit.state.design.orientation,
+                      );
+                      final snappedPos = _cubit.snapOffset(
+                        _rawPosition,
+                        canvasSize,
+                        elementSize: contentSize,
+                      );
+                      widget.onSnapHaptics(_rawPosition, snappedPos);
+                      setState(() => _dragPosition = snappedPos);
+                    },
+                    onScaleEnd: (_) => _endDrag(),
+                    onTap: () => _cubit.selectOverlay(overlay.id),
                   ),
+                  content: _buildIconContent(overlay),
                 ),
               ),
             ),
           ),
+        ),
+      ),
+    );
+  }
+
+  Widget _buildIconContent(IconOverlay overlay) {
+    return Container(
+      padding: EdgeInsets.all(overlay.padding),
+      decoration: BoxDecoration(
+        color: overlay.backgroundColor,
+        borderRadius: overlay.borderRadius > 0
+            ? BorderRadius.circular(overlay.borderRadius)
+            : null,
+        boxShadow:
+            overlay.shadowColor != null && overlay.shadowBlurRadius > 0
+            ? [
+                BoxShadow(
+                  color: overlay.shadowColor!,
+                  blurRadius: overlay.shadowBlurRadius,
+                  offset: overlay.shadowOffset,
+                ),
+              ]
+            : null,
+      ),
+      child: Text(
+        String.fromCharCode(overlay.codePoint),
+        style: TextStyle(
+          fontFamily: overlay.fontFamily,
+          package: overlay.fontPackage,
+          fontSize: overlay.size,
+          color: overlay.color,
+          fontVariations: overlay.isSFSymbol
+              ? null
+              : [FontVariation('wght', overlay.fontWeight)],
         ),
       ),
     );

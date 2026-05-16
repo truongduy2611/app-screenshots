@@ -1653,4 +1653,30 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String get restartRequired => 'App neu starten, um Änderungen zu übernehmen';
+
+  @override
+  String get lineHeight => 'Zeilenhöhe';
+
+  @override
+  String get letterSpacing => 'Zeichenabstand';
+
+  @override
+  String get uploadCachedFolderTitle =>
+      'Zwischengespeicherte Screenshots hochladen';
+
+  @override
+  String get uploadCachedFolderMessage =>
+      'Wir haben kürzlich gerenderte Screenshots gefunden. Möchten Sie diese hochladen oder einen anderen Ordner auswählen?';
+
+  @override
+  String get useCached => 'Cache verwenden';
+
+  @override
+  String get pickFolder => 'Ordner auswählen';
+
+  @override
+  String get addImages => 'Bilder hinzufügen';
+
+  @override
+  String get resetRotation => 'Zurücksetzen';
 }

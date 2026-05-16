@@ -42,6 +42,7 @@ class _MagnifierOverlayWidgetState extends State<MagnifierOverlayWidget> {
           ? SystemMouseCursors.grabbing
           : SystemMouseCursors.move,
       child: GestureDetector(
+        behavior: widget.isSelected ? HitTestBehavior.opaque : HitTestBehavior.deferToChild,
         onTap: () {
           context.read<ScreenshotEditorCubit>().selectOverlay(overlay.id);
         },

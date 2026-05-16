@@ -482,5 +482,13 @@
   "icloudSyncDisabled": "การซิงค์ iCloud ถูกปิด",
   "restartRequired": "รีสตาร์ทแอปเพื่อให้การเปลี่ยนแปลงมีผล",
   "uploadExistingFolderToAsc": "อัปโหลดโฟลเดอร์ที่มีอยู่...",
-  "noImagesFoundInFolder": "ไม่พบภาพหน้าจอที่ถูกต้องในโฟลเดอร์ที่เลือก"
+  "noImagesFoundInFolder": "ไม่พบภาพหน้าจอที่ถูกต้องในโฟลเดอร์ที่เลือก",
+  "lineHeight": "ความสูงของบรรทัด",
+  "letterSpacing": "ระยะห่างระหว่างตัวอักษร",
+  "uploadCachedFolderTitle": "อัปโหลดภาพหน้าจอที่แคชไว้",
+  "uploadCachedFolderMessage": "เราพบภาพหน้าจอที่เพิ่งเรนเดอร์ คุณต้องการอัปโหลดภาพเหล่านี้ หรือเลือกโฟลเดอร์อื่น?",
+  "useCached": "ใช้แคช",
+  "pickFolder": "เลือกโฟลเดอร์",
+  "addImages": "เพิ่มรูปภาพ",
+  "resetRotation": "รีเซ็ต"
 }

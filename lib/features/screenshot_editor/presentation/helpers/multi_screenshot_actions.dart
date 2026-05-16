@@ -457,7 +457,11 @@ mixin MultiScreenshotActions<T extends StatefulWidget> on State<T> {
         translationCubit.setPreviewLocale(null);
       }
 
-      return result.isNotEmpty ? result : null;
+      if (result.isNotEmpty && mounted) {
+        context.read<MultiScreenshotCubit>().setLastRenderedAscPath(exportDir.path);
+        return result;
+      }
+      return null;
     } catch (e, st) {
       if (hasTranslations) {
         translationCubit.setPreviewLocale(null);

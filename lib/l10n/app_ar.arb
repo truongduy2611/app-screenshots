@@ -482,5 +482,13 @@
   "icloudSyncDisabled": "مزامنة iCloud معطلة",
   "restartRequired": "أعد تشغيل التطبيق لتطبيق التغييرات",
   "uploadExistingFolderToAsc": "تحميل مجلد موجود...",
-  "noImagesFoundInFolder": "لم يتم العثور على صور لقطات شاشة صالحة في المجلد المحدد"
+  "noImagesFoundInFolder": "لم يتم العثور على صور لقطات شاشة صالحة في المجلد المحدد",
+  "lineHeight": "ارتفاع السطر",
+  "letterSpacing": "تباعد الأحرف",
+  "uploadCachedFolderTitle": "تحميل لقطات الشاشة المخزنة مؤقتًا",
+  "uploadCachedFolderMessage": "لقد وجدنا لقطات شاشة تم عرضها مؤخرًا. هل ترغب في تحميلها، أم اختيار مجلد آخر؟",
+  "useCached": "استخدام المخبأ",
+  "pickFolder": "اختيار مجلد",
+  "addImages": "إضافة صور",
+  "resetRotation": "إعادة تعيين"
 }
