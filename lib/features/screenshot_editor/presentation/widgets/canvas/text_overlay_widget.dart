@@ -279,6 +279,7 @@ class _TextOverlayWidgetState extends State<TextOverlayWidget> {
       top: effectivePos.dy,
       child: GrabCursorRegion(
         child: GestureDetector(
+          behavior: isSelected ? HitTestBehavior.opaque : HitTestBehavior.deferToChild,
           onPanStart: (_) {
             // If editing, commit first before starting drag.
             if (_isEditing) _commitEdit();

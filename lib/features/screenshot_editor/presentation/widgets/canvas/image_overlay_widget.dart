@@ -39,6 +39,7 @@ class _ImageOverlayWidgetState extends State<ImageOverlayWidget> {
           ? SystemMouseCursors.grabbing
           : SystemMouseCursors.move,
       child: GestureDetector(
+        behavior: widget.isSelected ? HitTestBehavior.opaque : HitTestBehavior.deferToChild,
         onScaleStart: (details) {
           setState(() => _isDragging = true);
           _startRotation = overlay.rotation;

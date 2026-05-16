@@ -43,6 +43,7 @@ class _IconOverlayWidgetState extends State<IconOverlayWidget> {
             ? SystemMouseCursors.grabbing
             : SystemMouseCursors.grab,
         child: GestureDetector(
+          behavior: widget.isSelected ? HitTestBehavior.opaque : HitTestBehavior.deferToChild,
           onScaleStart: (details) {
             setState(() => _isDragging = true);
             _rawPosition = overlay.position;
