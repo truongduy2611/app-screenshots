@@ -154,19 +154,8 @@ class _DesignCardState extends State<DesignCard> {
                     } else {
                       page = ScreenshotEditorPage(initialDesign: widget.design);
                     }
-                    final isLarge = MediaQuery.sizeOf(context).width >= 600;
-                    final sourceRect = isLarge
-                        ? rectFromContext(context)
-                        : null;
                     Navigator.of(context)
-                        .push(
-                          sourceRect != null
-                              ? geniePageRoute(
-                                  builder: (_) => page,
-                                  sourceRect: sourceRect,
-                                )
-                              : MaterialPageRoute(builder: (_) => page),
-                        )
+                        .push(MaterialPageRoute(builder: (_) => page))
                         .then((_) {
                           if (context.mounted) {
                             context
