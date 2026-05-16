@@ -1649,4 +1649,29 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get restartRequired => 'Riavvia l\'app per applicare le modifiche';
+
+  @override
+  String get lineHeight => 'Altezza riga';
+
+  @override
+  String get letterSpacing => 'Spaziatura lettere';
+
+  @override
+  String get uploadCachedFolderTitle => 'Carica screenshot nella cache';
+
+  @override
+  String get uploadCachedFolderMessage =>
+      'Abbiamo trovato screenshot renderizzati di recente. Vuoi caricarli o scegliere un\'altra cartella?';
+
+  @override
+  String get useCached => 'Usa cache';
+
+  @override
+  String get pickFolder => 'Scegli cartella';
+
+  @override
+  String get addImages => 'Aggiungi immagini';
+
+  @override
+  String get resetRotation => 'Ripristina';
 }

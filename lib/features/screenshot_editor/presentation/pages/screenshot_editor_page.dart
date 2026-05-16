@@ -257,7 +257,7 @@ class _ScreenshotEditorViewState extends State<ScreenshotEditorView> {
     }
 
     if (delta != null) {
-      _screenShotCubit.moveSelectedOverlay(delta);
+      _screenShotCubit.nudgeSelectedOverlay(delta);
       return KeyEventResult.handled;
     }
 

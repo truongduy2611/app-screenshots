@@ -1623,4 +1623,29 @@ class AppLocalizationsVi extends AppLocalizations {
 
   @override
   String get restartRequired => 'Khởi động lại ứng dụng để áp dụng thay đổi';
+
+  @override
+  String get lineHeight => 'Chiều cao dòng';
+
+  @override
+  String get letterSpacing => 'Khoảng cách chữ';
+
+  @override
+  String get uploadCachedFolderTitle => 'Tải lên ảnh đã kết xuất';
+
+  @override
+  String get uploadCachedFolderMessage =>
+      'Chúng tôi tìm thấy các ảnh vừa được kết xuất gần đây. Bạn muốn sử dụng chúng hay chọn thư mục khác?';
+
+  @override
+  String get useCached => 'Dùng ảnh đã lưu';
+
+  @override
+  String get pickFolder => 'Chọn thư mục';
+
+  @override
+  String get addImages => 'Thêm ảnh';
+
+  @override
+  String get resetRotation => 'Đặt lại';
 }

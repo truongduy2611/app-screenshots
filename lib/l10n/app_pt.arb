@@ -482,5 +482,13 @@
   "icloudSyncDisabled": "A sincronização do iCloud está desativada",
   "restartRequired": "Reinicie o app para aplicar as alterações",
   "uploadExistingFolderToAsc": "Enviar pasta existente...",
-  "noImagesFoundInFolder": "Nenhuma imagem de captura de tela válida encontrada na pasta selecionada"
+  "noImagesFoundInFolder": "Nenhuma imagem de captura de tela válida encontrada na pasta selecionada",
+  "lineHeight": "Altura da linha",
+  "letterSpacing": "Espaçamento entre letras",
+  "uploadCachedFolderTitle": "Enviar capturas em cache",
+  "uploadCachedFolderMessage": "Encontramos capturas de tela renderizadas recentemente. Gostaria de enviá-las ou escolher outra pasta?",
+  "useCached": "Usar cache",
+  "pickFolder": "Escolher pasta",
+  "addImages": "Adicionar imagens",
+  "resetRotation": "Redefinir"
 }

@@ -48,6 +48,12 @@ class _TextOverlayWidgetState extends State<TextOverlayWidget> {
   final Map<String, Offset> _rawPositions = {};
   final Map<String, GlobalKey> _overlayKeys = {};
 
+  // ── Live drag state ──
+  // While dragging, the overlay renders from [_dragPosition] and the cubit is
+  // only committed on drag end — so a drag never emits per frame.
+  bool _isDragging = false;
+  Offset _dragPosition = Offset.zero;
+
   // ── Inline editing state ──
   bool _isEditing = false;
   final TextEditingController _editController = TextEditingController();
@@ -210,6 +216,12 @@ class _TextOverlayWidgetState extends State<TextOverlayWidget> {
     final effectiveFontSize =
         (isLocalePreview ? localeOverride?.fontSize : null) ??
         overlay.style.fontSize;
+    final effectiveHeight =
+        (isLocalePreview ? localeOverride?.height : null) ??
+        overlay.style.height;
+    final effectiveLetterSpacing =
+        (isLocalePreview ? localeOverride?.letterSpacing : null) ??
+        overlay.style.letterSpacing;
 
     // ── Resolve font (with non‑Latin fallback) ──
     var textStyle = overlay.style.copyWith(
@@ -220,6 +232,8 @@ class _TextOverlayWidgetState extends State<TextOverlayWidget> {
       decoration: effectiveDecoration,
       decorationStyle: effectiveDecorationStyle,
       decorationColor: effectiveDecorationColor,
+      height: effectiveHeight,
+      letterSpacing: effectiveLetterSpacing,
     );
     final baseStyle = GoogleFonts.getFont(
       effectiveGoogleFont ?? 'Roboto',
@@ -274,106 +288,120 @@ class _TextOverlayWidgetState extends State<TextOverlayWidget> {
             style: resolvedStyle,
           );
 
-    return Positioned(
-      left: effectivePos.dx,
-      top: effectivePos.dy,
-      child: GrabCursorRegion(
-        child: OverlaySelectionBorder(
-          key: _keyFor(overlay.id),
-          isSelected: isSelected,
-          child: Transform.rotate(
-            angle: effectiveRotation,
-            child: Transform.scale(
-              scale: effectiveScale,
-              child: GestureDetector(
-                behavior: isSelected ? HitTestBehavior.opaque : HitTestBehavior.deferToChild,
-                onPanStart: (_) {
-                  // If editing, commit first before starting drag.
-                  if (_isEditing) _commitEdit();
-                  _rawPositions[overlay.id] = effectivePos;
-                },
-                onPanUpdate: (details) {
-                  final rawPos =
-                      (_rawPositions[overlay.id] ?? effectivePos) + details.delta;
-                  _rawPositions[overlay.id] = rawPos;
-                  final cubit = context.read<ScreenshotEditorCubit>();
+    // Commits the finished drag to the cubit (or translation override) as a
+    // single update — keeps a drag to one undo entry.
+    void commitDrag() {
+      if (!_isDragging) return;
+      final cubit = context.read<ScreenshotEditorCubit>();
+      if (previewLocale != null && tCubit != null) {
+        tCubit.updateOverlayOverride(
+          previewLocale,
+          translationKey,
+          (localeOverride ?? const OverlayOverride()).copyWith(
+            position: _dragPosition,
+          ),
+        );
+      } else {
+        cubit.updateTextOverlay(
+          overlay.id,
+          overlay.copyWith(position: _dragPosition),
+        );
+      }
+      cubit.clearSnapLines();
+      _rawPositions.remove(overlay.id);
+      setState(() => _isDragging = false);
+    }
 
-                  // Measure actual rendered size via GlobalKey.
-                  Size? elSize;
-                  final key = _overlayKeys[overlay.id];
-                  if (key?.currentContext != null) {
-                    final box = key!.currentContext!.findRenderObject() as RenderBox?;
+    final position = _isDragging ? _dragPosition : effectivePos;
+
+    return Positioned(
+      left: position.dx,
+      top: position.dy,
+      child: RepaintBoundary(
+        child: GrabCursorRegion(
+          child: OverlaySelectionBorder(
+            key: _keyFor(overlay.id),
+            isSelected: isSelected,
+            child: Transform.rotate(
+              angle: effectiveRotation,
+              child: Transform.scale(
+                scale: effectiveScale,
+                child: GestureDetector(
+                  behavior: isSelected
+                      ? HitTestBehavior.opaque
+                      : HitTestBehavior.deferToChild,
+                  onPanStart: (_) {
+                    // If editing, commit first before starting drag.
+                    if (_isEditing) _commitEdit();
+                    _rawPositions[overlay.id] = effectivePos;
+                    _dragPosition = effectivePos;
+                    setState(() => _isDragging = true);
+                  },
+                  onPanUpdate: (details) {
+                    final rawPos =
+                        (_rawPositions[overlay.id] ?? effectivePos) +
+                        details.delta;
+                    _rawPositions[overlay.id] = rawPos;
+                    final cubit = context.read<ScreenshotEditorCubit>();
+
+                    // Measure actual rendered size via GlobalKey.
+                    Size? elSize;
+                    final box =
+                        _keyFor(overlay.id).currentContext?.findRenderObject()
+                            as RenderBox?;
                     if (box != null && box.hasSize) {
                       elSize = box.size * effectiveScale;
                     }
-                  }
 
-                  final snappedPosition = cubit.snapOffset(
-                    rawPos,
-                    widget.canvasSize,
-                    elementSize: elSize,
-                  );
-                  widget.onSnapHaptics(rawPos, snappedPosition);
-
-                  // Route to override or base depending on whether a preview
-                  // locale is active.
-                  if (previewLocale != null && tCubit != null) {
-                    tCubit.updateOverlayOverride(
-                      previewLocale,
-                      translationKey,
-                      (localeOverride ?? const OverlayOverride()).copyWith(
-                        position: snappedPosition,
+                    final snappedPosition = cubit.snapOffset(
+                      rawPos,
+                      widget.canvasSize,
+                      elementSize: elSize,
+                    );
+                    widget.onSnapHaptics(rawPos, snappedPosition);
+                    setState(() => _dragPosition = snappedPosition);
+                  },
+                  onPanEnd: (_) => commitDrag(),
+                  onPanCancel: commitDrag,
+                  onTap: () {
+                    if (!isSelected) {
+                      context.read<ScreenshotEditorCubit>().selectOverlay(
+                        overlay.id,
+                      );
+                    }
+                  },
+                  onDoubleTap: () {
+                    // Select if not already, then enter edit mode.
+                    if (!isSelected) {
+                      context.read<ScreenshotEditorCubit>().selectOverlay(
+                        overlay.id,
+                      );
+                    }
+                    _enterEditMode(displayText);
+                  },
+                  child: SizedBox(
+                    width: effectiveWidth,
+                    child: Container(
+                      decoration: BoxDecoration(
+                        color: effectiveBackgroundColor,
+                        border:
+                            effectiveBorderColor != null &&
+                                effectiveBorderWidth > 0
+                            ? Border.all(
+                                color: effectiveBorderColor,
+                                width: effectiveBorderWidth,
+                              )
+                            : null,
+                        borderRadius: effectiveBorderRadius > 0
+                            ? BorderRadius.circular(effectiveBorderRadius)
+                            : null,
                       ),
-                    );
-                  } else {
-                    cubit.updateTextOverlay(
-                      overlay.id,
-                      overlay.copyWith(position: snappedPosition),
-                    );
-                  }
-                },
-                onPanEnd: (_) {
-                  _rawPositions.remove(overlay.id);
-                  context.read<ScreenshotEditorCubit>().clearSnapLines();
-                },
-                onPanCancel: () {
-                  _rawPositions.remove(overlay.id);
-                  context.read<ScreenshotEditorCubit>().clearSnapLines();
-                },
-                onTap: () {
-                  if (!isSelected) {
-                    context.read<ScreenshotEditorCubit>().selectOverlay(overlay.id);
-                  }
-                },
-                onDoubleTap: () {
-                  // Select if not already, then enter edit mode.
-                  if (!isSelected) {
-                    context.read<ScreenshotEditorCubit>().selectOverlay(overlay.id);
-                  }
-                  _enterEditMode(displayText);
-                },
-                child: SizedBox(
-                  width: effectiveWidth,
-                  child: Container(
-                    decoration: BoxDecoration(
-                      color: effectiveBackgroundColor,
-                      border:
-                          effectiveBorderColor != null &&
-                              effectiveBorderWidth > 0
-                          ? Border.all(
-                              color: effectiveBorderColor,
-                              width: effectiveBorderWidth,
-                            )
-                          : null,
-                      borderRadius: effectiveBorderRadius > 0
-                          ? BorderRadius.circular(effectiveBorderRadius)
-                          : null,
+                      padding: EdgeInsets.symmetric(
+                        horizontal: effectiveHPad,
+                        vertical: effectiveVPad,
+                      ),
+                      child: textContent,
                     ),
-                    padding: EdgeInsets.symmetric(
-                      horizontal: effectiveHPad,
-                      vertical: effectiveVPad,
-                    ),
-                    child: textContent,
                   ),
                 ),
               ),

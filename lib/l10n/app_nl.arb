@@ -482,5 +482,13 @@
   "icloudSyncDisabled": "iCloud-synchronisatie is uitgeschakeld",
   "restartRequired": "Start de app opnieuw om wijzigingen toe te passen",
   "uploadExistingFolderToAsc": "Bestaande map uploaden...",
-  "noImagesFoundInFolder": "Geen geldige schermafbeeldingen gevonden in de geselecteerde map"
+  "noImagesFoundInFolder": "Geen geldige schermafbeeldingen gevonden in de geselecteerde map",
+  "lineHeight": "Regelhoogte",
+  "letterSpacing": "Letterafstand",
+  "uploadCachedFolderTitle": "Gecachte screenshots uploaden",
+  "uploadCachedFolderMessage": "We hebben recent gerenderde screenshots gevonden. Wilt u deze uploaden of een andere map kiezen?",
+  "useCached": "Gebruik cache",
+  "pickFolder": "Kies map",
+  "addImages": "Afbeeldingen toevoegen",
+  "resetRotation": "Resetten"
 }

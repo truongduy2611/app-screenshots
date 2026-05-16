@@ -482,5 +482,13 @@
   "icloudSyncDisabled": "La synchronisation iCloud est désactivée",
   "restartRequired": "Redémarrez l'application pour appliquer les modifications",
   "uploadExistingFolderToAsc": "Télécharger un dossier existant...",
-  "noImagesFoundInFolder": "Aucune image de capture d'écran valide trouvée dans le dossier sélectionné"
+  "noImagesFoundInFolder": "Aucune image de capture d'écran valide trouvée dans le dossier sélectionné",
+  "lineHeight": "Hauteur de ligne",
+  "letterSpacing": "Espacement des lettres",
+  "uploadCachedFolderTitle": "Télécharger les captures d'écran en cache",
+  "uploadCachedFolderMessage": "Nous avons trouvé des captures d'écran récemment rendues. Souhaitez-vous les télécharger ou choisir un autre dossier ?",
+  "useCached": "Utiliser le cache",
+  "pickFolder": "Choisir un dossier",
+  "addImages": "Ajouter des images",
+  "resetRotation": "Réinitialiser"
 }

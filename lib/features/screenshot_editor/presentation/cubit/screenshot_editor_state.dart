@@ -15,10 +15,6 @@ class ScreenshotEditorState extends Equatable {
   /// the file system. When set, "Save" writes back to this file.
   final String? sourceFilePath;
 
-  /// Active snap guide line positions (set during drag, cleared on drag end).
-  final double? activeSnapX;
-  final double? activeSnapY;
-
   /// History state flags
   final bool canUndo;
   final bool canRedo;
@@ -31,8 +27,6 @@ class ScreenshotEditorState extends Equatable {
     this.savedDesignId,
     this.savedDesignName,
     this.sourceFilePath,
-    this.activeSnapX,
-    this.activeSnapY,
     this.canUndo = false,
     this.canRedo = false,
   });
@@ -45,8 +39,6 @@ class ScreenshotEditorState extends Equatable {
     String? savedDesignId,
     String? savedDesignName,
     String? sourceFilePath,
-    Object? activeSnapX = _cleared,
-    Object? activeSnapY = _cleared,
     bool? canUndo,
     bool? canRedo,
   }) {
@@ -60,12 +52,6 @@ class ScreenshotEditorState extends Equatable {
       savedDesignId: savedDesignId ?? this.savedDesignId,
       savedDesignName: savedDesignName ?? this.savedDesignName,
       sourceFilePath: sourceFilePath ?? this.sourceFilePath,
-      activeSnapX: activeSnapX == _cleared
-          ? this.activeSnapX
-          : activeSnapX as double?,
-      activeSnapY: activeSnapY == _cleared
-          ? this.activeSnapY
-          : activeSnapY as double?,
       canUndo: canUndo ?? this.canUndo,
       canRedo: canRedo ?? this.canRedo,
     );
@@ -80,8 +66,6 @@ class ScreenshotEditorState extends Equatable {
     savedDesignId,
     savedDesignName,
     sourceFilePath,
-    activeSnapX,
-    activeSnapY,
     canUndo,
     canRedo,
   ];

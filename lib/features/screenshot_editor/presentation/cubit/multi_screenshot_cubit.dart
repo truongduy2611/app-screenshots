@@ -78,6 +78,11 @@ class MultiScreenshotCubit extends Cubit<MultiScreenshotState> {
     }
   }
 
+  /// Store the path of the most recently rendered ASC upload directory.
+  void setLastRenderedAscPath(String path) {
+    emit(state.copyWith(lastRenderedAscPath: path));
+  }
+
   // ---------------------------------------------------------------------------
   // Slot management
   // ---------------------------------------------------------------------------

@@ -102,7 +102,7 @@ class FrameControls extends StatelessWidget {
                   label: context.l10n.padding,
                   value: state.design.padding,
                   min: 0,
-                  max: 4000,
+                  max: 1000,
                   suffix: 'px',
                   onChanged: cubit.updatePadding,
                 ),

@@ -482,5 +482,13 @@
   "icloudSyncDisabled": "iCloud senkronizasyonu devre dışı",
   "restartRequired": "Değişikliklerin geçerli olması için uygulamayı yeniden başlatın",
   "uploadExistingFolderToAsc": "Mevcut Klasörü Yükle...",
-  "noImagesFoundInFolder": "Seçilen klasörde geçerli ekran görüntüsü resmi bulunamadı"
+  "noImagesFoundInFolder": "Seçilen klasörde geçerli ekran görüntüsü resmi bulunamadı",
+  "lineHeight": "Satır Yüksekliği",
+  "letterSpacing": "Harf Aralığı",
+  "uploadCachedFolderTitle": "Önbelleğe Alınan Ekran Görüntülerini Yükle",
+  "uploadCachedFolderMessage": "Kısa süre önce oluşturulmuş ekran görüntüleri bulduk. Bunları yüklemek mi yoksa başka bir klasör mü seçmek istersiniz?",
+  "useCached": "Önbelleği Kullan",
+  "pickFolder": "Klasör Seç",
+  "addImages": "Resim Ekle",
+  "resetRotation": "Sıfırla"
 }

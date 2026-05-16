@@ -21,6 +21,9 @@ class MultiScreenshotState extends Equatable {
   /// Saved ASC app config for quick re-upload.
   final AscAppConfig? ascAppConfig;
 
+  /// Path to the last successfully rendered ASC upload directory in this session.
+  final String? lastRenderedAscPath;
+
   const MultiScreenshotState({
     this.designs = const [],
     this.imageFiles = const [],
@@ -29,6 +32,7 @@ class MultiScreenshotState extends Equatable {
     this.savedDesignName,
     this.sourceFilePath,
     this.ascAppConfig,
+    this.lastRenderedAscPath,
   });
 
   /// The currently active design.
@@ -54,6 +58,7 @@ class MultiScreenshotState extends Equatable {
     String? sourceFilePath,
     AscAppConfig? ascAppConfig,
     bool clearAscAppConfig = false,
+    String? lastRenderedAscPath,
   }) {
     return MultiScreenshotState(
       designs: designs ?? this.designs,
@@ -65,6 +70,7 @@ class MultiScreenshotState extends Equatable {
       ascAppConfig: clearAscAppConfig
           ? null
           : (ascAppConfig ?? this.ascAppConfig),
+      lastRenderedAscPath: lastRenderedAscPath ?? this.lastRenderedAscPath,
     );
   }
 
@@ -77,5 +83,6 @@ class MultiScreenshotState extends Equatable {
     savedDesignName,
     sourceFilePath,
     ascAppConfig,
+    lastRenderedAscPath,
   ];
 }

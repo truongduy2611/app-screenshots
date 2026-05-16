@@ -1635,4 +1635,29 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get restartRequired => 'أعد تشغيل التطبيق لتطبيق التغييرات';
+
+  @override
+  String get lineHeight => 'ارتفاع السطر';
+
+  @override
+  String get letterSpacing => 'تباعد الأحرف';
+
+  @override
+  String get uploadCachedFolderTitle => 'تحميل لقطات الشاشة المخزنة مؤقتًا';
+
+  @override
+  String get uploadCachedFolderMessage =>
+      'لقد وجدنا لقطات شاشة تم عرضها مؤخرًا. هل ترغب في تحميلها، أم اختيار مجلد آخر؟';
+
+  @override
+  String get useCached => 'استخدام المخبأ';
+
+  @override
+  String get pickFolder => 'اختيار مجلد';
+
+  @override
+  String get addImages => 'إضافة صور';
+
+  @override
+  String get resetRotation => 'إعادة تعيين';
 }
