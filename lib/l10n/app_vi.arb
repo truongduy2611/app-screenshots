@@ -474,8 +474,6 @@
   "onlySelectedLocalesWillBeRendered": "Chỉ các ngôn ngữ được chọn sẽ được xuất",
   "renderNLocales": "Xuất {count} ngôn ngữ",
   "source": "Nguồn",
-  "supportTheDeveloper": "Ủng hộ nhà phát triển",
-  "supportTheDeveloperDescription": "Bạn thích ứng dụng này? Hãy mời tôi một ly cà phê nhé! {price}",
   "enableCliServer": "Bật máy chủ CLI",
   "enableCliServerDescription": "Khởi động máy chủ cục bộ để sử dụng công cụ CLI.",
   "cliLearnMoreButton": "Đọc tài liệu",

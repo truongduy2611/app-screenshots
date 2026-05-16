@@ -472,8 +472,6 @@
   "onlySelectedLocalesWillBeRendered": "선택한 언어만 렌더링됩니다",
   "renderNLocales": "{count}개 언어 렌더링",
   "source": "소스",
-  "supportTheDeveloper": "개발자 후원하기",
-  "supportTheDeveloperDescription": "앱이 마음에 드시나요? 커피 한 잔 사주세요! {price}",
   "enableCliServer": "CLI 서버 활성화",
   "enableCliServerDescription": "CLI 도구를 사용하려면 로컬 서버를 시작하세요.",
   "cliLearnMoreButton": "문서 읽기",

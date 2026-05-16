@@ -1614,14 +1614,6 @@ class AppLocalizationsEn extends AppLocalizations {
   String get source => 'Source';
 
   @override
-  String get supportTheDeveloper => 'Support the Developer';
-
-  @override
-  String supportTheDeveloperDescription(String price) {
-    return 'Love the app? Treat me to a coffee! $price';
-  }
-
-  @override
   String get enableCliServer => 'Enable CLI Server';
 
   @override

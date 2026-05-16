@@ -472,8 +472,6 @@
   "onlySelectedLocalesWillBeRendered": "Verranno renderizzate solo le lingue selezionate",
   "renderNLocales": "Renderizza {count} {count, plural, =1{lingua} other{lingue}}",
   "source": "Sorgente",
-  "supportTheDeveloper": "Supporta lo sviluppatore",
-  "supportTheDeveloperDescription": "Ti piace l'app? Offrimi un caffè! {price}",
   "enableCliServer": "Abilita server CLI",
   "enableCliServerDescription": "Avvia il server locale per utilizzare lo strumento CLI.",
   "cliLearnMoreButton": "Leggi la documentazione",

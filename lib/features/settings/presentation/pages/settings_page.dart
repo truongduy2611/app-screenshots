@@ -20,13 +20,14 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:app_screenshots/features/settings/presentation/cubit/cli_cubit.dart';
 import 'package:in_app_review/in_app_review.dart';
+
 import 'package:intl/intl.dart';
 import 'package:material_symbols_icons/symbols.dart';
-import 'package:in_app_purchase/in_app_purchase.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 import '../cubit/app_icon_cubit.dart';
 import '../cubit/backup_cubit.dart';
+
 import '../cubit/theme_cubit.dart';
 
 part 'settings_review_card.dart';
@@ -34,7 +35,7 @@ part 'settings_app_icon.dart';
 part 'settings_asc_credentials.dart';
 part 'settings_icloud_backup.dart';
 part 'settings_ai_keys.dart';
-part 'settings_support_card.dart';
+
 part 'settings_cli_card.dart';
 
 class SettingsDialog extends StatefulWidget {
@@ -56,6 +57,7 @@ class SettingsDialog extends StatefulWidget {
         BlocProvider.value(value: context.read<ThemeCubit>()),
         BlocProvider.value(value: context.read<AppIconCubit>()),
         BlocProvider.value(value: context.read<BackupCubit>()),
+
       ],
       child: child,
     );
@@ -144,8 +146,7 @@ class _SettingsDialogState extends State<SettingsDialog> {
         return ListView(
           padding: const EdgeInsets.all(20),
           children: [
-            _SupportMeCard(isDark: isDark, theme: theme),
-            const SizedBox(height: 24),
+
             // ── Appearance ──
             _SectionHeader(title: context.l10n.appearance),
             const SizedBox(height: 8),

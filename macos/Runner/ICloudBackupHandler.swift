@@ -14,6 +14,13 @@ class ICloudBackupHandler: NSObject {
     /// Debounce timer to batch rapid change notifications.
     private var debounceTimer: Timer?
     
+    /// Background queue for iCloud container resolution (avoids main-thread blocking).
+    private let iCloudQueue = DispatchQueue(label: "com.progressiostudio.appscreenshots.icloud", qos: .userInitiated)
+    
+    /// Cached ubiquity container URL — resolved once, reused for the session.
+    private var cachedContainerURL: URL?
+    private var containerResolved = false
+    
     private override init() {
         super.init()
     }
@@ -33,7 +40,7 @@ class ICloudBackupHandler: NSObject {
     private func handleMethodCall(call: FlutterMethodCall, result: @escaping FlutterResult) {
         switch call.method {
         case "isICloudAvailable":
-            result(isICloudAvailable())
+            isICloudAvailableAsync(result: result)
             
         case "uploadToICloud":
             guard let args = call.arguments as? [String: Any],
@@ -67,10 +74,10 @@ class ICloudBackupHandler: NSObject {
         // ── iCloud Sync methods ──
             
         case "getICloudDesignsPath":
-            result(getICloudDesignsPath())
+            getICloudDesignsPathAsync(result: result)
             
         case "getLocalDesignsPath":
-            result(getLocalDesignsPath())
+            getLocalDesignsPathAsync(result: result)
             
         case "startMonitoringChanges":
             startMonitoringChanges()
@@ -87,14 +94,31 @@ class ICloudBackupHandler: NSObject {
     
     // MARK: - iCloud Operations
     
-    private func isICloudAvailable() -> Bool {
-        guard FileManager.default.ubiquityIdentityToken != nil else { return false }
-        guard FileManager.default.url(forUbiquityContainerIdentifier: nil) != nil else { return false }
-        return true
+    /// Resolves the ubiquity container URL (blocking) — call from background queue only.
+    private func resolveContainerURL() -> URL? {
+        if containerResolved {
+            return cachedContainerURL
+        }
+        cachedContainerURL = FileManager.default.url(forUbiquityContainerIdentifier: nil)
+        containerResolved = true
+        return cachedContainerURL
     }
     
+    /// Async version: dispatches the heavy ubiquity container check to a background queue.
+    private func isICloudAvailableAsync(result: @escaping FlutterResult) {
+        iCloudQueue.async { [weak self] in
+            let hasToken = FileManager.default.ubiquityIdentityToken != nil
+            let hasContainer = self?.resolveContainerURL() != nil
+            let available = hasToken && hasContainer
+            DispatchQueue.main.async {
+                result(available)
+            }
+        }
+    }
+    
+    /// Synchronous check using cached container — safe for main thread after initial resolve.
     private func getICloudDocumentsURL() -> URL? {
-        guard let containerURL = FileManager.default.url(forUbiquityContainerIdentifier: nil) else { return nil }
+        guard let containerURL = cachedContainerURL else { return nil }
         let documentsURL = containerURL.appendingPathComponent("Documents")
         if !FileManager.default.fileExists(atPath: documentsURL.path) {
             try? FileManager.default.createDirectory(at: documentsURL, withIntermediateDirectories: true)
@@ -104,40 +128,59 @@ class ICloudBackupHandler: NSObject {
     
     // MARK: - iCloud Sync
     
-    /// Returns the iCloud designs directory path, creating it if needed.
-    private func getICloudDesignsPath() -> String? {
-        guard let docsURL = getICloudDocumentsURL() else { return nil }
-        let designsURL = docsURL.appendingPathComponent("screenshot_designs")
-        
-        if !FileManager.default.fileExists(atPath: designsURL.path) {
-            do {
-                try FileManager.default.createDirectory(at: designsURL, withIntermediateDirectories: true)
-            } catch {
-                NSLog("[ICloudBackupHandler] Failed to create iCloud designs dir: \(error)")
-                return nil
+    /// Async version: resolves iCloud designs path on a background queue.
+    private func getICloudDesignsPathAsync(result: @escaping FlutterResult) {
+        iCloudQueue.async { [weak self] in
+            guard let self = self else {
+                DispatchQueue.main.async { result(nil) }
+                return
             }
+            // Ensure container is resolved
+            let _ = self.resolveContainerURL()
+            
+            guard let docsURL = self.getICloudDocumentsURL() else {
+                DispatchQueue.main.async { result(nil) }
+                return
+            }
+            let designsURL = docsURL.appendingPathComponent("screenshot_designs")
+            
+            if !FileManager.default.fileExists(atPath: designsURL.path) {
+                do {
+                    try FileManager.default.createDirectory(at: designsURL, withIntermediateDirectories: true)
+                } catch {
+                    NSLog("[ICloudBackupHandler] Failed to create iCloud designs dir: \(error)")
+                    DispatchQueue.main.async { result(nil) }
+                    return
+                }
+            }
+            
+            let path = designsURL.path
+            DispatchQueue.main.async { result(path) }
         }
-        
-        return designsURL.path
     }
     
-    /// Returns the local app-documents designs directory path.
-    private func getLocalDesignsPath() -> String? {
-        guard let appDocsURL = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first else {
-            return nil
-        }
-        let designsURL = appDocsURL.appendingPathComponent("screenshot_designs")
-        
-        if !FileManager.default.fileExists(atPath: designsURL.path) {
-            do {
-                try FileManager.default.createDirectory(at: designsURL, withIntermediateDirectories: true)
-            } catch {
-                NSLog("[ICloudBackupHandler] Failed to create local designs dir: \(error)")
-                return nil
+    /// Async version: resolves local designs path on a background queue.
+    private func getLocalDesignsPathAsync(result: @escaping FlutterResult) {
+        iCloudQueue.async {
+            guard let appDocsURL = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first else {
+                DispatchQueue.main.async { result(nil) }
+                return
             }
+            let designsURL = appDocsURL.appendingPathComponent("screenshot_designs")
+            
+            if !FileManager.default.fileExists(atPath: designsURL.path) {
+                do {
+                    try FileManager.default.createDirectory(at: designsURL, withIntermediateDirectories: true)
+                } catch {
+                    NSLog("[ICloudBackupHandler] Failed to create local designs dir: \(error)")
+                    DispatchQueue.main.async { result(nil) }
+                    return
+                }
+            }
+            
+            let path = designsURL.path
+            DispatchQueue.main.async { result(path) }
         }
-        
-        return designsURL.path
     }
     
     /// Starts monitoring iCloud for file changes using NSMetadataQuery.

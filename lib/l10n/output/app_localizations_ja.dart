@@ -1159,11 +1159,10 @@ class AppLocalizationsJa extends AppLocalizations {
   String get uploadToAsc => 'ASCにアップロード';
 
   @override
-  String get uploadExistingFolderToAsc => 'Upload Existing Folder...';
+  String get uploadExistingFolderToAsc => '既存のフォルダーをアップロード...';
 
   @override
-  String get noImagesFoundInFolder =>
-      'No valid screenshot images found in selected folder';
+  String get noImagesFoundInFolder => '選択したフォルダーに有効なスクリーンショット画像が見つかりませんでした';
 
   @override
   String get addMoreLanguages => '言語を追加';
@@ -1540,14 +1539,6 @@ class AppLocalizationsJa extends AppLocalizations {
 
   @override
   String get source => 'ソース';
-
-  @override
-  String get supportTheDeveloper => '開発者を支援する';
-
-  @override
-  String supportTheDeveloperDescription(String price) {
-    return 'アプリが気に入りましたか？コーヒーをおごってください！ $price';
-  }
 
   @override
   String get enableCliServer => 'CLIサーバーを有効にする';

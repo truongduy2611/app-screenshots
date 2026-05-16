@@ -1167,11 +1167,11 @@ class AppLocalizationsTh extends AppLocalizations {
   String get uploadToAsc => 'อัปโหลดไป ASC';
 
   @override
-  String get uploadExistingFolderToAsc => 'Upload Existing Folder...';
+  String get uploadExistingFolderToAsc => 'อัปโหลดโฟลเดอร์ที่มีอยู่...';
 
   @override
   String get noImagesFoundInFolder =>
-      'No valid screenshot images found in selected folder';
+      'ไม่พบภาพหน้าจอที่ถูกต้องในโฟลเดอร์ที่เลือก';
 
   @override
   String get addMoreLanguages => 'เพิ่มภาษาอื่น';
@@ -1559,14 +1559,6 @@ class AppLocalizationsTh extends AppLocalizations {
 
   @override
   String get source => 'ต้นฉบับ';
-
-  @override
-  String get supportTheDeveloper => 'สนับสนุนนักพัฒนา';
-
-  @override
-  String supportTheDeveloperDescription(String price) {
-    return 'ชอบแอปนี้ไหม? เลี้ยงกาแฟฉันสิ! $price';
-  }
 
   @override
   String get enableCliServer => 'เปิดใช้งานเซิร์ฟเวอร์ CLI';

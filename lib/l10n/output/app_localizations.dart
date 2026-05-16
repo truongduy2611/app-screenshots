@@ -2969,18 +2969,6 @@ abstract class AppLocalizations {
   /// **'Source'**
   String get source;
 
-  /// Title for the support me card in settings
-  ///
-  /// In en, this message translates to:
-  /// **'Support the Developer'**
-  String get supportTheDeveloper;
-
-  /// Description for the support me card in settings
-  ///
-  /// In en, this message translates to:
-  /// **'Love the app? Treat me to a coffee! {price}'**
-  String supportTheDeveloperDescription(String price);
-
   /// Toggle title to enable or disable the CLI server
   ///
   /// In en, this message translates to:

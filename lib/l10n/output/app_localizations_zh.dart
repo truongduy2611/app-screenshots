@@ -1154,11 +1154,10 @@ class AppLocalizationsZh extends AppLocalizations {
   String get uploadToAsc => '上传至ASC';
 
   @override
-  String get uploadExistingFolderToAsc => 'Upload Existing Folder...';
+  String get uploadExistingFolderToAsc => '上传现有文件夹...';
 
   @override
-  String get noImagesFoundInFolder =>
-      'No valid screenshot images found in selected folder';
+  String get noImagesFoundInFolder => '在选定文件夹中未找到有效的屏幕截图图像';
 
   @override
   String get addMoreLanguages => '添加更多语言';
@@ -1531,14 +1530,6 @@ class AppLocalizationsZh extends AppLocalizations {
 
   @override
   String get source => '源';
-
-  @override
-  String get supportTheDeveloper => '支持开发者';
-
-  @override
-  String supportTheDeveloperDescription(String price) {
-    return '喜欢这款应用吗？请我喝杯咖啡吧！ $price';
-  }
 
   @override
   String get enableCliServer => '启用CLI服务器';
@@ -2718,6 +2709,12 @@ class AppLocalizationsZhHant extends AppLocalizationsZh {
   String get uploadToAsc => '上傳至ASC';
 
   @override
+  String get uploadExistingFolderToAsc => '上傳現有資料夾...';
+
+  @override
+  String get noImagesFoundInFolder => '在選定資料夾中未找到有效的螢幕截圖圖像';
+
+  @override
   String get addMoreLanguages => '新增更多語言';
 
   @override
@@ -3088,14 +3085,6 @@ class AppLocalizationsZhHant extends AppLocalizationsZh {
 
   @override
   String get source => '來源';
-
-  @override
-  String get supportTheDeveloper => '支持開發者';
-
-  @override
-  String supportTheDeveloperDescription(String price) {
-    return '喜歡這款應用嗎？請我喝杯咖啡吧！ $price';
-  }
 
   @override
   String get enableCliServer => '啟用CLI伺服器';

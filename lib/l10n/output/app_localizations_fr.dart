@@ -1211,11 +1211,11 @@ class AppLocalizationsFr extends AppLocalizations {
   String get uploadToAsc => 'Envoyer vers ASC';
 
   @override
-  String get uploadExistingFolderToAsc => 'Upload Existing Folder...';
+  String get uploadExistingFolderToAsc => 'Télécharger un dossier existant...';
 
   @override
   String get noImagesFoundInFolder =>
-      'No valid screenshot images found in selected folder';
+      'Aucune image de capture d\'écran valide trouvée dans le dossier sélectionné';
 
   @override
   String get addMoreLanguages => 'Ajouter d\'autres langues';
@@ -1628,14 +1628,6 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get source => 'Source';
-
-  @override
-  String get supportTheDeveloper => 'Soutenir le développeur';
-
-  @override
-  String supportTheDeveloperDescription(String price) {
-    return 'Vous aimez l\'application ? Offrez-moi un café ! $price';
-  }
 
   @override
   String get enableCliServer => 'Activer le serveur CLI';
