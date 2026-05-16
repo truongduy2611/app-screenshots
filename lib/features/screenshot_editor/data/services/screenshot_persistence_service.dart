@@ -21,16 +21,17 @@ class ScreenshotPersistenceService {
 
   /// The root storage directory path for designs.
   ///
-  /// When provided via constructor, uses that path directly (e.g. from
+  /// When provided via constructor, awaits the future path (e.g. from
   /// [ICloudSyncService]). Otherwise falls back to local app documents.
-  final String? _storageRootOverride;
+  final Future<String>? _storageRootFuture;
 
-  ScreenshotPersistenceService({String? storageRoot})
-    : _storageRootOverride = storageRoot;
+  ScreenshotPersistenceService({Future<String>? storageRootFuture})
+    : _storageRootFuture = storageRootFuture;
 
   Future<Directory> get _designsDir async {
-    if (_storageRootOverride != null) {
-      final dir = Directory(_storageRootOverride);
+    if (_storageRootFuture != null) {
+      final root = await _storageRootFuture;
+      final dir = Directory(root);
       if (!await dir.exists()) {
         await dir.create(recursive: true);
       }

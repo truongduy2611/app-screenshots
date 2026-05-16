@@ -1203,11 +1203,11 @@ class AppLocalizationsNl extends AppLocalizations {
   String get uploadToAsc => 'Uploaden naar ASC';
 
   @override
-  String get uploadExistingFolderToAsc => 'Upload Existing Folder...';
+  String get uploadExistingFolderToAsc => 'Bestaande map uploaden...';
 
   @override
   String get noImagesFoundInFolder =>
-      'No valid screenshot images found in selected folder';
+      'Geen geldige schermafbeeldingen gevonden in de geselecteerde map';
 
   @override
   String get addMoreLanguages => 'Meer talen toevoegen';
@@ -1618,14 +1618,6 @@ class AppLocalizationsNl extends AppLocalizations {
 
   @override
   String get source => 'Bron';
-
-  @override
-  String get supportTheDeveloper => 'Ondersteun de ontwikkelaar';
-
-  @override
-  String supportTheDeveloperDescription(String price) {
-    return 'Vind je de app leuk? Trakteer me op een koffie! $price';
-  }
 
   @override
   String get enableCliServer => 'CLI-server inschakelen';

@@ -1202,11 +1202,11 @@ class AppLocalizationsRu extends AppLocalizations {
   String get uploadToAsc => 'Загрузить в ASC';
 
   @override
-  String get uploadExistingFolderToAsc => 'Upload Existing Folder...';
+  String get uploadExistingFolderToAsc => 'Загрузить существующую папку...';
 
   @override
   String get noImagesFoundInFolder =>
-      'No valid screenshot images found in selected folder';
+      'В выбранной папке не найдено допустимых снимков экрана';
 
   @override
   String get addMoreLanguages => 'Добавить ещё языки';
@@ -1617,14 +1617,6 @@ class AppLocalizationsRu extends AppLocalizations {
 
   @override
   String get source => 'Источник';
-
-  @override
-  String get supportTheDeveloper => 'Поддержать разработчика';
-
-  @override
-  String supportTheDeveloperDescription(String price) {
-    return 'Нравится приложение? Угостите меня кофе! $price';
-  }
 
   @override
   String get enableCliServer => 'Включить сервер CLI';

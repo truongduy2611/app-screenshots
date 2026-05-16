@@ -472,8 +472,6 @@
   "onlySelectedLocalesWillBeRendered": "Yalnızca seçilen diller oluşturulacak",
   "renderNLocales": "{count} dil oluştur",
   "source": "Kaynak",
-  "supportTheDeveloper": "Geliştiriciyi Destekle",
-  "supportTheDeveloperDescription": "Uygulamayı sevdiniz mi? Bana bir kahve ısmarlayın! {price}",
   "enableCliServer": "CLI Sunucusunu Etkinleştir",
   "enableCliServerDescription": "CLI aracını kullanmak için yerel sunucuyu başlatın.",
   "cliLearnMoreButton": "Belgeleri Oku",

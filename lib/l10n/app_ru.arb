@@ -472,8 +472,6 @@
   "onlySelectedLocalesWillBeRendered": "Будут отрендерены только выбранные языки",
   "renderNLocales": "Отрендерить {count} {count, plural, =1{язык} few{языка} other{языков}}",
   "source": "Источник",
-  "supportTheDeveloper": "Поддержать разработчика",
-  "supportTheDeveloperDescription": "Нравится приложение? Угостите меня кофе! {price}",
   "enableCliServer": "Включить сервер CLI",
   "enableCliServerDescription": "Запустите локальный сервер для использования инструмента CLI.",
   "cliLearnMoreButton": "Читать документацию",

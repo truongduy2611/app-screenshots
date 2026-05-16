@@ -1203,11 +1203,11 @@ class AppLocalizationsTr extends AppLocalizations {
   String get uploadToAsc => 'ASC\'ye yükle';
 
   @override
-  String get uploadExistingFolderToAsc => 'Upload Existing Folder...';
+  String get uploadExistingFolderToAsc => 'Mevcut Klasörü Yükle...';
 
   @override
   String get noImagesFoundInFolder =>
-      'No valid screenshot images found in selected folder';
+      'Seçilen klasörde geçerli ekran görüntüsü resmi bulunamadı';
 
   @override
   String get addMoreLanguages => 'Daha fazla dil ekle';
@@ -1612,14 +1612,6 @@ class AppLocalizationsTr extends AppLocalizations {
 
   @override
   String get source => 'Kaynak';
-
-  @override
-  String get supportTheDeveloper => 'Geliştiriciyi Destekle';
-
-  @override
-  String supportTheDeveloperDescription(String price) {
-    return 'Uygulamayı sevdiniz mi? Bana bir kahve ısmarlayın! $price';
-  }
 
   @override
   String get enableCliServer => 'CLI Sunucusunu Etkinleştir';

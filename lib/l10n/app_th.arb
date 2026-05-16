@@ -472,8 +472,6 @@
   "onlySelectedLocalesWillBeRendered": "เฉพาะภาษาที่เลือกเท่านั้นที่จะถูกเรนเดอร์",
   "renderNLocales": "เรนเดอร์ {count} ภาษา",
   "source": "ต้นฉบับ",
-  "supportTheDeveloper": "สนับสนุนนักพัฒนา",
-  "supportTheDeveloperDescription": "ชอบแอปนี้ไหม? เลี้ยงกาแฟฉันสิ! {price}",
   "enableCliServer": "เปิดใช้งานเซิร์ฟเวอร์ CLI",
   "enableCliServerDescription": "เริ่มต้นเซิร์ฟเวอร์ในเครื่องเพื่อใช้เครื่องมือ CLI",
   "cliLearnMoreButton": "อ่านเอกสารประกอบ",

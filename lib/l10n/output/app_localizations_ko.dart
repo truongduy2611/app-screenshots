@@ -1159,11 +1159,10 @@ class AppLocalizationsKo extends AppLocalizations {
   String get uploadToAsc => 'ASC에 업로드';
 
   @override
-  String get uploadExistingFolderToAsc => 'Upload Existing Folder...';
+  String get uploadExistingFolderToAsc => '기존 폴더 업로드...';
 
   @override
-  String get noImagesFoundInFolder =>
-      'No valid screenshot images found in selected folder';
+  String get noImagesFoundInFolder => '선택한 폴더에서 유효한 스크린샷 이미지를 찾을 수 없습니다';
 
   @override
   String get addMoreLanguages => '언어 추가';
@@ -1538,14 +1537,6 @@ class AppLocalizationsKo extends AppLocalizations {
 
   @override
   String get source => '소스';
-
-  @override
-  String get supportTheDeveloper => '개발자 후원하기';
-
-  @override
-  String supportTheDeveloperDescription(String price) {
-    return '앱이 마음에 드시나요? 커피 한 잔 사주세요! $price';
-  }
 
   @override
   String get enableCliServer => 'CLI 서버 활성화';

@@ -68,10 +68,10 @@ class ICloudBackupService {
   static const String _autoBackupFileName = 'appshots_auto_backup.zip';
 
   final SharedPreferences _prefs;
-  final String? _storageRoot;
+  final Future<String>? _storageRootFuture;
 
-  ICloudBackupService(this._prefs, {String? storageRoot})
-    : _storageRoot = storageRoot;
+  ICloudBackupService(this._prefs, {Future<String>? storageRootFuture})
+    : _storageRootFuture = storageRootFuture;
 
   /// Returns true if iCloud is available on the current device.
   Future<bool> isAvailable() async {
@@ -464,8 +464,9 @@ class ICloudBackupService {
   }
 
   Future<Directory> _getDesignsDir() async {
-    if (_storageRoot != null) {
-      return Directory(_storageRoot);
+    if (_storageRootFuture != null) {
+      final root = await _storageRootFuture;
+      return Directory(root);
     }
     final appDir = await getApplicationDocumentsDirectory();
     return Directory(p.join(appDir.path, _designsDirName));

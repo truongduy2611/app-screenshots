@@ -2119,19 +2119,6 @@
   "@source": {
     "description": "Badge label for the source locale in locale picker"
   },
-  "supportTheDeveloper": "Support the Developer",
-  "supportTheDeveloperDescription": "Love the app? Treat me to a coffee! {price}",
-  "@supportTheDeveloper": {
-    "description": "Title for the support me card in settings"
-  },
-  "@supportTheDeveloperDescription": {
-    "description": "Description for the support me card in settings",
-    "placeholders": {
-      "price": {
-        "type": "String"
-      }
-    }
-  },
   "enableCliServer": "Enable CLI Server",
   "enableCliServerDescription": "Start the local loopback server to use the CLI tool.",
   "@enableCliServer": {

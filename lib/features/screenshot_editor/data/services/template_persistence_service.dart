@@ -8,14 +8,15 @@ import 'package:path_provider/path_provider.dart';
 class TemplatePersistenceService {
   static const String _templatesDirName = 'screenshot_templates';
 
-  final String? _storageRootOverride;
+  final Future<String>? _storageRootFuture;
 
-  TemplatePersistenceService({String? storageRoot})
-    : _storageRootOverride = storageRoot;
+  TemplatePersistenceService({Future<String>? storageRootFuture})
+    : _storageRootFuture = storageRootFuture;
 
   Future<Directory> get _templatesDir async {
-    if (_storageRootOverride != null) {
-      final dir = Directory(_storageRootOverride);
+    if (_storageRootFuture != null) {
+      final root = await _storageRootFuture;
+      final dir = Directory(root);
       if (!await dir.exists()) {
         await dir.create(recursive: true);
       }

@@ -1200,11 +1200,11 @@ class AppLocalizationsAr extends AppLocalizations {
   String get uploadToAsc => 'رفع إلى ASC';
 
   @override
-  String get uploadExistingFolderToAsc => 'Upload Existing Folder...';
+  String get uploadExistingFolderToAsc => 'تحميل مجلد موجود...';
 
   @override
   String get noImagesFoundInFolder =>
-      'No valid screenshot images found in selected folder';
+      'لم يتم العثور على صور لقطات شاشة صالحة في المجلد المحدد';
 
   @override
   String get addMoreLanguages => 'إضافة لغات أخرى';
@@ -1606,14 +1606,6 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get source => 'المصدر';
-
-  @override
-  String get supportTheDeveloper => 'ادعم المطور';
-
-  @override
-  String supportTheDeveloperDescription(String price) {
-    return 'هل أعجبك التطبيق؟ عاملني بقهوة! $price';
-  }
 
   @override
   String get enableCliServer => 'تمكين خادم CLI';

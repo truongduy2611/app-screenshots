@@ -12,6 +12,7 @@ import 'package:app_screenshots/features/screenshot_editor/data/services/transla
 import 'package:app_screenshots/features/screenshot_editor/data/services/translation_service.dart';
 import 'package:app_screenshots/features/screenshot_editor/domain/repositories/ai_provider_repository.dart';
 import 'package:app_screenshots/features/screenshot_editor/presentation/cubit/translation_cubit.dart';
+
 import 'package:app_screenshots/features/settings/presentation/cubit/backup_cubit.dart';
 import 'package:app_screenshots/features/screenshot_editor/presentation/cubit/screenshot_editor_cubit.dart';
 import 'package:app_screenshots/features/screenshot_editor/presentation/cubit/screenshot_library_cubit.dart';
@@ -20,6 +21,7 @@ import 'package:app_screenshots/features/settings/data/services/app_icon_service
 import 'package:app_screenshots/features/settings/domain/repositories/settings_repository.dart';
 import 'package:app_screenshots/features/settings/presentation/cubit/app_icon_cubit.dart';
 import 'package:app_screenshots/features/settings/presentation/cubit/cli_cubit.dart';
+
 import 'package:app_screenshots/features/settings/presentation/cubit/theme_cubit.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:get_it/get_it.dart';
@@ -29,7 +31,7 @@ final sl = GetIt.instance;
 
 Future<void> initServiceLocator() async {
   await _registerExternalDeps();
-  final syncService = await _registerCloudSync();
+  final syncService = _registerCloudSync();
   _registerServices(syncService);
   _registerRepositories();
   _registerCubits();
@@ -51,9 +53,11 @@ Future<void> _registerExternalDeps() async {
 // Cloud sync (order-sensitive — must come before services)
 // ─────────────────────────────────────────────────────────────────────────────
 
-Future<ICloudSyncService> _registerCloudSync() async {
+ICloudSyncService _registerCloudSync() {
   final syncService = ICloudSyncService(sl<SharedPreferences>());
-  await syncService.init();
+  // Fire-and-forget: init runs in the background while the UI renders.
+  // Services that need the designs path await syncService.designsPathFuture.
+  syncService.init();
   sl.registerSingleton<ICloudSyncService>(syncService);
   return syncService;
 }
@@ -64,22 +68,29 @@ Future<ICloudSyncService> _registerCloudSync() async {
 
 void _registerServices(ICloudSyncService syncService) {
   sl.registerLazySingleton(
-    () => ScreenshotPersistenceService(storageRoot: syncService.designsPath),
+    () => ScreenshotPersistenceService(
+      storageRootFuture: syncService.designsPathFuture,
+    ),
   );
   sl.registerLazySingleton(
     () => TemplatePersistenceService(
-      storageRoot: '${syncService.designsPath}/screenshot_templates',
+      storageRootFuture: syncService.designsPathFuture
+          .then((root) => '$root/screenshot_templates'),
     ),
   );
   sl.registerLazySingleton(() => AppIconService());
   sl.registerLazySingleton(
-    () => ICloudBackupService(sl(), storageRoot: syncService.designsPath),
+    () => ICloudBackupService(
+      sl(),
+      storageRootFuture: syncService.designsPathFuture,
+    ),
   );
   sl.registerLazySingleton(() => FileOpenService()..init());
   sl.registerLazySingleton(() => TranslationMemoryService());
   sl.registerLazySingleton(() => TranslationService(sl(), sl()));
   sl.registerLazySingleton(() => AscUploadService(sl()));
   sl.registerLazySingleton(() => DesignFileService());
+
   sl.registerLazySingleton(
     () => CommandServer(persistenceService: sl(), designFileService: sl()),
   );
@@ -117,4 +128,5 @@ void _registerCubits() {
     () => BackupCubit(sl(), sl<ICloudSyncService>())..init(),
   );
   sl.registerLazySingleton(() => CliCubit(sl()));
+
 }

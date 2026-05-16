@@ -1595,14 +1595,6 @@ class AppLocalizationsVi extends AppLocalizations {
   String get source => 'Nguồn';
 
   @override
-  String get supportTheDeveloper => 'Ủng hộ nhà phát triển';
-
-  @override
-  String supportTheDeveloperDescription(String price) {
-    return 'Bạn thích ứng dụng này? Hãy mời tôi một ly cà phê nhé! $price';
-  }
-
-  @override
   String get enableCliServer => 'Bật máy chủ CLI';
 
   @override

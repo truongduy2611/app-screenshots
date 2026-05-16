@@ -472,8 +472,6 @@
   "onlySelectedLocalesWillBeRendered": "Alleen geselecteerde talen worden gerenderd",
   "renderNLocales": "{count} {count, plural, =1{taal} other{talen}} renderen",
   "source": "Bron",
-  "supportTheDeveloper": "Ondersteun de ontwikkelaar",
-  "supportTheDeveloperDescription": "Vind je de app leuk? Trakteer me op een koffie! {price}",
   "enableCliServer": "CLI-server inschakelen",
   "enableCliServerDescription": "Start de lokale server om de CLI-tool te gebruiken.",
   "cliLearnMoreButton": "Documentatie lezen",

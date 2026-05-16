@@ -19,7 +19,19 @@ class ICloudSyncService {
   final SharedPreferences _prefs;
 
   /// The resolved storage directory path (iCloud or local fallback).
+  ///
+  /// Only safe to access after [ready] completes.
   late final String designsPath;
+
+  /// Completes when [init] has finished and [designsPath] is available.
+  final _readyCompleter = Completer<void>();
+
+  /// A future that completes when initialization is done.
+  /// Await this before accessing [designsPath] if init was fire-and-forget.
+  Future<void> get ready => _readyCompleter.future;
+
+  /// A convenience future that resolves to the designs path once ready.
+  Future<String> get designsPathFuture => ready.then((_) => designsPath);
 
   /// Whether iCloud sync is active on this device.
   bool get isSyncEnabled => _iCloudActive;
@@ -45,35 +57,56 @@ class ICloudSyncService {
   /// Initializes the service: resolves storage path, migrates if needed,
   /// and starts monitoring iCloud changes.
   ///
-  /// Must be called before accessing [designsPath].
+  /// Safe to call as fire-and-forget — await [ready] or [designsPathFuture]
+  /// when you actually need the resolved path.
   Future<void> init() async {
-    // 1. Check iCloud availability and user preference
-    _iCloudAvailable = await _isICloudAvailable();
-    final userEnabled = isUserEnabled;
+    try {
+      // 1. Check iCloud availability and user preference
+      _iCloudAvailable = await _isICloudAvailable();
+      final userEnabled = isUserEnabled;
 
-    if (_iCloudAvailable && userEnabled) {
-      // 2a. Get the iCloud designs path
-      final iCloudPath = await _getICloudDesignsPath();
-      if (iCloudPath != null) {
-        designsPath = iCloudPath;
+      if (_iCloudAvailable && userEnabled) {
+        // 2a. Get the iCloud designs path
+        final iCloudPath = await _getICloudDesignsPath();
+        if (iCloudPath != null) {
+          designsPath = iCloudPath;
 
-        // 3. Migrate local data if this is the first time
-        await _migrateIfNeeded();
+          // 3. Migrate local data if this is the first time
+          await _migrateIfNeeded();
 
-        // 4. Start monitoring for remote changes
-        _setupChangeListener();
-        await _startMonitoring();
+          // 4. Start monitoring for remote changes
+          _setupChangeListener();
+          await _startMonitoring();
 
-        AppLogger.i('Using iCloud path: $designsPath', tag: 'iCloudSync');
-        _iCloudActive = true;
-        return;
+          AppLogger.i('Using iCloud path: $designsPath', tag: 'iCloudSync');
+          _iCloudActive = true;
+          _readyCompleter.complete();
+          return;
+        }
       }
-    }
 
-    // 2b. Fallback to local storage
-    final localPath = await _getLocalDesignsPath();
-    designsPath = localPath!;
-    AppLogger.i('Using local path: $designsPath', tag: 'iCloudSync');
+      // 2b. Fallback to local storage
+      final localPath = await _getLocalDesignsPath();
+      designsPath = localPath!;
+      AppLogger.i('Using local path: $designsPath', tag: 'iCloudSync');
+      _readyCompleter.complete();
+    } catch (e, st) {
+      AppLogger.error(
+        'iCloud init failed, falling back to local',
+        tag: 'iCloudSync',
+        error: e,
+        stackTrace: st,
+      );
+      // Attempt local fallback even on error
+      try {
+        final localPath = await _getLocalDesignsPath();
+        designsPath = localPath!;
+      } catch (_) {
+        // Last resort — should never happen
+        designsPath = '';
+      }
+      _readyCompleter.complete();
+    }
   }
 
   /// Stops monitoring and cleans up resources.
