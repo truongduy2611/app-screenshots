@@ -371,13 +371,13 @@ class BackgroundControls extends StatelessWidget {
       // ── Scale ──
       LabeledSlider(
         label: 'Scale',
-        value: overlay.scale * 100,
-        min: 10,
-        max: 5000,
-        suffix: '%',
+        value: overlay.scale,
+        min: 0.1,
+        max: 50.0,
+        valueLabel: '${overlay.scale.toStringAsFixed(1)}×',
         onChanged: (v) => cubit.updateImageOverlay(
           overlay.id,
-          overlay.copyWith(scale: v / 100),
+          overlay.copyWith(scale: v),
         ),
       ),
       const SizedBox(height: 4),
