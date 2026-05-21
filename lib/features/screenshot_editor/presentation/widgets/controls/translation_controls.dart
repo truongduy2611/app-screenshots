@@ -388,18 +388,28 @@ class _TranslationControlsState extends State<TranslationControls> {
     final savedConfig = captureProvider.ascAppConfig;
 
     if (!context.mounted) return;
+    final isSmallScreen = MediaQuery.sizeOf(context).width < 600;
     showDialog(
       context: context,
+      useSafeArea: !isSmallScreen,
       builder: (_) => BlocProvider(
         create: (_) => sl<AscUploadCubit>()
           ..init(savedAppConfig: savedConfig, designDisplayType: displayType),
-        child: Dialog(
-          child: AscUploadSheet(
-            localeScreenshots: localeScreenshots,
-            ascAppConfig: savedConfig,
-            onAppConfigChanged: captureProvider.onAscAppConfigChanged,
-          ),
-        ),
+        child: isSmallScreen
+            ? Dialog.fullscreen(
+                child: AscUploadSheet(
+                  localeScreenshots: localeScreenshots,
+                  ascAppConfig: savedConfig,
+                  onAppConfigChanged: captureProvider.onAscAppConfigChanged,
+                ),
+              )
+            : Dialog(
+                child: AscUploadSheet(
+                  localeScreenshots: localeScreenshots,
+                  ascAppConfig: savedConfig,
+                  onAppConfigChanged: captureProvider.onAscAppConfigChanged,
+                ),
+              ),
       ),
     );
   }

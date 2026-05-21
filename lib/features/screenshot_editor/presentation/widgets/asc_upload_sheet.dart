@@ -72,20 +72,26 @@ class AscUploadSheet extends StatelessWidget {
 
         return Container(
           constraints: BoxConstraints(
-            maxWidth: isSmall ? screenWidth - 16 : 520,
-            maxHeight: isSmall ? MediaQuery.sizeOf(context).height * 0.85 : 640,
+            maxWidth: isSmall ? double.infinity : 520,
+            maxHeight: isSmall ? double.infinity : 640,
             minHeight: isSmall ? 0 : 640,
           ),
           child: Padding(
-            padding: const EdgeInsets.all(24),
-            child: Column(
-              mainAxisSize: MainAxisSize.min,
-              crossAxisAlignment: CrossAxisAlignment.stretch,
-              children: [
-                _buildHeader(context),
-                const SizedBox(height: 16),
-                Expanded(child: _buildBody(context, state)),
-              ],
+            padding: EdgeInsets.all(isSmall ? 16 : 24),
+            child: SafeArea(
+              top: isSmall,
+              bottom: false,
+              left: false,
+              right: false,
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: [
+                  _buildHeader(context),
+                  const SizedBox(height: 16),
+                  Expanded(child: _buildBody(context, state)),
+                ],
+              ),
             ),
           ),
         );
