@@ -439,6 +439,7 @@ class ScreenshotPersistenceService {
       // Paths in the JSON are already relative — keep them as-is.
       final newDesign = design.copyWith(
         folderId: folderId,
+        clearFolderId: folderId == null,
         lastModified: DateTime.now(),
       );
       await jsonFile.writeAsString(jsonEncode(newDesign.toJson()));

@@ -482,5 +482,13 @@
   "icloudSyncDisabled": "La sincronizzazione iCloud è disattivata",
   "restartRequired": "Riavvia l'app per applicare le modifiche",
   "uploadExistingFolderToAsc": "Carica cartella esistente...",
-  "noImagesFoundInFolder": "Nessuna immagine di screenshot valida trovata nella cartella selezionata"
+  "noImagesFoundInFolder": "Nessuna immagine di screenshot valida trovata nella cartella selezionata",
+  "lineHeight": "Altezza riga",
+  "letterSpacing": "Spaziatura lettere",
+  "uploadCachedFolderTitle": "Carica screenshot nella cache",
+  "uploadCachedFolderMessage": "Abbiamo trovato screenshot renderizzati di recente. Vuoi caricarli o scegliere un'altra cartella?",
+  "useCached": "Usa cache",
+  "pickFolder": "Scegli cartella",
+  "addImages": "Aggiungi immagini",
+  "resetRotation": "Ripristina"
 }

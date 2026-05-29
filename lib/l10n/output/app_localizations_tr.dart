@@ -1643,4 +1643,30 @@ class AppLocalizationsTr extends AppLocalizations {
   @override
   String get restartRequired =>
       'Değişikliklerin geçerli olması için uygulamayı yeniden başlatın';
+
+  @override
+  String get lineHeight => 'Satır Yüksekliği';
+
+  @override
+  String get letterSpacing => 'Harf Aralığı';
+
+  @override
+  String get uploadCachedFolderTitle =>
+      'Önbelleğe Alınan Ekran Görüntülerini Yükle';
+
+  @override
+  String get uploadCachedFolderMessage =>
+      'Kısa süre önce oluşturulmuş ekran görüntüleri bulduk. Bunları yüklemek mi yoksa başka bir klasör mü seçmek istersiniz?';
+
+  @override
+  String get useCached => 'Önbelleği Kullan';
+
+  @override
+  String get pickFolder => 'Klasör Seç';
+
+  @override
+  String get addImages => 'Resim Ekle';
+
+  @override
+  String get resetRotation => 'Sıfırla';
 }

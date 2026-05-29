@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:convert';
 import 'dart:io';
 import 'dart:typed_data';
@@ -8,6 +9,7 @@ import 'package:app_screenshots/features/screenshot_editor/data/models/saved_des
 import 'package:app_screenshots/features/screenshot_editor/data/models/mesh_gradient_settings.dart';
 import 'package:app_screenshots/features/screenshot_editor/data/models/screenshot_design.dart';
 import 'package:app_screenshots/features/screenshot_editor/data/services/screenshot_persistence_service.dart';
+import 'package:app_screenshots/features/screenshot_editor/presentation/widgets/canvas/snap_lines.dart';
 import 'package:app_screenshots/features/screenshot_editor/utils/screenshot_utils.dart';
 import 'package:device_frame/device_frame.dart';
 import 'package:equatable/equatable.dart';
@@ -68,6 +70,21 @@ class ScreenshotEditorCubit extends Cubit<ScreenshotEditorState> {
   final List<ScreenshotDesign> _undoStack = [];
   final List<ScreenshotDesign> _redoStack = [];
   bool _isBatchEditing = false;
+
+  /// Active snap guide lines. Published outside the bloc state so that
+  /// showing/hiding guides during a drag only repaints the thin guide layer
+  /// instead of rebuilding the whole canvas.
+  final ValueNotifier<SnapLines> snapLines = ValueNotifier(const SnapLines());
+
+  /// Collapses a burst of rapid keyboard nudges into one undo entry.
+  Timer? _nudgeBatchTimer;
+
+  @override
+  Future<void> close() {
+    _nudgeBatchTimer?.cancel();
+    snapLines.dispose();
+    return super.close();
+  }
 
   /// Call before a continuous interaction (e.g. dragging a color picker or
   /// slider) to collapse all intermediate changes into a single undo entry.
@@ -336,16 +353,14 @@ class ScreenshotEditorCubit extends Cubit<ScreenshotEditorState> {
 
   /// Updates the visible snap guide lines without touching the design.
   void _emitSnapLines(double? x, double? y) {
-    if (x != state.activeSnapX || y != state.activeSnapY) {
-      emit(state.copyWith(activeSnapX: x, activeSnapY: y));
-    }
+    // ValueNotifier only notifies when the value actually changes (SnapLines
+    // has value equality), so this is safe to call every drag frame.
+    snapLines.value = SnapLines(x: x, y: y);
   }
 
   /// Call on drag end to hide snap guide lines.
   void clearSnapLines() {
-    if (state.activeSnapX != null || state.activeSnapY != null) {
-      emit(state.copyWith(activeSnapX: null, activeSnapY: null));
-    }
+    snapLines.value = const SnapLines();
   }
 
   /// Adds a text overlay.
@@ -392,6 +407,46 @@ class ScreenshotEditorCubit extends Cubit<ScreenshotEditorState> {
       selectedOverlayId: overlay.id,
     );
     return true;
+  }
+
+  /// Adds multiple image overlays in a single undo batch.
+  Future<int> addMultipleImageOverlays(List<File> files) async {
+    final remaining = 10 - state.design.imageOverlays.length;
+    if (remaining <= 0) return 0;
+
+    final toAdd = files.take(remaining).toList();
+    if (toAdd.isEmpty) return 0;
+
+    beginBatchEdit();
+    String? lastId;
+    int added = 0;
+
+    for (int i = 0; i < toAdd.length; i++) {
+      final stable = await _copyToStableStorage(toAdd[i]);
+      final overlay = ImageOverlay(
+        id: const Uuid().v4(),
+        filePath: stable.path,
+        position: Offset(100.0 + i * 20, 100.0 + i * 20),
+        width: 150,
+        height: 150,
+      );
+
+      final imageOverlays = List<ImageOverlay>.from(state.design.imageOverlays)
+        ..add(overlay);
+      _updateDesign(
+        state.design.copyWith(imageOverlays: imageOverlays),
+        selectedOverlayId: overlay.id,
+      );
+      lastId = overlay.id;
+      added++;
+    }
+
+    endBatchEdit();
+
+    if (lastId != null) {
+      emit(state.copyWith(selectedOverlayId: lastId));
+    }
+    return added;
   }
 
   void updateTextOverlay(String id, TextOverlay newOverlay) {
@@ -723,6 +778,18 @@ class ScreenshotEditorCubit extends Cubit<ScreenshotEditorState> {
 
   /// Moves the currently selected overlay by [delta] pixels.
   /// When no overlay is selected, moves the main image/device frame instead.
+  /// Moves the selected overlay by [delta], collapsing a burst of rapid
+  /// nudges (e.g. holding an arrow key) into a single undo entry.
+  void nudgeSelectedOverlay(Offset delta) {
+    beginBatchEdit();
+    moveSelectedOverlay(delta);
+    _nudgeBatchTimer?.cancel();
+    _nudgeBatchTimer = Timer(
+      const Duration(milliseconds: 400),
+      endBatchEdit,
+    );
+  }
+
   void moveSelectedOverlay(Offset delta) {
     final id = state.selectedOverlayId;
     AppLogger.d(

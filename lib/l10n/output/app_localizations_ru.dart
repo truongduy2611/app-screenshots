@@ -1648,4 +1648,29 @@ class AppLocalizationsRu extends AppLocalizations {
   @override
   String get restartRequired =>
       'Перезапустите приложение для применения изменений';
+
+  @override
+  String get lineHeight => 'Высота строки';
+
+  @override
+  String get letterSpacing => 'Межбуквенный интервал';
+
+  @override
+  String get uploadCachedFolderTitle => 'Загрузить кэшированные скриншоты';
+
+  @override
+  String get uploadCachedFolderMessage =>
+      'Мы нашли недавно отрендеренные скриншоты. Вы хотите загрузить их или выбрать другую папку?';
+
+  @override
+  String get useCached => 'Использовать кэш';
+
+  @override
+  String get pickFolder => 'Выбрать папку';
+
+  @override
+  String get addImages => 'Добавить изображения';
+
+  @override
+  String get resetRotation => 'Сбросить';
 }

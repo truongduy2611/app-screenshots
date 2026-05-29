@@ -482,5 +482,13 @@
   "icloudSyncDisabled": "iCloud 동기화가 비활성화되어 있습니다",
   "restartRequired": "변경 사항을 적용하려면 앱을 다시 시작하세요",
   "uploadExistingFolderToAsc": "기존 폴더 업로드...",
-  "noImagesFoundInFolder": "선택한 폴더에서 유효한 스크린샷 이미지를 찾을 수 없습니다"
+  "noImagesFoundInFolder": "선택한 폴더에서 유효한 스크린샷 이미지를 찾을 수 없습니다",
+  "lineHeight": "줄 높이",
+  "letterSpacing": "글자 간격",
+  "uploadCachedFolderTitle": "캐시된 스크린샷 업로드",
+  "uploadCachedFolderMessage": "최근에 렌더링된 스크린샷을 찾았습니다. 이를 업로드하시겠습니까, 아니면 다른 폴더를 선택하시겠습니까?",
+  "useCached": "캐시 사용",
+  "pickFolder": "폴더 선택",
+  "addImages": "이미지 추가",
+  "resetRotation": "초기화"
 }

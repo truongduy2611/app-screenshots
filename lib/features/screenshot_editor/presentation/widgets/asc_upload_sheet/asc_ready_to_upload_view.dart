@@ -56,6 +56,8 @@ class _ReadyToUploadView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
+    final screenWidth = MediaQuery.sizeOf(context).width;
+    final isSmall = screenWidth < 600;
     final Map<String, String> displayTypes;
     switch (platform) {
       case 'IMESSAGE':
@@ -146,32 +148,39 @@ class _ReadyToUploadView extends StatelessWidget {
         const SizedBox(height: 14),
 
         // ── Platform selector ──
-        SegmentedButton<String>(
-          segments: [
-            ButtonSegment(
-              value: 'IOS',
-              label: const Text('iOS'),
-              icon: SFIcon(SFIcons.sf_iphone, fontSize: 16),
-            ),
-            ButtonSegment(
-              value: 'IMESSAGE',
-              label: const Text('iMessage'),
-              icon: SFIcon(SFIcons.sf_message_fill, fontSize: 16),
-            ),
-            ButtonSegment(
-              value: 'MAC_OS',
-              label: const Text('macOS'),
-              icon: SFIcon(SFIcons.sf_macbook, fontSize: 16),
-            ),
-            ButtonSegment(
-              value: 'WATCH_OS',
-              label: const Text('watchOS'),
-              icon: SFIcon(SFIcons.sf_applewatch, fontSize: 16),
-            ),
-          ],
-          selected: {platform},
-          onSelectionChanged: (s) => onPlatformChanged(s.first),
-          showSelectedIcon: false,
+        SingleChildScrollView(
+          scrollDirection: Axis.horizontal,
+          child: SegmentedButton<String>(
+            segments: [
+              ButtonSegment(
+                value: 'IOS',
+                label: const Text('iOS'),
+                icon: isSmall ? null : SFIcon(SFIcons.sf_iphone, fontSize: 16),
+              ),
+              ButtonSegment(
+                value: 'IMESSAGE',
+                label: const Text('iMessage'),
+                icon: isSmall
+                    ? null
+                    : SFIcon(SFIcons.sf_message_fill, fontSize: 16),
+              ),
+              ButtonSegment(
+                value: 'MAC_OS',
+                label: const Text('macOS'),
+                icon: isSmall ? null : SFIcon(SFIcons.sf_macbook, fontSize: 16),
+              ),
+              ButtonSegment(
+                value: 'WATCH_OS',
+                label: const Text('watchOS'),
+                icon: isSmall
+                    ? null
+                    : SFIcon(SFIcons.sf_applewatch, fontSize: 16),
+              ),
+            ],
+            selected: {platform},
+            onSelectionChanged: (s) => onPlatformChanged(s.first),
+            showSelectedIcon: false,
+          ),
         ),
         const SizedBox(height: 14),
 
@@ -198,12 +207,14 @@ class _ReadyToUploadView extends StatelessWidget {
             ButtonSegment(
               value: true,
               label: Text(context.l10n.replace),
-              icon: Icon(Symbols.delete_sweep, size: 18),
+              icon: isSmall ? null : Icon(Symbols.delete_sweep, size: 18),
             ),
             ButtonSegment(
               value: false,
               label: Text(context.l10n.append),
-              icon: Icon(Symbols.add_photo_alternate, size: 18),
+              icon: isSmall
+                  ? null
+                  : Icon(Symbols.add_photo_alternate, size: 18),
             ),
           ],
           selected: {deleteExisting},

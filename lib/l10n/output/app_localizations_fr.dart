@@ -1659,4 +1659,30 @@ class AppLocalizationsFr extends AppLocalizations {
   @override
   String get restartRequired =>
       'Redémarrez l\'application pour appliquer les modifications';
+
+  @override
+  String get lineHeight => 'Hauteur de ligne';
+
+  @override
+  String get letterSpacing => 'Espacement des lettres';
+
+  @override
+  String get uploadCachedFolderTitle =>
+      'Télécharger les captures d\'écran en cache';
+
+  @override
+  String get uploadCachedFolderMessage =>
+      'Nous avons trouvé des captures d\'écran récemment rendues. Souhaitez-vous les télécharger ou choisir un autre dossier ?';
+
+  @override
+  String get useCached => 'Utiliser le cache';
+
+  @override
+  String get pickFolder => 'Choisir un dossier';
+
+  @override
+  String get addImages => 'Ajouter des images';
+
+  @override
+  String get resetRotation => 'Réinitialiser';
 }

@@ -1,26 +1,21 @@
-import 'dart:io';
 import 'dart:ui' as ui;
-import 'package:app_screenshots/core/services/app_logger.dart';
 import 'package:flutter/rendering.dart';
 import 'package:app_screenshots/features/screenshot_editor/presentation/cubit/multi_screenshot_cubit.dart';
 import 'package:app_screenshots/features/screenshot_editor/presentation/cubit/screenshot_editor_cubit.dart';
 import 'package:app_screenshots/features/screenshot_editor/presentation/cubit/translation_cubit.dart';
 import 'package:app_screenshots/features/screenshot_editor/presentation/widgets/canvas/canvas_painters.dart';
-import 'package:app_screenshots/features/screenshot_editor/presentation/widgets/canvas/grab_cursor_region.dart';
+import 'package:app_screenshots/features/screenshot_editor/presentation/widgets/canvas/draggable_frame_widget.dart';
 import 'package:app_screenshots/features/screenshot_editor/presentation/widgets/canvas/icon_overlay_widget.dart';
 import 'package:app_screenshots/features/screenshot_editor/presentation/widgets/canvas/image_overlay_widget.dart';
-import 'package:app_screenshots/features/screenshot_editor/presentation/widgets/canvas/import_hint_placeholder.dart';
 import 'package:app_screenshots/features/screenshot_editor/presentation/widgets/canvas/magnifier_overlay_widget.dart';
+import 'package:app_screenshots/features/screenshot_editor/presentation/widgets/canvas/snap_lines.dart';
 import 'package:app_screenshots/features/screenshot_editor/presentation/widgets/canvas/text_overlay_widget.dart';
 import 'package:app_screenshots/features/screenshot_editor/utils/screenshot_utils.dart';
 import 'package:app_screenshots/features/screenshot_editor/presentation/widgets/grid_overlay.dart';
 import 'package:app_screenshots/features/screenshot_editor/presentation/widgets/doodle_background.dart';
-import 'package:device_frame/device_frame.dart';
-import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:material_symbols_icons/symbols.dart';
 import 'package:mesh_gradient/mesh_gradient.dart';
 import 'package:screenshot/screenshot.dart';
 
@@ -34,7 +29,6 @@ class EditorCanvas extends StatefulWidget {
 
 class _EditorCanvasState extends State<EditorCanvas> {
   bool _isSnapped = false;
-  Offset? _rawImagePosition;
 
   // Canvas capture for magnifier
   final GlobalKey _canvasBoundaryKey = GlobalKey();
@@ -87,16 +81,6 @@ class _EditorCanvasState extends State<EditorCanvas> {
     _isSnapped = nowSnapped;
   }
 
-  Future<void> _pickImageForCanvas(BuildContext context) async {
-    final result = await FilePicker.platform.pickFiles(type: FileType.image);
-    if (result != null && result.files.single.path != null) {
-      if (!context.mounted) return;
-      context.read<ScreenshotEditorCubit>().updateImageFile(
-        File(result.files.single.path!),
-      );
-    }
-  }
-
   // ─────────────────────────────────────────────────────────────────
   // build
   // ─────────────────────────────────────────────────────────────────
@@ -104,6 +88,13 @@ class _EditorCanvasState extends State<EditorCanvas> {
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<ScreenshotEditorCubit, ScreenshotEditorState>(
+      // Skip rebuilds for changes that don't affect the canvas (undo/redo
+      // button state, saved-design metadata).
+      buildWhen: (prev, curr) =>
+          !identical(prev.design, curr.design) ||
+          prev.selectedOverlayId != curr.selectedOverlayId ||
+          prev.selectedImageUrl != curr.selectedImageUrl ||
+          prev.selectedImageFile?.path != curr.selectedImageFile?.path,
       builder: (context, state) {
         final canvasSize = ScreenshotUtils.getDimensions(
           state.design.displayType ?? '',
@@ -164,15 +155,14 @@ class _EditorCanvasState extends State<EditorCanvas> {
                                           );
                                           return [
                                             ...overlays.behind,
-                                            _buildDraggableFrame(
-                                              context,
-                                              state,
-                                              canvasSize,
+                                            DraggableFrameWidget(
+                                              canvasSize: canvasSize,
+                                              onSnapHaptics: _handleSnapHaptics,
                                             ),
                                             ...overlays.inFront,
                                           ];
                                         })(),
-                                        _buildSnapGuides(state, canvasSize),
+                                        _buildSnapGuides(context, canvasSize),
                                       ],
                                     ),
                                   ),
@@ -240,70 +230,6 @@ class _EditorCanvasState extends State<EditorCanvas> {
   }
 
   // ─────────────────────────────────────────────────────────────────
-  // Draggable frame (background image + frame drag gestures)
-  // ─────────────────────────────────────────────────────────────────
-
-  Widget _buildDraggableFrame(
-    BuildContext context,
-    ScreenshotEditorState state,
-    Size canvasSize,
-  ) {
-    return Positioned.fill(
-      child: GrabCursorRegion(
-        child: GestureDetector(
-          onTap:
-              state.selectedImageFile == null && state.selectedImageUrl == null
-              ? () => _pickImageForCanvas(context)
-              : () {
-                  AppLogger.d(
-                    'FrameTap: Deselecting overlay. Was: ${state.selectedOverlayId}',
-                    tag: 'Canvas',
-                  );
-                  context.read<ScreenshotEditorCubit>().deselectOverlay();
-                },
-          onPanStart: (_) {
-            AppLogger.d(
-              'FrameDrag: PanStart — selectedOverlayId: ${state.selectedOverlayId}',
-              tag: 'Canvas',
-            );
-            context.read<ScreenshotEditorCubit>().deselectOverlay();
-            _rawImagePosition = state.design.imagePosition;
-          },
-          onPanUpdate: (details) {
-            _rawImagePosition =
-                (_rawImagePosition ?? state.design.imagePosition) +
-                details.delta;
-            final cubit = context.read<ScreenshotEditorCubit>();
-            final halfCanvas = Offset(
-              canvasSize.width / 2,
-              canvasSize.height / 2,
-            );
-            final frameCenter = halfCanvas + _rawImagePosition!;
-            final snappedCenter = cubit.snapOffset(frameCenter, canvasSize);
-            final snappedPos = snappedCenter - halfCanvas;
-            _handleSnapHaptics(frameCenter, snappedCenter);
-            cubit.updateImagePosition(snappedPos);
-          },
-          onPanEnd: (_) {
-            _rawImagePosition = null;
-            context.read<ScreenshotEditorCubit>().clearSnapLines();
-          },
-          onPanCancel: () {
-            _rawImagePosition = null;
-            context.read<ScreenshotEditorCubit>().clearSnapLines();
-          },
-          child: Padding(
-            padding: EdgeInsets.all(state.design.padding),
-            child: Center(
-              child: _buildFrameContent(context, state, canvasSize),
-            ),
-          ),
-        ),
-      ),
-    );
-  }
-
-  // ─────────────────────────────────────────────────────────────────
   // Overlay lists
   // ─────────────────────────────────────────────────────────────────
 
@@ -362,15 +288,11 @@ class _EditorCanvasState extends State<EditorCanvas> {
 
   List<Widget> _buildImageOverlays(ScreenshotEditorState state) {
     return state.design.imageOverlays.map((overlay) {
-      return Positioned(
+      return ImageOverlayWidget(
         key: ValueKey(overlay.id),
-        left: overlay.position.dx,
-        top: overlay.position.dy,
-        child: ImageOverlayWidget(
-          overlay: overlay,
-          isSelected: state.selectedOverlayId == overlay.id,
-          onPanUpdate: (raw, snapped) => _handleSnapHaptics(raw, snapped),
-        ),
+        overlay: overlay,
+        isSelected: state.selectedOverlayId == overlay.id,
+        onPanUpdate: (raw, snapped) => _handleSnapHaptics(raw, snapped),
       );
     }).toList();
   }
@@ -396,6 +318,7 @@ class _EditorCanvasState extends State<EditorCanvas> {
     return state.design.overlays.map((overlay) {
       if (!hasTranslationCubit) {
         return TextOverlayWidget(
+          key: ValueKey(overlay.id),
           overlay: overlay,
           canvasSize: canvasSize,
           state: state,
@@ -408,6 +331,7 @@ class _EditorCanvasState extends State<EditorCanvas> {
       }
 
       return BlocBuilder<TranslationCubit, TranslationState>(
+        key: ValueKey(overlay.id),
         builder: (ctx, tState) {
           final tCubit = ctx.read<TranslationCubit>();
           final pvLocale = tState.previewLocale;
@@ -441,6 +365,7 @@ class _EditorCanvasState extends State<EditorCanvas> {
   ) {
     return state.design.iconOverlays.map((overlay) {
       return IconOverlayWidget(
+        key: ValueKey(overlay.id),
         overlay: overlay,
         isSelected: state.selectedOverlayId == overlay.id,
         canvasSize: canvasSize,
@@ -468,127 +393,25 @@ class _EditorCanvasState extends State<EditorCanvas> {
     }).toList();
   }
 
-  Widget _buildSnapGuides(ScreenshotEditorState state, Size canvasSize) {
-    if (state.activeSnapX == null && state.activeSnapY == null) {
-      return const SizedBox.shrink();
-    }
+  Widget _buildSnapGuides(BuildContext context, Size canvasSize) {
+    final cubit = context.read<ScreenshotEditorCubit>();
     return IgnorePointer(
-      child: CustomPaint(
-        size: canvasSize,
-        painter: SnapGuidePainter(
-          activeSnapX: state.activeSnapX,
-          activeSnapY: state.activeSnapY,
-        ),
-      ),
-    );
-  }
-
-  // ─────────────────────────────────────────────────────────────────
-  // Frame content & image
-  // ─────────────────────────────────────────────────────────────────
-
-  Widget _buildFrameContent(
-    BuildContext context,
-    ScreenshotEditorState state,
-    Size canvasSize,
-  ) {
-    if (state.design.deviceFrame == null) {
-      return Transform.translate(
-        offset: state.design.imagePosition,
-        child: Transform(
-          transform: Matrix4.identity()
-            ..setEntry(3, 2, 0.001) // Perspective
-            ..rotateX(state.design.frameRotationX)
-            ..rotateY(state.design.frameRotationY)
-            ..rotateZ(state.design.frameRotation),
-          alignment: Alignment.center,
-          child: SizedBox.expand(
-            child: FittedBox(
-              fit: BoxFit.contain,
-              child: SizedBox(
-                width: canvasSize.width,
-                height: canvasSize.height,
-                child: ClipRRect(
-                  borderRadius: BorderRadius.circular(
-                    state.design.cornerRadius,
-                  ),
-                  child: _buildImage(state, fit: BoxFit.cover),
-                ),
-              ),
+      child: ValueListenableBuilder<SnapLines>(
+        valueListenable: cubit.snapLines,
+        builder: (context, lines, _) {
+          if (lines.isEmpty) return const SizedBox.shrink();
+          return CustomPaint(
+            size: canvasSize,
+            painter: SnapGuidePainter(
+              activeSnapX: lines.x,
+              activeSnapY: lines.y,
             ),
-          ),
-        ),
-      );
-    }
-
-    return Transform.translate(
-      offset: state.design.imagePosition,
-      child: Transform(
-        transform: Matrix4.identity()
-          ..setEntry(3, 2, 0.001) // Perspective
-          ..rotateX(state.design.frameRotationX)
-          ..rotateY(state.design.frameRotationY)
-          ..rotateZ(state.design.frameRotation),
-        alignment: Alignment.center,
-        child: SizedBox.expand(
-          child: FittedBox(
-            fit: BoxFit.contain,
-            child: DeviceFrame(
-              device: state.design.deviceFrame!,
-              isFrameVisible: true,
-              orientation: state.design.orientation,
-              screen: _buildImage(state, fit: BoxFit.cover),
-            ),
-          ),
-        ),
-      ),
-    );
-  }
-
-  Widget _buildImage(ScreenshotEditorState state, {BoxFit fit = BoxFit.cover}) {
-    // Check for per-locale image override via TranslationCubit.
-    TranslationCubit? tCubit;
-    try {
-      tCubit = context.read<TranslationCubit>();
-    } catch (_) {}
-
-    if (tCubit != null) {
-      final localeImagePath = tCubit.currentLocaleImagePath;
-      if (localeImagePath != null) {
-        final localeFile = File(localeImagePath);
-        if (localeFile.existsSync()) {
-          return Image.file(
-            localeFile,
-            fit: fit,
-            errorBuilder: (_, _, _) =>
-                const Center(child: Icon(Symbols.error_rounded)),
           );
-        }
-      }
-    }
-
-    if (state.selectedImageFile != null) {
-      return Image.file(
-        state.selectedImageFile!,
-        fit: fit,
-        errorBuilder: (_, _, _) =>
-            const Center(child: Icon(Symbols.error_rounded)),
-      );
-    }
-    if (state.selectedImageUrl != null) {
-      return Image.network(
-        state.selectedImageUrl!,
-        fit: fit,
-        errorBuilder: (_, _, _) =>
-            const Center(child: Icon(Symbols.error_rounded)),
-        loadingBuilder: (_, child, loading) {
-          if (loading == null) return child;
-          return const Center(child: CircularProgressIndicator());
         },
-      );
-    }
-    return const ImportHintPlaceholder();
+      ),
+    );
   }
+
 }
 
 class _ZIndexedWidget {

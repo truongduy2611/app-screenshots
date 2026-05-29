@@ -23,6 +23,12 @@ class OverlayOverride extends Equatable {
   /// Override font size (applied to the text style).
   final double? fontSize;
 
+  /// Override text height (line height).
+  final double? height;
+
+  /// Override letter spacing.
+  final double? letterSpacing;
+
   /// Override rotation angle.
   final double? rotation;
 
@@ -77,6 +83,8 @@ class OverlayOverride extends Equatable {
     this.width,
     this.scale,
     this.fontSize,
+    this.height,
+    this.letterSpacing,
     this.rotation,
     this.fontWeightIndex,
     this.fontStyleIndex,
@@ -99,6 +107,8 @@ class OverlayOverride extends Equatable {
     double? width,
     double? scale,
     double? fontSize,
+    double? height,
+    double? letterSpacing,
     double? rotation,
     int? fontWeightIndex,
     int? fontStyleIndex,
@@ -119,6 +129,8 @@ class OverlayOverride extends Equatable {
     bool clearWidth = false,
     bool clearScale = false,
     bool clearFontSize = false,
+    bool clearHeight = false,
+    bool clearLetterSpacing = false,
     bool clearRotation = false,
     bool clearFontWeightIndex = false,
     bool clearFontStyleIndex = false,
@@ -140,6 +152,8 @@ class OverlayOverride extends Equatable {
       width: clearWidth ? null : (width ?? this.width),
       scale: clearScale ? null : (scale ?? this.scale),
       fontSize: clearFontSize ? null : (fontSize ?? this.fontSize),
+      height: clearHeight ? null : (height ?? this.height),
+      letterSpacing: clearLetterSpacing ? null : (letterSpacing ?? this.letterSpacing),
       rotation: clearRotation ? null : (rotation ?? this.rotation),
       fontWeightIndex: clearFontWeightIndex
           ? null
@@ -183,6 +197,8 @@ class OverlayOverride extends Equatable {
       width: other.width ?? width,
       scale: other.scale ?? scale,
       fontSize: other.fontSize ?? fontSize,
+      height: other.height ?? height,
+      letterSpacing: other.letterSpacing ?? letterSpacing,
       rotation: other.rotation ?? rotation,
       fontWeightIndex: other.fontWeightIndex ?? fontWeightIndex,
       fontStyleIndex: other.fontStyleIndex ?? fontStyleIndex,
@@ -207,6 +223,8 @@ class OverlayOverride extends Equatable {
       width == null &&
       scale == null &&
       fontSize == null &&
+      height == null &&
+      letterSpacing == null &&
       rotation == null &&
       fontWeightIndex == null &&
       fontStyleIndex == null &&
@@ -229,6 +247,8 @@ class OverlayOverride extends Equatable {
     if (width != null) 'width': width,
     if (scale != null) 'scale': scale,
     if (fontSize != null) 'fontSize': fontSize,
+    if (height != null) 'height': height,
+    if (letterSpacing != null) 'letterSpacing': letterSpacing,
     if (rotation != null) 'rotation': rotation,
     if (fontWeightIndex != null) 'fontWeightIndex': fontWeightIndex,
     if (fontStyleIndex != null) 'fontStyleIndex': fontStyleIndex,
@@ -258,6 +278,8 @@ class OverlayOverride extends Equatable {
       width: (json['width'] as num?)?.toDouble(),
       scale: (json['scale'] as num?)?.toDouble(),
       fontSize: (json['fontSize'] as num?)?.toDouble(),
+      height: (json['height'] as num?)?.toDouble(),
+      letterSpacing: (json['letterSpacing'] as num?)?.toDouble(),
       rotation: (json['rotation'] as num?)?.toDouble(),
       fontWeightIndex: (json['fontWeightIndex'] as num?)?.toInt(),
       fontStyleIndex: (json['fontStyleIndex'] as num?)?.toInt(),
@@ -323,6 +345,8 @@ class OverlayOverride extends Equatable {
     width,
     scale,
     fontSize,
+    height,
+    letterSpacing,
     rotation,
     fontWeightIndex,
     fontStyleIndex,

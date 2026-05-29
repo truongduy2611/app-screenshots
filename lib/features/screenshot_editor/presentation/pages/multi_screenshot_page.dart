@@ -282,7 +282,7 @@ class _MultiScreenshotViewState extends State<_MultiScreenshotView>
     }
 
     if (delta != null) {
-      editorCubit.moveSelectedOverlay(delta);
+      editorCubit.nudgeSelectedOverlay(delta);
       _syncEditorChangesBack();
       return KeyEventResult.handled;
     }
@@ -808,10 +808,44 @@ class _MultiScreenshotViewState extends State<_MultiScreenshotView>
 
     if (!context.mounted) return;
 
-    // 2) Pick directory
-    final path = await FilePicker.platform.getDirectoryPath(
-      dialogTitle: context.l10n.uploadExistingFolderToAsc,
-    );
+    // 2) Pick directory or use cached
+    final multiState = context.read<MultiScreenshotCubit>().state;
+    String? path;
+
+    if (multiState.lastRenderedAscPath != null && Directory(multiState.lastRenderedAscPath!).existsSync()) {
+      final useCached = await showDialog<bool>(
+        context: context,
+        builder: (ctx) => AlertDialog(
+          title: Text(context.l10n.uploadCachedFolderTitle),
+          content: Text(context.l10n.uploadCachedFolderMessage),
+          actions: [
+            TextButton(
+              onPressed: () => Navigator.pop(ctx, false),
+              child: Text(context.l10n.pickFolder),
+            ),
+            FilledButton(
+              onPressed: () => Navigator.pop(ctx, true),
+              child: Text(context.l10n.useCached),
+            ),
+          ],
+        ),
+      );
+      
+      if (useCached == null || !context.mounted) return;
+      
+      if (useCached) {
+        path = multiState.lastRenderedAscPath;
+      } else {
+        path = await FilePicker.platform.getDirectoryPath(
+          dialogTitle: context.l10n.uploadExistingFolderToAsc,
+        );
+      }
+    } else {
+      path = await FilePicker.platform.getDirectoryPath(
+        dialogTitle: context.l10n.uploadExistingFolderToAsc,
+      );
+    }
+    
     if (path == null || !context.mounted) return;
 
     final dir = Directory(path);
@@ -855,18 +889,28 @@ class _MultiScreenshotViewState extends State<_MultiScreenshotView>
     final displayType = context.read<MultiScreenshotCubit>().displayType;
     if (!context.mounted) return;
 
+    final isSmallScreen = MediaQuery.sizeOf(context).width < 600;
     showDialog(
       context: context,
+      useSafeArea: !isSmallScreen,
       builder: (_) => BlocProvider(
         create: (_) => sl<AscUploadCubit>()
           ..init(savedAppConfig: savedConfig, designDisplayType: displayType),
-        child: Dialog(
-          child: AscUploadSheet(
-            localeScreenshots: localeScreenshots,
-            ascAppConfig: savedConfig,
-            onAppConfigChanged: captureProvider?.onAscAppConfigChanged,
-          ),
-        ),
+        child: isSmallScreen
+            ? Dialog.fullscreen(
+                child: AscUploadSheet(
+                  localeScreenshots: localeScreenshots,
+                  ascAppConfig: savedConfig,
+                  onAppConfigChanged: captureProvider?.onAscAppConfigChanged,
+                ),
+              )
+            : Dialog(
+                child: AscUploadSheet(
+                  localeScreenshots: localeScreenshots,
+                  ascAppConfig: savedConfig,
+                  onAppConfigChanged: captureProvider?.onAscAppConfigChanged,
+                ),
+              ),
       ),
     );
   }
@@ -931,18 +975,28 @@ class _MultiScreenshotViewState extends State<_MultiScreenshotView>
     final displayType = context.read<MultiScreenshotCubit>().displayType;
     if (!context.mounted) return;
 
+    final isSmallScreen = MediaQuery.sizeOf(context).width < 600;
     showDialog(
       context: context,
+      useSafeArea: !isSmallScreen,
       builder: (_) => BlocProvider(
         create: (_) => sl<AscUploadCubit>()
           ..init(savedAppConfig: savedConfig, designDisplayType: displayType),
-        child: Dialog(
-          child: AscUploadSheet(
-            localeScreenshots: localeScreenshots,
-            ascAppConfig: savedConfig,
-            onAppConfigChanged: captureProvider.onAscAppConfigChanged,
-          ),
-        ),
+        child: isSmallScreen
+            ? Dialog.fullscreen(
+                child: AscUploadSheet(
+                  localeScreenshots: localeScreenshots,
+                  ascAppConfig: savedConfig,
+                  onAppConfigChanged: captureProvider.onAscAppConfigChanged,
+                ),
+              )
+            : Dialog(
+                child: AscUploadSheet(
+                  localeScreenshots: localeScreenshots,
+                  ascAppConfig: savedConfig,
+                  onAppConfigChanged: captureProvider.onAscAppConfigChanged,
+                ),
+              ),
       ),
     );
   }

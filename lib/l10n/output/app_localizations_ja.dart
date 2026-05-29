@@ -1567,4 +1567,29 @@ class AppLocalizationsJa extends AppLocalizations {
 
   @override
   String get restartRequired => '変更を適用するにはアプリを再起動してください';
+
+  @override
+  String get lineHeight => '行の高さ';
+
+  @override
+  String get letterSpacing => '文字間隔';
+
+  @override
+  String get uploadCachedFolderTitle => 'キャッシュされたスクリーンショットをアップロード';
+
+  @override
+  String get uploadCachedFolderMessage =>
+      '最近レンダリングされたスクリーンショットが見つかりました。これらをアップロードしますか、それとも別のフォルダーを選択しますか？';
+
+  @override
+  String get useCached => 'キャッシュを使用';
+
+  @override
+  String get pickFolder => 'フォルダーを選択';
+
+  @override
+  String get addImages => '画像を追加';
+
+  @override
+  String get resetRotation => 'リセット';
 }

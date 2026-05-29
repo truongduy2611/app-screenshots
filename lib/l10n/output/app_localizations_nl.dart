@@ -1649,4 +1649,29 @@ class AppLocalizationsNl extends AppLocalizations {
   @override
   String get restartRequired =>
       'Start de app opnieuw om wijzigingen toe te passen';
+
+  @override
+  String get lineHeight => 'Regelhoogte';
+
+  @override
+  String get letterSpacing => 'Letterafstand';
+
+  @override
+  String get uploadCachedFolderTitle => 'Gecachte screenshots uploaden';
+
+  @override
+  String get uploadCachedFolderMessage =>
+      'We hebben recent gerenderde screenshots gevonden. Wilt u deze uploaden of een andere map kiezen?';
+
+  @override
+  String get useCached => 'Gebruik cache';
+
+  @override
+  String get pickFolder => 'Kies map';
+
+  @override
+  String get addImages => 'Afbeeldingen toevoegen';
+
+  @override
+  String get resetRotation => 'Resetten';
 }

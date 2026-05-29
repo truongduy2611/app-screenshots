@@ -482,5 +482,13 @@
   "icloudSyncDisabled": "iCloud同期がオフです",
   "restartRequired": "変更を適用するにはアプリを再起動してください",
   "uploadExistingFolderToAsc": "既存のフォルダーをアップロード...",
-  "noImagesFoundInFolder": "選択したフォルダーに有効なスクリーンショット画像が見つかりませんでした"
+  "noImagesFoundInFolder": "選択したフォルダーに有効なスクリーンショット画像が見つかりませんでした",
+  "lineHeight": "行の高さ",
+  "letterSpacing": "文字間隔",
+  "uploadCachedFolderTitle": "キャッシュされたスクリーンショットをアップロード",
+  "uploadCachedFolderMessage": "最近レンダリングされたスクリーンショットが見つかりました。これらをアップロードしますか、それとも別のフォルダーを選択しますか？",
+  "useCached": "キャッシュを使用",
+  "pickFolder": "フォルダーを選択",
+  "addImages": "画像を追加",
+  "resetRotation": "リセット"
 }

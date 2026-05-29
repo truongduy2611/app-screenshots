@@ -101,6 +101,8 @@ class TextOverlay {
         'color': style.color?.toARGB32(),
         'fontWeight': style.fontWeight?.value,
         'fontStyle': style.fontStyle?.index,
+        'height': style.height,
+        'letterSpacing': style.letterSpacing,
       },
       'position': {'dx': position.dx, 'dy': position.dy},
       'googleFont': googleFont,
@@ -140,6 +142,8 @@ class TextOverlay {
         fontStyle: json['style']['fontStyle'] != null
             ? FontStyle.values[json['style']['fontStyle']]
             : null,
+        height: (json['style']['height'] as num?)?.toDouble(),
+        letterSpacing: (json['style']['letterSpacing'] as num?)?.toDouble(),
       ),
       position: Offset(
         (json['position']?['dx'] as num?)?.toDouble() ?? 0,

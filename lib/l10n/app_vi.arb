@@ -482,5 +482,13 @@
   "icloudSync": "Đồng bộ iCloud",
   "icloudSyncSubtitle": "Đồng bộ thiết kế giữa các thiết bị qua iCloud",
   "icloudSyncDisabled": "Đồng bộ iCloud đã tắt",
-  "restartRequired": "Khởi động lại ứng dụng để áp dụng thay đổi"
+  "restartRequired": "Khởi động lại ứng dụng để áp dụng thay đổi",
+  "lineHeight": "Chiều cao dòng",
+  "letterSpacing": "Khoảng cách chữ",
+  "uploadCachedFolderTitle": "Tải lên ảnh đã kết xuất",
+  "uploadCachedFolderMessage": "Chúng tôi tìm thấy các ảnh vừa được kết xuất gần đây. Bạn muốn sử dụng chúng hay chọn thư mục khác?",
+  "useCached": "Dùng ảnh đã lưu",
+  "pickFolder": "Chọn thư mục",
+  "addImages": "Thêm ảnh",
+  "resetRotation": "Đặt lại"
 }

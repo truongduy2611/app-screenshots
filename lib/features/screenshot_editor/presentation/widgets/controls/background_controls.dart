@@ -1,4 +1,5 @@
 import 'dart:io';
+import 'dart:math' as math;
 import 'package:app_screenshots/core/extensions/context_extensions.dart';
 import 'package:app_screenshots/core/widgets/app_chip.dart';
 import 'package:app_screenshots/features/screenshot_editor/utils/screenshot_utils.dart';
@@ -121,7 +122,7 @@ class BackgroundControls extends StatelessWidget {
                   label: context.l10n.padding,
                   value: state.design.padding,
                   min: 0,
-                  max: 400,
+                  max: 4000,
                   suffix: 'px',
                   onChanged: cubit.updatePadding,
                 ),
@@ -153,7 +154,7 @@ class BackgroundControls extends StatelessWidget {
                       Symbols.add_photo_alternate_rounded,
                       size: 18,
                     ),
-                    label: Text(context.l10n.addImage),
+                    label: Text(context.l10n.addImages),
                     style: OutlinedButton.styleFrom(
                       padding: const EdgeInsets.symmetric(vertical: 10),
                       shape: RoundedRectangleBorder(
@@ -371,14 +372,43 @@ class BackgroundControls extends StatelessWidget {
       // ── Scale ──
       LabeledSlider(
         label: 'Scale',
-        value: overlay.scale * 100,
-        min: 10,
-        max: 500,
-        suffix: '%',
+        value: overlay.scale,
+        min: 0.1,
+        max: 50.0,
+        valueLabel: '${overlay.scale.toStringAsFixed(1)}×',
         onChanged: (v) => cubit.updateImageOverlay(
           overlay.id,
-          overlay.copyWith(scale: v / 100),
+          overlay.copyWith(scale: v),
         ),
+      ),
+      const SizedBox(height: 4),
+      // ── Rotation ──
+      Row(
+        children: [
+          Expanded(
+            child: LabeledSlider(
+              label: context.l10n.rotation,
+              value: overlay.rotation * 180 / math.pi,
+              min: -180,
+              max: 180,
+              valueLabel: '${(overlay.rotation * 180 / math.pi).round()}°',
+              onChanged: (v) => cubit.updateImageOverlay(
+                overlay.id,
+                overlay.copyWith(rotation: v * math.pi / 180),
+              ),
+            ),
+          ),
+          if (overlay.rotation != 0.0)
+            IconButton(
+              tooltip: context.l10n.resetRotation,
+              icon: const Icon(Symbols.restart_alt_rounded, size: 18),
+              onPressed: () => cubit.updateImageOverlay(
+                overlay.id,
+                overlay.copyWith(rotation: 0.0),
+              ),
+              visualDensity: VisualDensity.compact,
+            ),
+        ],
       ),
       const SizedBox(height: 4),
       // ── Corner Radius ──
@@ -391,6 +421,34 @@ class BackgroundControls extends StatelessWidget {
         onChanged: (v) => cubit.updateImageOverlay(
           overlay.id,
           overlay.copyWith(cornerRadius: v),
+        ),
+      ),
+      const SizedBox(height: 8),
+      // ── Fit ──
+      Text(
+        'Image Fit',
+        style: theme.textTheme.bodySmall?.copyWith(
+          color: theme.colorScheme.onSurfaceVariant,
+        ),
+      ),
+      const SizedBox(height: 6),
+      AppSegmentedControl<BoxFit>(
+        value: overlay.fit,
+        items: const [
+          AppSegment(
+            value: BoxFit.cover,
+            label: 'Fill',
+            icon: Symbols.crop_rounded,
+          ),
+          AppSegment(
+            value: BoxFit.contain,
+            label: 'Fit',
+            icon: Symbols.fit_screen_rounded,
+          ),
+        ],
+        onChanged: (v) => cubit.updateImageOverlay(
+          overlay.id,
+          overlay.copyWith(fit: v),
         ),
       ),
       const SizedBox(height: 8),
@@ -637,7 +695,7 @@ class BackgroundControls extends StatelessWidget {
         label: 'Size',
         value: overlay.size,
         min: 20,
-        max: 300,
+        max: 3000,
         suffix: 'px',
         onChanged: (v) =>
             cubit.updateIconOverlay(overlay.id, overlay.copyWith(size: v)),
@@ -968,8 +1026,8 @@ class BackgroundControls extends StatelessWidget {
       Slider(
         value: overlay.zoomLevel,
         min: 1.5,
-        max: 5.0,
-        divisions: 14,
+        max: 50.0,
+        divisions: 194,
         label: '${overlay.zoomLevel.toStringAsFixed(1)}×',
         onChanged: (v) => cubit.updateMagnifierOverlay(
           overlay.id,
@@ -1122,12 +1180,23 @@ class BackgroundControls extends StatelessWidget {
   }
 
   Future<void> _pickImageOverlay(BuildContext context) async {
-    final result = await FilePicker.platform.pickFiles(type: FileType.image);
-    if (result != null && result.files.single.path != null) {
-      if (!context.mounted) return;
-      context.read<ScreenshotEditorCubit>().addImageOverlay(
-        File(result.files.single.path!),
-      );
+    final result = await FilePicker.platform.pickFiles(
+      type: FileType.image,
+      allowMultiple: true,
+    );
+    if (result == null || result.files.isEmpty) return;
+    if (!context.mounted) return;
+
+    final cubit = context.read<ScreenshotEditorCubit>();
+    final files = result.files
+        .where((f) => f.path != null)
+        .map((f) => File(f.path!))
+        .toList();
+
+    if (files.length == 1) {
+      cubit.addImageOverlay(files.first);
+    } else {
+      cubit.addMultipleImageOverlays(files);
     }
   }
 

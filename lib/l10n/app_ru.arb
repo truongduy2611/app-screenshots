@@ -482,5 +482,13 @@
   "icloudSyncDisabled": "Синхронизация iCloud отключена",
   "restartRequired": "Перезапустите приложение для применения изменений",
   "uploadExistingFolderToAsc": "Загрузить существующую папку...",
-  "noImagesFoundInFolder": "В выбранной папке не найдено допустимых снимков экрана"
+  "noImagesFoundInFolder": "В выбранной папке не найдено допустимых снимков экрана",
+  "lineHeight": "Высота строки",
+  "letterSpacing": "Межбуквенный интервал",
+  "uploadCachedFolderTitle": "Загрузить кэшированные скриншоты",
+  "uploadCachedFolderMessage": "Мы нашли недавно отрендеренные скриншоты. Вы хотите загрузить их или выбрать другую папку?",
+  "useCached": "Использовать кэш",
+  "pickFolder": "Выбрать папку",
+  "addImages": "Добавить изображения",
+  "resetRotation": "Сбросить"
 }

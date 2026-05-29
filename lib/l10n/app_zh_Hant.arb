@@ -482,5 +482,13 @@
   "icloudSyncDisabled": "iCloud 同步已關閉",
   "restartRequired": "重新啟動應用程式以套用變更",
   "uploadExistingFolderToAsc": "上傳現有資料夾...",
-  "noImagesFoundInFolder": "在選定資料夾中未找到有效的螢幕截圖圖像"
+  "noImagesFoundInFolder": "在選定資料夾中未找到有效的螢幕截圖圖像",
+  "lineHeight": "行高",
+  "letterSpacing": "字間距",
+  "uploadCachedFolderTitle": "上傳快取的截圖",
+  "uploadCachedFolderMessage": "我們發現了最近渲染的截圖。您想上傳它們，還是選擇其他資料夾？",
+  "useCached": "使用快取",
+  "pickFolder": "選擇資料夾",
+  "addImages": "新增圖片",
+  "resetRotation": "重設"
 }

@@ -1565,4 +1565,29 @@ class AppLocalizationsKo extends AppLocalizations {
 
   @override
   String get restartRequired => '변경 사항을 적용하려면 앱을 다시 시작하세요';
+
+  @override
+  String get lineHeight => '줄 높이';
+
+  @override
+  String get letterSpacing => '글자 간격';
+
+  @override
+  String get uploadCachedFolderTitle => '캐시된 스크린샷 업로드';
+
+  @override
+  String get uploadCachedFolderMessage =>
+      '최근에 렌더링된 스크린샷을 찾았습니다. 이를 업로드하시겠습니까, 아니면 다른 폴더를 선택하시겠습니까?';
+
+  @override
+  String get useCached => '캐시 사용';
+
+  @override
+  String get pickFolder => '폴더 선택';
+
+  @override
+  String get addImages => '이미지 추가';
+
+  @override
+  String get resetRotation => '초기화';
 }

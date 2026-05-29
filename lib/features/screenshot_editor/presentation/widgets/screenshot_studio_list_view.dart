@@ -6,7 +6,6 @@ import 'package:app_screenshots/features/screenshot_editor/presentation/pages/mu
 import 'package:app_screenshots/features/screenshot_editor/presentation/pages/screenshot_editor_page.dart';
 import 'package:app_screenshots/features/screenshot_editor/presentation/widgets/design_list_tile.dart';
 import 'package:app_screenshots/features/screenshot_editor/presentation/widgets/folder_list_tile.dart';
-import 'package:app_screenshots/core/widgets/genie_dialog_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -83,19 +82,13 @@ class ScreenshotStudioListView extends StatelessWidget {
         } else {
           page = ScreenshotEditorPage(initialDesign: design);
         }
-        final isLarge = MediaQuery.sizeOf(context).width >= 600;
-        final sourceRect = isLarge ? rectFromContext(context) : null;
-        Navigator.of(context)
-            .push(
-              sourceRect != null
-                  ? geniePageRoute(builder: (_) => page, sourceRect: sourceRect)
-                  : MaterialPageRoute(builder: (_) => page),
-            )
-            .then((_) {
-              if (context.mounted) {
-                context.read<ScreenshotLibraryCubit>().loadDesigns();
-              }
-            });
+        Navigator.of(
+          context,
+        ).push(MaterialPageRoute(builder: (_) => page)).then((_) {
+          if (context.mounted) {
+            context.read<ScreenshotLibraryCubit>().loadDesigns();
+          }
+        });
       },
       onDelete: () => onDesignDelete(design),
       onRename: (newName) {
@@ -236,22 +229,13 @@ class _FolderGroup extends StatelessWidget {
                 } else {
                   page = ScreenshotEditorPage(initialDesign: design);
                 }
-                final isLarge = MediaQuery.sizeOf(context).width >= 600;
-                final sourceRect = isLarge ? rectFromContext(context) : null;
-                Navigator.of(context)
-                    .push(
-                      sourceRect != null
-                          ? geniePageRoute(
-                              builder: (_) => page,
-                              sourceRect: sourceRect,
-                            )
-                          : MaterialPageRoute(builder: (_) => page),
-                    )
-                    .then((_) {
-                      if (context.mounted) {
-                        context.read<ScreenshotLibraryCubit>().loadDesigns();
-                      }
-                    });
+                Navigator.of(
+                  context,
+                ).push(MaterialPageRoute(builder: (_) => page)).then((_) {
+                  if (context.mounted) {
+                    context.read<ScreenshotLibraryCubit>().loadDesigns();
+                  }
+                });
               },
               onDelete: () => onDesignDelete(design),
               onRename: (newName) {

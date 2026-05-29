@@ -2154,5 +2154,31 @@
   "restartRequired": "Restart the app for changes to take effect",
   "@restartRequired": {
     "description": "Message telling user to restart the app after changing iCloud settings"
+  },
+  "lineHeight": "Line Height",
+  "letterSpacing": "Letter Spacing",
+  "uploadCachedFolderTitle": "Upload Cached Screenshots",
+  "uploadCachedFolderMessage": "We found recently rendered screenshots. Would you like to upload them, or pick a different folder?",
+  "useCached": "Use Cached",
+  "pickFolder": "Pick Folder",
+  "@uploadCachedFolderTitle": {
+    "description": "Title for dialog when cached screenshots exist"
+  },
+  "@uploadCachedFolderMessage": {
+    "description": "Message for dialog when cached screenshots exist"
+  },
+  "@useCached": {
+    "description": "Button to use cached screenshots"
+  },
+  "@pickFolder": {
+    "description": "Button to pick a different folder"
+  },
+  "addImages": "Add Images",
+  "resetRotation": "Reset",
+  "@addImages": {
+    "description": "Button label for multi-image picker"
+  },
+  "@resetRotation": {
+    "description": "Tooltip for reset rotation button on image overlay"
   }
 }

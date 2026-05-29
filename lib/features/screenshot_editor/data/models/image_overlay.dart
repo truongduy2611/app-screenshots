@@ -14,6 +14,9 @@ class ImageOverlay {
   final int zIndex;
   final double opacity;
   final double cornerRadius;
+
+  /// How the image is fitted within its [width] × [height] box.
+  final BoxFit fit;
   final bool flipHorizontal;
   final bool flipVertical;
   final Color? shadowColor;
@@ -34,6 +37,7 @@ class ImageOverlay {
     this.zIndex = 0,
     this.opacity = 1.0,
     this.cornerRadius = 0.0,
+    this.fit = BoxFit.cover,
     this.flipHorizontal = false,
     this.flipVertical = false,
     this.shadowColor,
@@ -54,6 +58,7 @@ class ImageOverlay {
     int? zIndex,
     double? opacity,
     double? cornerRadius,
+    BoxFit? fit,
     bool? flipHorizontal,
     bool? flipVertical,
     Color? shadowColor,
@@ -75,6 +80,7 @@ class ImageOverlay {
       zIndex: zIndex ?? this.zIndex,
       opacity: opacity ?? this.opacity,
       cornerRadius: cornerRadius ?? this.cornerRadius,
+      fit: fit ?? this.fit,
       flipHorizontal: flipHorizontal ?? this.flipHorizontal,
       flipVertical: flipVertical ?? this.flipVertical,
       shadowColor: clearShadowColor ? null : (shadowColor ?? this.shadowColor),
@@ -97,6 +103,7 @@ class ImageOverlay {
       'zIndex': zIndex,
       'opacity': opacity,
       'cornerRadius': cornerRadius,
+      'fit': fit.name,
       'flipHorizontal': flipHorizontal,
       'flipVertical': flipVertical,
       'shadowColor': shadowColor?.toARGB32(),
@@ -122,6 +129,13 @@ class ImageOverlay {
       zIndex: json['zIndex'] as int? ?? 0,
       opacity: (json['opacity'] as num?)?.toDouble() ?? 1.0,
       cornerRadius: (json['cornerRadius'] as num?)?.toDouble() ?? 0.0,
+      // Legacy designs without a `fit` key kept the old behaviour where the
+      // fit was implied by the corner radius.
+      fit: json['fit'] != null
+          ? BoxFit.values.byName(json['fit'] as String)
+          : (((json['cornerRadius'] as num?)?.toDouble() ?? 0.0) > 0
+                ? BoxFit.cover
+                : BoxFit.contain),
       flipHorizontal: json['flipHorizontal'] as bool? ?? false,
       flipVertical: json['flipVertical'] as bool? ?? false,
       shadowColor: json['shadowColor'] != null

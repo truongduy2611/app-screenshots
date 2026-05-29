@@ -661,7 +661,7 @@ class DoodleControls extends StatelessWidget {
                     label: context.l10n.iconSizeLabel,
                     value: settings.iconSize,
                     min: 16,
-                    max: 200,
+                    max: 2000,
                     suffix: 'px',
                     onChanged: (val) =>
                         _update(context, settings.copyWith(iconSize: val)),
@@ -671,7 +671,7 @@ class DoodleControls extends StatelessWidget {
                     label: context.l10n.spacingLabel,
                     value: settings.spacing,
                     min: 30,
-                    max: 300,
+                    max: 3000,
                     suffix: 'px',
                     onChanged: (val) =>
                         _update(context, settings.copyWith(spacing: val)),

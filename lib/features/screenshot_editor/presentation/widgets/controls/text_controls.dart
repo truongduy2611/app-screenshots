@@ -80,6 +80,13 @@ class TextControls extends StatelessWidget {
                 (isLocalePreview ? localeOverride?.fontSize : null) ??
                 selectedOverlay?.style.fontSize ??
                 14.0;
+            final effectiveHeight =
+                (isLocalePreview ? localeOverride?.height : null) ??
+                selectedOverlay?.style.height;
+            final effectiveLetterSpacing =
+                (isLocalePreview ? localeOverride?.letterSpacing : null) ??
+                selectedOverlay?.style.letterSpacing ??
+                0.0;
             final effectiveFontWeight =
                 (isLocalePreview ? localeOverride?.fontWeight : null) ??
                 selectedOverlay?.style.fontWeight;
@@ -654,7 +661,7 @@ class TextControls extends StatelessWidget {
                         label: context.l10n.fontSize,
                         value: effectiveFontSize,
                         min: 10,
-                        max: 250,
+                        max: 1000,
                         suffix: 'px',
                         onChanged: (val) {
                           if (isLocalePreview) {
@@ -667,6 +674,53 @@ class TextControls extends StatelessWidget {
                               selectedOverlay.copyWith(
                                 style: selectedOverlay.style.copyWith(
                                   fontSize: val,
+                                ),
+                              ),
+                            );
+                          }
+                        },
+                      ),
+                      const SizedBox(height: 4),
+                      LabeledSlider(
+                        label: context.l10n.lineHeight,
+                        value: effectiveHeight ?? 1.2,
+                        min: 0.5,
+                        max: 3.0,
+                        onChanged: (val) {
+                          if (isLocalePreview) {
+                            setOverrideField(
+                              (oo) => oo.copyWith(height: val),
+                            );
+                          } else {
+                            cubit.updateTextOverlay(
+                              selectedOverlay.id,
+                              selectedOverlay.copyWith(
+                                style: selectedOverlay.style.copyWith(
+                                  height: val,
+                                ),
+                              ),
+                            );
+                          }
+                        },
+                      ),
+                      const SizedBox(height: 4),
+                      LabeledSlider(
+                        label: context.l10n.letterSpacing,
+                        value: effectiveLetterSpacing,
+                        min: -5.0,
+                        max: 20.0,
+                        suffix: 'px',
+                        onChanged: (val) {
+                          if (isLocalePreview) {
+                            setOverrideField(
+                              (oo) => oo.copyWith(letterSpacing: val),
+                            );
+                          } else {
+                            cubit.updateTextOverlay(
+                              selectedOverlay.id,
+                              selectedOverlay.copyWith(
+                                style: selectedOverlay.style.copyWith(
+                                  letterSpacing: val,
                                 ),
                               ),
                             );

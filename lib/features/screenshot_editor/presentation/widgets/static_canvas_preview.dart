@@ -303,16 +303,12 @@ class StaticCanvasPreview extends StatelessWidget {
                                         child: overlay.filePath != null
                                             ? Image.file(
                                                 File(overlay.filePath!),
-                                                fit: overlay.cornerRadius > 0
-                                                    ? BoxFit.cover
-                                                    : BoxFit.contain,
+                                                fit: overlay.fit,
                                               )
                                             : overlay.bytes != null
                                             ? Image.memory(
                                                 overlay.bytes!,
-                                                fit: overlay.cornerRadius > 0
-                                                    ? BoxFit.cover
-                                                    : BoxFit.contain,
+                                                fit: overlay.fit,
                                               )
                                             : const SizedBox.shrink(),
                                       ),

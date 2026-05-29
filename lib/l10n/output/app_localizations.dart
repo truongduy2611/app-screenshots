@@ -3022,6 +3022,54 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Restart the app for changes to take effect'**
   String get restartRequired;
+
+  /// No description provided for @lineHeight.
+  ///
+  /// In en, this message translates to:
+  /// **'Line Height'**
+  String get lineHeight;
+
+  /// No description provided for @letterSpacing.
+  ///
+  /// In en, this message translates to:
+  /// **'Letter Spacing'**
+  String get letterSpacing;
+
+  /// Title for dialog when cached screenshots exist
+  ///
+  /// In en, this message translates to:
+  /// **'Upload Cached Screenshots'**
+  String get uploadCachedFolderTitle;
+
+  /// Message for dialog when cached screenshots exist
+  ///
+  /// In en, this message translates to:
+  /// **'We found recently rendered screenshots. Would you like to upload them, or pick a different folder?'**
+  String get uploadCachedFolderMessage;
+
+  /// Button to use cached screenshots
+  ///
+  /// In en, this message translates to:
+  /// **'Use Cached'**
+  String get useCached;
+
+  /// Button to pick a different folder
+  ///
+  /// In en, this message translates to:
+  /// **'Pick Folder'**
+  String get pickFolder;
+
+  /// Button label for multi-image picker
+  ///
+  /// In en, this message translates to:
+  /// **'Add Images'**
+  String get addImages;
+
+  /// Tooltip for reset rotation button on image overlay
+  ///
+  /// In en, this message translates to:
+  /// **'Reset'**
+  String get resetRotation;
 }
 
 class _AppLocalizationsDelegate

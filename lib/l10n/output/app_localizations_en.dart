@@ -1642,4 +1642,29 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get restartRequired => 'Restart the app for changes to take effect';
+
+  @override
+  String get lineHeight => 'Line Height';
+
+  @override
+  String get letterSpacing => 'Letter Spacing';
+
+  @override
+  String get uploadCachedFolderTitle => 'Upload Cached Screenshots';
+
+  @override
+  String get uploadCachedFolderMessage =>
+      'We found recently rendered screenshots. Would you like to upload them, or pick a different folder?';
+
+  @override
+  String get useCached => 'Use Cached';
+
+  @override
+  String get pickFolder => 'Pick Folder';
+
+  @override
+  String get addImages => 'Add Images';
+
+  @override
+  String get resetRotation => 'Reset';
 }
