@@ -527,5 +527,6 @@
   "presetCenter": "กลาง",
   "presetReset": "รีเซ็ต",
   "applyToAllLocales": "ใช้กับทุกภาษา",
-  "applyToAllOverlaysScreenshotsLocales": "ใช้กับข้อความ ภาพหน้าจอ และทุกภาษาทั้งหมด"
+  "applyToAllOverlaysScreenshotsLocales": "ใช้กับข้อความ ภาพหน้าจอ และทุกภาษาทั้งหมด",
+  "applyFrameToAllScreenshots": "ใช้การตั้งค่าเฟรมกับภาพหน้าจอทั้งหมด"
 }

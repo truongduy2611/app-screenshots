@@ -1794,4 +1794,8 @@ class AppLocalizationsTr extends AppLocalizations {
   @override
   String get applyToAllOverlaysScreenshotsLocales =>
       'Tüm metinlere, ekran görüntülerine ve dillere uygula';
+
+  @override
+  String get applyFrameToAllScreenshots =>
+      'Çerçeve ayarlarını tüm ekran görüntülerine uygula';
 }

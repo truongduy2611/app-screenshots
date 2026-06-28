@@ -527,5 +527,6 @@
   "presetCenter": "Centro",
   "presetReset": "Reset",
   "applyToAllLocales": "Applica a tutte le lingue",
-  "applyToAllOverlaysScreenshotsLocales": "Applica a tutti i testi, screenshot e lingue"
+  "applyToAllOverlaysScreenshotsLocales": "Applica a tutti i testi, screenshot e lingue",
+  "applyFrameToAllScreenshots": "Applica le impostazioni del frame a tutti gli screenshot"
 }

@@ -3292,6 +3292,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Apply to all text overlays, screenshots & locales'**
   String get applyToAllOverlaysScreenshotsLocales;
+
+  /// No description provided for @applyFrameToAllScreenshots.
+  ///
+  /// In en, this message translates to:
+  /// **'Apply frame settings to all screenshots'**
+  String get applyFrameToAllScreenshots;
 }
 
 class _AppLocalizationsDelegate

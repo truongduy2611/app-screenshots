@@ -1785,4 +1785,8 @@ class AppLocalizationsAr extends AppLocalizations {
   @override
   String get applyToAllOverlaysScreenshotsLocales =>
       'تطبيق على جميع النصوص، لقطات الشاشة واللغات';
+
+  @override
+  String get applyFrameToAllScreenshots =>
+      'تطبيق إعدادات الإطار على جميع لقطات الشاشة';
 }

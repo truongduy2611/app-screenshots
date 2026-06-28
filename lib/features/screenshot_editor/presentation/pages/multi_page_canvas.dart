@@ -223,6 +223,18 @@ class _MultiCanvasAreaState extends State<_MultiCanvasArea> {
                                                   );
                                             }
                                           : null,
+                                      onApplyFrameToAll: () {
+                                        widget.onSyncBack();
+                                        context
+                                            .read<MultiScreenshotCubit>()
+                                            .applyFrameSettingsToAll(i);
+                                        WidgetsBinding.instance
+                                            .addPostFrameCallback((_) {
+                                          if (context.mounted) {
+                                            widget.onSyncActiveDesign();
+                                          }
+                                        });
+                                      },
                                     ),
                                   ],
                                   // ── Add-new placeholder ──

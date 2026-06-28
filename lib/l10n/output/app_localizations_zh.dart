@@ -1699,6 +1699,9 @@ class AppLocalizationsZh extends AppLocalizations {
 
   @override
   String get applyToAllOverlaysScreenshotsLocales => '应用到所有文本、屏幕截图和语言';
+
+  @override
+  String get applyFrameToAllScreenshots => '将外框设置应用到所有截图';
 }
 
 /// The translations for Chinese, using the Han script (`zh_Hant`).
@@ -3396,4 +3399,7 @@ class AppLocalizationsZhHant extends AppLocalizationsZh {
 
   @override
   String get applyToAllOverlaysScreenshotsLocales => '應用到所有文本、螢幕截圖和語言';
+
+  @override
+  String get applyFrameToAllScreenshots => '將外框設定套用到所有螢幕截圖';
 }

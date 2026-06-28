@@ -527,5 +527,6 @@
   "presetCenter": "居中",
   "presetReset": "重置",
   "applyToAllLocales": "应用到所有语言",
-  "applyToAllOverlaysScreenshotsLocales": "应用到所有文本、屏幕截图和语言"
+  "applyToAllOverlaysScreenshotsLocales": "应用到所有文本、屏幕截图和语言",
+  "applyFrameToAllScreenshots": "将外框设置应用到所有截图"
 }

@@ -527,5 +527,6 @@
   "presetCenter": "Giữa",
   "presetReset": "Đặt lại",
   "applyToAllLocales": "Áp dụng cho tất cả ngôn ngữ",
-  "applyToAllOverlaysScreenshotsLocales": "Áp dụng cho tất cả chữ, ảnh chụp & ngôn ngữ"
+  "applyToAllOverlaysScreenshotsLocales": "Áp dụng cho tất cả chữ, ảnh chụp & ngôn ngữ",
+  "applyFrameToAllScreenshots": "Áp dụng cài đặt khung cho tất cả ảnh chụp màn hình"
 }

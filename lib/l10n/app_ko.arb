@@ -527,5 +527,6 @@
   "presetCenter": "중앙",
   "presetReset": "재설정",
   "applyToAllLocales": "모든 언어에 적용",
-  "applyToAllOverlaysScreenshotsLocales": "모든 텍스트, 스크린샷 및 언어에 적용"
+  "applyToAllOverlaysScreenshotsLocales": "모든 텍스트, 스크린샷 및 언어에 적용",
+  "applyFrameToAllScreenshots": "모든 스ครีน샷에 프레임 설정 적용"
 }

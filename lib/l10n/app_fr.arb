@@ -527,5 +527,6 @@
   "presetCenter": "Centre",
   "presetReset": "Réinit.",
   "applyToAllLocales": "Appliquer à toutes les langues",
-  "applyToAllOverlaysScreenshotsLocales": "Appliquer à toutes les superpositions, captures & langues"
+  "applyToAllOverlaysScreenshotsLocales": "Appliquer à toutes les superpositions, captures & langues",
+  "applyFrameToAllScreenshots": "Appliquer les paramètres de cadre à toutes les captures d'écran"
 }

@@ -527,5 +527,6 @@
   "presetCenter": "Orta",
   "presetReset": "Sıfırla",
   "applyToAllLocales": "Tüm dillere uygula",
-  "applyToAllOverlaysScreenshotsLocales": "Tüm metinlere, ekran görüntülerine ve dillere uygula"
+  "applyToAllOverlaysScreenshotsLocales": "Tüm metinlere, ekran görüntülerine ve dillere uygula",
+  "applyFrameToAllScreenshots": "Çerçeve ayarlarını tüm ekran görüntülerine uygula"
 }

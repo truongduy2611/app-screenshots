@@ -1798,4 +1798,8 @@ class AppLocalizationsRu extends AppLocalizations {
   @override
   String get applyToAllOverlaysScreenshotsLocales =>
       'Применить ко всем текстам, скриншотам и языкам';
+
+  @override
+  String get applyFrameToAllScreenshots =>
+      'Применить настройки кадра ко всем скриншотам';
 }

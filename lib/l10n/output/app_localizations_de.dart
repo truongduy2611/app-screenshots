@@ -1804,4 +1804,8 @@ class AppLocalizationsDe extends AppLocalizations {
   @override
   String get applyToAllOverlaysScreenshotsLocales =>
       'Auf alle Texte, Screenshots & Sprachen anwenden';
+
+  @override
+  String get applyFrameToAllScreenshots =>
+      'Rahmeneinstellungen auf alle Screenshots anwenden';
 }

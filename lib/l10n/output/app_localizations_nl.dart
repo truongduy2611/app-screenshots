@@ -1799,4 +1799,8 @@ class AppLocalizationsNl extends AppLocalizations {
   @override
   String get applyToAllOverlaysScreenshotsLocales =>
       'Toepassen op alle teksten, screenshots & talen';
+
+  @override
+  String get applyFrameToAllScreenshots =>
+      'Kaderinstellingen toepassen op alle schermafbeeldingen';
 }

@@ -1800,4 +1800,8 @@ class AppLocalizationsEs extends AppLocalizations {
   @override
   String get applyToAllOverlaysScreenshotsLocales =>
       'Aplicar a todas las superposiciones, capturas e idiomas';
+
+  @override
+  String get applyFrameToAllScreenshots =>
+      'Aplicar la configuración de marco a todas las capturas de pantalla';
 }

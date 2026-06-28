@@ -1737,4 +1737,8 @@ class AppLocalizationsTh extends AppLocalizations {
   @override
   String get applyToAllOverlaysScreenshotsLocales =>
       'ใช้กับข้อความ ภาพหน้าจอ และทุกภาษาทั้งหมด';
+
+  @override
+  String get applyFrameToAllScreenshots =>
+      'ใช้การตั้งค่าเฟรมกับภาพหน้าจอทั้งหมด';
 }

@@ -1773,4 +1773,8 @@ class AppLocalizationsVi extends AppLocalizations {
   @override
   String get applyToAllOverlaysScreenshotsLocales =>
       'Áp dụng cho tất cả chữ, ảnh chụp & ngôn ngữ';
+
+  @override
+  String get applyFrameToAllScreenshots =>
+      'Áp dụng cài đặt khung cho tất cả ảnh chụp màn hình';
 }

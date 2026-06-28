@@ -1713,4 +1713,7 @@ class AppLocalizationsJa extends AppLocalizations {
 
   @override
   String get applyToAllOverlaysScreenshotsLocales => 'すべてのテキスト、スクリーンショット、言語に適用';
+
+  @override
+  String get applyFrameToAllScreenshots => 'フレーム設定をすべてのスクリーンショットに適用する';
 }

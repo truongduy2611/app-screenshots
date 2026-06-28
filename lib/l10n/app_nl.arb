@@ -527,5 +527,6 @@
   "presetCenter": "Midden",
   "presetReset": "Reset",
   "applyToAllLocales": "Toepassen op alle talen",
-  "applyToAllOverlaysScreenshotsLocales": "Toepassen op alle teksten, screenshots & talen"
+  "applyToAllOverlaysScreenshotsLocales": "Toepassen op alle teksten, screenshots & talen",
+  "applyFrameToAllScreenshots": "Kaderinstellingen toepassen op alle schermafbeeldingen"
 }

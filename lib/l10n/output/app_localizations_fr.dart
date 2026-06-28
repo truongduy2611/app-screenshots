@@ -1810,4 +1810,8 @@ class AppLocalizationsFr extends AppLocalizations {
   @override
   String get applyToAllOverlaysScreenshotsLocales =>
       'Appliquer à toutes les superpositions, captures & langues';
+
+  @override
+  String get applyFrameToAllScreenshots =>
+      'Appliquer les paramètres de cadre à toutes les captures d\'écran';
 }

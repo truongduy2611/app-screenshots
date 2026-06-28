@@ -527,5 +527,6 @@
   "presetCenter": "وسط",
   "presetReset": "إعادة",
   "applyToAllLocales": "تطبيق على جميع اللغات",
-  "applyToAllOverlaysScreenshotsLocales": "تطبيق على جميع النصوص، لقطات الشاشة واللغات"
+  "applyToAllOverlaysScreenshotsLocales": "تطبيق على جميع النصوص، لقطات الشاشة واللغات",
+  "applyFrameToAllScreenshots": "تطبيق إعدادات الإطار على جميع لقطات الشاشة"
 }

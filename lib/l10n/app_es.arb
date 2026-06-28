@@ -527,5 +527,6 @@
   "presetCenter": "Centro",
   "presetReset": "Restab.",
   "applyToAllLocales": "Aplicar a todos los idiomas",
-  "applyToAllOverlaysScreenshotsLocales": "Aplicar a todas las superposiciones, capturas e idiomas"
+  "applyToAllOverlaysScreenshotsLocales": "Aplicar a todas las superposiciones, capturas e idiomas",
+  "applyFrameToAllScreenshots": "Aplicar la configuración de marco a todas las capturas de pantalla"
 }

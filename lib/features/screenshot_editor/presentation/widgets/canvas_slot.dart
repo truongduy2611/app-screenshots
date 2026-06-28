@@ -34,6 +34,7 @@ class CanvasSlot extends StatefulWidget {
     this.hasLocaleImage = false,
     this.onReplaceLocaleImage,
     this.onRevertLocaleImage,
+    this.onApplyFrameToAll,
   });
 
   final int index;
@@ -47,6 +48,7 @@ class CanvasSlot extends StatefulWidget {
   final VoidCallback? onReplaceImage;
   final VoidCallback? onMoveLeft;
   final VoidCallback? onMoveRight;
+  final VoidCallback? onApplyFrameToAll;
 
   /// The non-source locale currently previewed (uppercased label is shown in
   /// the context menu), or `null` when viewing the source locale.
@@ -245,6 +247,12 @@ class _CanvasSlotState extends State<CanvasSlot> {
                 title: context.l10n.duplicate,
                 icon: Symbols.content_copy_rounded,
               ),
+            if (widget.onApplyFrameToAll != null)
+              AppPopupMenuItem(
+                value: 'applyFrameToAll',
+                title: context.l10n.applyFrameToAllScreenshots,
+                icon: Symbols.photo_frame_rounded,
+              ),
             if (widget.onMoveLeft != null)
               AppPopupMenuItem(
                 value: 'moveLeft',
@@ -271,6 +279,7 @@ class _CanvasSlotState extends State<CanvasSlot> {
           if (value == 'replaceLocale') widget.onReplaceLocaleImage?.call();
           if (value == 'revertLocale') widget.onRevertLocaleImage?.call();
           if (value == 'duplicate') widget.onDuplicate?.call();
+          if (value == 'applyFrameToAll') widget.onApplyFrameToAll?.call();
           if (value == 'moveLeft') widget.onMoveLeft?.call();
           if (value == 'moveRight') widget.onMoveRight?.call();
           if (value == 'delete') widget.onDelete?.call();

@@ -1710,4 +1710,7 @@ class AppLocalizationsKo extends AppLocalizations {
 
   @override
   String get applyToAllOverlaysScreenshotsLocales => '모든 텍스트, 스크린샷 및 언어에 적용';
+
+  @override
+  String get applyFrameToAllScreenshots => '모든 스ครีน샷에 프레임 설정 적용';
 }

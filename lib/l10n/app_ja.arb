@@ -527,5 +527,6 @@
   "presetCenter": "中央",
   "presetReset": "リセット",
   "applyToAllLocales": "すべての言語に適用",
-  "applyToAllOverlaysScreenshotsLocales": "すべてのテキスト、スクリーンショット、言語に適用"
+  "applyToAllOverlaysScreenshotsLocales": "すべてのテキスト、スクリーンショット、言語に適用",
+  "applyFrameToAllScreenshots": "フレーム設定をすべてのスクリーンショットに適用する"
 }

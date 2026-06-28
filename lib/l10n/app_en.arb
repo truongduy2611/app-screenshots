@@ -2344,5 +2344,6 @@
   "applyToAllOverlaysScreenshotsLocales": "Apply to all text overlays, screenshots & locales",
   "@applyToAllOverlaysScreenshotsLocales": {
     "description": "Label for the switch to apply text alignment presets to all text overlays, screenshots and locales"
-  }
+  },
+  "applyFrameToAllScreenshots": "Apply frame settings to all screenshots"
 }

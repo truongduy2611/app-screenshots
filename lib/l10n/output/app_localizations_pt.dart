@@ -1804,4 +1804,8 @@ class AppLocalizationsPt extends AppLocalizations {
   @override
   String get applyToAllOverlaysScreenshotsLocales =>
       'Aplicar a todas as sobreposições, capturas e idiomas';
+
+  @override
+  String get applyFrameToAllScreenshots =>
+      'Aplicar configurações de quadro a todas as capturas de tela';
 }
