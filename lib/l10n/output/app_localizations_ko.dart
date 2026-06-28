@@ -329,6 +329,17 @@ class AppLocalizationsKo extends AppLocalizations {
   String get replaceImage => '이미지 교체';
 
   @override
+  String replaceImageForLocale(String locale) {
+    return '$locale 이미지 교체';
+  }
+
+  @override
+  String get revertToSourceImage => '원본 이미지로 되돌리기';
+
+  @override
+  String get alternativeScreenshots => '대체 스크린샷';
+
+  @override
   String get savedToLibrary => '라이브러리에 저장됨';
 
   @override

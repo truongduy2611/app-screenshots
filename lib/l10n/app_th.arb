@@ -490,5 +490,8 @@
   "useCached": "ใช้แคช",
   "pickFolder": "เลือกโฟลเดอร์",
   "addImages": "เพิ่มรูปภาพ",
-  "resetRotation": "รีเซ็ต"
+  "resetRotation": "รีเซ็ต",
+  "replaceImageForLocale": "แทนที่รูปภาพสำหรับ {locale}",
+  "revertToSourceImage": "ย้อนกลับเป็นรูปภาพต้นฉบับ",
+  "alternativeScreenshots": "ภาพหน้าจอทางเลือก"
 }

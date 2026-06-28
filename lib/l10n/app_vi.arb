@@ -490,5 +490,8 @@
   "useCached": "Dùng ảnh đã lưu",
   "pickFolder": "Chọn thư mục",
   "addImages": "Thêm ảnh",
-  "resetRotation": "Đặt lại"
+  "resetRotation": "Đặt lại",
+  "replaceImageForLocale": "Thay thế hình ảnh cho {locale}",
+  "revertToSourceImage": "Quay lại hình ảnh gốc",
+  "alternativeScreenshots": "Ảnh chụp màn hình thay thế"
 }

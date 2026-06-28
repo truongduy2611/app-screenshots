@@ -429,6 +429,24 @@
   "@replaceImage": {
     "description": "Action to replace an image"
   },
+  "replaceImageForLocale": "Replace Image for {locale}",
+  "@replaceImageForLocale": {
+    "description": "Action to replace the screenshot image for a specific locale",
+    "placeholders": {
+      "locale": {
+        "type": "String",
+        "example": "DE"
+      }
+    }
+  },
+  "revertToSourceImage": "Revert to Source Image",
+  "@revertToSourceImage": {
+    "description": "Action to remove a locale-specific image and fall back to the source image"
+  },
+  "alternativeScreenshots": "Alternative Screenshots",
+  "@alternativeScreenshots": {
+    "description": "Label for the per-locale alternative screenshot images section"
+  },
   "savedToLibrary": "Saved to library",
   "@savedToLibrary": {
     "description": "Snackbar message after saving a design to the library"

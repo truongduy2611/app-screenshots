@@ -490,5 +490,8 @@
   "useCached": "Gebruik cache",
   "pickFolder": "Kies map",
   "addImages": "Afbeeldingen toevoegen",
-  "resetRotation": "Resetten"
+  "resetRotation": "Resetten",
+  "replaceImageForLocale": "Afbeelding vervangen voor {locale}",
+  "revertToSourceImage": "Terugzetten naar bronafbeelding",
+  "alternativeScreenshots": "Alternatieve screenshots"
 }

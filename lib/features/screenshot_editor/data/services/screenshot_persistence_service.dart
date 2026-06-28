@@ -65,6 +65,68 @@ class ScreenshotPersistenceService {
     return _toAbsolute(dirPath, relativePath);
   }
 
+  /// Copies each per-locale image into the designs dir and returns a bundle
+  /// whose `localeImages` paths are relative basenames (for portable JSON).
+  /// Files already stored relative or already inside the designs dir are left
+  /// in place; missing source files are dropped.
+  Future<TranslationBundle?> _persistLocaleImages(
+    String dirPath,
+    String id,
+    TranslationBundle? bundle,
+  ) async {
+    if (bundle == null || bundle.localeImages.isEmpty) return bundle;
+    final updated = <String, Map<String, String>>{};
+    for (final localeEntry in bundle.localeImages.entries) {
+      final locale = localeEntry.key;
+      final slotMap = <String, String>{};
+      for (final slotEntry in localeEntry.value.entries) {
+        final slotKey = slotEntry.key;
+        final srcPath = slotEntry.value;
+
+        // Already relative → keep as-is.
+        if (!p.isAbsolute(srcPath)) {
+          slotMap[slotKey] = srcPath;
+          continue;
+        }
+        final ext = srcPath.split('.').last;
+        final dest = File(
+          '$dirPath/${id}_slot${slotKey}_${locale}_source.$ext',
+        );
+        // Already stored under this design's own filename → just relativize.
+        if (p.equals(srcPath, dest.path)) {
+          slotMap[slotKey] = p.basename(dest.path);
+          continue;
+        }
+        // Otherwise copy into this design's dir (handles picked temp files and
+        // duplicated projects that still reference another design's files).
+        final src = File(srcPath);
+        if (await src.exists()) {
+          await src.copy(dest.path);
+          slotMap[slotKey] = p.basename(dest.path);
+        }
+        // else: missing source → drop this entry.
+      }
+      if (slotMap.isNotEmpty) updated[locale] = slotMap;
+    }
+    return bundle.copyWith(localeImages: updated);
+  }
+
+  /// Returns a bundle whose `localeImages` paths are resolved to absolute
+  /// paths within the designs dir (for runtime use after load/save).
+  static TranslationBundle? _bundleLocaleImagesToAbsolute(
+    String dirPath,
+    TranslationBundle? bundle,
+  ) {
+    if (bundle == null || bundle.localeImages.isEmpty) return bundle;
+    final updated = bundle.localeImages.map(
+      (locale, slots) => MapEntry(
+        locale,
+        slots.map((slot, path) => MapEntry(slot, _toAbsolute(dirPath, path))),
+      ),
+    );
+    return bundle.copyWith(localeImages: updated);
+  }
+
   Future<SavedDesign> saveDesign({
     required ScreenshotDesign design,
     required Uint8List thumbnailBytes,
@@ -158,6 +220,13 @@ class ScreenshotPersistenceService {
       }
     }
 
+    // Copy per-locale images into the designs dir; JSON stores relative paths.
+    final relativeBundle = await _persistLocaleImages(
+      dir.path,
+      id,
+      translationBundle,
+    );
+
     // Store relative filenames in JSON for portability.
     final savedDesign = SavedDesign(
       id: id,
@@ -169,7 +238,7 @@ class ScreenshotPersistenceService {
       design: design,
       multiDesigns: multiDesigns,
       imagePaths: savedImagePaths?.map(_toRelative).toList(),
-      translationBundle: translationBundle,
+      translationBundle: relativeBundle,
       ascAppConfig: ascAppConfig,
     );
 
@@ -187,7 +256,7 @@ class ScreenshotPersistenceService {
       design: design,
       multiDesigns: multiDesigns,
       imagePaths: savedImagePaths,
-      translationBundle: translationBundle,
+      translationBundle: _bundleLocaleImagesToAbsolute(dir.path, relativeBundle),
       ascAppConfig: ascAppConfig,
     );
   }
@@ -211,6 +280,10 @@ class ScreenshotPersistenceService {
         imagePaths: design.imagePaths
             ?.map((p) => _toAbsoluteNullable(dirPath, p))
             .toList(),
+        translationBundle: _bundleLocaleImagesToAbsolute(
+          dirPath,
+          design.translationBundle,
+        ),
       );
     } catch (e, st) {
       AppLogger.error(
@@ -263,6 +336,10 @@ class ScreenshotPersistenceService {
             imagePaths: design.imagePaths
                 ?.map((path) => _toAbsoluteNullable(dirPath, path))
                 .toList(),
+            translationBundle: _bundleLocaleImagesToAbsolute(
+              dirPath,
+              design.translationBundle,
+            ),
           ),
         );
       } catch (e, st) {

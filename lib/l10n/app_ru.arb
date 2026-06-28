@@ -490,5 +490,8 @@
   "useCached": "Использовать кэш",
   "pickFolder": "Выбрать папку",
   "addImages": "Добавить изображения",
-  "resetRotation": "Сбросить"
+  "resetRotation": "Сбросить",
+  "replaceImageForLocale": "Заменить изображение для {locale}",
+  "revertToSourceImage": "Вернуть исходное изображение",
+  "alternativeScreenshots": "Альтернативные скриншоты"
 }

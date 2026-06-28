@@ -490,5 +490,8 @@
   "useCached": "استخدام المخبأ",
   "pickFolder": "اختيار مجلد",
   "addImages": "إضافة صور",
-  "resetRotation": "إعادة تعيين"
+  "resetRotation": "إعادة تعيين",
+  "replaceImageForLocale": "استبدال الصورة لـ {locale}",
+  "revertToSourceImage": "الرجوع إلى الصورة المصدر",
+  "alternativeScreenshots": "لقطات شاشة بديلة"
 }

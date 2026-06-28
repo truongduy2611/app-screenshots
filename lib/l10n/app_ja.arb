@@ -490,5 +490,8 @@
   "useCached": "キャッシュを使用",
   "pickFolder": "フォルダーを選択",
   "addImages": "画像を追加",
-  "resetRotation": "リセット"
+  "resetRotation": "リセット",
+  "replaceImageForLocale": "{locale}の画像を差し替え",
+  "revertToSourceImage": "元の画像に戻す",
+  "alternativeScreenshots": "代替スクリーンショット"
 }

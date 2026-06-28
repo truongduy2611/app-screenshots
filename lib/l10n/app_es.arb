@@ -490,5 +490,8 @@
   "useCached": "Usar caché",
   "pickFolder": "Elegir carpeta",
   "addImages": "Añadir imágenes",
-  "resetRotation": "Restablecer"
+  "resetRotation": "Restablecer",
+  "replaceImageForLocale": "Reemplazar imagen para {locale}",
+  "revertToSourceImage": "Volver a la imagen original",
+  "alternativeScreenshots": "Capturas de pantalla alternativas"
 }

@@ -490,5 +490,8 @@
   "useCached": "Önbelleği Kullan",
   "pickFolder": "Klasör Seç",
   "addImages": "Resim Ekle",
-  "resetRotation": "Sıfırla"
+  "resetRotation": "Sıfırla",
+  "replaceImageForLocale": "{locale} için görseli değiştir",
+  "revertToSourceImage": "Kaynak görsele geri dön",
+  "alternativeScreenshots": "Alternatif ekran görüntüleri"
 }

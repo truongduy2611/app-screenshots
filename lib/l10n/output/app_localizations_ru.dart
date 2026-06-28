@@ -333,6 +333,17 @@ class AppLocalizationsRu extends AppLocalizations {
   String get replaceImage => 'Заменить изображение';
 
   @override
+  String replaceImageForLocale(String locale) {
+    return 'Заменить изображение для $locale';
+  }
+
+  @override
+  String get revertToSourceImage => 'Вернуть исходное изображение';
+
+  @override
+  String get alternativeScreenshots => 'Альтернативные скриншоты';
+
+  @override
   String get savedToLibrary => 'Сохранено в библиотеку';
 
   @override

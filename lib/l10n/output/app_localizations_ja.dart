@@ -329,6 +329,17 @@ class AppLocalizationsJa extends AppLocalizations {
   String get replaceImage => '画像を差し替え';
 
   @override
+  String replaceImageForLocale(String locale) {
+    return '$localeの画像を差し替え';
+  }
+
+  @override
+  String get revertToSourceImage => '元の画像に戻す';
+
+  @override
+  String get alternativeScreenshots => '代替スクリーンショット';
+
+  @override
   String get savedToLibrary => 'ライブラリに保存しました';
 
   @override

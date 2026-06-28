@@ -761,6 +761,24 @@ abstract class AppLocalizations {
   /// **'Replace Image'**
   String get replaceImage;
 
+  /// Action to replace the screenshot image for a specific locale
+  ///
+  /// In en, this message translates to:
+  /// **'Replace Image for {locale}'**
+  String replaceImageForLocale(String locale);
+
+  /// Action to remove a locale-specific image and fall back to the source image
+  ///
+  /// In en, this message translates to:
+  /// **'Revert to Source Image'**
+  String get revertToSourceImage;
+
+  /// Label for the per-locale alternative screenshot images section
+  ///
+  /// In en, this message translates to:
+  /// **'Alternative Screenshots'**
+  String get alternativeScreenshots;
+
   /// Snackbar message after saving a design to the library
   ///
   /// In en, this message translates to:

@@ -331,6 +331,17 @@ class AppLocalizationsVi extends AppLocalizations {
   String get replaceImage => 'Thay thế hình ảnh';
 
   @override
+  String replaceImageForLocale(String locale) {
+    return 'Thay thế hình ảnh cho $locale';
+  }
+
+  @override
+  String get revertToSourceImage => 'Quay lại hình ảnh gốc';
+
+  @override
+  String get alternativeScreenshots => 'Ảnh chụp màn hình thay thế';
+
+  @override
   String get savedToLibrary => 'Đã lưu vào thư viện';
 
   @override

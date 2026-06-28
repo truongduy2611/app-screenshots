@@ -331,6 +331,17 @@ class AppLocalizationsTh extends AppLocalizations {
   String get replaceImage => 'แทนที่รูปภาพ';
 
   @override
+  String replaceImageForLocale(String locale) {
+    return 'แทนที่รูปภาพสำหรับ $locale';
+  }
+
+  @override
+  String get revertToSourceImage => 'ย้อนกลับเป็นรูปภาพต้นฉบับ';
+
+  @override
+  String get alternativeScreenshots => 'ภาพหน้าจอทางเลือก';
+
+  @override
   String get savedToLibrary => 'บันทึกไปยังไลบรารีแล้ว';
 
   @override

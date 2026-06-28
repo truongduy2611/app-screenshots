@@ -32,7 +32,9 @@ void main() {
             ),
           },
         },
-        localeImages: {'ja': '/path/to/ja.png'},
+        localeImages: {
+          'ja': {'0': '/path/to/ja.png'},
+        },
         customPrompt: 'Test context',
       );
 
@@ -44,9 +46,23 @@ void main() {
       expect(restored.translations['ja']!['overlay_1'], 'テスト');
       expect(restored.translations['de']!['overlay_2'], 'Probe');
       expect(restored.overrides['ja']!['overlay_1']!.position?.dx, 1);
-      expect(restored.localeImages['ja'], '/path/to/ja.png');
+      expect(restored.getLocaleImage('ja'), '/path/to/ja.png');
       expect(restored.customPrompt, 'Test context');
       expect(restored, equals(bundle));
+    });
+
+    test('fromJson migrates legacy flat localeImages to slot 0', () {
+      // Old shape stored `locale -> path` (a String). New shape is
+      // `locale -> {slotKey -> path}`.
+      final restored = TranslationBundle.fromJson({
+        'sourceLocale': 'en',
+        'targetLocales': ['ja'],
+        'localeImages': {'ja': '/legacy/ja.png'},
+      });
+
+      expect(restored.getLocaleImage('ja'), '/legacy/ja.png');
+      expect(restored.getLocaleImage('ja', 0), '/legacy/ja.png');
+      expect(restored.localeImages['ja'], {'0': '/legacy/ja.png'});
     });
 
     test('fromJson handles missing fields gracefully', () {
@@ -115,22 +131,26 @@ void main() {
       expect(updated.targetLocales, contains('es'));
     });
 
-    test('setLocaleImage and getLocaleImage work correctly', () {
+    test('setLocaleImage and getLocaleImage work per slot', () {
       const bundle = TranslationBundle();
-      final updated = bundle.setLocaleImage('ko', '/path/to/image.png');
+      final updated = bundle
+          .setLocaleImage('ko', 0, '/path/to/slot0.png')
+          .setLocaleImage('ko', 1, '/path/to/slot1.png');
 
-      expect(updated.getLocaleImage('ko'), '/path/to/image.png');
+      expect(updated.getLocaleImage('ko', 0), '/path/to/slot0.png');
+      expect(updated.getLocaleImage('ko', 1), '/path/to/slot1.png');
+      expect(updated.getLocaleImage('ko', 2), isNull);
       expect(updated.targetLocales, contains('ko'));
     });
 
-    test('removeLocaleImage removes only the image', () {
-      final bundle = const TranslationBundle().setLocaleImage(
-        'ja',
-        '/path.png',
-      );
-      final updated = bundle.removeLocaleImage('ja');
+    test('removeLocaleImage removes only the given slot', () {
+      final bundle = const TranslationBundle()
+          .setLocaleImage('ja', 0, '/slot0.png')
+          .setLocaleImage('ja', 1, '/slot1.png');
+      final updated = bundle.removeLocaleImage('ja', 0);
 
-      expect(updated.getLocaleImage('ja'), isNull);
+      expect(updated.getLocaleImage('ja', 0), isNull);
+      expect(updated.getLocaleImage('ja', 1), '/slot1.png');
       expect(updated.targetLocales, contains('ja')); // Target locale remains
     });
 
@@ -142,7 +162,7 @@ void main() {
             'overlay_1',
             const OverlayOverride(position: Offset(0, 0)),
           )
-          .setLocaleImage('de', '/path.png');
+          .setLocaleImage('de', 0, '/path.png');
 
       expect(bundle.targetLocales, contains('de'));
       expect(bundle.translations, contains('de'));

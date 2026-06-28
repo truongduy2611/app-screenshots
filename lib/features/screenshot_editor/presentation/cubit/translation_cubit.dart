@@ -202,25 +202,25 @@ class TranslationCubit extends Cubit<TranslationState> {
     emit(state.copyWith(bundle: bundle));
   }
 
-  /// Set the screenshot image path for a locale.
-  void setLocaleImage(String locale, String filePath) {
+  /// Set the screenshot image path for a (locale, slot).
+  void setLocaleImage(String locale, int slot, String filePath) {
     var bundle = state.bundle ?? const TranslationBundle();
-    bundle = bundle.setLocaleImage(locale, filePath);
+    bundle = bundle.setLocaleImage(locale, slot, filePath);
     emit(state.copyWith(bundle: bundle));
   }
 
-  /// Remove the screenshot image for a locale.
-  void removeLocaleImage(String locale) {
+  /// Remove the screenshot image for a (locale, slot).
+  void removeLocaleImage(String locale, int slot) {
     if (state.bundle == null) return;
-    emit(state.copyWith(bundle: state.bundle!.removeLocaleImage(locale)));
+    emit(state.copyWith(bundle: state.bundle!.removeLocaleImage(locale, slot)));
   }
 
-  /// Get the locale-specific screenshot image path for the current
-  /// preview locale, or `null` if none is set.
-  String? get currentLocaleImagePath {
+  /// Get the locale-specific screenshot image path for the current preview
+  /// locale and the given design [slot], or `null` if none is set.
+  String? localeImagePathForSlot(int slot) {
     final locale = state.previewLocale;
     if (locale == null || state.bundle == null) return null;
-    return state.bundle!.getLocaleImage(locale);
+    return state.bundle!.getLocaleImage(locale, slot);
   }
 
   /// Apply translations from the manual copy-paste flow.

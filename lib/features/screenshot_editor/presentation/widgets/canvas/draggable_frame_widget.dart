@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:app_screenshots/features/screenshot_editor/presentation/cubit/multi_screenshot_cubit.dart';
 import 'package:app_screenshots/features/screenshot_editor/presentation/cubit/screenshot_editor_cubit.dart';
 import 'package:app_screenshots/features/screenshot_editor/presentation/cubit/translation_cubit.dart';
 import 'package:app_screenshots/features/screenshot_editor/presentation/widgets/canvas/grab_cursor_region.dart';
@@ -36,6 +37,15 @@ class _DraggableFrameWidgetState extends State<DraggableFrameWidget> {
   Offset _dragImagePosition = Offset.zero; // snapped, rendered + committed
 
   ScreenshotEditorCubit get _cubit => context.read<ScreenshotEditorCubit>();
+
+  /// The active design slot index (0 in single-screenshot mode).
+  int get _activeSlot {
+    try {
+      return context.read<MultiScreenshotCubit>().state.activeIndex;
+    } catch (_) {
+      return 0;
+    }
+  }
 
   Future<void> _pickImageForCanvas() async {
     final result = await FilePicker.platform.pickFiles(type: FileType.image);
@@ -179,7 +189,7 @@ class _DraggableFrameWidgetState extends State<DraggableFrameWidget> {
     } catch (_) {}
 
     if (tCubit != null) {
-      final localeImagePath = tCubit.currentLocaleImagePath;
+      final localeImagePath = tCubit.localeImagePathForSlot(_activeSlot);
       if (localeImagePath != null) {
         final localeFile = File(localeImagePath);
         if (localeFile.existsSync()) {

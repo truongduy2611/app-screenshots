@@ -19,6 +19,7 @@ import 'package:app_screenshots/features/screenshot_editor/presentation/widgets/
 import 'package:app_screenshots/features/screenshot_editor/presentation/widgets/manual_translation_dialog.dart';
 import 'package:app_screenshots/features/screenshot_editor/presentation/widgets/screenshot_capture_provider.dart';
 import 'package:app_screenshots/features/screenshot_editor/presentation/widgets/translation_settings_sheet.dart';
+import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:material_symbols_icons/symbols.dart';
@@ -133,6 +134,15 @@ class _TranslationControlsState extends State<TranslationControls> {
     if (translationState.bundle != null) {
       _sourceLocale = translationState.bundle!.sourceLocale;
       _selectedLocales.addAll(translationState.bundle!.targetLocales);
+    }
+  }
+
+  /// Number of screenshot slots (designs) in the project; 1 in single mode.
+  int _slotCount(BuildContext context) {
+    try {
+      return context.read<MultiScreenshotCubit>().state.designs.length;
+    } catch (_) {
+      return 1;
     }
   }
 
@@ -812,6 +822,8 @@ class _TranslationControlsState extends State<TranslationControls> {
                   return const SizedBox.shrink();
                 }
 
+                final slotCount = _slotCount(context);
+
                 return LocaleTranslationCard(
                   locale: locale,
                   translations: translations,
@@ -833,6 +845,28 @@ class _TranslationControlsState extends State<TranslationControls> {
                   onRemove: () {
                     context.read<TranslationCubit>().removeLocale(locale);
                     setState(() => _selectedLocales.remove(locale));
+                  },
+                  slotCount: slotCount,
+                  localeImagePath: (slot) =>
+                      translationState.bundle?.getLocaleImage(locale, slot),
+                  onPickLocaleImage: (slot) async {
+                    final result = await FilePicker.platform.pickFiles(
+                      type: FileType.image,
+                    );
+                    if (result != null && result.files.single.path != null) {
+                      if (!context.mounted) return;
+                      context.read<TranslationCubit>().setLocaleImage(
+                        locale,
+                        slot,
+                        result.files.single.path!,
+                      );
+                    }
+                  },
+                  onRemoveLocaleImage: (slot) {
+                    context.read<TranslationCubit>().removeLocaleImage(
+                      locale,
+                      slot,
+                    );
                   },
                 );
               }),

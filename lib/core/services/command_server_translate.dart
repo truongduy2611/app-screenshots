@@ -167,6 +167,7 @@ extension _TranslationRoutes on CommandServer {
         final body = await _readBody(request);
         final locale = body['locale'] as String?;
         final data = body['data'] as String?;
+        final slot = (body['slot'] as num?)?.toInt() ?? 0;
         if (locale == null || data == null) {
           return ServerResponse.error(
             'Missing "locale" and/or "data" (base64)',
@@ -179,8 +180,12 @@ extension _TranslationRoutes on CommandServer {
             '${tempDir.path}/locale_image_${locale}_${DateTime.now().millisecondsSinceEpoch}.png',
           );
           await file.writeAsBytes(bytes);
-          tCubit.setLocaleImage(locale, file.path);
-          return ServerResponse.ok({'locale': locale, 'imagePath': file.path});
+          tCubit.setLocaleImage(locale, slot, file.path);
+          return ServerResponse.ok({
+            'locale': locale,
+            'slot': slot,
+            'imagePath': file.path,
+          });
         } catch (e) {
           return ServerResponse.error('Failed to save locale image: $e');
         }

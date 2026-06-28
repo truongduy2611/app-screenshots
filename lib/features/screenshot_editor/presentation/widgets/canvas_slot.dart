@@ -30,6 +30,10 @@ class CanvasSlot extends StatefulWidget {
     this.onReplaceImage,
     this.onMoveLeft,
     this.onMoveRight,
+    this.previewLocale,
+    this.hasLocaleImage = false,
+    this.onReplaceLocaleImage,
+    this.onRevertLocaleImage,
   });
 
   final int index;
@@ -43,6 +47,19 @@ class CanvasSlot extends StatefulWidget {
   final VoidCallback? onReplaceImage;
   final VoidCallback? onMoveLeft;
   final VoidCallback? onMoveRight;
+
+  /// The non-source locale currently previewed (uppercased label is shown in
+  /// the context menu), or `null` when viewing the source locale.
+  final String? previewLocale;
+
+  /// Whether a per-locale image override exists for this slot + [previewLocale].
+  final bool hasLocaleImage;
+
+  /// Replace the screenshot image for [previewLocale] on this slot.
+  final VoidCallback? onReplaceLocaleImage;
+
+  /// Remove the per-locale image override for [previewLocale] on this slot.
+  final VoidCallback? onRevertLocaleImage;
 
   @override
   State<CanvasSlot> createState() => _CanvasSlotState();
@@ -205,6 +222,23 @@ class _CanvasSlotState extends State<CanvasSlot> {
                 title: context.l10n.replaceImage,
                 icon: Symbols.image_rounded,
               ),
+            if (widget.previewLocale != null &&
+                widget.onReplaceLocaleImage != null)
+              AppPopupMenuItem(
+                value: 'replaceLocale',
+                title: context.l10n.replaceImageForLocale(
+                  widget.previewLocale!.toUpperCase(),
+                ),
+                icon: Symbols.translate_rounded,
+              ),
+            if (widget.previewLocale != null &&
+                widget.hasLocaleImage &&
+                widget.onRevertLocaleImage != null)
+              AppPopupMenuItem(
+                value: 'revertLocale',
+                title: context.l10n.revertToSourceImage,
+                icon: Symbols.undo_rounded,
+              ),
             if (widget.onDuplicate != null)
               AppPopupMenuItem(
                 value: 'duplicate',
@@ -234,6 +268,8 @@ class _CanvasSlotState extends State<CanvasSlot> {
         )
         .then((value) {
           if (value == 'replace') widget.onReplaceImage?.call();
+          if (value == 'replaceLocale') widget.onReplaceLocaleImage?.call();
+          if (value == 'revertLocale') widget.onRevertLocaleImage?.call();
           if (value == 'duplicate') widget.onDuplicate?.call();
           if (value == 'moveLeft') widget.onMoveLeft?.call();
           if (value == 'moveRight') widget.onMoveRight?.call();

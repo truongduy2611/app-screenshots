@@ -490,5 +490,8 @@
   "useCached": "캐시 사용",
   "pickFolder": "폴더 선택",
   "addImages": "이미지 추가",
-  "resetRotation": "초기화"
+  "resetRotation": "초기화",
+  "replaceImageForLocale": "{locale} 이미지 교체",
+  "revertToSourceImage": "원본 이미지로 되돌리기",
+  "alternativeScreenshots": "대체 스크린샷"
 }

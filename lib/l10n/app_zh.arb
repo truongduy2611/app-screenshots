@@ -490,5 +490,8 @@
   "useCached": "使用缓存",
   "pickFolder": "选择文件夹",
   "addImages": "添加图片",
-  "resetRotation": "重置"
+  "resetRotation": "重置",
+  "replaceImageForLocale": "替换 {locale} 的图片",
+  "revertToSourceImage": "恢复为源图片",
+  "alternativeScreenshots": "备用截图"
 }

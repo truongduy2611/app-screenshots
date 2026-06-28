@@ -98,6 +98,25 @@ class StaticCanvasPreview extends StatelessWidget {
                     ),
                     // ── Sorted overlays + frame (split by behindFrame) ──
                     ...(() {
+                      // Resolve a per-locale image override for this slot when
+                      // previewing a non-source locale; fall back to the slot's
+                      // source image otherwise.
+                      File? effectiveImageFile = imageFile;
+                      TranslationState? tState;
+                      try {
+                        tState = context.watch<TranslationCubit>().state;
+                      } catch (_) {}
+                      final previewLocale = tState?.previewLocale;
+                      if (previewLocale != null) {
+                        final localePath = tState?.bundle?.getLocaleImage(
+                          previewLocale,
+                          designIndex ?? 0,
+                        );
+                        if (localePath != null) {
+                          final f = File(localePath);
+                          if (f.existsSync()) effectiveImageFile = f;
+                        }
+                      }
                       // Build the frame widget
                       final frameWidget = Positioned.fill(
                         child: Padding(
@@ -115,9 +134,9 @@ class StaticCanvasPreview extends StatelessWidget {
                                             device: design.deviceFrame!,
                                             isFrameVisible: true,
                                             orientation: design.orientation,
-                                            screen: imageFile != null
+                                            screen: effectiveImageFile != null
                                                 ? Image.file(
-                                                    imageFile!,
+                                                    effectiveImageFile,
                                                     fit: BoxFit.cover,
                                                   )
                                                 : Container(
@@ -139,9 +158,9 @@ class StaticCanvasPreview extends StatelessWidget {
                                                   BorderRadius.circular(
                                                     design.cornerRadius,
                                                   ),
-                                              child: imageFile != null
+                                              child: effectiveImageFile != null
                                                   ? Image.file(
-                                                      imageFile!,
+                                                      effectiveImageFile,
                                                       fit: BoxFit.cover,
                                                     )
                                                   : Container(

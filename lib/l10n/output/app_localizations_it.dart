@@ -333,6 +333,17 @@ class AppLocalizationsIt extends AppLocalizations {
   String get replaceImage => 'Sostituisci immagine';
 
   @override
+  String replaceImageForLocale(String locale) {
+    return 'Sostituisci immagine per $locale';
+  }
+
+  @override
+  String get revertToSourceImage => 'Ripristina immagine originale';
+
+  @override
+  String get alternativeScreenshots => 'Screenshot alternativi';
+
+  @override
   String get savedToLibrary => 'Salvato nella libreria';
 
   @override

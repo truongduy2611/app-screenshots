@@ -92,6 +92,12 @@ class _MultiCanvasAreaState extends State<_MultiCanvasArea> {
                     child:
                         BlocBuilder<MultiScreenshotCubit, MultiScreenshotState>(
                           builder: (context, multiState) {
+                            // Rebuild slots when the previewed locale or its
+                            // per-locale images change.
+                            final tState = context
+                                .watch<TranslationCubit>()
+                                .state;
+                            final previewLocale = tState.previewLocale;
                             return Padding(
                               padding: const EdgeInsets.all(100),
                               child: Row(
@@ -177,6 +183,44 @@ class _MultiCanvasAreaState extends State<_MultiCanvasArea> {
                                               context
                                                   .read<MultiScreenshotCubit>()
                                                   .moveDesignRight(i);
+                                            }
+                                          : null,
+                                      previewLocale: previewLocale,
+                                      hasLocaleImage: previewLocale != null &&
+                                          tState.bundle?.getLocaleImage(
+                                                previewLocale,
+                                                i,
+                                              ) !=
+                                              null,
+                                      onReplaceLocaleImage: previewLocale != null
+                                          ? () async {
+                                              final result = await FilePicker
+                                                  .platform
+                                                  .pickFiles(
+                                                    type: FileType.image,
+                                                  );
+                                              if (result != null &&
+                                                  result.files.single.path !=
+                                                      null) {
+                                                if (!context.mounted) return;
+                                                context
+                                                    .read<TranslationCubit>()
+                                                    .setLocaleImage(
+                                                      previewLocale,
+                                                      i,
+                                                      result.files.single.path!,
+                                                    );
+                                              }
+                                            }
+                                          : null,
+                                      onRevertLocaleImage: previewLocale != null
+                                          ? () {
+                                              context
+                                                  .read<TranslationCubit>()
+                                                  .removeLocaleImage(
+                                                    previewLocale,
+                                                    i,
+                                                  );
                                             }
                                           : null,
                                     ),

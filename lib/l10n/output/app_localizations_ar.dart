@@ -332,6 +332,17 @@ class AppLocalizationsAr extends AppLocalizations {
   String get replaceImage => 'استبدال الصورة';
 
   @override
+  String replaceImageForLocale(String locale) {
+    return 'استبدال الصورة لـ $locale';
+  }
+
+  @override
+  String get revertToSourceImage => 'الرجوع إلى الصورة المصدر';
+
+  @override
+  String get alternativeScreenshots => 'لقطات شاشة بديلة';
+
+  @override
   String get savedToLibrary => 'تم الحفظ في المكتبة';
 
   @override

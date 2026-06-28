@@ -332,6 +332,17 @@ class AppLocalizationsNl extends AppLocalizations {
   String get replaceImage => 'Afbeelding vervangen';
 
   @override
+  String replaceImageForLocale(String locale) {
+    return 'Afbeelding vervangen voor $locale';
+  }
+
+  @override
+  String get revertToSourceImage => 'Terugzetten naar bronafbeelding';
+
+  @override
+  String get alternativeScreenshots => 'Alternatieve screenshots';
+
+  @override
   String get savedToLibrary => 'Opgeslagen in bibliotheek';
 
   @override

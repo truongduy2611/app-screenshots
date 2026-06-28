@@ -333,6 +333,17 @@ class AppLocalizationsTr extends AppLocalizations {
   String get replaceImage => 'Görseli değiştir';
 
   @override
+  String replaceImageForLocale(String locale) {
+    return '$locale için görseli değiştir';
+  }
+
+  @override
+  String get revertToSourceImage => 'Kaynak görsele geri dön';
+
+  @override
+  String get alternativeScreenshots => 'Alternatif ekran görüntüleri';
+
+  @override
   String get savedToLibrary => 'Kütüphaneye kaydedildi';
 
   @override

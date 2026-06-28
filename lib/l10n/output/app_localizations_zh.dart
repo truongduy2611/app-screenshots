@@ -329,6 +329,17 @@ class AppLocalizationsZh extends AppLocalizations {
   String get replaceImage => '替换图片';
 
   @override
+  String replaceImageForLocale(String locale) {
+    return '替换 $locale 的图片';
+  }
+
+  @override
+  String get revertToSourceImage => '恢复为源图片';
+
+  @override
+  String get alternativeScreenshots => '备用截图';
+
+  @override
   String get savedToLibrary => '已保存至资料库';
 
   @override
@@ -1906,6 +1917,17 @@ class AppLocalizationsZhHant extends AppLocalizationsZh {
 
   @override
   String get replaceImage => '替換圖片';
+
+  @override
+  String replaceImageForLocale(String locale) {
+    return '替換 $locale 的圖片';
+  }
+
+  @override
+  String get revertToSourceImage => '還原為原始圖片';
+
+  @override
+  String get alternativeScreenshots => '備用截圖';
 
   @override
   String get savedToLibrary => '已儲存至資料庫';

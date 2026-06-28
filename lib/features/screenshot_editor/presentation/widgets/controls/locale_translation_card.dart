@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:app_screenshots/core/extensions/context_extensions.dart';
 import 'package:app_screenshots/features/screenshot_editor/presentation/cubit/translation_cubit.dart';
 import 'package:app_screenshots/features/screenshot_editor/presentation/widgets/controls/translation_status_dot.dart';
@@ -14,6 +16,19 @@ class LocaleTranslationCard extends StatefulWidget {
   final VoidCallback onRetry;
   final VoidCallback onRemove;
 
+  /// Number of screenshot slots in the project (1 in single-screenshot mode).
+  final int slotCount;
+
+  /// Resolves the current per-locale image path for a slot, or `null` if the
+  /// slot falls back to the source image.
+  final String? Function(int slot)? localeImagePath;
+
+  /// Pick an alternative screenshot for this locale + slot.
+  final void Function(int slot)? onPickLocaleImage;
+
+  /// Remove the per-locale image override for this locale + slot.
+  final void Function(int slot)? onRemoveLocaleImage;
+
   const LocaleTranslationCard({
     required this.locale,
     required this.translations,
@@ -22,6 +37,10 @@ class LocaleTranslationCard extends StatefulWidget {
     required this.onEdit,
     required this.onRetry,
     required this.onRemove,
+    this.slotCount = 1,
+    this.localeImagePath,
+    this.onPickLocaleImage,
+    this.onRemoveLocaleImage,
     super.key,
   });
 
@@ -213,6 +232,127 @@ class _LocaleTranslationCardState extends State<LocaleTranslationCard> {
               ),
             );
           }),
+          if (widget.onPickLocaleImage != null) _buildLocaleImages(theme),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildLocaleImages(ThemeData theme) {
+    return Padding(
+      padding: const EdgeInsets.only(top: 4),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Row(
+            children: [
+              Icon(
+                Symbols.image_rounded,
+                size: 14,
+                color: theme.colorScheme.onSurfaceVariant,
+              ),
+              const SizedBox(width: 4),
+              Text(
+                context.l10n.alternativeScreenshots,
+                style: theme.textTheme.labelSmall?.copyWith(
+                  color: theme.colorScheme.onSurfaceVariant,
+                  fontWeight: FontWeight.w600,
+                ),
+              ),
+            ],
+          ),
+          const SizedBox(height: 8),
+          Wrap(
+            spacing: 8,
+            runSpacing: 8,
+            children: [
+              for (int slot = 0; slot < widget.slotCount; slot++)
+                _buildSlotThumbnail(theme, slot),
+            ],
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildSlotThumbnail(ThemeData theme, int slot) {
+    final path = widget.localeImagePath?.call(slot);
+    final hasImage = path != null && File(path).existsSync();
+
+    return SizedBox(
+      width: 56,
+      child: Column(
+        children: [
+          MouseRegion(
+            cursor: SystemMouseCursors.click,
+            child: GestureDetector(
+              onTap: () => widget.onPickLocaleImage?.call(slot),
+              child: Stack(
+                clipBehavior: Clip.none,
+                children: [
+                  Container(
+                    width: 56,
+                    height: 96,
+                    decoration: BoxDecoration(
+                      color: theme.colorScheme.surface,
+                      borderRadius: BorderRadius.circular(8),
+                      border: Border.all(
+                        color: hasImage
+                            ? theme.colorScheme.primary.withValues(alpha: 0.6)
+                            : theme.colorScheme.outlineVariant.withValues(
+                                alpha: 0.4,
+                              ),
+                      ),
+                    ),
+                    clipBehavior: Clip.antiAlias,
+                    child: hasImage
+                        ? Image.file(File(path), fit: BoxFit.cover)
+                        : Icon(
+                            Symbols.add_photo_alternate_rounded,
+                            size: 20,
+                            color: theme.colorScheme.onSurfaceVariant.withValues(
+                              alpha: 0.6,
+                            ),
+                          ),
+                  ),
+                  if (hasImage)
+                    Positioned(
+                      top: -6,
+                      right: -6,
+                      child: MouseRegion(
+                        cursor: SystemMouseCursors.click,
+                        child: GestureDetector(
+                          onTap: () => widget.onRemoveLocaleImage?.call(slot),
+                          child: Container(
+                            padding: const EdgeInsets.all(2),
+                            decoration: BoxDecoration(
+                              color: theme.colorScheme.surfaceContainerHighest,
+                              shape: BoxShape.circle,
+                              border: Border.all(
+                                color: theme.colorScheme.outlineVariant,
+                              ),
+                            ),
+                            child: Icon(
+                              Symbols.close_rounded,
+                              size: 12,
+                              color: theme.colorScheme.onSurfaceVariant,
+                            ),
+                          ),
+                        ),
+                      ),
+                    ),
+                ],
+              ),
+            ),
+          ),
+          const SizedBox(height: 2),
+          Text(
+            '#${slot + 1}',
+            style: theme.textTheme.labelSmall?.copyWith(
+              fontSize: 9,
+              color: theme.colorScheme.onSurfaceVariant.withValues(alpha: 0.7),
+            ),
+          ),
         ],
       ),
     );
