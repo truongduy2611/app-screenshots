@@ -4,8 +4,13 @@ import 'package:image_picker/image_picker.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:material_symbols_icons/symbols.dart';
 import 'package:app_screenshots/core/extensions/context_extensions.dart';
+import 'package:get_it/get_it.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+import 'package:path/path.dart' as p;
 
 class ImagePickerHelper {
+  static const _lastOpenPathKey = 'last_open_directory_path';
+
   /// Prompts the user to select an image source (Camera or Gallery/Files)
   /// and returns the selected files.
   /// If [allowMultiple] is true and Gallery is selected, multiple files can be selected.
@@ -16,17 +21,7 @@ class ImagePickerHelper {
     final isMobile = Platform.isIOS || Platform.isAndroid;
 
     if (!isMobile) {
-      final result = await FilePicker.platform.pickFiles(
-        type: FileType.image,
-        allowMultiple: allowMultiple,
-      );
-      if (result != null && result.files.isNotEmpty) {
-        return result.files
-            .where((f) => f.path != null)
-            .map((f) => File(f.path!))
-            .toList();
-      }
-      return const [];
+      return _pickFiles(allowMultiple: allowMultiple);
     }
 
     final ImageSource? source = await showModalBottomSheet<ImageSource>(
@@ -80,16 +75,31 @@ class ImagePickerHelper {
         return [File(file.path)];
       }
     } else {
-      final result = await FilePicker.platform.pickFiles(
-        type: FileType.image,
-        allowMultiple: allowMultiple,
-      );
-      if (result != null && result.files.isNotEmpty) {
-        return result.files
-            .where((f) => f.path != null)
-            .map((f) => File(f.path!))
-            .toList();
+      return _pickFiles(allowMultiple: allowMultiple);
+    }
+    return const [];
+  }
+
+  static Future<List<File>> _pickFiles({required bool allowMultiple}) async {
+    final prefs = GetIt.I<SharedPreferences>();
+    final initialDir = prefs.getString(_lastOpenPathKey);
+
+    final result = await FilePicker.platform.pickFiles(
+      type: FileType.image,
+      allowMultiple: allowMultiple,
+      initialDirectory: initialDir,
+    );
+
+    if (result != null && result.files.isNotEmpty) {
+      final firstPath = result.files.first.path;
+      if (firstPath != null) {
+        final dirPath = p.dirname(firstPath);
+        await prefs.setString(_lastOpenPathKey, dirPath);
       }
+      return result.files
+          .where((f) => f.path != null)
+          .map((f) => File(f.path!))
+          .toList();
     }
     return const [];
   }
