@@ -520,5 +520,12 @@
   "takePhoto": "التقاط صورة",
   "chooseFromGallery": "اختر من المعرض",
   "selectSource": "اختر المصدر",
-  "fillCanvas": "ملء الكانفاس"
+  "fillCanvas": "ملء الكانفاس",
+  "positionAssist": "مساعد الموضع",
+  "presetTopCenter": "أعلى",
+  "presetBottomCenter": "أسفل",
+  "presetCenter": "وسط",
+  "presetReset": "إعادة",
+  "applyToAllLocales": "تطبيق على جميع اللغات",
+  "applyToAllOverlaysScreenshotsLocales": "تطبيق على جميع النصوص، لقطات الشاشة واللغات"
 }

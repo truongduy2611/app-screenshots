@@ -1770,4 +1770,26 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get fillCanvas => 'Fill Canvas';
+
+  @override
+  String get positionAssist => 'Position Assist';
+
+  @override
+  String get presetTopCenter => 'Top';
+
+  @override
+  String get presetBottomCenter => 'Bottom';
+
+  @override
+  String get presetCenter => 'Center';
+
+  @override
+  String get presetReset => 'Reset';
+
+  @override
+  String get applyToAllLocales => 'Apply to all locales';
+
+  @override
+  String get applyToAllOverlaysScreenshotsLocales =>
+      'Apply to all text overlays, screenshots & locales';
 }

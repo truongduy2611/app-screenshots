@@ -520,5 +520,12 @@
   "takePhoto": "Fotoğraf Çek",
   "chooseFromGallery": "Galeriden Seç",
   "selectSource": "Kaynak Seç",
-  "fillCanvas": "Tuvali Doldur"
+  "fillCanvas": "Tuvali Doldur",
+  "positionAssist": "Konum Asistanı",
+  "presetTopCenter": "Üst",
+  "presetBottomCenter": "Alt",
+  "presetCenter": "Orta",
+  "presetReset": "Sıfırla",
+  "applyToAllLocales": "Tüm dillere uygula",
+  "applyToAllOverlaysScreenshotsLocales": "Tüm metinlere, ekran görüntülerine ve dillere uygula"
 }

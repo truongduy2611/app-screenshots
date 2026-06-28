@@ -520,5 +520,12 @@
   "takePhoto": "Tirar foto",
   "chooseFromGallery": "Escolher da galeria",
   "selectSource": "Selecionar origem",
-  "fillCanvas": "Preencher tela"
+  "fillCanvas": "Preencher tela",
+  "positionAssist": "Assistente de posição",
+  "presetTopCenter": "Topo",
+  "presetBottomCenter": "Base",
+  "presetCenter": "Centro",
+  "presetReset": "Reset",
+  "applyToAllLocales": "Aplicar a todos os guias",
+  "applyToAllOverlaysScreenshotsLocales": "Aplicar a todas as sobreposições, capturas e idiomas"
 }

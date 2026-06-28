@@ -1678,6 +1678,27 @@ class AppLocalizationsZh extends AppLocalizations {
 
   @override
   String get fillCanvas => '填满画布';
+
+  @override
+  String get positionAssist => '位置辅助';
+
+  @override
+  String get presetTopCenter => '顶部';
+
+  @override
+  String get presetBottomCenter => '底部';
+
+  @override
+  String get presetCenter => '居中';
+
+  @override
+  String get presetReset => '重置';
+
+  @override
+  String get applyToAllLocales => '应用到所有语言';
+
+  @override
+  String get applyToAllOverlaysScreenshotsLocales => '应用到所有文本、屏幕截图和语言';
 }
 
 /// The translations for Chinese, using the Han script (`zh_Hant`).
@@ -3354,4 +3375,25 @@ class AppLocalizationsZhHant extends AppLocalizationsZh {
 
   @override
   String get fillCanvas => '填滿画布';
+
+  @override
+  String get positionAssist => '位置輔助';
+
+  @override
+  String get presetTopCenter => '頂部';
+
+  @override
+  String get presetBottomCenter => '底部';
+
+  @override
+  String get presetCenter => '居中';
+
+  @override
+  String get presetReset => '重置';
+
+  @override
+  String get applyToAllLocales => '應用到所有語言';
+
+  @override
+  String get applyToAllOverlaysScreenshotsLocales => '應用到所有文本、螢幕截圖和語言';
 }

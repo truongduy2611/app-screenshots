@@ -520,5 +520,12 @@
   "takePhoto": "사진 촬영",
   "chooseFromGallery": "갤러리에서 선택",
   "selectSource": "소스 선택",
-  "fillCanvas": "캔버스 채우기"
+  "fillCanvas": "캔버스 채우기",
+  "positionAssist": "위치 도우미",
+  "presetTopCenter": "상단",
+  "presetBottomCenter": "하단",
+  "presetCenter": "중앙",
+  "presetReset": "재설정",
+  "applyToAllLocales": "모든 언어에 적용",
+  "applyToAllOverlaysScreenshotsLocales": "모든 텍스트, 스크린샷 및 언어에 적용"
 }

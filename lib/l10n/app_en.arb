@@ -2316,5 +2316,33 @@
   "fillCanvas": "Fill Canvas",
   "@fillCanvas": {
     "description": "Button label to scale and position the selected image to completely cover the canvas background"
+  },
+  "positionAssist": "Position Assist",
+  "@positionAssist": {
+    "description": "Section header for text position assist preset controls"
+  },
+  "presetTopCenter": "Top",
+  "@presetTopCenter": {
+    "description": "Text layout preset to center horizontally near the top"
+  },
+  "presetBottomCenter": "Bottom",
+  "@presetBottomCenter": {
+    "description": "Text layout preset to center horizontally near the bottom"
+  },
+  "presetCenter": "Center",
+  "@presetCenter": {
+    "description": "Text layout preset to center horizontally and vertically"
+  },
+  "presetReset": "Reset",
+  "@presetReset": {
+    "description": "Text layout preset to reset custom position overrides"
+  },
+  "applyToAllLocales": "Apply to all locales",
+  "@applyToAllLocales": {
+    "description": "Label for the switch to apply text alignment presets to all locales"
+  },
+  "applyToAllOverlaysScreenshotsLocales": "Apply to all text overlays, screenshots & locales",
+  "@applyToAllOverlaysScreenshotsLocales": {
+    "description": "Label for the switch to apply text alignment presets to all text overlays, screenshots and locales"
   }
 }

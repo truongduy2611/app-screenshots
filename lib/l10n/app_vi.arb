@@ -520,5 +520,12 @@
   "takePhoto": "Chụp ảnh",
   "chooseFromGallery": "Chọn từ thư viện",
   "selectSource": "Chọn nguồn",
-  "fillCanvas": "Lấp đầy Canvas"
+  "fillCanvas": "Lấp đầy Canvas",
+  "positionAssist": "Hỗ trợ vị trí",
+  "presetTopCenter": "Trên",
+  "presetBottomCenter": "Dưới",
+  "presetCenter": "Giữa",
+  "presetReset": "Đặt lại",
+  "applyToAllLocales": "Áp dụng cho tất cả ngôn ngữ",
+  "applyToAllOverlaysScreenshotsLocales": "Áp dụng cho tất cả chữ, ảnh chụp & ngôn ngữ"
 }

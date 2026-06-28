@@ -1,3 +1,4 @@
+import 'dart:ui';
 import 'package:app_screenshots/core/services/app_logger.dart';
 import 'package:app_screenshots/features/screenshot_editor/data/models/overlay_override.dart';
 import 'package:app_screenshots/features/screenshot_editor/data/models/translation_bundle.dart';
@@ -190,6 +191,105 @@ class TranslationCubit extends Cubit<TranslationState> {
   ) {
     var bundle = state.bundle ?? const TranslationBundle();
     bundle = bundle.setOverride(locale, overlayId, override);
+    emit(state.copyWith(bundle: bundle));
+  }
+
+  /// Update multiple per-locale layout overrides for a specific overlay in a single emit.
+  void updateOverlayOverrides(
+    List<String> locales,
+    String overlayId,
+    OverlayOverride override,
+  ) {
+    var bundle = state.bundle ?? const TranslationBundle();
+    for (final locale in locales) {
+      final existing = bundle.getOverride(locale, overlayId) ?? const OverlayOverride();
+      final updated = existing.merge(override);
+      bundle = bundle.setOverride(locale, overlayId, updated);
+    }
+    emit(state.copyWith(bundle: bundle));
+  }
+
+  /// Clear position, width, and alignment overrides for multiple locales in a single emit.
+  void clearOverlayOverrides(
+    List<String> locales,
+    String overlayId,
+  ) {
+    var bundle = state.bundle ?? const TranslationBundle();
+    for (final locale in locales) {
+      final existing = bundle.getOverride(locale, overlayId);
+      if (existing != null) {
+        final cleared = existing.copyWith(
+          clearPosition: true,
+          clearWidth: true,
+          clearTextAlignIndex: true,
+        );
+        bundle = bundle.setOverride(locale, overlayId, cleared);
+      }
+    }
+    emit(state.copyWith(bundle: bundle));
+  }
+
+  /// Update multiple per-locale layout overrides for multiple overlays in a single emit.
+  void updateMultipleOverlayOverrides(
+    List<String> locales,
+    List<String> overlayIds,
+    OverlayOverride override,
+  ) {
+    var bundle = state.bundle ?? const TranslationBundle();
+    for (final locale in locales) {
+      for (final overlayId in overlayIds) {
+        final existing = bundle.getOverride(locale, overlayId) ?? const OverlayOverride();
+        final updated = existing.merge(override);
+        bundle = bundle.setOverride(locale, overlayId, updated);
+      }
+    }
+    emit(state.copyWith(bundle: bundle));
+  }
+
+  /// Update multiple per-locale layout overrides for multiple overlays, adjusting horizontal position only while preserving vertical Y positions.
+  void updateMultipleOverlayOverridesHorizontalOnly({
+    required List<String> locales,
+    required List<String> overlayIds,
+    required double dx,
+    required double width,
+    required int textAlignIndex,
+  }) {
+    var bundle = state.bundle ?? const TranslationBundle();
+    for (final locale in locales) {
+      for (final overlayId in overlayIds) {
+        final existing = bundle.getOverride(locale, overlayId) ?? const OverlayOverride();
+        final existingY = existing.position?.dy;
+        final newPos = Offset(dx, existingY ?? 100);
+        final updated = existing.copyWith(
+          position: newPos,
+          width: width,
+          textAlignIndex: textAlignIndex,
+        );
+        bundle = bundle.setOverride(locale, overlayId, updated);
+      }
+    }
+    emit(state.copyWith(bundle: bundle));
+  }
+
+  /// Clear position, width, and alignment overrides for multiple overlays and multiple locales in a single emit.
+  void clearMultipleOverlayOverrides(
+    List<String> locales,
+    List<String> overlayIds,
+  ) {
+    var bundle = state.bundle ?? const TranslationBundle();
+    for (final locale in locales) {
+      for (final overlayId in overlayIds) {
+        final existing = bundle.getOverride(locale, overlayId);
+        if (existing != null) {
+          final cleared = existing.copyWith(
+            clearPosition: true,
+            clearWidth: true,
+            clearTextAlignIndex: true,
+          );
+          bundle = bundle.setOverride(locale, overlayId, cleared);
+        }
+      }
+    }
     emit(state.copyWith(bundle: bundle));
   }
 

@@ -520,5 +520,12 @@
   "takePhoto": "Foto maken",
   "chooseFromGallery": "Kiezen uit galerij",
   "selectSource": "Bron selecteren",
-  "fillCanvas": "Canvas vullen"
+  "fillCanvas": "Canvas vullen",
+  "positionAssist": "Positiehulp",
+  "presetTopCenter": "Boven",
+  "presetBottomCenter": "Onder",
+  "presetCenter": "Midden",
+  "presetReset": "Reset",
+  "applyToAllLocales": "Toepassen op alle talen",
+  "applyToAllOverlaysScreenshotsLocales": "Toepassen op alle teksten, screenshots & talen"
 }

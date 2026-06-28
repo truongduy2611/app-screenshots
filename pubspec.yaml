@@ -24,7 +24,7 @@ dependencies:
   flutter_secure_storage: ^9.0.0
 
   # UI
-  google_fonts: ^6.3.3
+  google_fonts: ^8.1.0
   material_symbols_icons: ^4.2801.0
   flutter_colorpicker: ^1.1.0
   device_frame:

@@ -1689,4 +1689,25 @@ class AppLocalizationsKo extends AppLocalizations {
 
   @override
   String get fillCanvas => '캔버스 채우기';
+
+  @override
+  String get positionAssist => '위치 도우미';
+
+  @override
+  String get presetTopCenter => '상단';
+
+  @override
+  String get presetBottomCenter => '하단';
+
+  @override
+  String get presetCenter => '중앙';
+
+  @override
+  String get presetReset => '재설정';
+
+  @override
+  String get applyToAllLocales => '모든 언어에 적용';
+
+  @override
+  String get applyToAllOverlaysScreenshotsLocales => '모든 텍스트, 스크린샷 및 언어에 적용';
 }

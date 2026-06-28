@@ -1772,4 +1772,26 @@ class AppLocalizationsTr extends AppLocalizations {
 
   @override
   String get fillCanvas => 'Tuvali Doldur';
+
+  @override
+  String get positionAssist => 'Konum Asistanı';
+
+  @override
+  String get presetTopCenter => 'Üst';
+
+  @override
+  String get presetBottomCenter => 'Alt';
+
+  @override
+  String get presetCenter => 'Orta';
+
+  @override
+  String get presetReset => 'Sıfırla';
+
+  @override
+  String get applyToAllLocales => 'Tüm dillere uygula';
+
+  @override
+  String get applyToAllOverlaysScreenshotsLocales =>
+      'Tüm metinlere, ekran görüntülerine ve dillere uygula';
 }

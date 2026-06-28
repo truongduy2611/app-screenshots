@@ -103,6 +103,10 @@ class ScreenshotEditorCubit extends Cubit<ScreenshotEditorState> {
     _isBatchEditing = false;
   }
 
+  void updateDesign(ScreenshotDesign design) {
+    _updateDesign(design, selectedOverlayId: state.selectedOverlayId);
+  }
+
   void _updateDesign(
     ScreenshotDesign newDesign, {
     Object? selectedOverlayId = _cleared,

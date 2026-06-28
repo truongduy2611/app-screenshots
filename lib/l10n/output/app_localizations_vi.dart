@@ -1751,4 +1751,26 @@ class AppLocalizationsVi extends AppLocalizations {
 
   @override
   String get fillCanvas => 'Lấp đầy Canvas';
+
+  @override
+  String get positionAssist => 'Hỗ trợ vị trí';
+
+  @override
+  String get presetTopCenter => 'Trên';
+
+  @override
+  String get presetBottomCenter => 'Dưới';
+
+  @override
+  String get presetCenter => 'Giữa';
+
+  @override
+  String get presetReset => 'Đặt lại';
+
+  @override
+  String get applyToAllLocales => 'Áp dụng cho tất cả ngôn ngữ';
+
+  @override
+  String get applyToAllOverlaysScreenshotsLocales =>
+      'Áp dụng cho tất cả chữ, ảnh chụp & ngôn ngữ';
 }

@@ -520,5 +520,12 @@
   "takePhoto": "ถ่ายภาพ",
   "chooseFromGallery": "เลือกจากแกลเลอรี",
   "selectSource": "เลือกแหล่งที่มา",
-  "fillCanvas": "เติมเต็มผืนผ้าใบ"
+  "fillCanvas": "เติมเต็มผืนผ้าใบ",
+  "positionAssist": "ตัวช่วยจัดตำแหน่ง",
+  "presetTopCenter": "บน",
+  "presetBottomCenter": "ล่าง",
+  "presetCenter": "กลาง",
+  "presetReset": "รีเซ็ต",
+  "applyToAllLocales": "ใช้กับทุกภาษา",
+  "applyToAllOverlaysScreenshotsLocales": "ใช้กับข้อความ ภาพหน้าจอ และทุกภาษาทั้งหมด"
 }

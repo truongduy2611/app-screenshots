@@ -381,26 +381,29 @@ class _TextOverlayWidgetState extends State<TextOverlayWidget> {
                   },
                   child: SizedBox(
                     width: effectiveWidth,
-                    child: Container(
-                      decoration: BoxDecoration(
-                        color: effectiveBackgroundColor,
-                        border:
-                            effectiveBorderColor != null &&
-                                effectiveBorderWidth > 0
-                            ? Border.all(
-                                color: effectiveBorderColor,
-                                width: effectiveBorderWidth,
-                              )
-                            : null,
-                        borderRadius: effectiveBorderRadius > 0
-                            ? BorderRadius.circular(effectiveBorderRadius)
-                            : null,
+                    child: Align(
+                      alignment: _getAlignment(effectiveTextAlign),
+                      child: Container(
+                        decoration: BoxDecoration(
+                          color: effectiveBackgroundColor,
+                          border:
+                              effectiveBorderColor != null &&
+                                  effectiveBorderWidth > 0
+                              ? Border.all(
+                                  color: effectiveBorderColor,
+                                  width: effectiveBorderWidth,
+                                )
+                              : null,
+                          borderRadius: effectiveBorderRadius > 0
+                              ? BorderRadius.circular(effectiveBorderRadius)
+                              : null,
+                        ),
+                        padding: EdgeInsets.symmetric(
+                          horizontal: effectiveHPad,
+                          vertical: effectiveVPad,
+                        ),
+                        child: textContent,
                       ),
-                      padding: EdgeInsets.symmetric(
-                        horizontal: effectiveHPad,
-                        vertical: effectiveVPad,
-                      ),
-                      child: textContent,
                     ),
                   ),
                 ),
@@ -410,5 +413,18 @@ class _TextOverlayWidgetState extends State<TextOverlayWidget> {
         ),
       ),
     );
+  }
+
+  Alignment _getAlignment(TextAlign textAlign) {
+    switch (textAlign) {
+      case TextAlign.left:
+      case TextAlign.start:
+        return Alignment.centerLeft;
+      case TextAlign.right:
+      case TextAlign.end:
+        return Alignment.centerRight;
+      default:
+        return Alignment.center;
+    }
   }
 }

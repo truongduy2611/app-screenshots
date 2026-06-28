@@ -205,6 +205,36 @@ class StaticCanvasPreview extends StatelessWidget {
                             localeOverride?.scale ?? overlay.scale;
                         final effectiveWidth =
                             localeOverride?.width ?? overlay.width;
+                        final effectiveRotation =
+                            (previewLocale != null ? localeOverride?.rotation : null) ?? overlay.rotation;
+
+                        final overrideBgColorValue = localeOverride?.backgroundColor;
+                        final effectiveBackgroundColor =
+                            (previewLocale != null && overrideBgColorValue != null
+                                ? Color(overrideBgColorValue)
+                                : null) ??
+                            overlay.backgroundColor;
+                        final overrideBorderColorValue = localeOverride?.borderColor;
+                        final effectiveBorderColor =
+                            (previewLocale != null && overrideBorderColorValue != null
+                                ? Color(overrideBorderColorValue)
+                                : null) ??
+                            overlay.borderColor;
+                        final effectiveBorderWidth =
+                            (previewLocale != null ? localeOverride?.borderWidth : null) ??
+                            overlay.borderWidth;
+                        final effectiveBorderRadius =
+                            (previewLocale != null ? localeOverride?.borderRadius : null) ??
+                            overlay.borderRadius;
+                        final effectiveHPad =
+                            (previewLocale != null ? localeOverride?.horizontalPadding : null) ??
+                            overlay.horizontalPadding;
+                        final effectiveVPad =
+                            (previewLocale != null ? localeOverride?.verticalPadding : null) ??
+                            overlay.verticalPadding;
+                        final effectiveTextAlign =
+                            (previewLocale != null ? localeOverride?.textAlign : null) ??
+                            overlay.textAlign;
 
                         String displayText = overlay.text;
                         if (previewLocale != null &&
@@ -237,36 +267,39 @@ class StaticCanvasPreview extends StatelessWidget {
                             left: effectivePos.dx,
                             top: effectivePos.dy,
                             child: Transform.rotate(
-                              angle: overlay.rotation,
+                              angle: effectiveRotation,
                               child: Transform.scale(
                                 scale: effectiveScale,
                                 child: SizedBox(
                                   width: effectiveWidth,
-                                  child: Container(
-                                    decoration: BoxDecoration(
-                                      color: overlay.backgroundColor,
-                                      border:
-                                          overlay.borderColor != null &&
-                                              overlay.borderWidth > 0
-                                          ? Border.all(
-                                              color: overlay.borderColor!,
-                                              width: overlay.borderWidth,
-                                            )
-                                          : null,
-                                      borderRadius: overlay.borderRadius > 0
-                                          ? BorderRadius.circular(
-                                              overlay.borderRadius,
-                                            )
-                                          : null,
-                                    ),
-                                    padding: EdgeInsets.symmetric(
-                                      horizontal: overlay.horizontalPadding,
-                                      vertical: overlay.verticalPadding,
-                                    ),
-                                    child: Text(
-                                      displayText,
-                                      textAlign: overlay.textAlign,
-                                      style: resolvedStyle,
+                                  child: Align(
+                                    alignment: _getAlignment(effectiveTextAlign),
+                                    child: Container(
+                                      decoration: BoxDecoration(
+                                        color: effectiveBackgroundColor,
+                                        border:
+                                            effectiveBorderColor != null &&
+                                                effectiveBorderWidth > 0
+                                            ? Border.all(
+                                                color: effectiveBorderColor,
+                                                width: effectiveBorderWidth,
+                                              )
+                                            : null,
+                                        borderRadius: effectiveBorderRadius > 0
+                                            ? BorderRadius.circular(
+                                                effectiveBorderRadius,
+                                              )
+                                            : null,
+                                      ),
+                                      padding: EdgeInsets.symmetric(
+                                        horizontal: effectiveHPad,
+                                        vertical: effectiveVPad,
+                                      ),
+                                      child: Text(
+                                        displayText,
+                                        textAlign: effectiveTextAlign,
+                                        style: resolvedStyle,
+                                      ),
                                     ),
                                   ),
                                 ),
@@ -519,6 +552,19 @@ class StaticCanvasPreview extends StatelessWidget {
         ),
       ),
     );
+  }
+
+  Alignment _getAlignment(TextAlign textAlign) {
+    switch (textAlign) {
+      case TextAlign.left:
+      case TextAlign.start:
+        return Alignment.centerLeft;
+      case TextAlign.right:
+      case TextAlign.end:
+        return Alignment.centerRight;
+      default:
+        return Alignment.center;
+    }
   }
 }
 

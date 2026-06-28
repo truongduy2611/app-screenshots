@@ -520,5 +520,12 @@
   "takePhoto": "Scatta foto",
   "chooseFromGallery": "Scegli dalla galleria",
   "selectSource": "Seleziona sorgente",
-  "fillCanvas": "Riempi tela"
+  "fillCanvas": "Riempi tela",
+  "positionAssist": "Assistente posizione",
+  "presetTopCenter": "Alto",
+  "presetBottomCenter": "Basso",
+  "presetCenter": "Centro",
+  "presetReset": "Reset",
+  "applyToAllLocales": "Applica a tutte le lingue",
+  "applyToAllOverlaysScreenshotsLocales": "Applica a tutti i testi, screenshot e lingue"
 }

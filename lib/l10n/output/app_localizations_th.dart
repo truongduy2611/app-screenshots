@@ -1715,4 +1715,26 @@ class AppLocalizationsTh extends AppLocalizations {
 
   @override
   String get fillCanvas => 'เติมเต็มผืนผ้าใบ';
+
+  @override
+  String get positionAssist => 'ตัวช่วยจัดตำแหน่ง';
+
+  @override
+  String get presetTopCenter => 'บน';
+
+  @override
+  String get presetBottomCenter => 'ล่าง';
+
+  @override
+  String get presetCenter => 'กลาง';
+
+  @override
+  String get presetReset => 'รีเซ็ต';
+
+  @override
+  String get applyToAllLocales => 'ใช้กับทุกภาษา';
+
+  @override
+  String get applyToAllOverlaysScreenshotsLocales =>
+      'ใช้กับข้อความ ภาพหน้าจอ และทุกภาษาทั้งหมด';
 }

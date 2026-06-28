@@ -520,5 +520,12 @@
   "takePhoto": "拍照",
   "chooseFromGallery": "從相簿選取",
   "selectSource": "選擇來源",
-  "fillCanvas": "填滿画布"
+  "fillCanvas": "填滿画布",
+  "positionAssist": "位置輔助",
+  "presetTopCenter": "頂部",
+  "presetBottomCenter": "底部",
+  "presetCenter": "居中",
+  "presetReset": "重置",
+  "applyToAllLocales": "應用到所有語言",
+  "applyToAllOverlaysScreenshotsLocales": "應用到所有文本、螢幕截圖和語言"
 }

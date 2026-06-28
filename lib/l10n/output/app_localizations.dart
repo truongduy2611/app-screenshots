@@ -3250,6 +3250,48 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Fill Canvas'**
   String get fillCanvas;
+
+  /// Section header for text position assist preset controls
+  ///
+  /// In en, this message translates to:
+  /// **'Position Assist'**
+  String get positionAssist;
+
+  /// Text layout preset to center horizontally near the top
+  ///
+  /// In en, this message translates to:
+  /// **'Top'**
+  String get presetTopCenter;
+
+  /// Text layout preset to center horizontally near the bottom
+  ///
+  /// In en, this message translates to:
+  /// **'Bottom'**
+  String get presetBottomCenter;
+
+  /// Text layout preset to center horizontally and vertically
+  ///
+  /// In en, this message translates to:
+  /// **'Center'**
+  String get presetCenter;
+
+  /// Text layout preset to reset custom position overrides
+  ///
+  /// In en, this message translates to:
+  /// **'Reset'**
+  String get presetReset;
+
+  /// Label for the switch to apply text alignment presets to all locales
+  ///
+  /// In en, this message translates to:
+  /// **'Apply to all locales'**
+  String get applyToAllLocales;
+
+  /// Label for the switch to apply text alignment presets to all text overlays, screenshots and locales
+  ///
+  /// In en, this message translates to:
+  /// **'Apply to all text overlays, screenshots & locales'**
+  String get applyToAllOverlaysScreenshotsLocales;
 }
 
 class _AppLocalizationsDelegate

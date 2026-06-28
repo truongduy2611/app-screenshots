@@ -1776,4 +1776,26 @@ class AppLocalizationsRu extends AppLocalizations {
 
   @override
   String get fillCanvas => 'Заполнить холст';
+
+  @override
+  String get positionAssist => 'Помощник позиционирования';
+
+  @override
+  String get presetTopCenter => 'Верх';
+
+  @override
+  String get presetBottomCenter => 'Низ';
+
+  @override
+  String get presetCenter => 'Центр';
+
+  @override
+  String get presetReset => 'Сброс';
+
+  @override
+  String get applyToAllLocales => 'Применить ко всем языкам';
+
+  @override
+  String get applyToAllOverlaysScreenshotsLocales =>
+      'Применить ко всем текстам, скриншотам и языкам';
 }

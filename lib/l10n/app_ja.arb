@@ -520,5 +520,12 @@
   "takePhoto": "写真を撮影",
   "chooseFromGallery": "ギャラリーから選択",
   "selectSource": "ソースを選択",
-  "fillCanvas": "キャンバスを埋める"
+  "fillCanvas": "キャンバスを埋める",
+  "positionAssist": "配置アシスト",
+  "presetTopCenter": "上部",
+  "presetBottomCenter": "下部",
+  "presetCenter": "中央",
+  "presetReset": "リセット",
+  "applyToAllLocales": "すべての言語に適用",
+  "applyToAllOverlaysScreenshotsLocales": "すべてのテキスト、スクリーンショット、言語に適用"
 }

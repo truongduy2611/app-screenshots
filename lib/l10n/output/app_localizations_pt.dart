@@ -1782,4 +1782,26 @@ class AppLocalizationsPt extends AppLocalizations {
 
   @override
   String get fillCanvas => 'Preencher tela';
+
+  @override
+  String get positionAssist => 'Assistente de posição';
+
+  @override
+  String get presetTopCenter => 'Topo';
+
+  @override
+  String get presetBottomCenter => 'Base';
+
+  @override
+  String get presetCenter => 'Centro';
+
+  @override
+  String get presetReset => 'Reset';
+
+  @override
+  String get applyToAllLocales => 'Aplicar a todos os guias';
+
+  @override
+  String get applyToAllOverlaysScreenshotsLocales =>
+      'Aplicar a todas as sobreposições, capturas e idiomas';
 }

@@ -1692,4 +1692,25 @@ class AppLocalizationsJa extends AppLocalizations {
 
   @override
   String get fillCanvas => 'キャンバスを埋める';
+
+  @override
+  String get positionAssist => '配置アシスト';
+
+  @override
+  String get presetTopCenter => '上部';
+
+  @override
+  String get presetBottomCenter => '下部';
+
+  @override
+  String get presetCenter => '中央';
+
+  @override
+  String get presetReset => 'リセット';
+
+  @override
+  String get applyToAllLocales => 'すべての言語に適用';
+
+  @override
+  String get applyToAllOverlaysScreenshotsLocales => 'すべてのテキスト、スクリーンショット、言語に適用';
 }

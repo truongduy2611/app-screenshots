@@ -1763,4 +1763,26 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get fillCanvas => 'ملء الكانفاس';
+
+  @override
+  String get positionAssist => 'مساعد الموضع';
+
+  @override
+  String get presetTopCenter => 'أعلى';
+
+  @override
+  String get presetBottomCenter => 'أسفل';
+
+  @override
+  String get presetCenter => 'وسط';
+
+  @override
+  String get presetReset => 'إعادة';
+
+  @override
+  String get applyToAllLocales => 'تطبيق على جميع اللغات';
+
+  @override
+  String get applyToAllOverlaysScreenshotsLocales =>
+      'تطبيق على جميع النصوص، لقطات الشاشة واللغات';
 }

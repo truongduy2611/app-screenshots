@@ -214,6 +214,10 @@ class MultiScreenshotCubit extends Cubit<MultiScreenshotState> {
     emit(state.copyWith(designs: designs));
   }
 
+  void updateAllDesigns(List<ScreenshotDesign> newDesigns) {
+    emit(state.copyWith(designs: newDesigns));
+  }
+
   Future<void> updateActiveImage(File file) async {
     final stable = await _copyToStableStorage(file);
     final files = List<File?>.from(state.imageFiles);

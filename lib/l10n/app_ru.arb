@@ -520,5 +520,12 @@
   "takePhoto": "Сделать фото",
   "chooseFromGallery": "Выбрать из галереи",
   "selectSource": "Выберите источник",
-  "fillCanvas": "Заполнить холст"
+  "fillCanvas": "Заполнить холст",
+  "positionAssist": "Помощник позиционирования",
+  "presetTopCenter": "Верх",
+  "presetBottomCenter": "Низ",
+  "presetCenter": "Центр",
+  "presetReset": "Сброс",
+  "applyToAllLocales": "Применить ко всем языкам",
+  "applyToAllOverlaysScreenshotsLocales": "Применить ко всем текстам, скриншотам и языкам"
 }
