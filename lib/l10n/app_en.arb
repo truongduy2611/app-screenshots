@@ -2300,5 +2300,21 @@
   },
   "@resetRotation": {
     "description": "Tooltip for reset rotation button on image overlay"
+  },
+  "takePhoto": "Take Photo",
+  "@takePhoto": {
+    "description": "Option to capture an image directly using the device camera"
+  },
+  "chooseFromGallery": "Choose from Gallery",
+  "@chooseFromGallery": {
+    "description": "Option to pick an existing image from the gallery/files library"
+  },
+  "selectSource": "Select Source",
+  "@selectSource": {
+    "description": "Title for the dialog or bottom sheet prompting the user to choose an image source"
+  },
+  "fillCanvas": "Fill Canvas",
+  "@fillCanvas": {
+    "description": "Button label to scale and position the selected image to completely cover the canvas background"
   }
 }

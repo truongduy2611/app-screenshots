@@ -13,7 +13,7 @@ import 'package:app_screenshots/features/screenshot_editor/presentation/widgets/
 import 'package:app_screenshots/features/screenshot_editor/presentation/widgets/controls/gradient_editor.dart';
 import 'package:app_screenshots/features/screenshot_editor/presentation/widgets/controls/gradient_presets.dart';
 import 'package:app_screenshots/features/screenshot_editor/presentation/widgets/icon_picker_dialog.dart';
-import 'package:file_picker/file_picker.dart';
+import 'package:app_screenshots/features/screenshot_editor/presentation/helpers/image_picker_helper.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:material_symbols_icons/symbols.dart';
@@ -176,7 +176,7 @@ class BackgroundControls extends StatelessWidget {
                           return _ImageThumbnail(
                             filePath: overlay.filePath!,
                             isSelected: isSelected,
-                            onTap: () => cubit.selectOverlay(overlay.id),
+                            onTap: () => _changeImageOverlay(context, overlay),
                             onDelete: () =>
                                 cubit.deleteImageOverlay(overlay.id),
                           );
@@ -356,6 +356,37 @@ class BackgroundControls extends StatelessWidget {
         ],
       ),
       const SizedBox(height: 8),
+      SizedBox(
+        width: double.infinity,
+        child: OutlinedButton.icon(
+          onPressed: () {
+            final canvasSize = ScreenshotUtils.getDimensions(
+              state.design.displayType ?? '',
+              state.design.orientation,
+            );
+            cubit.updateImageOverlay(
+              overlay.id,
+              overlay.copyWith(
+                position: Offset.zero,
+                scale: 1.0,
+                rotation: 0.0,
+                width: canvasSize.width,
+                height: canvasSize.height,
+                fit: BoxFit.cover,
+              ),
+            );
+          },
+          icon: const Icon(Symbols.fullscreen_rounded, size: 18),
+          label: Text(context.l10n.fillCanvas),
+          style: OutlinedButton.styleFrom(
+            padding: const EdgeInsets.symmetric(vertical: 10),
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(8),
+            ),
+          ),
+        ),
+      ),
+      const SizedBox(height: 12),
       // ── Opacity ──
       LabeledSlider(
         label: 'Opacity',
@@ -1180,18 +1211,14 @@ class BackgroundControls extends StatelessWidget {
   }
 
   Future<void> _pickImageOverlay(BuildContext context) async {
-    final result = await FilePicker.platform.pickFiles(
-      type: FileType.image,
+    final files = await ImagePickerHelper.pickImage(
+      context: context,
       allowMultiple: true,
     );
-    if (result == null || result.files.isEmpty) return;
+    if (files.isEmpty) return;
     if (!context.mounted) return;
 
     final cubit = context.read<ScreenshotEditorCubit>();
-    final files = result.files
-        .where((f) => f.path != null)
-        .map((f) => File(f.path!))
-        .toList();
 
     if (files.length == 1) {
       cubit.addImageOverlay(files.first);
@@ -1213,6 +1240,22 @@ class BackgroundControls extends StatelessWidget {
         fontWeight: result.fontWeight,
       );
     }
+  }
+
+  Future<void> _changeImageOverlay(BuildContext context, ImageOverlay overlay) async {
+    final cubit = context.read<ScreenshotEditorCubit>();
+    cubit.selectOverlay(overlay.id);
+
+    final files = await ImagePickerHelper.pickImage(
+      context: context,
+      allowMultiple: false,
+    );
+    if (files.isEmpty) return;
+
+    cubit.updateImageOverlay(
+      overlay.id,
+      overlay.copyWith(filePath: files.first.path),
+    );
   }
 }
 

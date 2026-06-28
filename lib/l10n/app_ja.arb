@@ -516,5 +516,9 @@
   "playInstructionsStep1": "Google Play Console → セットアップ → API アクセス を開きます。",
   "playInstructionsStep2": "Google Cloud プロジェクトを作成またはリンクし、サービスアカウントを作成します。",
   "playInstructionsStep3": "ユーザーと権限 の下で、サービスアカウントにアプリへのアクセス権を付与します。",
-  "playInstructionsStep4": "サービスアカウントの JSON キーを作成してダウンロードします。"
+  "playInstructionsStep4": "サービスアカウントの JSON キーを作成してダウンロードします。",
+  "takePhoto": "写真を撮影",
+  "chooseFromGallery": "ギャラリーから選択",
+  "selectSource": "ソースを選択",
+  "fillCanvas": "キャンバスを埋める"
 }

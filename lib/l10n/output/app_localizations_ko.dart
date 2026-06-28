@@ -1677,4 +1677,16 @@ class AppLocalizationsKo extends AppLocalizations {
 
   @override
   String get resetRotation => '초기화';
+
+  @override
+  String get takePhoto => '사진 촬영';
+
+  @override
+  String get chooseFromGallery => '갤러리에서 선택';
+
+  @override
+  String get selectSource => '소스 선택';
+
+  @override
+  String get fillCanvas => '캔버스 채우기';
 }

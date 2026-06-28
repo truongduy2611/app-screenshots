@@ -516,5 +516,9 @@
   "playInstructionsStep1": "افتح Google Play Console ← الإعداد ← الوصول إلى API.",
   "playInstructionsStep2": "إنشاء مشروع Google Cloud أو ربطه، ثم إنشاء حساب خدمة.",
   "playInstructionsStep3": "امنح حساب الخدمة حق الوصول إلى تطبيقك ضمن المستخدمين والأذونات.",
-  "playInstructionsStep4": "قم بإنشاء مفتاح JSON لحساب الخدمة وقم بتنزيله."
+  "playInstructionsStep4": "قم بإنشاء مفتاح JSON لحساب الخدمة وقم بتنزيله.",
+  "takePhoto": "التقاط صورة",
+  "chooseFromGallery": "اختر من المعرض",
+  "selectSource": "اختر المصدر",
+  "fillCanvas": "ملء الكانفاس"
 }

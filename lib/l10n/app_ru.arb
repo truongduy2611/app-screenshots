@@ -516,5 +516,9 @@
   "playInstructionsStep1": "Откройте Google Play Console → Настройка → Доступ к API.",
   "playInstructionsStep2": "Создайте или свяжите проект Google Cloud, а затем создайте сервисный аккаунт.",
   "playInstructionsStep3": "Предоставьте сервисному аккаунту доступ к вашему приложению в разделе «Пользователи и разрешения».",
-  "playInstructionsStep4": "Создайте JSON-ключ для сервисного аккаунта и скачайте его."
+  "playInstructionsStep4": "Создайте JSON-ключ для сервисного аккаунта и скачайте его.",
+  "takePhoto": "Сделать фото",
+  "chooseFromGallery": "Выбрать из галереи",
+  "selectSource": "Выберите источник",
+  "fillCanvas": "Заполнить холст"
 }

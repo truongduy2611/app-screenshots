@@ -516,5 +516,9 @@
   "playInstructionsStep1": "Abra Google Play Console → Configuración → Acceso a la API.",
   "playInstructionsStep2": "Cree o vincule un proyecto de Google Cloud, luego cree una cuenta de servicio.",
   "playInstructionsStep3": "Otorgue acceso de cuenta de servicio a su aplicación en Usuarios y permisos.",
-  "playInstructionsStep4": "Cree una clave JSON para la cuenta de servicio y descárguela."
+  "playInstructionsStep4": "Cree una clave JSON para la cuenta de servicio y descárguela.",
+  "takePhoto": "Tomar foto",
+  "chooseFromGallery": "Elegir de la galería",
+  "selectSource": "Seleccionar origen",
+  "fillCanvas": "Llenar lienzo"
 }

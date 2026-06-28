@@ -69,6 +69,8 @@
 		<key>NSPhotoLibraryUsageDescription</key>
 		<string>App Screenshots needs access to your photo library to import images for your
 			screenshot designs.</string>
+		<key>NSCameraUsageDescription</key>
+		<string>App Screenshots needs access to the camera to capture images for your screenshot designs.</string>
 		<key>UTExportedTypeDeclarations</key>
 		<array>
 			<dict>

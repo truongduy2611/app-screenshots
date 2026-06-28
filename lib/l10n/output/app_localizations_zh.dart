@@ -1666,6 +1666,18 @@ class AppLocalizationsZh extends AppLocalizations {
 
   @override
   String get resetRotation => '重置';
+
+  @override
+  String get takePhoto => '拍照';
+
+  @override
+  String get chooseFromGallery => '从相册选取';
+
+  @override
+  String get selectSource => '选择来源';
+
+  @override
+  String get fillCanvas => '填满画布';
 }
 
 /// The translations for Chinese, using the Han script (`zh_Hant`).
@@ -3330,4 +3342,16 @@ class AppLocalizationsZhHant extends AppLocalizationsZh {
 
   @override
   String get resetRotation => '重設';
+
+  @override
+  String get takePhoto => '拍照';
+
+  @override
+  String get chooseFromGallery => '從相簿選取';
+
+  @override
+  String get selectSource => '選擇來源';
+
+  @override
+  String get fillCanvas => '填滿画布';
 }

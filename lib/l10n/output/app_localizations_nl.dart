@@ -1765,4 +1765,16 @@ class AppLocalizationsNl extends AppLocalizations {
 
   @override
   String get resetRotation => 'Resetten';
+
+  @override
+  String get takePhoto => 'Foto maken';
+
+  @override
+  String get chooseFromGallery => 'Kiezen uit galerij';
+
+  @override
+  String get selectSource => 'Bron selecteren';
+
+  @override
+  String get fillCanvas => 'Canvas vullen';
 }

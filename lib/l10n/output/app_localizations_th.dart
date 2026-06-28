@@ -1703,4 +1703,16 @@ class AppLocalizationsTh extends AppLocalizations {
 
   @override
   String get resetRotation => 'รีเซ็ต';
+
+  @override
+  String get takePhoto => 'ถ่ายภาพ';
+
+  @override
+  String get chooseFromGallery => 'เลือกจากแกลเลอรี';
+
+  @override
+  String get selectSource => 'เลือกแหล่งที่มา';
+
+  @override
+  String get fillCanvas => 'เติมเต็มผืนผ้าใบ';
 }

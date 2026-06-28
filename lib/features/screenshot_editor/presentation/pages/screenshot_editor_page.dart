@@ -24,6 +24,7 @@ import 'package:app_screenshots/features/screenshot_editor/presentation/widgets/
 import 'package:app_screenshots/features/screenshot_editor/presentation/widgets/screenshot_capture_provider.dart';
 
 import 'package:desktop_drop/desktop_drop.dart';
+import 'package:app_screenshots/features/screenshot_editor/presentation/helpers/image_picker_helper.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:get_it/get_it.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -301,10 +302,10 @@ class _ScreenshotEditorViewState extends State<ScreenshotEditorView> {
   }
 
   Future<void> _pickImage(BuildContext context) async {
-    final result = await FilePicker.platform.pickFiles(type: FileType.image);
-    if (result != null && result.files.single.path != null) {
+    final files = await ImagePickerHelper.pickImage(context: context);
+    if (files.isNotEmpty) {
       if (!context.mounted) return;
-      _screenShotCubit.updateImageFile(File(result.files.single.path!));
+      _screenShotCubit.updateImageFile(files.first);
     }
   }
 

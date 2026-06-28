@@ -1770,4 +1770,16 @@ class AppLocalizationsPt extends AppLocalizations {
 
   @override
   String get resetRotation => 'Redefinir';
+
+  @override
+  String get takePhoto => 'Tirar foto';
+
+  @override
+  String get chooseFromGallery => 'Escolher da galeria';
+
+  @override
+  String get selectSource => 'Selecionar origem';
+
+  @override
+  String get fillCanvas => 'Preencher tela';
 }

@@ -516,5 +516,9 @@
   "playInstructionsStep1": "打開 Google Play Console → 設定 → API 存取。",
   "playInstructionsStep2": "建立或連結 Google Cloud 專案，然後建立服務帳戶。",
   "playInstructionsStep3": "在「使用者和權限」下授予服務帳戶存取應用程式的權限。",
-  "playInstructionsStep4": "為服務帳戶建立 JSON 金鑰並下載。"
+  "playInstructionsStep4": "為服務帳戶建立 JSON 金鑰並下載。",
+  "takePhoto": "拍照",
+  "chooseFromGallery": "從相簿選取",
+  "selectSource": "選擇來源",
+  "fillCanvas": "填滿画布"
 }

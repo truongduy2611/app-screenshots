@@ -516,5 +516,9 @@
   "playInstructionsStep1": "Google Play Console öffnen → Setup → API-Zugriff.",
   "playInstructionsStep2": "Erstellen oder verknüpfen Sie ein Google Cloud-Projekt und erstellen Sie dann ein Dienstkonto.",
   "playInstructionsStep3": "Gewähren Sie dem Dienstkonto unter Benutzer & Berechtigungen Zugriff auf Ihre App.",
-  "playInstructionsStep4": "Erstellen Sie einen JSON-Schlüssel für das Dienstkonto und laden Sie ihn herunter."
+  "playInstructionsStep4": "Erstellen Sie einen JSON-Schlüssel für das Dienstkonto und laden Sie ihn herunter.",
+  "takePhoto": "Foto aufnehmen",
+  "chooseFromGallery": "Aus Galerie auswählen",
+  "selectSource": "Quelle auswählen",
+  "fillCanvas": "Canvas ausfüllen"
 }

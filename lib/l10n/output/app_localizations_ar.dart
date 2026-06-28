@@ -1751,4 +1751,16 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get resetRotation => 'إعادة تعيين';
+
+  @override
+  String get takePhoto => 'التقاط صورة';
+
+  @override
+  String get chooseFromGallery => 'اختر من المعرض';
+
+  @override
+  String get selectSource => 'اختر المصدر';
+
+  @override
+  String get fillCanvas => 'ملء الكانفاس';
 }

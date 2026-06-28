@@ -516,5 +516,9 @@
   "playInstructionsStep1": "เปิด Google Play Console → ตั้งค่า → การเข้าถึง API",
   "playInstructionsStep2": "สร้างหรือลิงก์โปรเจกต์ Google Cloud แล้วสร้างบัญชีบริการ",
   "playInstructionsStep3": "มอบสิทธิ์เข้าถึงแอปให้กับบัญชีบริการภายใต้ ผู้ใช้และสิทธิ์",
-  "playInstructionsStep4": "สร้างคีย์ JSON สำหรับบัญชีบริการแล้วดาวน์โหลด"
+  "playInstructionsStep4": "สร้างคีย์ JSON สำหรับบัญชีบริการแล้วดาวน์โหลด",
+  "takePhoto": "ถ่ายภาพ",
+  "chooseFromGallery": "เลือกจากแกลเลอรี",
+  "selectSource": "เลือกแหล่งที่มา",
+  "fillCanvas": "เติมเต็มผืนผ้าใบ"
 }

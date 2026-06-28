@@ -1680,4 +1680,16 @@ class AppLocalizationsJa extends AppLocalizations {
 
   @override
   String get resetRotation => 'リセット';
+
+  @override
+  String get takePhoto => '写真を撮影';
+
+  @override
+  String get chooseFromGallery => 'ギャラリーから選択';
+
+  @override
+  String get selectSource => 'ソースを選択';
+
+  @override
+  String get fillCanvas => 'キャンバスを埋める';
 }

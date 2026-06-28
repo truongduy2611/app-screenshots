@@ -1766,4 +1766,16 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get resetRotation => 'Ripristina';
+
+  @override
+  String get takePhoto => 'Scatta foto';
+
+  @override
+  String get chooseFromGallery => 'Scegli dalla galleria';
+
+  @override
+  String get selectSource => 'Seleziona sorgente';
+
+  @override
+  String get fillCanvas => 'Riempi tela';
 }

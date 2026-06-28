@@ -3226,6 +3226,30 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Reset'**
   String get resetRotation;
+
+  /// Option to capture an image directly using the device camera
+  ///
+  /// In en, this message translates to:
+  /// **'Take Photo'**
+  String get takePhoto;
+
+  /// Option to pick an existing image from the gallery/files library
+  ///
+  /// In en, this message translates to:
+  /// **'Choose from Gallery'**
+  String get chooseFromGallery;
+
+  /// Title for the dialog or bottom sheet prompting the user to choose an image source
+  ///
+  /// In en, this message translates to:
+  /// **'Select Source'**
+  String get selectSource;
+
+  /// Button label to scale and position the selected image to completely cover the canvas background
+  ///
+  /// In en, this message translates to:
+  /// **'Fill Canvas'**
+  String get fillCanvas;
 }
 
 class _AppLocalizationsDelegate

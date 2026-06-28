@@ -1739,4 +1739,16 @@ class AppLocalizationsVi extends AppLocalizations {
 
   @override
   String get resetRotation => 'Đặt lại';
+
+  @override
+  String get takePhoto => 'Chụp ảnh';
+
+  @override
+  String get chooseFromGallery => 'Chọn từ thư viện';
+
+  @override
+  String get selectSource => 'Chọn nguồn';
+
+  @override
+  String get fillCanvas => 'Lấp đầy Canvas';
 }

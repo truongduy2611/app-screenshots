@@ -9,6 +9,7 @@ import 'package:app_screenshots/features/screenshot_editor/presentation/cubit/mu
 import 'package:app_screenshots/features/screenshot_editor/presentation/cubit/screenshot_editor_cubit.dart';
 import 'package:app_screenshots/features/screenshot_editor/presentation/cubit/translation_cubit.dart';
 import 'package:app_screenshots/features/screenshot_editor/utils/screenshot_utils.dart';
+import 'package:app_screenshots/features/screenshot_editor/presentation/helpers/image_picker_helper.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -44,12 +45,10 @@ mixin MultiScreenshotActions<T extends StatefulWidget> on State<T> {
   // ---------------------------------------------------------------------------
 
   Future<void> pickImage(BuildContext context) async {
-    final result = await FilePicker.platform.pickFiles(type: FileType.image);
-    if (result != null && result.files.single.path != null) {
+    final files = await ImagePickerHelper.pickImage(context: context);
+    if (files.isNotEmpty) {
       if (!context.mounted) return;
-      context.read<ScreenshotEditorCubit>().updateImageFile(
-        File(result.files.single.path!),
-      );
+      context.read<ScreenshotEditorCubit>().updateImageFile(files.first);
     }
   }
 

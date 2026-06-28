@@ -516,5 +516,9 @@
   "playInstructionsStep1": "Open de Google Play Console → Instellen → API-toegang.",
   "playInstructionsStep2": "Maak of koppel een Google Cloud-project en maak vervolgens een serviceaccount aan.",
   "playInstructionsStep3": "Geef het serviceaccount toegang tot uw app onder Gebruikers en rechten.",
-  "playInstructionsStep4": "Maak een JSON-sleutel voor het serviceaccount en download deze."
+  "playInstructionsStep4": "Maak een JSON-sleutel voor het serviceaccount en download deze.",
+  "takePhoto": "Foto maken",
+  "chooseFromGallery": "Kiezen uit galerij",
+  "selectSource": "Bron selecteren",
+  "fillCanvas": "Canvas vullen"
 }

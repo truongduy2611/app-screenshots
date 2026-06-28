@@ -1760,4 +1760,16 @@ class AppLocalizationsTr extends AppLocalizations {
 
   @override
   String get resetRotation => 'Sıfırla';
+
+  @override
+  String get takePhoto => 'Fotoğraf Çek';
+
+  @override
+  String get chooseFromGallery => 'Galeriden Seç';
+
+  @override
+  String get selectSource => 'Kaynak Seç';
+
+  @override
+  String get fillCanvas => 'Tuvali Doldur';
 }

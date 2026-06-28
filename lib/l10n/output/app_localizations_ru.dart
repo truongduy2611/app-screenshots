@@ -1764,4 +1764,16 @@ class AppLocalizationsRu extends AppLocalizations {
 
   @override
   String get resetRotation => 'Сбросить';
+
+  @override
+  String get takePhoto => 'Сделать фото';
+
+  @override
+  String get chooseFromGallery => 'Выбрать из галереи';
+
+  @override
+  String get selectSource => 'Выберите источник';
+
+  @override
+  String get fillCanvas => 'Заполнить холст';
 }

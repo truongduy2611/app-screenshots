@@ -516,5 +516,9 @@
   "playInstructionsStep1": "Mở Google Play Console → Cấu hình (Setup) → Truy cập API (API access).",
   "playInstructionsStep2": "Tạo hoặc liên kết một dự án Google Cloud, sau đó tạo một tài khoản dịch vụ.",
   "playInstructionsStep3": "Cấp quyền truy cập ứng dụng cho tài khoản dịch vụ trong phần Người dùng & quyền (Users & permissions).",
-  "playInstructionsStep4": "Tạo khóa JSON cho tài khoản dịch vụ và tải về."
+  "playInstructionsStep4": "Tạo khóa JSON cho tài khoản dịch vụ và tải về.",
+  "takePhoto": "Chụp ảnh",
+  "chooseFromGallery": "Chọn từ thư viện",
+  "selectSource": "Chọn nguồn",
+  "fillCanvas": "Lấp đầy Canvas"
 }

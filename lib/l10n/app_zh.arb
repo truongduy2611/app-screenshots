@@ -516,5 +516,9 @@
   "playInstructionsStep1": "打开 Google Play Console → 设置 → API 访问。",
   "playInstructionsStep2": "创建或关联 Google Cloud 项目，然后创建服务帐号。",
   "playInstructionsStep3": "在“用户和权限”下授予服务帐号对应用的访问权限。",
-  "playInstructionsStep4": "为服务帐号创建 JSON 密钥并下载。"
+  "playInstructionsStep4": "为服务帐号创建 JSON 密钥并下载。",
+  "takePhoto": "拍照",
+  "chooseFromGallery": "从相册选取",
+  "selectSource": "选择来源",
+  "fillCanvas": "填满画布"
 }

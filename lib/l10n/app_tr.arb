@@ -516,5 +516,9 @@
   "playInstructionsStep1": "Google Play Console'u açın → Kurulum → API erişimi.",
   "playInstructionsStep2": "Bir Google Cloud projesi oluşturun veya bağlayın, ardından bir hizmet hesabı oluşturun.",
   "playInstructionsStep3": "Kullanıcılar ve izinler altında hizmet hesabına uygulamanıza erişim yetkisi verin.",
-  "playInstructionsStep4": "Hizmet hesabı için bir JSON anahtarı oluşturun ve indirin."
+  "playInstructionsStep4": "Hizmet hesabı için bir JSON anahtarı oluşturun ve indirin.",
+  "takePhoto": "Fotoğraf Çek",
+  "chooseFromGallery": "Galeriden Seç",
+  "selectSource": "Kaynak Seç",
+  "fillCanvas": "Tuvali Doldur"
 }
