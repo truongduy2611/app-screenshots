@@ -1217,6 +1217,86 @@ class AppLocalizationsTr extends AppLocalizations {
   String get uploadExistingFolderToAsc => 'Mevcut Klasörü Yükle...';
 
   @override
+  String get uploadToGooglePlay => 'Google Play\'e Yükle';
+
+  @override
+  String get googlePlayServiceAccount => 'Google Play Hizmet Hesabı';
+
+  @override
+  String get playServiceAccountHint =>
+      'Google Cloud Console\'dan Android Publisher erişimi olan hizmet hesabı JSON anahtarını seçin.';
+
+  @override
+  String get selectJsonKeyFile => 'JSON Anahtar Dosyasını Seç';
+
+  @override
+  String get noServiceAccountConfigured => 'Yapılandırılmış hizmet hesabı yok';
+
+  @override
+  String get playSetupHint =>
+      'Ekran görüntülerini yüklemek için Google Play hizmet hesabınızı kurun.';
+
+  @override
+  String get configureServiceAccount => 'Hizmet Hesabını Yapılandır';
+
+  @override
+  String invalidServiceAccount(String error) {
+    return 'Geçersiz hizmet hesabı dosyası: $error';
+  }
+
+  @override
+  String get packageName => 'Paket Adı';
+
+  @override
+  String get packageNameHint => 'com.example.app';
+
+  @override
+  String get imageType => 'Görsel Türü';
+
+  @override
+  String playMaxScreenshotsNote(int count) {
+    return 'Google Play her dil seçeneği için en fazla $count ekran görüntüsüne izin verir; fazlası yüklenmez.';
+  }
+
+  @override
+  String get googlePlay => 'Google Play';
+
+  @override
+  String get learnMore => 'Daha fazla bilgi edin';
+
+  @override
+  String get orLabel => 'veya';
+
+  @override
+  String get pasteJsonLabel => 'JSON içeriğini yapıştır';
+
+  @override
+  String get playPasteJsonHint =>
+      'Hizmet hesabınızın .json dosyasının içeriğini yapıştırın';
+
+  @override
+  String get saveJsonContents => 'JSON İçeriğini Kaydet';
+
+  @override
+  String get playInstructionsTitle => 'Anahtarınızı nasıl alırsınız';
+
+  @override
+  String get playInstructionsStep1 =>
+      'Google Play Console\'u açın → Kurulum → API erişimi.';
+
+  @override
+  String get playInstructionsStep2 =>
+      'Bir Google Cloud projesi oluşturun veya bağlayın, ardından bir hizmet hesabı oluşturun.';
+
+  @override
+  String get playInstructionsStep3 =>
+      'Kullanıcılar ve izinler altında hizmet hesabına uygulamanıza erişim yetkisi verin.';
+
+  @override
+  String get playInstructionsStep4 =>
+      'Hizmet hesabı için bir JSON anahtarı oluşturun ve indirin.';
+
+  @override
   String get noImagesFoundInFolder =>
       'Seçilen klasörde geçerli ekran görüntüsü resmi bulunamadı';
 

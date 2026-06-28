@@ -1210,6 +1210,86 @@ class AppLocalizationsEn extends AppLocalizations {
   String get uploadExistingFolderToAsc => 'Upload Existing Folder...';
 
   @override
+  String get uploadToGooglePlay => 'Upload to Google Play';
+
+  @override
+  String get googlePlayServiceAccount => 'Google Play Service Account';
+
+  @override
+  String get playServiceAccountHint =>
+      'Select the service account JSON key from Google Cloud Console with Android Publisher access.';
+
+  @override
+  String get selectJsonKeyFile => 'Select JSON Key File';
+
+  @override
+  String get noServiceAccountConfigured => 'No service account configured';
+
+  @override
+  String get playSetupHint =>
+      'Set up your Google Play service account to upload screenshots.';
+
+  @override
+  String get configureServiceAccount => 'Configure Service Account';
+
+  @override
+  String invalidServiceAccount(String error) {
+    return 'Invalid service account file: $error';
+  }
+
+  @override
+  String get packageName => 'Package Name';
+
+  @override
+  String get packageNameHint => 'com.example.app';
+
+  @override
+  String get imageType => 'Image Type';
+
+  @override
+  String playMaxScreenshotsNote(int count) {
+    return 'Google Play allows up to $count screenshots per locale — extras won\'t be uploaded.';
+  }
+
+  @override
+  String get googlePlay => 'Google Play';
+
+  @override
+  String get learnMore => 'Learn more';
+
+  @override
+  String get orLabel => 'or';
+
+  @override
+  String get pasteJsonLabel => 'Paste JSON contents';
+
+  @override
+  String get playPasteJsonHint =>
+      'Paste the contents of your service account .json file';
+
+  @override
+  String get saveJsonContents => 'Save JSON Contents';
+
+  @override
+  String get playInstructionsTitle => 'How to get your key';
+
+  @override
+  String get playInstructionsStep1 =>
+      'Open Google Play Console → Setup → API access.';
+
+  @override
+  String get playInstructionsStep2 =>
+      'Create or link a Google Cloud project, then create a service account.';
+
+  @override
+  String get playInstructionsStep3 =>
+      'Grant the service account access to your app under Users & permissions.';
+
+  @override
+  String get playInstructionsStep4 =>
+      'Create a JSON key for the service account and download it.';
+
+  @override
   String get noImagesFoundInFolder =>
       'No valid screenshot images found in selected folder';
 

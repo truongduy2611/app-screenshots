@@ -1217,6 +1217,86 @@ class AppLocalizationsNl extends AppLocalizations {
   String get uploadExistingFolderToAsc => 'Bestaande map uploaden...';
 
   @override
+  String get uploadToGooglePlay => 'Uploaden naar Google Play';
+
+  @override
+  String get googlePlayServiceAccount => 'Google Play-serviceaccount';
+
+  @override
+  String get playServiceAccountHint =>
+      'Selecter de JSON-sleutel van het serviceaccount uit de Google Cloud Console met Android Publisher-toegang.';
+
+  @override
+  String get selectJsonKeyFile => 'JSON-sleutelbestand selecteren';
+
+  @override
+  String get noServiceAccountConfigured => 'Geen serviceaccount geconfigureerd';
+
+  @override
+  String get playSetupHint =>
+      'Stel uw Google Play-serviceaccount in om screenshots te uploaden.';
+
+  @override
+  String get configureServiceAccount => 'Serviceaccount configureren';
+
+  @override
+  String invalidServiceAccount(String error) {
+    return 'Ongeldig serviceaccountbestand: $error';
+  }
+
+  @override
+  String get packageName => 'Pakketnaam';
+
+  @override
+  String get packageNameHint => 'com.example.app';
+
+  @override
+  String get imageType => 'Afbeeldingstype';
+
+  @override
+  String playMaxScreenshotsNote(int count) {
+    return 'Google Play staat maximaal $count screenshots per taal toe – extra screenshots worden niet geüpload.';
+  }
+
+  @override
+  String get googlePlay => 'Google Play';
+
+  @override
+  String get learnMore => 'Meer informatie';
+
+  @override
+  String get orLabel => 'of';
+
+  @override
+  String get pasteJsonLabel => 'JSON-inhoud plakken';
+
+  @override
+  String get playPasteJsonHint =>
+      'Plak de inhoud van het .json-bestand van uw serviceaccount';
+
+  @override
+  String get saveJsonContents => 'JSON-inhoud opslaan';
+
+  @override
+  String get playInstructionsTitle => 'Hoe u uw sleutel kunt krijgen';
+
+  @override
+  String get playInstructionsStep1 =>
+      'Open de Google Play Console → Instellen → API-toegang.';
+
+  @override
+  String get playInstructionsStep2 =>
+      'Maak of koppel een Google Cloud-project en maak vervolgens een serviceaccount aan.';
+
+  @override
+  String get playInstructionsStep3 =>
+      'Geef het serviceaccount toegang tot uw app onder Gebruikers en rechten.';
+
+  @override
+  String get playInstructionsStep4 =>
+      'Maak een JSON-sleutel voor het serviceaccount en download deze.';
+
+  @override
   String get noImagesFoundInFolder =>
       'Geen geldige schermafbeeldingen gevonden in de geselecteerde map';
 

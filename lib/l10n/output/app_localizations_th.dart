@@ -1181,6 +1181,85 @@ class AppLocalizationsTh extends AppLocalizations {
   String get uploadExistingFolderToAsc => 'อัปโหลดโฟลเดอร์ที่มีอยู่...';
 
   @override
+  String get uploadToGooglePlay => 'อัปโหลดไปยัง Google Play';
+
+  @override
+  String get googlePlayServiceAccount => 'บัญชีบริการ Google Play';
+
+  @override
+  String get playServiceAccountHint =>
+      'เลือกคีย์ JSON ของบัญชีบริการจาก Google Cloud Console ที่มีสิทธิ์เข้าถึง Android Publisher';
+
+  @override
+  String get selectJsonKeyFile => 'เลือกไฟล์คีย์ JSON';
+
+  @override
+  String get noServiceAccountConfigured => 'ไม่ได้กำหนดค่าบัญชีบริการ';
+
+  @override
+  String get playSetupHint =>
+      'ตั้งค่าบัญชีบริการ Google Play ของคุณเพื่ออัปโหลดภาพหน้าจอ';
+
+  @override
+  String get configureServiceAccount => 'กำหนดค่าบัญชีบริการ';
+
+  @override
+  String invalidServiceAccount(String error) {
+    return 'ไฟล์บัญชีบริการไม่ถูกต้อง: $error';
+  }
+
+  @override
+  String get packageName => 'ชื่อแพ็กเกจ';
+
+  @override
+  String get packageNameHint => 'com.example.app';
+
+  @override
+  String get imageType => 'ประเภทรูปภาพ';
+
+  @override
+  String playMaxScreenshotsNote(int count) {
+    return 'Google Play อนุญาตให้มีภาพหน้าจอได้สูงสุด $count ภาพต่อหนึ่งภาษา — ภาพส่วนเกินจะไม่ถูกอัปโหลด';
+  }
+
+  @override
+  String get googlePlay => 'Google Play';
+
+  @override
+  String get learnMore => 'เรียนรู้เพิ่มเติม';
+
+  @override
+  String get orLabel => 'หรือ';
+
+  @override
+  String get pasteJsonLabel => 'วางเนื้อหา JSON';
+
+  @override
+  String get playPasteJsonHint => 'วางเนื้อหาของไฟล์บัญชีบริการ .json ของคุณ';
+
+  @override
+  String get saveJsonContents => 'บันทึกเนื้อหา JSON';
+
+  @override
+  String get playInstructionsTitle => 'วิธีรับคีย์ของคุณ';
+
+  @override
+  String get playInstructionsStep1 =>
+      'เปิด Google Play Console → ตั้งค่า → การเข้าถึง API';
+
+  @override
+  String get playInstructionsStep2 =>
+      'สร้างหรือลิงก์โปรเจกต์ Google Cloud แล้วสร้างบัญชีบริการ';
+
+  @override
+  String get playInstructionsStep3 =>
+      'มอบสิทธิ์เข้าถึงแอปให้กับบัญชีบริการภายใต้ ผู้ใช้และสิทธิ์';
+
+  @override
+  String get playInstructionsStep4 =>
+      'สร้างคีย์ JSON สำหรับบัญชีบริการแล้วดาวน์โหลด';
+
+  @override
   String get noImagesFoundInFolder =>
       'ไม่พบภาพหน้าจอที่ถูกต้องในโฟลเดอร์ที่เลือก';
 

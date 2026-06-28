@@ -20,6 +20,9 @@ import 'package:app_screenshots/features/screenshot_editor/presentation/cubit/tr
 import 'package:app_screenshots/features/screenshot_editor/presentation/widgets/asc_credentials_dialog.dart';
 import 'package:app_screenshots/features/screenshot_editor/presentation/widgets/asc_upload_sheet.dart';
 import 'package:app_screenshots/features/screenshot_editor/presentation/widgets/asc_locale_picker_dialog.dart';
+import 'package:app_screenshots/features/screenshot_editor/presentation/cubit/play_upload_cubit.dart';
+import 'package:app_screenshots/features/screenshot_editor/presentation/widgets/play_credentials_dialog.dart';
+import 'package:app_screenshots/features/screenshot_editor/presentation/widgets/play_upload_sheet.dart';
 import 'package:app_screenshots/features/settings/domain/repositories/settings_repository.dart';
 import 'package:app_screenshots/features/screenshot_editor/presentation/widgets/locale_switcher.dart';
 import 'package:app_screenshots/features/screenshot_editor/presentation/helpers/multi_screenshot_actions.dart';
@@ -64,6 +67,7 @@ enum _MultiMenuAction {
   shareDesign,
   uploadToAsc,
   uploadExistingToAsc,
+  uploadToGooglePlay,
 }
 
 /// Multi-screenshot editor page – horizontal row of artboards.
@@ -787,6 +791,8 @@ class _MultiScreenshotViewState extends State<_MultiScreenshotView>
         _showUploadSheet(context);
       case _MultiMenuAction.uploadExistingToAsc:
         _uploadExistingFolder(context);
+      case _MultiMenuAction.uploadToGooglePlay:
+        _showPlayUploadSheet(context);
       case _MultiMenuAction.saveAsTemplate:
         _saveAsTemplate(context);
       case _MultiMenuAction.grid:
@@ -996,6 +1002,77 @@ class _MultiScreenshotViewState extends State<_MultiScreenshotView>
                   ascAppConfig: savedConfig,
                   onAppConfigChanged: captureProvider.onAscAppConfigChanged,
                 ),
+              ),
+      ),
+    );
+  }
+
+  /// Opens the Google Play upload sheet from the export menu.
+  ///
+  /// Mirrors [_showUploadSheet]: ensures a service account is configured,
+  /// lets the user pick locales, captures them, then opens the sheet.
+  Future<void> _showPlayUploadSheet(BuildContext context) async {
+    // 1) Check credentials — prompt for the service account JSON if missing.
+    final repo = sl<SettingsRepository>();
+    final creds = await repo.getPlayCredentials();
+    if (creds == null || !creds.isValid) {
+      if (!context.mounted) return;
+      final saved = await PlayCredentialsDialog.show(context);
+      if (!saved || !context.mounted) return;
+    }
+
+    // 2) Show locale picker — let the user choose which locales to render.
+    if (!context.mounted) return;
+    final translationCubit = context.read<TranslationCubit>();
+    final bundle = translationCubit.state.bundle;
+    final hasTranslations = bundle != null && bundle.translations.isNotEmpty;
+    final sourceLocale = bundle?.sourceLocale ?? 'en-US';
+    final allLocales = hasTranslations
+        ? [sourceLocale, ...bundle.targetLocales]
+        : [sourceLocale];
+
+    Set<String>? selectedLocales;
+    if (allLocales.length > 1) {
+      selectedLocales = await AscLocalePickerDialog.show(
+        context: context,
+        allLocales: allLocales,
+        sourceLocale: sourceLocale,
+      );
+      if (selectedLocales == null || !context.mounted) return;
+    }
+
+    // 3) Capture locale screenshots (only the selected locales).
+    final captureProvider = ScreenshotCaptureProvider.of(context);
+    if (captureProvider == null) return;
+
+    final localeScreenshots = await captureProvider.captureAllLocaleScreenshots(
+      context,
+      selectedLocales: selectedLocales,
+    );
+
+    if (!context.mounted) return;
+
+    if (localeScreenshots == null || localeScreenshots.isEmpty) {
+      context.showAppSnackbar(
+        'Failed to capture locale screenshots',
+        type: AppSnackbarType.error,
+      );
+      return;
+    }
+
+    // 4) Show the upload sheet.
+    final isSmallScreen = MediaQuery.sizeOf(context).width < 600;
+    showDialog(
+      context: context,
+      useSafeArea: !isSmallScreen,
+      builder: (_) => BlocProvider(
+        create: (_) => sl<PlayUploadCubit>()..init(),
+        child: isSmallScreen
+            ? Dialog.fullscreen(
+                child: PlayUploadSheet(localeScreenshots: localeScreenshots),
+              )
+            : Dialog(
+                child: PlayUploadSheet(localeScreenshots: localeScreenshots),
               ),
       ),
     );

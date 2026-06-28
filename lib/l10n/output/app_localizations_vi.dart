@@ -1204,6 +1204,86 @@ class AppLocalizationsVi extends AppLocalizations {
   String get uploadExistingFolderToAsc => 'Tải lên thư mục có sẵn...';
 
   @override
+  String get uploadToGooglePlay => 'Tải lên Google Play';
+
+  @override
+  String get googlePlayServiceAccount => 'Tài khoản dịch vụ Google Play';
+
+  @override
+  String get playServiceAccountHint =>
+      'Chọn tệp khóa JSON của tài khoản dịch vụ từ Google Cloud Console có quyền truy cập Android Publisher.';
+
+  @override
+  String get selectJsonKeyFile => 'Chọn tệp khóa JSON';
+
+  @override
+  String get noServiceAccountConfigured => 'Chưa cấu hình tài khoản dịch vụ';
+
+  @override
+  String get playSetupHint =>
+      'Cấu hình tài khoản dịch vụ Google Play của bạn để tải lên ảnh chụp màn hình.';
+
+  @override
+  String get configureServiceAccount => 'Cấu hình tài khoản dịch vụ';
+
+  @override
+  String invalidServiceAccount(String error) {
+    return 'Tệp tài khoản dịch vụ không hợp lệ: $error';
+  }
+
+  @override
+  String get packageName => 'Tên gói (Package Name)';
+
+  @override
+  String get packageNameHint => 'com.example.app';
+
+  @override
+  String get imageType => 'Loại hình ảnh';
+
+  @override
+  String playMaxScreenshotsNote(int count) {
+    return 'Google Play cho phép tối đa $count ảnh chụp màn hình cho mỗi ngôn ngữ — các ảnh dư thừa sẽ không được tải lên.';
+  }
+
+  @override
+  String get googlePlay => 'Google Play';
+
+  @override
+  String get learnMore => 'Tìm hiểu thêm';
+
+  @override
+  String get orLabel => 'hoặc';
+
+  @override
+  String get pasteJsonLabel => 'Dán nội dung JSON';
+
+  @override
+  String get playPasteJsonHint =>
+      'Dán nội dung của tệp .json tài khoản dịch vụ của bạn';
+
+  @override
+  String get saveJsonContents => 'Lưu nội dung JSON';
+
+  @override
+  String get playInstructionsTitle => 'Cách lấy khóa của bạn';
+
+  @override
+  String get playInstructionsStep1 =>
+      'Mở Google Play Console → Cấu hình (Setup) → Truy cập API (API access).';
+
+  @override
+  String get playInstructionsStep2 =>
+      'Tạo hoặc liên kết một dự án Google Cloud, sau đó tạo một tài khoản dịch vụ.';
+
+  @override
+  String get playInstructionsStep3 =>
+      'Cấp quyền truy cập ứng dụng cho tài khoản dịch vụ trong phần Người dùng & quyền (Users & permissions).';
+
+  @override
+  String get playInstructionsStep4 =>
+      'Tạo khóa JSON cho tài khoản dịch vụ và tải về.';
+
+  @override
   String get noImagesFoundInFolder =>
       'Không tìm thấy hình ảnh hợp lệ nào trong thư mục đã chọn';
 

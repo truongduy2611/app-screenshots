@@ -81,6 +81,11 @@ class _SaveExportMenu extends StatelessWidget {
           title: context.l10n.uploadExistingFolderToAsc,
         ),
         AppPopupMenuItem(
+          value: _MultiMenuAction.uploadToGooglePlay,
+          icon: Symbols.android_rounded,
+          title: context.l10n.uploadToGooglePlay,
+        ),
+        AppPopupMenuItem(
           value: _MultiMenuAction.shareDesign,
           icon: Symbols.share_rounded,
           title: context.l10n.shareDesignFile,

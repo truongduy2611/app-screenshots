@@ -1218,6 +1218,86 @@ class AppLocalizationsEs extends AppLocalizations {
   String get uploadExistingFolderToAsc => 'Subir carpeta existente...';
 
   @override
+  String get uploadToGooglePlay => 'Subir a Google Play';
+
+  @override
+  String get googlePlayServiceAccount => 'Cuenta de servicio de Google Play';
+
+  @override
+  String get playServiceAccountHint =>
+      'Seleccione la clave JSON de la cuenta de servicio de Google Cloud Console con acceso de Android Publisher.';
+
+  @override
+  String get selectJsonKeyFile => 'Seleccionar archivo de clave JSON';
+
+  @override
+  String get noServiceAccountConfigured => 'Sin cuenta de servicio configurada';
+
+  @override
+  String get playSetupHint =>
+      'Configure su cuenta de servicio de Google Play para subir capturas de pantalla.';
+
+  @override
+  String get configureServiceAccount => 'Configurar cuenta de servicio';
+
+  @override
+  String invalidServiceAccount(String error) {
+    return 'Archivo de cuenta de servicio no válido: $error';
+  }
+
+  @override
+  String get packageName => 'Nombre del paquete';
+
+  @override
+  String get packageNameHint => 'com.example.app';
+
+  @override
+  String get imageType => 'Tipo de imagen';
+
+  @override
+  String playMaxScreenshotsNote(int count) {
+    return 'Google Play permite hasta $count capturas de pantalla por idioma; las adicionales no se subirán.';
+  }
+
+  @override
+  String get googlePlay => 'Google Play';
+
+  @override
+  String get learnMore => 'Más información';
+
+  @override
+  String get orLabel => 'o';
+
+  @override
+  String get pasteJsonLabel => 'Pegar contenido JSON';
+
+  @override
+  String get playPasteJsonHint =>
+      'Pegue el contenido del archivo .json de su cuenta de servicio';
+
+  @override
+  String get saveJsonContents => 'Guardar contenido JSON';
+
+  @override
+  String get playInstructionsTitle => 'Cómo obtener su clave';
+
+  @override
+  String get playInstructionsStep1 =>
+      'Abra Google Play Console → Configuración → Acceso a la API.';
+
+  @override
+  String get playInstructionsStep2 =>
+      'Cree o vincule un proyecto de Google Cloud, luego cree una cuenta de servicio.';
+
+  @override
+  String get playInstructionsStep3 =>
+      'Otorgue acceso de cuenta de servicio a su aplicación en Usuarios y permisos.';
+
+  @override
+  String get playInstructionsStep4 =>
+      'Cree una clave JSON para la cuenta de servicio y descárguela.';
+
+  @override
   String get noImagesFoundInFolder =>
       'No se encontraron imágenes de captura de pantalla válidas en la carpeta seleccionada';
 

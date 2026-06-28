@@ -1173,6 +1173,83 @@ class AppLocalizationsJa extends AppLocalizations {
   String get uploadExistingFolderToAsc => '既存のフォルダーをアップロード...';
 
   @override
+  String get uploadToGooglePlay => 'Google Playにアップロード';
+
+  @override
+  String get googlePlayServiceAccount => 'Google Play サービスアカウント';
+
+  @override
+  String get playServiceAccountHint =>
+      'Google Cloud Consoleから、Android Publisherのアクセス権を持つサービスアカウントのJSONキーを選択します。';
+
+  @override
+  String get selectJsonKeyFile => 'JSONキーファイルを選択';
+
+  @override
+  String get noServiceAccountConfigured => 'サービスアカウントが設定されていません';
+
+  @override
+  String get playSetupHint =>
+      'スクリーンショットをアップロードするには、Google Play サービスアカウントを設定してください。';
+
+  @override
+  String get configureServiceAccount => 'サービスアカウントを設定';
+
+  @override
+  String invalidServiceAccount(String error) {
+    return '無効なサービスアカウントファイル: $error';
+  }
+
+  @override
+  String get packageName => 'パッケージ名';
+
+  @override
+  String get packageNameHint => 'com.example.app';
+
+  @override
+  String get imageType => '画像タイプ';
+
+  @override
+  String playMaxScreenshotsNote(int count) {
+    return 'Google Playではロケールごとに最大$count枚 of スクリーンショットが許可されています。超過分はアップロードされません。';
+  }
+
+  @override
+  String get googlePlay => 'Google Play';
+
+  @override
+  String get learnMore => '詳細情報';
+
+  @override
+  String get orLabel => 'または';
+
+  @override
+  String get pasteJsonLabel => 'JSONの内容を貼り付け';
+
+  @override
+  String get playPasteJsonHint => 'サービスアカウントの .json ファイルの内容を貼り付けます';
+
+  @override
+  String get saveJsonContents => 'JSONの内容を保存';
+
+  @override
+  String get playInstructionsTitle => 'キーの取得方法';
+
+  @override
+  String get playInstructionsStep1 =>
+      'Google Play Console → セットアップ → API アクセス を開きます。';
+
+  @override
+  String get playInstructionsStep2 =>
+      'Google Cloud プロジェクトを作成またはリンクし、サービスアカウントを作成します。';
+
+  @override
+  String get playInstructionsStep3 => 'ユーザーと権限 の下で、サービスアカウントにアプリへのアクセス権を付与します。';
+
+  @override
+  String get playInstructionsStep4 => 'サービスアカウントの JSON キーを作成してダウンロードします。';
+
+  @override
   String get noImagesFoundInFolder => '選択したフォルダーに有効なスクリーンショット画像が見つかりませんでした';
 
   @override

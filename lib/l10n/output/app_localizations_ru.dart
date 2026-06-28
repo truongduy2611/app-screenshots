@@ -1216,6 +1216,86 @@ class AppLocalizationsRu extends AppLocalizations {
   String get uploadExistingFolderToAsc => 'Загрузить существующую папку...';
 
   @override
+  String get uploadToGooglePlay => 'Загрузить в Google Play';
+
+  @override
+  String get googlePlayServiceAccount => 'Сервисный аккаунт Google Play';
+
+  @override
+  String get playServiceAccountHint =>
+      'Выберите JSON-ключ сервисного аккаунта в Google Cloud Console с доступом к Android Publisher.';
+
+  @override
+  String get selectJsonKeyFile => 'Выбрать файл JSON-ключа';
+
+  @override
+  String get noServiceAccountConfigured => 'Сервисный аккаунт не настроен';
+
+  @override
+  String get playSetupHint =>
+      'Настройте сервисный аккаунт Google Play для загрузки скриншотов.';
+
+  @override
+  String get configureServiceAccount => 'Настроить сервисный аккаунт';
+
+  @override
+  String invalidServiceAccount(String error) {
+    return 'Недопустимый файл сервисного аккаунта: $error';
+  }
+
+  @override
+  String get packageName => 'Имя пакета';
+
+  @override
+  String get packageNameHint => 'com.example.app';
+
+  @override
+  String get imageType => 'Тип изображения';
+
+  @override
+  String playMaxScreenshotsNote(int count) {
+    return 'Google Play разрешает до $count скриншотов на один язык. Лишние загружены не будут.';
+  }
+
+  @override
+  String get googlePlay => 'Google Play';
+
+  @override
+  String get learnMore => 'Подробнее';
+
+  @override
+  String get orLabel => 'или';
+
+  @override
+  String get pasteJsonLabel => 'Вставить содержимое JSON';
+
+  @override
+  String get playPasteJsonHint =>
+      'Вставьте содержимое файла .json вашего сервисного аккаунта';
+
+  @override
+  String get saveJsonContents => 'Сохранить содержимое JSON';
+
+  @override
+  String get playInstructionsTitle => 'Как получить ключ';
+
+  @override
+  String get playInstructionsStep1 =>
+      'Откройте Google Play Console → Настройка → Доступ к API.';
+
+  @override
+  String get playInstructionsStep2 =>
+      'Создайте или свяжите проект Google Cloud, а затем создайте сервисный аккаунт.';
+
+  @override
+  String get playInstructionsStep3 =>
+      'Предоставьте сервисному аккаунту доступ к вашему приложению в разделе «Пользователи и разрешения».';
+
+  @override
+  String get playInstructionsStep4 =>
+      'Создайте JSON-ключ для сервисного аккаунта и скачайте его.';
+
+  @override
   String get noImagesFoundInFolder =>
       'В выбранной папке не найдено допустимых снимков экрана';
 

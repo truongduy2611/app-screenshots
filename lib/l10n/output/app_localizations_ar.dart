@@ -1214,6 +1214,86 @@ class AppLocalizationsAr extends AppLocalizations {
   String get uploadExistingFolderToAsc => 'تحميل مجلد موجود...';
 
   @override
+  String get uploadToGooglePlay => 'تحميل إلى Google Play';
+
+  @override
+  String get googlePlayServiceAccount => 'حساب خدمة Google Play';
+
+  @override
+  String get playServiceAccountHint =>
+      'حدد مفتاح JSON لحساب الخدمة من Google Cloud Console مع صلاحية وصول Android Publisher.';
+
+  @override
+  String get selectJsonKeyFile => 'تحديد ملف مفتاح JSON';
+
+  @override
+  String get noServiceAccountConfigured => 'لم يتم تكوين حساب خدمة';
+
+  @override
+  String get playSetupHint =>
+      'قم بإعداد حساب خدمة Google Play لتحميل لقطات الشاشة.';
+
+  @override
+  String get configureServiceAccount => 'تكوين حساب الخدمة';
+
+  @override
+  String invalidServiceAccount(String error) {
+    return 'ملف حساب خدمة غير صالح: $error';
+  }
+
+  @override
+  String get packageName => 'اسم الحزمة';
+
+  @override
+  String get packageNameHint => 'com.example.app';
+
+  @override
+  String get imageType => 'نوع الصورة';
+
+  @override
+  String playMaxScreenshotsNote(int count) {
+    return 'يسمح Google Play بما يصل إلى $count من لقطات الشاشة لكل لغة — لن يتم تحميل اللقطات الإضافية.';
+  }
+
+  @override
+  String get googlePlay => 'Google Play';
+
+  @override
+  String get learnMore => 'معرفة المزيد';
+
+  @override
+  String get orLabel => 'أو';
+
+  @override
+  String get pasteJsonLabel => 'لصق محتويات JSON';
+
+  @override
+  String get playPasteJsonHint =>
+      'الصق محتويات ملف .json الخاص بحساب الخدمة الخاص بك';
+
+  @override
+  String get saveJsonContents => 'حفظ محتويات JSON';
+
+  @override
+  String get playInstructionsTitle => 'كيفية الحصول على المفتاح الخاص بك';
+
+  @override
+  String get playInstructionsStep1 =>
+      'افتح Google Play Console ← الإعداد ← الوصول إلى API.';
+
+  @override
+  String get playInstructionsStep2 =>
+      'إنشاء مشروع Google Cloud أو ربطه، ثم إنشاء حساب خدمة.';
+
+  @override
+  String get playInstructionsStep3 =>
+      'امنح حساب الخدمة حق الوصول إلى تطبيقك ضمن المستخدمين والأذونات.';
+
+  @override
+  String get playInstructionsStep4 =>
+      'قم بإنشاء مفتاح JSON لحساب الخدمة وقم بتنزيله.';
+
+  @override
   String get noImagesFoundInFolder =>
       'لم يتم العثور على صور لقطات شاشة صالحة في المجلد المحدد';
 

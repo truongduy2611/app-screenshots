@@ -1168,6 +1168,80 @@ class AppLocalizationsZh extends AppLocalizations {
   String get uploadExistingFolderToAsc => '上传现有文件夹...';
 
   @override
+  String get uploadToGooglePlay => '上传到 Google Play';
+
+  @override
+  String get googlePlayServiceAccount => 'Google Play 服务帐号';
+
+  @override
+  String get playServiceAccountHint =>
+      '从 Google Cloud Console 中选择具有 Android Publisher 访问权限的服务帐号 JSON 密钥。';
+
+  @override
+  String get selectJsonKeyFile => '选择 JSON 密钥文件';
+
+  @override
+  String get noServiceAccountConfigured => '未配置服务帐号';
+
+  @override
+  String get playSetupHint => '设置您的 Google Play 服务帐号以上传屏幕截图。';
+
+  @override
+  String get configureServiceAccount => '配置服务帐号';
+
+  @override
+  String invalidServiceAccount(String error) {
+    return '无效的服务帐号文件：$error';
+  }
+
+  @override
+  String get packageName => '包名';
+
+  @override
+  String get packageNameHint => 'com.example.app';
+
+  @override
+  String get imageType => '图片类型';
+
+  @override
+  String playMaxScreenshotsNote(int count) {
+    return 'Google Play 每个语言区域最多允许 $count 张屏幕截图 — 多余的截图不会被上传。';
+  }
+
+  @override
+  String get googlePlay => 'Google Play';
+
+  @override
+  String get learnMore => '了解详情';
+
+  @override
+  String get orLabel => '或';
+
+  @override
+  String get pasteJsonLabel => '粘贴 JSON 内容';
+
+  @override
+  String get playPasteJsonHint => '粘贴您的服务帐号 .json 文件的内容';
+
+  @override
+  String get saveJsonContents => '保存 JSON 内容';
+
+  @override
+  String get playInstructionsTitle => '如何获取密钥';
+
+  @override
+  String get playInstructionsStep1 => '打开 Google Play Console → 设置 → API 访问。';
+
+  @override
+  String get playInstructionsStep2 => '创建或关联 Google Cloud 项目，然后创建服务帐号。';
+
+  @override
+  String get playInstructionsStep3 => '在“用户和权限”下授予服务帐号对应用的访问权限。';
+
+  @override
+  String get playInstructionsStep4 => '为服务帐号创建 JSON 密钥并下载。';
+
+  @override
   String get noImagesFoundInFolder => '在选定文件夹中未找到有效的屏幕截图图像';
 
   @override
@@ -2756,6 +2830,80 @@ class AppLocalizationsZhHant extends AppLocalizationsZh {
 
   @override
   String get uploadExistingFolderToAsc => '上傳現有資料夾...';
+
+  @override
+  String get uploadToGooglePlay => '上傳到 Google Play';
+
+  @override
+  String get googlePlayServiceAccount => 'Google Play 服務帳戶';
+
+  @override
+  String get playServiceAccountHint =>
+      '從 Google Cloud Console 選擇具有 Android Publisher 存取權限的服務帳戶 JSON 金鑰。';
+
+  @override
+  String get selectJsonKeyFile => '選擇 JSON 金鑰檔案';
+
+  @override
+  String get noServiceAccountConfigured => '未設定服務帳戶';
+
+  @override
+  String get playSetupHint => '設定您的 Google Play 服務帳戶以上傳螢幕截圖。';
+
+  @override
+  String get configureServiceAccount => '設定服務帳戶';
+
+  @override
+  String invalidServiceAccount(String error) {
+    return '無效的服務帳戶檔案：$error';
+  }
+
+  @override
+  String get packageName => '套件名稱';
+
+  @override
+  String get packageNameHint => 'com.example.app';
+
+  @override
+  String get imageType => '圖片類型';
+
+  @override
+  String playMaxScreenshotsNote(int count) {
+    return 'Google Play 每個語言區域最多允許 $count 張螢幕截圖 — 多餘的螢幕截圖不會被上傳。';
+  }
+
+  @override
+  String get googlePlay => 'Google Play';
+
+  @override
+  String get learnMore => '了解更多';
+
+  @override
+  String get orLabel => '或';
+
+  @override
+  String get pasteJsonLabel => '貼上 JSON 內容';
+
+  @override
+  String get playPasteJsonHint => '貼上您服務帳戶 .json 檔案的內容';
+
+  @override
+  String get saveJsonContents => '儲存 JSON 內容';
+
+  @override
+  String get playInstructionsTitle => '如何取得您的金鑰';
+
+  @override
+  String get playInstructionsStep1 => '打開 Google Play Console → 設定 → API 存取。';
+
+  @override
+  String get playInstructionsStep2 => '建立或連結 Google Cloud 專案，然後建立服務帳戶。';
+
+  @override
+  String get playInstructionsStep3 => '在「使用者和權限」下授予服務帳戶存取應用程式的權限。';
+
+  @override
+  String get playInstructionsStep4 => '為服務帳戶建立 JSON 金鑰並下載。';
 
   @override
   String get noImagesFoundInFolder => '在選定資料夾中未找到有效的螢幕截圖圖像';

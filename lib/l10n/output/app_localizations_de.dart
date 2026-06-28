@@ -1220,6 +1220,86 @@ class AppLocalizationsDe extends AppLocalizations {
   String get uploadExistingFolderToAsc => 'Vorhandenen Ordner hochladen...';
 
   @override
+  String get uploadToGooglePlay => 'Zu Google Play hochladen';
+
+  @override
+  String get googlePlayServiceAccount => 'Google Play Dienstkonto';
+
+  @override
+  String get playServiceAccountHint =>
+      'Wählen Sie den JSON-Schlüssel des Dienstkontos aus der Google Cloud Console mit Android Publisher-Zugriff aus.';
+
+  @override
+  String get selectJsonKeyFile => 'JSON-Schlüsseldatei auswählen';
+
+  @override
+  String get noServiceAccountConfigured => 'Kein Dienstkonto konfiguriert';
+
+  @override
+  String get playSetupHint =>
+      'Richten Sie Ihr Google Play Dienstkonto ein, um Screenshots hochzuladen.';
+
+  @override
+  String get configureServiceAccount => 'Dienstkonto konfigurieren';
+
+  @override
+  String invalidServiceAccount(String error) {
+    return 'Ungültige Dienstkontodatei: $error';
+  }
+
+  @override
+  String get packageName => 'Paketname';
+
+  @override
+  String get packageNameHint => 'com.example.app';
+
+  @override
+  String get imageType => 'Bildtyp';
+
+  @override
+  String playMaxScreenshotsNote(int count) {
+    return 'Google Play erlaubt bis zu $count Screenshots pro Sprache – zusätzliche werden nicht hochgeladen.';
+  }
+
+  @override
+  String get googlePlay => 'Google Play';
+
+  @override
+  String get learnMore => 'Mehr erfahren';
+
+  @override
+  String get orLabel => 'oder';
+
+  @override
+  String get pasteJsonLabel => 'JSON-Inhalt einfügen';
+
+  @override
+  String get playPasteJsonHint =>
+      'Fügen Sie den Inhalt der .json-Datei Ihres Dienstkontos ein';
+
+  @override
+  String get saveJsonContents => 'JSON-Inhalt speichern';
+
+  @override
+  String get playInstructionsTitle => 'So erhalten Sie Ihren Schlüssel';
+
+  @override
+  String get playInstructionsStep1 =>
+      'Google Play Console öffnen → Setup → API-Zugriff.';
+
+  @override
+  String get playInstructionsStep2 =>
+      'Erstellen oder verknüpfen Sie ein Google Cloud-Projekt und erstellen Sie dann ein Dienstkonto.';
+
+  @override
+  String get playInstructionsStep3 =>
+      'Gewähren Sie dem Dienstkonto unter Benutzer & Berechtigungen Zugriff auf Ihre App.';
+
+  @override
+  String get playInstructionsStep4 =>
+      'Erstellen Sie einen JSON-Schlüssel für das Dienstkonto und laden Sie ihn herunter.';
+
+  @override
   String get noImagesFoundInFolder =>
       'Keine gültigen Screenshot-Bilder im ausgewählten Ordner gefunden';
 

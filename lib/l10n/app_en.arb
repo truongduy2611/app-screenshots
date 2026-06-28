@@ -1582,6 +1582,108 @@
   "@uploadExistingFolderToAsc": {
     "description": "Action to upload an existing folder of screenshots to ASC without rendering"
   },
+  "uploadToGooglePlay": "Upload to Google Play",
+  "@uploadToGooglePlay": {
+    "description": "Menu item / sheet title to upload screenshots to the Google Play Console"
+  },
+  "googlePlayServiceAccount": "Google Play Service Account",
+  "@googlePlayServiceAccount": {
+    "description": "Title of the Google Play credentials dialog"
+  },
+  "playServiceAccountHint": "Select the service account JSON key from Google Cloud Console with Android Publisher access.",
+  "@playServiceAccountHint": {
+    "description": "Hint explaining how to obtain the Google Play service account key"
+  },
+  "selectJsonKeyFile": "Select JSON Key File",
+  "@selectJsonKeyFile": {
+    "description": "Button to pick the Google Play service account JSON key file"
+  },
+  "noServiceAccountConfigured": "No service account configured",
+  "@noServiceAccountConfigured": {
+    "description": "Empty state when no Google Play credentials are set"
+  },
+  "playSetupHint": "Set up your Google Play service account to upload screenshots.",
+  "@playSetupHint": {
+    "description": "Prompt to configure the Google Play service account"
+  },
+  "configureServiceAccount": "Configure Service Account",
+  "@configureServiceAccount": {
+    "description": "Button to configure the Google Play service account"
+  },
+  "invalidServiceAccount": "Invalid service account file: {error}",
+  "@invalidServiceAccount": {
+    "description": "Error shown when the selected JSON key file is invalid",
+    "placeholders": {
+      "error": {
+        "type": "String"
+      }
+    }
+  },
+  "packageName": "Package Name",
+  "@packageName": {
+    "description": "Label for the Google Play package name field"
+  },
+  "packageNameHint": "com.example.app",
+  "@packageNameHint": {
+    "description": "Placeholder for the package name input"
+  },
+  "imageType": "Image Type",
+  "@imageType": {
+    "description": "Label for the Google Play screenshot image type selector"
+  },
+  "playMaxScreenshotsNote": "Google Play allows up to {count} screenshots per locale — extras won't be uploaded.",
+  "@playMaxScreenshotsNote": {
+    "description": "Warning shown when a locale has more screenshots than Google Play's per-type limit",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "googlePlay": "Google Play",
+  "@googlePlay": {
+    "description": "Settings section header for Google Play"
+  },
+  "learnMore": "Learn more",
+  "@learnMore": {
+    "description": "Link label to open external documentation"
+  },
+  "orLabel": "or",
+  "@orLabel": {
+    "description": "Divider label between two alternative actions"
+  },
+  "pasteJsonLabel": "Paste JSON contents",
+  "@pasteJsonLabel": {
+    "description": "Label for the paste-JSON text field in the Play credentials dialog"
+  },
+  "playPasteJsonHint": "Paste the contents of your service account .json file",
+  "@playPasteJsonHint": {
+    "description": "Hint for pasting the Google Play service account JSON"
+  },
+  "saveJsonContents": "Save JSON Contents",
+  "@saveJsonContents": {
+    "description": "Button to save pasted service account JSON"
+  },
+  "playInstructionsTitle": "How to get your key",
+  "@playInstructionsTitle": {
+    "description": "Heading for the Google Play service account setup steps"
+  },
+  "playInstructionsStep1": "Open Google Play Console → Setup → API access.",
+  "@playInstructionsStep1": {
+    "description": "Google Play service account setup step 1"
+  },
+  "playInstructionsStep2": "Create or link a Google Cloud project, then create a service account.",
+  "@playInstructionsStep2": {
+    "description": "Google Play service account setup step 2"
+  },
+  "playInstructionsStep3": "Grant the service account access to your app under Users & permissions.",
+  "@playInstructionsStep3": {
+    "description": "Google Play service account setup step 3"
+  },
+  "playInstructionsStep4": "Create a JSON key for the service account and download it.",
+  "@playInstructionsStep4": {
+    "description": "Google Play service account setup step 4"
+  },
   "noImagesFoundInFolder": "No valid screenshot images found in selected folder",
   "@noImagesFoundInFolder": {
     "description": "Error message when the selected folder for ASC upload contains no valid images"
