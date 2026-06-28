@@ -13,6 +13,22 @@ class ImagePickerHelper {
     required BuildContext context,
     bool allowMultiple = false,
   }) async {
+    final isMobile = Platform.isIOS || Platform.isAndroid;
+
+    if (!isMobile) {
+      final result = await FilePicker.platform.pickFiles(
+        type: FileType.image,
+        allowMultiple: allowMultiple,
+      );
+      if (result != null && result.files.isNotEmpty) {
+        return result.files
+            .where((f) => f.path != null)
+            .map((f) => File(f.path!))
+            .toList();
+      }
+      return const [];
+    }
+
     final ImageSource? source = await showModalBottomSheet<ImageSource>(
       context: context,
       shape: const RoundedRectangleBorder(
