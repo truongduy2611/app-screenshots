@@ -17,6 +17,24 @@ class PlayApiException implements Exception {
       message.toLowerCase().contains('listing') &&
           message.toLowerCase().contains('not');
 
+  /// `true` when Google rejected the request because the locale isn't a
+  /// supported Play listing language (e.g. "The requested language is not
+  /// currently supported: pl."). Treated as a per-locale failure, not fatal.
+  bool get isLanguageUnsupported =>
+      statusCode == 400 &&
+      message.toLowerCase().contains('language is not currently supported');
+
+  /// `true` when Google refuses to auto-submit the changes for review
+  /// ("Changes cannot be sent for review automatically. Please set the query
+  /// parameter changesNotSentForReview to true."). The fix is to retry the
+  /// commit with changesNotSentForReview=true.
+  bool get isReviewRequired {
+    final lower = message.toLowerCase();
+    return statusCode == 400 &&
+        (lower.contains('changesnotsentforreview') ||
+            lower.contains('cannot be sent for review'));
+  }
+
   /// `true` when Google rejected a commit because the edit's baseline went
   /// stale ("A change was made to the application outside of this Edit, please
   /// create a new edit."). The fix is to retry the whole edit from scratch.

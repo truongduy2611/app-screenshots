@@ -150,12 +150,15 @@ class PlayUploadService {
               )).length;
             }
           } on PlayApiException catch (e) {
-            // A missing listing means the locale can't receive uploads — fail
-            // this locale, keep going.
-            if (e.isListingMissing) {
+            // A missing listing or an unsupported language means the locale
+            // can't receive uploads — fail this locale, keep going.
+            if (e.isListingMissing || e.isLanguageUnsupported) {
               localeErrors.add(
-                'No store listing for "$playLocale". '
-                'Create it in Play Console first.',
+                e.isLanguageUnsupported
+                    ? '"$playLocale" is not a supported Google Play '
+                          'listing language.'
+                    : 'No store listing for "$playLocale". '
+                          'Create it in Play Console first.',
               );
               localeFailure += files.length;
               failureCount += files.length;
@@ -230,7 +233,31 @@ class PlayUploadService {
         // Commit only if at least one screenshot was staged successfully.
         if (successCount > 0) {
           try {
-            await client.commitEdit(packageName, editId);
+            // Send the changes for review so they actually land on the
+            // listing without a manual step. If Google refuses to auto-submit
+            // (some apps can't), fall back to committing them as a draft.
+            try {
+              await client.commitEdit(
+                packageName,
+                editId,
+                changesNotSentForReview: false,
+              );
+            } on PlayApiException catch (e) {
+              if (e.isReviewRequired) {
+                AppLogger.w(
+                  'Auto-submit for review not allowed; committing as a draft '
+                  '(changes not sent for review)',
+                  tag: 'PlayUpload',
+                );
+                await client.commitEdit(
+                  packageName,
+                  editId,
+                  changesNotSentForReview: true,
+                );
+              } else {
+                rethrow;
+              }
+            }
             committed = true;
             AppLogger.i('Committed Play edit $editId', tag: 'PlayUpload');
           } on PlayApiException catch (e) {
@@ -337,6 +364,74 @@ class PlayUploadService {
       'zh-hant': 'zh-TW',
       'zh-tw': 'zh-TW',
       'zh-hant-tw': 'zh-TW',
+      'zh-hk': 'zh-HK',
+      // Languages Google Play requires with a region suffix.
+      'pl': 'pl-PL',
+      'pl-pl': 'pl-PL',
+      'sv': 'sv-SE',
+      'sv-se': 'sv-SE',
+      'da': 'da-DK',
+      'da-dk': 'da-DK',
+      'fi': 'fi-FI',
+      'fi-fi': 'fi-FI',
+      'cs': 'cs-CZ',
+      'cs-cz': 'cs-CZ',
+      'hu': 'hu-HU',
+      'hu-hu': 'hu-HU',
+      'el': 'el-GR',
+      'el-gr': 'el-GR',
+      'no': 'no-NO',
+      'nb': 'no-NO',
+      'nb-no': 'no-NO',
+      'nn': 'no-NO',
+      'he': 'iw-IL',
+      'iw': 'iw-IL',
+      'hi': 'hi-IN',
+      'bn': 'bn-BD',
+      'ta': 'ta-IN',
+      'te': 'te-IN',
+      'ml': 'ml-IN',
+      'mr': 'mr-IN',
+      'kn': 'kn-IN',
+      'az': 'az-AZ',
+      'ka': 'ka-GE',
+      'hy': 'hy-AM',
+      'km': 'km-KH',
+      'lo': 'lo-LA',
+      'mk': 'mk-MK',
+      'mn': 'mn-MN',
+      'my': 'my-MM',
+      'ne': 'ne-NP',
+      'si': 'si-LK',
+      'is': 'is-IS',
+      'gl': 'gl-ES',
+      'eu': 'eu-ES',
+      // Languages Google Play accepts as a bare language code.
+      'sk': 'sk',
+      'ro': 'ro',
+      'uk': 'uk',
+      'hr': 'hr',
+      'bg': 'bg',
+      'sr': 'sr',
+      'sl': 'sl',
+      'lt': 'lt',
+      'lv': 'lv',
+      'et': 'et',
+      'ca': 'ca',
+      'fa': 'fa',
+      'af': 'af',
+      'sw': 'sw',
+      'am': 'am',
+      'be': 'be',
+      'kk': 'kk',
+      'ur': 'ur',
+      'sq': 'sq',
+      'zu': 'zu',
+      'ms': 'ms',
+      'ms-my': 'ms',
+      'id': 'id',
+      'fil': 'fil',
+      'tl': 'fil',
     };
     return map[lower] ?? locale;
   }
