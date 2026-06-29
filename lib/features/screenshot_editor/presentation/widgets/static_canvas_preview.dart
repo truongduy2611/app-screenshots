@@ -129,7 +129,9 @@ class StaticCanvasPreview extends StatelessWidget {
                                 child: design.deviceFrame != null
                                     ? SizedBox.expand(
                                         child: FittedBox(
-                                          fit: BoxFit.contain,
+                                          fit: (design.deviceFrame?.identifier.name.contains('hand') ?? false)
+                                              ? BoxFit.fitHeight
+                                              : BoxFit.contain,
                                           child: DeviceFrame(
                                             device: design.deviceFrame!,
                                             isFrameVisible: true,

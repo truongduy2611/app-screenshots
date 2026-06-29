@@ -167,6 +167,7 @@ class FrameControls extends StatelessWidget {
           ...Devices.ios.iPhone17ProColors,
           ...Devices.ios.iPhone17Colors,
           ...Devices.ios.iPhoneAirColors,
+          ...Devices.ios.iPhone17ProMaxHandColors,
           // iPhone 16 series
           Devices.ios.iPhone16ProMax,
           Devices.ios.iPhone16Pro,

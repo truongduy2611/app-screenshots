@@ -157,6 +157,8 @@ class _DraggableFrameWidgetState extends State<DraggableFrameWidget> {
       );
     }
 
+    final isHandFrame = state.design.deviceFrame?.identifier.name.contains('hand') ?? false;
+
     return Transform.translate(
       offset: imagePos,
       child: Transform(
@@ -164,7 +166,7 @@ class _DraggableFrameWidgetState extends State<DraggableFrameWidget> {
         alignment: Alignment.center,
         child: SizedBox.expand(
           child: FittedBox(
-            fit: BoxFit.contain,
+            fit: isHandFrame ? BoxFit.fitHeight : BoxFit.contain,
             child: DeviceFrame(
               device: state.design.deviceFrame!,
               isFrameVisible: true,
