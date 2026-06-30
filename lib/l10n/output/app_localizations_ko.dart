@@ -1713,4 +1713,21 @@ class AppLocalizationsKo extends AppLocalizations {
 
   @override
   String get applyFrameToAllScreenshots => '모든 스ครีน샷에 프레임 설정 적용';
+
+  @override
+  String get commitAsDraft => '임시 저장';
+
+  @override
+  String get commitAsDraftDesc => '검토를 위해 제출하는 대신 변경 사항을 임시 저장 상태로 유지합니다.';
+
+  @override
+  String get playErrorAutoSubmitRequired =>
+      'Google Play Console에서는 이 앱의 모든 변경 사항이 자동으로 검토를 위해 제출되어야 합니다. \'임시 저장\'을 비활성화하고 Google Play Console에서 필요한 모든 선언이 완료되었는지 확인하십시오.';
+
+  @override
+  String get uploadExistingFolderToGooglePlay => '기존 폴더를 Google Play에 업로드';
+
+  @override
+  String get playErrorDeclarationRequired =>
+      'Google Play에서 업로드를 거부했습니다. 먼저 Google Play Console의 \'앱 콘텐츠\'에서 처리되지 않은 선언을 모두 완료하십시오.';
 }

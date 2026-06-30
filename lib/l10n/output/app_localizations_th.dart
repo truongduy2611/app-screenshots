@@ -1741,4 +1741,23 @@ class AppLocalizationsTh extends AppLocalizations {
   @override
   String get applyFrameToAllScreenshots =>
       'ใช้การตั้งค่าเฟรมกับภาพหน้าจอทั้งหมด';
+
+  @override
+  String get commitAsDraft => 'บันทึกเป็นแบบร่าง';
+
+  @override
+  String get commitAsDraftDesc =>
+      'เก็บการเปลี่ยนแปลงไว้ในสถานะแบบร่างแทนที่จะส่งเพื่อตรวจสอบ';
+
+  @override
+  String get playErrorAutoSubmitRequired =>
+      'Google Play Console กำหนดให้ส่งการเปลี่ยนแปลงทั้งหมดเพื่อตรวจสอบโดยอัตโนมัติสำหรับแอปนี้ โปรดปิดใช้งาน \'บันทึกเป็นแบบร่าง\' และตรวจสอบว่าได้กรอกคำประกาศที่จำเป็นทั้งหมดใน Google Play Console ครบถ้วนแล้ว';
+
+  @override
+  String get uploadExistingFolderToGooglePlay =>
+      'อัปโหลดโฟลเดอร์ที่มีอยู่ไปยัง Google Play';
+
+  @override
+  String get playErrorDeclarationRequired =>
+      'การอัปโหลดถูกปฏิเสธโดย Google Play: โปรดตรวจสอบ Google Play Console ของคุณและกรอกคำประกาศที่ค้างอยู่ภายใต้เนื้อหาแอปก่อน';
 }

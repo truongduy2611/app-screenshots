@@ -1802,4 +1802,23 @@ class AppLocalizationsRu extends AppLocalizations {
   @override
   String get applyFrameToAllScreenshots =>
       'Применить настройки кадра ко всем скриншотам';
+
+  @override
+  String get commitAsDraft => 'Сохранить как черновик';
+
+  @override
+  String get commitAsDraftDesc =>
+      'Сохранить изменения в статусе черновика вместо отправки на проверку.';
+
+  @override
+  String get playErrorAutoSubmitRequired =>
+      'Google Play Console требует, чтобы все изменения для этого приложения отправлялись на проверку автоматически. Пожалуйста, отключите \'Сохранить как черновик\' и убедитесь, что все необходимые декларации заполнены в Google Play Console.';
+
+  @override
+  String get uploadExistingFolderToGooglePlay =>
+      'Загрузить существующую папку в Google Play';
+
+  @override
+  String get playErrorDeclarationRequired =>
+      'Загрузка отклонена Google Play: пожалуйста, проверьте Google Play Console и сначала заполните все незавершенные декларации в разделе \'Контент приложения\'.';
 }

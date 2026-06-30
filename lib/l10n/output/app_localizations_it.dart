@@ -1804,4 +1804,23 @@ class AppLocalizationsIt extends AppLocalizations {
   @override
   String get applyFrameToAllScreenshots =>
       'Applica le impostazioni del frame a tutti gli screenshot';
+
+  @override
+  String get commitAsDraft => 'Salva come bozza';
+
+  @override
+  String get commitAsDraftDesc =>
+      'Mantieni le modifiche nello stato di bozza invece di inviarle per la revisione.';
+
+  @override
+  String get playErrorAutoSubmitRequired =>
+      'Google Play Console richiede che tutte le modifiche vengano inviate automaticamente alla revisione per questa app. Disattiva \'Salva come bozza\' e assicurati che tutte le dichiarazioni richieste siano completate in Google Play Console.';
+
+  @override
+  String get uploadExistingFolderToGooglePlay =>
+      'Carica cartella esistente su Google Play';
+
+  @override
+  String get playErrorDeclarationRequired =>
+      'Caricamento rifiutato da Google Play: controlla la tua Google Play Console e completa prima eventuali dichiarazioni in sospeso alla voce Contenuto dell\'app.';
 }

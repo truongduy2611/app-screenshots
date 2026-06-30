@@ -3298,6 +3298,36 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Apply frame settings to all screenshots'**
   String get applyFrameToAllScreenshots;
+
+  /// Label for toggle to upload screenshots as draft
+  ///
+  /// In en, this message translates to:
+  /// **'Commit as Draft'**
+  String get commitAsDraft;
+
+  /// Description for the commit as draft toggle
+  ///
+  /// In en, this message translates to:
+  /// **'Keep changes staged in Google Play Console instead of submitting for review.'**
+  String get commitAsDraftDesc;
+
+  /// Error message when Google Play Console requires changes to be sent for review automatically
+  ///
+  /// In en, this message translates to:
+  /// **'Google Play Console requires all changes to be sent for review automatically for this app. Please disable \'Commit as Draft\' and ensure all required declarations are completed in Google Play Console.'**
+  String get playErrorAutoSubmitRequired;
+
+  /// Menu item and dialog title to upload an existing screenshot folder to Google Play
+  ///
+  /// In en, this message translates to:
+  /// **'Upload existing folder to Google Play'**
+  String get uploadExistingFolderToGooglePlay;
+
+  /// Error message when Google Play rejects upload due to missing declarations under App Content
+  ///
+  /// In en, this message translates to:
+  /// **'Upload rejected by Google Play: Please check your Google Play Console and complete any outstanding declarations under App Content first.'**
+  String get playErrorDeclarationRequired;
 }
 
 class _AppLocalizationsDelegate

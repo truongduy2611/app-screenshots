@@ -1789,4 +1789,23 @@ class AppLocalizationsAr extends AppLocalizations {
   @override
   String get applyFrameToAllScreenshots =>
       'تطبيق إعدادات الإطار على جميع لقطات الشاشة';
+
+  @override
+  String get commitAsDraft => 'حفظ كمسودة';
+
+  @override
+  String get commitAsDraftDesc =>
+      'الاحتفاظ بالتغييرات في حالة مسودة بدلاً من إرسالها للمراجعة.';
+
+  @override
+  String get playErrorAutoSubmitRequired =>
+      'تتطلب Google Play Console إرسال جميع التغييرات للمراجعة تلقائيًا لهذا التطبيق. يرجى تعطيل \'حفظ كمسودة\' والتأكد من إكمال جميع الإقرارات المطلوبة في Google Play Console.';
+
+  @override
+  String get uploadExistingFolderToGooglePlay =>
+      'تحميل مجلد موجود إلى Google Play';
+
+  @override
+  String get playErrorDeclarationRequired =>
+      'تم رفض التحميل من قِvel Google Play: يرجى التحقق من Google Play Console وإكمال أي إقرارات معلقة ضمن محتوى التطبيق أولاً.';
 }

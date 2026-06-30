@@ -68,6 +68,7 @@ enum _MultiMenuAction {
   uploadToAsc,
   uploadExistingToAsc,
   uploadToGooglePlay,
+  uploadExistingToGooglePlay,
 }
 
 /// Multi-screenshot editor page – horizontal row of artboards.
@@ -793,6 +794,8 @@ class _MultiScreenshotViewState extends State<_MultiScreenshotView>
         _uploadExistingFolder(context);
       case _MultiMenuAction.uploadToGooglePlay:
         _showPlayUploadSheet(context);
+      case _MultiMenuAction.uploadExistingToGooglePlay:
+        _uploadExistingFolderToPlayStore(context);
       case _MultiMenuAction.saveAsTemplate:
         _saveAsTemplate(context);
       case _MultiMenuAction.grid:
@@ -916,6 +919,111 @@ class _MultiScreenshotViewState extends State<_MultiScreenshotView>
                   ascAppConfig: savedConfig,
                   onAppConfigChanged: captureProvider?.onAscAppConfigChanged,
                 ),
+              ),
+      ),
+    );
+  }
+
+  Future<void> _uploadExistingFolderToPlayStore(BuildContext context) async {
+    // 1) Check credentials — prompt dialog if missing.
+    final repo = sl<SettingsRepository>();
+    final creds = await repo.getPlayCredentials();
+    if (creds == null || !creds.isValid) {
+      if (!context.mounted) return;
+      final saved = await PlayCredentialsDialog.show(context);
+      if (!saved || !context.mounted) return;
+    }
+
+    if (!context.mounted) return;
+
+    // 2) Pick directory or use cached
+    final multiState = context.read<MultiScreenshotCubit>().state;
+    String? path;
+
+    if (multiState.lastRenderedAscPath != null && Directory(multiState.lastRenderedAscPath!).existsSync()) {
+      final useCached = await showDialog<bool>(
+        context: context,
+        builder: (ctx) => AlertDialog(
+          title: Text(context.l10n.uploadCachedFolderTitle),
+          content: Text(context.l10n.uploadCachedFolderMessage),
+          actions: [
+            TextButton(
+              onPressed: () => Navigator.pop(ctx, false),
+              child: Text(context.l10n.pickFolder),
+            ),
+            FilledButton(
+              onPressed: () => Navigator.pop(ctx, true),
+              child: Text(context.l10n.useCached),
+            ),
+          ],
+        ),
+      );
+      
+      if (useCached == null || !context.mounted) return;
+      
+      if (useCached) {
+        path = multiState.lastRenderedAscPath;
+      } else {
+        path = await FilePicker.platform.getDirectoryPath(
+          dialogTitle: context.l10n.uploadExistingFolderToGooglePlay,
+        );
+      }
+    } else {
+      path = await FilePicker.platform.getDirectoryPath(
+        dialogTitle: context.l10n.uploadExistingFolderToGooglePlay,
+      );
+    }
+    
+    if (path == null || !context.mounted) return;
+
+    final dir = Directory(path);
+    if (!dir.existsSync()) return;
+
+    // 3) Parse directory
+    final localeScreenshots = <String, List<File>>{};
+
+    // Scan subdirectories for locales
+    for (final entity in dir.listSync()) {
+      if (entity is Directory) {
+        final locale = entity.path.split(Platform.pathSeparator).last;
+        final files = entity.listSync().whereType<File>().where((f) {
+          final ext = f.path.toLowerCase();
+          return ext.endsWith('.png') ||
+              ext.endsWith('.jpg') ||
+              ext.endsWith('.jpeg');
+        }).toList();
+
+        if (files.isNotEmpty) {
+          // Sort files alphabetically to maintain order
+          files.sort((a, b) => a.path.compareTo(b.path));
+          localeScreenshots[locale] = files;
+        }
+      }
+    }
+
+    if (!context.mounted) return;
+
+    if (localeScreenshots.isEmpty) {
+      context.showAppSnackbar(
+        context.l10n.noImagesFoundInFolder,
+        type: AppSnackbarType.error,
+      );
+      return;
+    }
+
+    // 4) Show upload sheet
+    final isSmallScreen = MediaQuery.sizeOf(context).width < 600;
+    showDialog(
+      context: context,
+      useSafeArea: !isSmallScreen,
+      builder: (_) => BlocProvider(
+        create: (_) => sl<PlayUploadCubit>()..init(),
+        child: isSmallScreen
+            ? Dialog.fullscreen(
+                child: PlayUploadSheet(localeScreenshots: localeScreenshots),
+              )
+            : Dialog(
+                child: PlayUploadSheet(localeScreenshots: localeScreenshots),
               ),
       ),
     );

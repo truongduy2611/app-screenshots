@@ -2345,5 +2345,25 @@
   "@applyToAllOverlaysScreenshotsLocales": {
     "description": "Label for the switch to apply text alignment presets to all text overlays, screenshots and locales"
   },
-  "applyFrameToAllScreenshots": "Apply frame settings to all screenshots"
+  "applyFrameToAllScreenshots": "Apply frame settings to all screenshots",
+  "commitAsDraft": "Commit as Draft",
+  "@commitAsDraft": {
+    "description": "Label for toggle to upload screenshots as draft"
+  },
+  "commitAsDraftDesc": "Keep changes staged in Google Play Console instead of submitting for review.",
+  "@commitAsDraftDesc": {
+    "description": "Description for the commit as draft toggle"
+  },
+  "playErrorAutoSubmitRequired": "Google Play Console requires all changes to be sent for review automatically for this app. Please disable 'Commit as Draft' and ensure all required declarations are completed in Google Play Console.",
+  "@playErrorAutoSubmitRequired": {
+    "description": "Error message when Google Play Console requires changes to be sent for review automatically"
+  },
+  "uploadExistingFolderToGooglePlay": "Upload existing folder to Google Play",
+  "@uploadExistingFolderToGooglePlay": {
+    "description": "Menu item and dialog title to upload an existing screenshot folder to Google Play"
+  },
+  "playErrorDeclarationRequired": "Upload rejected by Google Play: Please check your Google Play Console and complete any outstanding declarations under App Content first.",
+  "@playErrorDeclarationRequired": {
+    "description": "Error message when Google Play rejects upload due to missing declarations under App Content"
+  }
 }

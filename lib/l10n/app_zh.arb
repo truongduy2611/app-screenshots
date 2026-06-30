@@ -528,5 +528,10 @@
   "presetReset": "重置",
   "applyToAllLocales": "应用到所有语言",
   "applyToAllOverlaysScreenshotsLocales": "应用到所有文本、屏幕截图和语言",
-  "applyFrameToAllScreenshots": "将外框设置应用到所有截图"
+  "applyFrameToAllScreenshots": "将外框设置应用到所有截图",
+  "commitAsDraft": "提交为草稿",
+  "commitAsDraftDesc": "将更改保持在草稿状态，而不是提交审核。",
+  "playErrorAutoSubmitRequired": "Google Play Console 要求此应用的所有更改自动提交审核。请停用“提交为草稿”，并确保在 Google Play Console 中完成所有必需的声明。",
+  "uploadExistingFolderToGooglePlay": "上传现有文件夹到 Google Play",
+  "playErrorDeclarationRequired": "上传被 Google Play 拒绝：请先检查您的 Google Play Console 并完成“应用内容”下所有未完成的声明。"
 }

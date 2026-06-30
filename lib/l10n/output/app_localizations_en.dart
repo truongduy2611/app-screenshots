@@ -1796,4 +1796,23 @@ class AppLocalizationsEn extends AppLocalizations {
   @override
   String get applyFrameToAllScreenshots =>
       'Apply frame settings to all screenshots';
+
+  @override
+  String get commitAsDraft => 'Commit as Draft';
+
+  @override
+  String get commitAsDraftDesc =>
+      'Keep changes staged in Google Play Console instead of submitting for review.';
+
+  @override
+  String get playErrorAutoSubmitRequired =>
+      'Google Play Console requires all changes to be sent for review automatically for this app. Please disable \'Commit as Draft\' and ensure all required declarations are completed in Google Play Console.';
+
+  @override
+  String get uploadExistingFolderToGooglePlay =>
+      'Upload existing folder to Google Play';
+
+  @override
+  String get playErrorDeclarationRequired =>
+      'Upload rejected by Google Play: Please check your Google Play Console and complete any outstanding declarations under App Content first.';
 }

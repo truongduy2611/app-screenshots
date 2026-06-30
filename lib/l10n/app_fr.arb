@@ -528,5 +528,10 @@
   "presetReset": "Réinit.",
   "applyToAllLocales": "Appliquer à toutes les langues",
   "applyToAllOverlaysScreenshotsLocales": "Appliquer à toutes les superpositions, captures & langues",
-  "applyFrameToAllScreenshots": "Appliquer les paramètres de cadre à toutes les captures d'écran"
+  "applyFrameToAllScreenshots": "Appliquer les paramètres de cadre à toutes les captures d'écran",
+  "commitAsDraft": "Enregistrer comme brouillon",
+  "commitAsDraftDesc": "Conserver les modifications en état de brouillon au lieu de les soumettre pour examen.",
+  "playErrorAutoSubmitRequired": "Google Play Console exige que toutes les modifications soient soumises pour examen automatiquement pour cette application. Veuillez désactiver 'Enregistrer comme brouillon' et vous assurer que toutes les déclarations requises sont complétées dans Google Play Console.",
+  "uploadExistingFolderToGooglePlay": "Importer un dossier existant sur Google Play",
+  "playErrorDeclarationRequired": "Téléchargement rejeté par Google Play : veuillez vérifier votre Google Play Console et compléter d'abord toutes les déclarations en attente sous Contenu de l'application."
 }

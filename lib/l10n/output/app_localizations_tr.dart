@@ -1798,4 +1798,23 @@ class AppLocalizationsTr extends AppLocalizations {
   @override
   String get applyFrameToAllScreenshots =>
       'Çerçeve ayarlarını tüm ekran görüntülerine uygula';
+
+  @override
+  String get commitAsDraft => 'Taslak Olarak Kaydet';
+
+  @override
+  String get commitAsDraftDesc =>
+      'Değişiklikleri incelemeye göndermek yerine taslak durumunda tutun.';
+
+  @override
+  String get playErrorAutoSubmitRequired =>
+      'Google Play Console, bu uygulama için tüm değişikliklerin otomatik olarak incelemeye gönderilmesini gerektirir. Lütfen \'Taslak Olarak Kaydet\' seçeneğini devre dışı bırakın ve Google Play Console\'daki tüm gerekli bildirimlerin tamamlandığından emin olun.';
+
+  @override
+  String get uploadExistingFolderToGooglePlay =>
+      'Mevcut klasörü Google Play\'e yükle';
+
+  @override
+  String get playErrorDeclarationRequired =>
+      'Yükleme Google Play tarafından reddedildi: Lütfen öncelikle Google Play Console\'u kontrol edin ve Uygulama İçeriği altındaki tüm eksik bildirimleri tamamlayın.';
 }

@@ -528,5 +528,10 @@
   "presetReset": "إعادة",
   "applyToAllLocales": "تطبيق على جميع اللغات",
   "applyToAllOverlaysScreenshotsLocales": "تطبيق على جميع النصوص، لقطات الشاشة واللغات",
-  "applyFrameToAllScreenshots": "تطبيق إعدادات الإطار على جميع لقطات الشاشة"
+  "applyFrameToAllScreenshots": "تطبيق إعدادات الإطار على جميع لقطات الشاشة",
+  "commitAsDraft": "حفظ كمسودة",
+  "commitAsDraftDesc": "الاحتفاظ بالتغييرات في حالة مسودة بدلاً من إرسالها للمراجعة.",
+  "playErrorAutoSubmitRequired": "تتطلب Google Play Console إرسال جميع التغييرات للمراجعة تلقائيًا لهذا التطبيق. يرجى تعطيل 'حفظ كمسودة' والتأكد من إكمال جميع الإقرارات المطلوبة في Google Play Console.",
+  "uploadExistingFolderToGooglePlay": "تحميل مجلد موجود إلى Google Play",
+  "playErrorDeclarationRequired": "تم رفض التحميل من قِvel Google Play: يرجى التحقق من Google Play Console وإكمال أي إقرارات معلقة ضمن محتوى التطبيق أولاً."
 }

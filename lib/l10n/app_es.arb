@@ -528,5 +528,10 @@
   "presetReset": "Restab.",
   "applyToAllLocales": "Aplicar a todos los idiomas",
   "applyToAllOverlaysScreenshotsLocales": "Aplicar a todas las superposiciones, capturas e idiomas",
-  "applyFrameToAllScreenshots": "Aplicar la configuración de marco a todas las capturas de pantalla"
+  "applyFrameToAllScreenshots": "Aplicar la configuración de marco a todas las capturas de pantalla",
+  "commitAsDraft": "Guardar como borrador",
+  "commitAsDraftDesc": "Mantener los cambios en estado de borrador en lugar de enviarlos a revisión.",
+  "playErrorAutoSubmitRequired": "Google Play Console requiere que todos los cambios se envíen a revisión automáticamente para esta aplicación. Desactive 'Guardar como borrador' y asegúrese de que todas las declaraciones requeridas estén completadas en Google Play Console.",
+  "uploadExistingFolderToGooglePlay": "Subir carpeta existente a Google Play",
+  "playErrorDeclarationRequired": "Carga rechazada por Google Play: consulte su Google Play Console y complete primero las declaraciones pendientes en Contenido de la aplicación."
 }

@@ -1716,4 +1716,21 @@ class AppLocalizationsJa extends AppLocalizations {
 
   @override
   String get applyFrameToAllScreenshots => 'フレーム設定をすべてのスクリーンショットに適用する';
+
+  @override
+  String get commitAsDraft => '下書きとして保存';
+
+  @override
+  String get commitAsDraftDesc => '確認のために送信するのではなく、変更を下書き状態のままにします。';
+
+  @override
+  String get playErrorAutoSubmitRequired =>
+      'Google Play Console では、このアプリのすべての変更が自動的に審査に送信される必要があります。[下書きとして保存] を無効にし、Google Play Console で必要なすべての宣言が完了していることを確認してください。';
+
+  @override
+  String get uploadExistingFolderToGooglePlay => '既存のフォルダをGoogle Playにアップロード';
+
+  @override
+  String get playErrorDeclarationRequired =>
+      'Google Play によってアップロードが拒否されました。まず Google Play Console の [アプリのコンテンツ] で未完了の宣言をすべて完了してください。';
 }

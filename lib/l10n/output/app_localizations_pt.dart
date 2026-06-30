@@ -1808,4 +1808,23 @@ class AppLocalizationsPt extends AppLocalizations {
   @override
   String get applyFrameToAllScreenshots =>
       'Aplicar configurações de quadro a todas as capturas de tela';
+
+  @override
+  String get commitAsDraft => 'Salvar como rascunho';
+
+  @override
+  String get commitAsDraftDesc =>
+      'Manter as alterações no status de rascunho em vez de enviar para revisão.';
+
+  @override
+  String get playErrorAutoSubmitRequired =>
+      'O Google Play Console exige que todas as alterações sejam enviadas para revisão automaticamente para este aplicativo. Desative \'Salvar como rascunho\' e certifique-se de que todas as declarações obrigatórias sejam preenchidas no Google Play Console.';
+
+  @override
+  String get uploadExistingFolderToGooglePlay =>
+      'Enviar pasta existente para o Google Play';
+
+  @override
+  String get playErrorDeclarationRequired =>
+      'Envio rejeitado pelo Google Play: verifique o Google Play Console e preencha as declarações pendentes em Conteúdo do aplicativo primeiro.';
 }

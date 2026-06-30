@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:app_screenshots/core/services/app_logger.dart';
 import 'package:app_screenshots/features/screenshot_editor/data/services/play_upload_service.dart';
+import 'package:app_screenshots/features/screenshot_editor/data/play_api/play_client.dart';
 import 'package:app_screenshots/features/settings/domain/entities/play_credentials.dart';
 import 'package:app_screenshots/features/settings/domain/repositories/settings_repository.dart';
 import 'package:equatable/equatable.dart';
@@ -74,6 +75,10 @@ class PlayUploadCubit extends Cubit<PlayUploadState> {
     emit(state.copyWith(deleteExisting: value));
   }
 
+  void setCommitAsDraft(bool value) {
+    emit(state.copyWith(commitAsDraft: value));
+  }
+
   void toggleLocale(String locale) {
     final updated = Set<String>.from(state.selectedLocales);
     if (updated.contains(locale)) {
@@ -119,6 +124,7 @@ class PlayUploadCubit extends Cubit<PlayUploadState> {
         localeScreenshots: filtered,
         imageType: state.imageType,
         deleteExisting: state.deleteExisting,
+        changesNotSentForReview: state.commitAsDraft,
         onProgress: (progress) {
           emit(
             state.copyWith(
@@ -136,10 +142,19 @@ class PlayUploadCubit extends Cubit<PlayUploadState> {
         error: e,
         stackTrace: st,
       );
+      PlayUploadFailure? failure;
+      if (e is PlayApiException) {
+        if (e.isAutoSubmitRequired) {
+          failure = PlayUploadFailure.autoSubmitRequired;
+        } else if (e.isHealthDeclarationRequired) {
+          failure = PlayUploadFailure.declarationRequired;
+        }
+      }
       emit(
         state.copyWith(
           status: PlayUploadStatus.error,
-          errorMessage: 'Upload failed: $e',
+          failure: failure,
+          errorMessage: 'Upload failed: ${e is PlayApiException ? e.message : e}',
         ),
       );
     }

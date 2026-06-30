@@ -1814,4 +1814,23 @@ class AppLocalizationsFr extends AppLocalizations {
   @override
   String get applyFrameToAllScreenshots =>
       'Appliquer les paramètres de cadre à toutes les captures d\'écran';
+
+  @override
+  String get commitAsDraft => 'Enregistrer comme brouillon';
+
+  @override
+  String get commitAsDraftDesc =>
+      'Conserver les modifications en état de brouillon au lieu de les soumettre pour examen.';
+
+  @override
+  String get playErrorAutoSubmitRequired =>
+      'Google Play Console exige que toutes les modifications soient soumises pour examen automatiquement pour cette application. Veuillez désactiver \'Enregistrer comme brouillon\' et vous assurer que toutes les déclarations requises sont complétées dans Google Play Console.';
+
+  @override
+  String get uploadExistingFolderToGooglePlay =>
+      'Importer un dossier existant sur Google Play';
+
+  @override
+  String get playErrorDeclarationRequired =>
+      'Téléchargement rejeté par Google Play : veuillez vérifier votre Google Play Console et compléter d\'abord toutes les déclarations en attente sous Contenu de l\'application.';
 }

@@ -1808,4 +1808,23 @@ class AppLocalizationsDe extends AppLocalizations {
   @override
   String get applyFrameToAllScreenshots =>
       'Rahmeneinstellungen auf alle Screenshots anwenden';
+
+  @override
+  String get commitAsDraft => 'Als Entwurf speichern';
+
+  @override
+  String get commitAsDraftDesc =>
+      'Änderungen als Entwurf speichern, anstatt sie zur Überprüfung einzureichen.';
+
+  @override
+  String get playErrorAutoSubmitRequired =>
+      'Google Play Console erfordert, dass alle Änderungen für diese App automatisch zur Überprüfung gesendet werden. Bitte deaktivieren Sie \'Als Entwurf speichern\' und stellen Sie sicher, dass alle erforderlichen Erklärungen in der Google Play Console ausgefüllt sind.';
+
+  @override
+  String get uploadExistingFolderToGooglePlay =>
+      'Vorhandenen Ordner auf Google Play hochladen';
+
+  @override
+  String get playErrorDeclarationRequired =>
+      'Upload von Google Play abgelehnt: Bitte überprüfen Sie Ihre Google Play Console und füllen Sie zuerst alle ausstehenden Erklärungen unter App-Inhalte aus.';
 }

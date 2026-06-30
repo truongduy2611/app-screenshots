@@ -1702,6 +1702,23 @@ class AppLocalizationsZh extends AppLocalizations {
 
   @override
   String get applyFrameToAllScreenshots => '将外框设置应用到所有截图';
+
+  @override
+  String get commitAsDraft => '提交为草稿';
+
+  @override
+  String get commitAsDraftDesc => '将更改保持在草稿状态，而不是提交审核。';
+
+  @override
+  String get playErrorAutoSubmitRequired =>
+      'Google Play Console 要求此应用的所有更改自动提交审核。请停用“提交为草稿”，并确保在 Google Play Console 中完成所有必需的声明。';
+
+  @override
+  String get uploadExistingFolderToGooglePlay => '上传现有文件夹到 Google Play';
+
+  @override
+  String get playErrorDeclarationRequired =>
+      '上传被 Google Play 拒绝：请先检查您的 Google Play Console 并完成“应用内容”下所有未完成的声明。';
 }
 
 /// The translations for Chinese, using the Han script (`zh_Hant`).
@@ -3402,4 +3419,21 @@ class AppLocalizationsZhHant extends AppLocalizationsZh {
 
   @override
   String get applyFrameToAllScreenshots => '將外框設定套用到所有螢幕截圖';
+
+  @override
+  String get commitAsDraft => '提交為草稿';
+
+  @override
+  String get commitAsDraftDesc => '將更改保持在草稿狀態，而不是提交審核。';
+
+  @override
+  String get playErrorAutoSubmitRequired =>
+      'Google Play Console 要求此應用的所有變更自動提交審核。請停用「提交為草稿」，並確保在 Google Play Console 中完成所有必需的聲明。';
+
+  @override
+  String get uploadExistingFolderToGooglePlay => '上傳現有資料夾到 Google Play';
+
+  @override
+  String get playErrorDeclarationRequired =>
+      '上傳被 Google Play 拒絕：請先檢查您的 Google Play Console 並完成「應用內容」下所有未完成的聲明。';
 }

@@ -528,5 +528,10 @@
   "presetReset": "Reset",
   "applyToAllLocales": "Toepassen op alle talen",
   "applyToAllOverlaysScreenshotsLocales": "Toepassen op alle teksten, screenshots & talen",
-  "applyFrameToAllScreenshots": "Kaderinstellingen toepassen op alle schermafbeeldingen"
+  "applyFrameToAllScreenshots": "Kaderinstellingen toepassen op alle schermafbeeldingen",
+  "commitAsDraft": "Opslaan als concept",
+  "commitAsDraftDesc": "Wijzigingen in conceptstatus houden in plaats von in te dienen voor beoordeling.",
+  "playErrorAutoSubmitRequired": "Google Play Console vereist dat alle wijzigingen voor deze app automatisch ter beoordeling worden ingediend. Schakel 'Opslaan als concept' uit en zorg ervoor dat alle vereiste verklaringen zijn ingevuld in de Google Play Console.",
+  "uploadExistingFolderToGooglePlay": "Bestaande map uploaden naar Google Play",
+  "playErrorDeclarationRequired": "Upload geweigerd door Google Play: controleer uw Google Play Console en vul eerst eventuele openstaande verklaringen in onder App-inhoud."
 }

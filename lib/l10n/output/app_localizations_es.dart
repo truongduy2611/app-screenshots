@@ -1804,4 +1804,23 @@ class AppLocalizationsEs extends AppLocalizations {
   @override
   String get applyFrameToAllScreenshots =>
       'Aplicar la configuración de marco a todas las capturas de pantalla';
+
+  @override
+  String get commitAsDraft => 'Guardar como borrador';
+
+  @override
+  String get commitAsDraftDesc =>
+      'Mantener los cambios en estado de borrador en lugar de enviarlos a revisión.';
+
+  @override
+  String get playErrorAutoSubmitRequired =>
+      'Google Play Console requiere que todos los cambios se envíen a revisión automáticamente para esta aplicación. Desactive \'Guardar como borrador\' y asegúrese de que todas las declaraciones requeridas estén completadas en Google Play Console.';
+
+  @override
+  String get uploadExistingFolderToGooglePlay =>
+      'Subir carpeta existente a Google Play';
+
+  @override
+  String get playErrorDeclarationRequired =>
+      'Carga rechazada por Google Play: consulte su Google Play Console y complete primero las declaraciones pendientes en Contenido de la aplicación.';
 }

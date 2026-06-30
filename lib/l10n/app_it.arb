@@ -528,5 +528,10 @@
   "presetReset": "Reset",
   "applyToAllLocales": "Applica a tutte le lingue",
   "applyToAllOverlaysScreenshotsLocales": "Applica a tutti i testi, screenshot e lingue",
-  "applyFrameToAllScreenshots": "Applica le impostazioni del frame a tutti gli screenshot"
+  "applyFrameToAllScreenshots": "Applica le impostazioni del frame a tutti gli screenshot",
+  "commitAsDraft": "Salva come bozza",
+  "commitAsDraftDesc": "Mantieni le modifiche nello stato di bozza invece di inviarle per la revisione.",
+  "playErrorAutoSubmitRequired": "Google Play Console richiede che tutte le modifiche vengano inviate automaticamente alla revisione per questa app. Disattiva 'Salva come bozza' e assicurati che tutte le dichiarazioni richieste siano completate in Google Play Console.",
+  "uploadExistingFolderToGooglePlay": "Carica cartella esistente su Google Play",
+  "playErrorDeclarationRequired": "Caricamento rifiutato da Google Play: controlla la tua Google Play Console e completa prima eventuali dichiarazioni in sospeso alla voce Contenuto dell'app."
 }

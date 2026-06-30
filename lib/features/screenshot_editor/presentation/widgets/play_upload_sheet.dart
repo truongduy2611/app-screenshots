@@ -6,6 +6,7 @@ import 'package:app_screenshots/core/widgets/app_card.dart';
 import 'package:app_screenshots/features/screenshot_editor/data/services/play_upload_service.dart';
 import 'package:app_screenshots/features/screenshot_editor/presentation/cubit/play_upload_cubit.dart';
 import 'package:app_screenshots/features/screenshot_editor/presentation/widgets/play_credentials_dialog.dart';
+import 'package:app_screenshots/features/screenshot_editor/presentation/widgets/controls/app_switch.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:material_symbols_icons/symbols.dart';
@@ -140,9 +141,16 @@ class PlayUploadSheet extends StatelessWidget {
         );
 
       case PlayUploadStatus.error:
+        final message = switch (state.failure) {
+          PlayUploadFailure.autoSubmitRequired =>
+            context.l10n.playErrorAutoSubmitRequired,
+          PlayUploadFailure.declarationRequired =>
+            context.l10n.playErrorDeclarationRequired,
+          _ => state.errorMessage ?? context.l10n.unknownError,
+        };
         return Center(
           child: _ErrorView(
-            message: state.errorMessage ?? context.l10n.unknownError,
+            message: message,
             onRetry: () => context.read<PlayUploadCubit>().reset(),
           ),
         );
@@ -320,6 +328,40 @@ class _ReadyViewState extends State<_ReadyView> {
           showSelectedIcon: false,
         ),
         const SizedBox(height: 14),
+
+        // ── Commit as draft option ──
+        Row(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Expanded(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  Text(
+                    context.l10n.commitAsDraft,
+                    style: theme.textTheme.bodyMedium?.copyWith(
+                      fontWeight: FontWeight.w600,
+                    ),
+                  ),
+                  const SizedBox(height: 4),
+                  Text(
+                    context.l10n.commitAsDraftDesc,
+                    style: theme.textTheme.bodySmall?.copyWith(
+                      color: theme.colorScheme.onSurfaceVariant,
+                    ),
+                  ),
+                ],
+              ),
+            ),
+            const SizedBox(width: 16),
+            AppSwitch(
+              value: state.commitAsDraft,
+              onChanged: cubit.setCommitAsDraft,
+            ),
+          ],
+        ),
+        const SizedBox(height: 16),
 
         // ── Locales header ──
         Row(
@@ -504,6 +546,40 @@ class _LocaleCheckTile extends StatelessWidget {
                 ),
               ),
             ),
+            const SizedBox(width: 6),
+            Icon(
+              Symbols.arrow_right_alt_rounded,
+              size: 14,
+              color: theme.colorScheme.onSurfaceVariant.withValues(alpha: 0.7),
+            ),
+            const SizedBox(width: 6),
+            Container(
+              padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 2),
+              decoration: BoxDecoration(
+                color: isSelected
+                    ? theme.colorScheme.secondaryContainer.withValues(alpha: 0.4)
+                    : theme.colorScheme.surfaceContainer.withValues(
+                        alpha: 0.4,
+                      ),
+                borderRadius: BorderRadius.circular(4),
+                border: Border.all(
+                  color: isSelected
+                      ? theme.colorScheme.secondary.withValues(alpha: 0.2)
+                      : theme.colorScheme.outline.withValues(alpha: 0.2),
+                ),
+              ),
+              child: Text(
+                PlayUploadService.toPlayLocale(locale),
+                style: TextStyle(
+                  fontSize: 9,
+                  fontWeight: FontWeight.w600,
+                  color: isSelected
+                      ? theme.colorScheme.secondary
+                      : theme.colorScheme.onSurfaceVariant.withValues(alpha: 0.8),
+                  letterSpacing: 0.5,
+                ),
+              ),
+            ),
             const Spacer(),
             Text(
               '$fileCount ${context.l10n.nFiles(fileCount)}',
@@ -534,27 +610,31 @@ class _ProgressView extends StatelessWidget {
     final localeStatuses = p?.localeStatuses ?? {};
 
     return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 16),
+      padding: const EdgeInsets.symmetric(vertical: 24),
       child: Column(
         mainAxisSize: MainAxisSize.min,
         children: [
           SizedBox(
-            width: 72,
-            height: 72,
+            width: 100,
+            height: 100,
             child: Stack(
               alignment: Alignment.center,
               children: [
-                CircularProgressIndicator(
-                  value: p != null ? fraction : null,
-                  strokeWidth: 5,
-                  backgroundColor: theme.colorScheme.surfaceContainerHighest,
-                  color: theme.colorScheme.primary,
+                SizedBox(
+                  width: 100,
+                  height: 100,
+                  child: CircularProgressIndicator(
+                    value: p != null ? fraction : null,
+                    strokeWidth: 6,
+                    backgroundColor: theme.colorScheme.surfaceContainerHighest,
+                    color: theme.colorScheme.primary,
+                  ),
                 ),
                 if (p != null)
                   Text(
                     '${(fraction * 100).toInt()}%',
-                    style: theme.textTheme.titleMedium?.copyWith(
-                      fontWeight: FontWeight.w700,
+                    style: theme.textTheme.headlineSmall?.copyWith(
+                      fontWeight: FontWeight.bold,
                       color: theme.colorScheme.primary,
                     ),
                   ),

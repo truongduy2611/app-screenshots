@@ -1803,4 +1803,23 @@ class AppLocalizationsNl extends AppLocalizations {
   @override
   String get applyFrameToAllScreenshots =>
       'Kaderinstellingen toepassen op alle schermafbeeldingen';
+
+  @override
+  String get commitAsDraft => 'Opslaan als concept';
+
+  @override
+  String get commitAsDraftDesc =>
+      'Wijzigingen in conceptstatus houden in plaats von in te dienen voor beoordeling.';
+
+  @override
+  String get playErrorAutoSubmitRequired =>
+      'Google Play Console vereist dat alle wijzigingen voor deze app automatisch ter beoordeling worden ingediend. Schakel \'Opslaan als concept\' uit en zorg ervoor dat alle vereiste verklaringen zijn ingevuld in de Google Play Console.';
+
+  @override
+  String get uploadExistingFolderToGooglePlay =>
+      'Bestaande map uploaden naar Google Play';
+
+  @override
+  String get playErrorDeclarationRequired =>
+      'Upload geweigerd door Google Play: controleer uw Google Play Console en vul eerst eventuele openstaande verklaringen in onder App-inhoud.';
 }

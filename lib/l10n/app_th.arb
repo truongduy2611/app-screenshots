@@ -528,5 +528,10 @@
   "presetReset": "รีเซ็ต",
   "applyToAllLocales": "ใช้กับทุกภาษา",
   "applyToAllOverlaysScreenshotsLocales": "ใช้กับข้อความ ภาพหน้าจอ และทุกภาษาทั้งหมด",
-  "applyFrameToAllScreenshots": "ใช้การตั้งค่าเฟรมกับภาพหน้าจอทั้งหมด"
+  "applyFrameToAllScreenshots": "ใช้การตั้งค่าเฟรมกับภาพหน้าจอทั้งหมด",
+  "commitAsDraft": "บันทึกเป็นแบบร่าง",
+  "commitAsDraftDesc": "เก็บการเปลี่ยนแปลงไว้ในสถานะแบบร่างแทนที่จะส่งเพื่อตรวจสอบ",
+  "playErrorAutoSubmitRequired": "Google Play Console กำหนดให้ส่งการเปลี่ยนแปลงทั้งหมดเพื่อตรวจสอบโดยอัตโนมัติสำหรับแอปนี้ โปรดปิดใช้งาน 'บันทึกเป็นแบบร่าง' และตรวจสอบว่าได้กรอกคำประกาศที่จำเป็นทั้งหมดใน Google Play Console ครบถ้วนแล้ว",
+  "uploadExistingFolderToGooglePlay": "อัปโหลดโฟลเดอร์ที่มีอยู่ไปยัง Google Play",
+  "playErrorDeclarationRequired": "การอัปโหลดถูกปฏิเสธโดย Google Play: โปรดตรวจสอบ Google Play Console ของคุณและกรอกคำประกาศที่ค้างอยู่ภายใต้เนื้อหาแอปก่อน"
 }

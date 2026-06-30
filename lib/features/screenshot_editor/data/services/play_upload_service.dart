@@ -69,6 +69,7 @@ class PlayUploadService {
     required String imageType,
     required void Function(AscUploadProgress) onProgress,
     bool deleteExisting = true,
+    bool changesNotSentForReview = true,
   }) async {
     final client = await _getClient();
 
@@ -121,7 +122,7 @@ class PlayUploadService {
         for (final entry in localeScreenshots.entries) {
           final appLocale = entry.key;
           final files = entry.value;
-          final playLocale = _toPlayLocale(appLocale);
+          final playLocale = toPlayLocale(appLocale);
           final localeErrors = <String>[];
           int localeSuccess = 0;
           int localeFailure = 0;
@@ -183,10 +184,13 @@ class PlayUploadService {
           final filesToUpload = files.take(freeSlots).toList();
           final skipped = files.length - filesToUpload.length;
 
+          int index = 1;
           for (final file in filesToUpload) {
             try {
               emitProgress(appLocale);
               final bytes = await file.readAsBytes();
+              final ext = file.path.split('.').last.toLowerCase();
+              final filename = '${playLocale.replaceAll('-', '_')}_${index.toString().padLeft(2, '0')}.$ext';
               await client.uploadImage(
                 packageName: packageName,
                 editId: editId,
@@ -194,9 +198,11 @@ class PlayUploadService {
                 imageType: imageType,
                 bytes: bytes,
                 contentType: _contentType(file.path),
+                filename: filename,
               );
               localeSuccess++;
               successCount++;
+              index++;
             } catch (e) {
               localeFailure++;
               failureCount++;
@@ -233,29 +239,34 @@ class PlayUploadService {
         // Commit only if at least one screenshot was staged successfully.
         if (successCount > 0) {
           try {
-            // Send the changes for review so they actually land on the
-            // listing without a manual step. If Google refuses to auto-submit
-            // (some apps can't), fall back to committing them as a draft.
-            try {
+            if (changesNotSentForReview) {
               await client.commitEdit(
                 packageName,
                 editId,
-                changesNotSentForReview: false,
+                changesNotSentForReview: true,
               );
-            } on PlayApiException catch (e) {
-              if (e.isReviewRequired) {
-                AppLogger.w(
-                  'Auto-submit for review not allowed; committing as a draft '
-                  '(changes not sent for review)',
-                  tag: 'PlayUpload',
-                );
+            } else {
+              try {
                 await client.commitEdit(
                   packageName,
                   editId,
-                  changesNotSentForReview: true,
+                  changesNotSentForReview: false,
                 );
-              } else {
-                rethrow;
+              } on PlayApiException catch (e) {
+                if (e.isReviewRequired) {
+                  AppLogger.w(
+                    'Auto-submit for review not allowed; committing as a draft '
+                    '(changes not sent for review)',
+                    tag: 'PlayUpload',
+                  );
+                  await client.commitEdit(
+                    packageName,
+                    editId,
+                    changesNotSentForReview: true,
+                  );
+                } else {
+                  rethrow;
+                }
               }
             }
             committed = true;
@@ -322,7 +333,7 @@ class PlayUploadService {
   ///
   /// Google Play uses BCP-47 codes that differ from Apple's in a few cases
   /// (notably Chinese script tags). Unknown codes pass through unchanged.
-  static String _toPlayLocale(String locale) {
+  static String toPlayLocale(String locale) {
     final lower = locale.toLowerCase().replaceAll('_', '-');
     const map = <String, String>{
       'en': 'en-US',

@@ -45,6 +45,22 @@ class PlayApiException implements Exception {
             lower.contains('outside of this edit'));
   }
 
+  /// `true` when Google rejects the commit because the app's Console settings
+  /// force all changes to be sent for review automatically.
+  bool get isAutoSubmitRequired {
+    final lower = message.toLowerCase();
+    return statusCode == 400 &&
+        lower.contains('changes are sent for review automatically');
+  }
+
+  /// `true` when Google rejects the commit because the app requires health
+  /// feature declaration first.
+  bool get isHealthDeclarationRequired {
+    final lower = message.toLowerCase();
+    return statusCode == 403 &&
+        lower.contains('health features');
+  }
+
   @override
   String toString() => 'PlayApiException($statusCode): $message';
 }
@@ -111,12 +127,14 @@ class GooglePlayClient {
     String editId, {
     bool changesNotSentForReview = true,
   }) async {
+    final queryParams = <String, String>{};
+    if (changesNotSentForReview) {
+      queryParams['changesNotSentForReview'] = 'true';
+    }
     final uri = Uri.parse(
       '$_base/applications/$packageName/edits/$editId:commit',
     ).replace(
-      queryParameters: {
-        'changesNotSentForReview': changesNotSentForReview.toString(),
-      },
+      queryParameters: queryParams.isEmpty ? null : queryParams,
     );
     final r = await _httpClient.post(uri, headers: await _headers());
     if (r.statusCode < 200 || r.statusCode >= 300) _fail(r);
@@ -175,24 +193,70 @@ class GooglePlayClient {
     required String imageType,
     required Uint8List bytes,
     required String contentType,
+    String? filename,
   }) async {
-    final uri = Uri.parse(
-      '$_uploadBase/applications/$packageName/edits/$editId/listings/$language/$imageType',
-    ).replace(queryParameters: {'uploadType': 'media'});
-
     final token = await _token.getValue();
-    final r = await _httpClient.post(
-      uri,
-      headers: {'Authorization': 'Bearer $token', 'Content-Type': contentType},
-      body: bytes,
-    );
-    if (r.statusCode < 200 || r.statusCode >= 300) _fail(r);
-    try {
-      final body = jsonDecode(r.body) as Map<String, dynamic>;
-      final image = body['image'] as Map<String, dynamic>?;
-      return image?['id'] as String?;
-    } catch (_) {
-      return null;
+
+    if (filename != null) {
+      final uri = Uri.parse(
+        '$_uploadBase/applications/$packageName/edits/$editId/listings/$language/$imageType',
+      ).replace(queryParameters: {'uploadType': 'multipart'});
+
+      final boundary = 'app_screenshots_boundary_${DateTime.now().millisecondsSinceEpoch}';
+
+      final metadataHeader = '--$boundary\r\n'
+          'Content-Type: application/json; charset=UTF-8\r\n\r\n'
+          '{}\r\n';
+
+      final mediaHeader = '--$boundary\r\n'
+          'Content-Type: $contentType\r\n'
+          'Content-Disposition: attachment; filename="$filename"\r\n\r\n';
+
+      final footer = '\r\n--$boundary--\r\n';
+
+      final bodyBytes = BytesBuilder();
+      bodyBytes.add(utf8.encode(metadataHeader));
+      bodyBytes.add(utf8.encode(mediaHeader));
+      bodyBytes.add(bytes);
+      bodyBytes.add(utf8.encode(footer));
+
+      final r = await _httpClient.post(
+        uri,
+        headers: {
+          'Authorization': 'Bearer $token',
+          'Content-Type': 'multipart/related; boundary=$boundary',
+        },
+        body: bodyBytes.takeBytes(),
+      );
+      if (r.statusCode < 200 || r.statusCode >= 300) _fail(r);
+      try {
+        final body = jsonDecode(r.body) as Map<String, dynamic>;
+        final image = body['image'] as Map<String, dynamic>?;
+        return image?['id'] as String?;
+      } catch (_) {
+        return null;
+      }
+    } else {
+      final uri = Uri.parse(
+        '$_uploadBase/applications/$packageName/edits/$editId/listings/$language/$imageType',
+      ).replace(queryParameters: {'uploadType': 'media'});
+
+      final r = await _httpClient.post(
+        uri,
+        headers: {
+          'Authorization': 'Bearer $token',
+          'Content-Type': contentType,
+        },
+        body: bytes,
+      );
+      if (r.statusCode < 200 || r.statusCode >= 300) _fail(r);
+      try {
+        final body = jsonDecode(r.body) as Map<String, dynamic>;
+        final image = body['image'] as Map<String, dynamic>?;
+        return image?['id'] as String?;
+      } catch (_) {
+        return null;
+      }
     }
   }
 

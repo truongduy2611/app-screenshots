@@ -1777,4 +1777,23 @@ class AppLocalizationsVi extends AppLocalizations {
   @override
   String get applyFrameToAllScreenshots =>
       'Áp dụng cài đặt khung cho tất cả ảnh chụp màn hình';
+
+  @override
+  String get commitAsDraft => 'Lưu dưới dạng bản nháp';
+
+  @override
+  String get commitAsDraftDesc =>
+      'Giữ các thay đổi ở trạng thái nháp thay vì gửi để xem xét.';
+
+  @override
+  String get playErrorAutoSubmitRequired =>
+      'Google Play Console yêu cầu gửi tất cả thay đổi để xem xét tự động cho ứng dụng này. Vui lòng tắt \'Lưu dưới dạng bản nháp\' và đảm bảo tất cả các tuyên bố bắt buộc được hoàn thành trong Google Play Console.';
+
+  @override
+  String get uploadExistingFolderToGooglePlay =>
+      'Tải thư mục có sẵn lên Google Play';
+
+  @override
+  String get playErrorDeclarationRequired =>
+      'Tải lên bị từ chối bởi Google Play: Vui lòng kiểm tra Google Play Console và hoàn thành các tuyên bố còn thiếu trong mục Nội dung ứng dụng trước.';
 }
