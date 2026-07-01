@@ -1,112 +1,114 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
-	<dict>
-		<key>CFBundleDevelopmentRegion</key>
-		<string>$(DEVELOPMENT_LANGUAGE)</string>
-		<key>CFBundleDisplayName</key>
-		<string>App Screenshots</string>
-		<key>CFBundleExecutable</key>
-		<string>$(EXECUTABLE_NAME)</string>
-		<key>CFBundleIdentifier</key>
-		<string>$(PRODUCT_BUNDLE_IDENTIFIER)</string>
-		<key>CFBundleInfoDictionaryVersion</key>
-		<string>6.0</string>
-		<key>CFBundleName</key>
-		<string>app_screenshots</string>
-		<key>CFBundlePackageType</key>
-		<string>APPL</string>
-		<key>CFBundleShortVersionString</key>
-		<string>$(FLUTTER_BUILD_NAME)</string>
-		<key>CFBundleSignature</key>
-		<string>????</string>
-		<key>CFBundleVersion</key>
-		<string>$(FLUTTER_BUILD_NUMBER)</string>
-		<key>CFBundleDocumentTypes</key>
-		<array>
-			<dict>
-				<key>CFBundleTypeIconFiles</key>
-				<array>
-					<string>AppShotsFileIcon</string>
-				</array>
-				<key>CFBundleTypeName</key>
-				<string>App Screenshots Design</string>
-				<key>CFBundleTypeRole</key>
-				<string>Viewer</string>
-				<key>LSHandlerRank</key>
-				<string>Owner</string>
-				<key>LSItemContentTypes</key>
-				<array>
-					<string>com.progressiostudio.appscreenshots</string>
-				</array>
-			</dict>
-		</array>
-		<key>LSRequiresIPhoneOS</key>
-		<true />
-		<key>LSSupportsOpeningDocumentsInPlace</key>
-		<true />
-		<key>UILaunchStoryboardName</key>
-		<string>LaunchScreen</string>
-		<key>UIMainStoryboardFile</key>
-		<string>Main</string>
-		<key>UISupportedInterfaceOrientations</key>
-		<array>
-			<string>UIInterfaceOrientationPortrait</string>
-			<string>UIInterfaceOrientationLandscapeLeft</string>
-			<string>UIInterfaceOrientationLandscapeRight</string>
-		</array>
-		<key>UISupportedInterfaceOrientations~ipad</key>
-		<array>
-			<string>UIInterfaceOrientationPortrait</string>
-			<string>UIInterfaceOrientationPortraitUpsideDown</string>
-			<string>UIInterfaceOrientationLandscapeLeft</string>
-			<string>UIInterfaceOrientationLandscapeRight</string>
-		</array>
-		<key>CADisableMinimumFrameDurationOnPhone</key>
-		<true />
-		<key>UIApplicationSupportsIndirectInputEvents</key>
-		<true />
-		<key>NSPhotoLibraryUsageDescription</key>
-		<string>App Screenshots needs access to your photo library to import images for your
-			screenshot designs.</string>
-		<key>NSCameraUsageDescription</key>
-		<string>App Screenshots needs access to the camera to capture images for your screenshot designs.</string>
-		<key>UTExportedTypeDeclarations</key>
-		<array>
-			<dict>
-				<key>UTTypeConformsTo</key>
-				<array>
-					<string>public.data</string>
-					<string>public.content</string>
-				</array>
-				<key>UTTypeDescription</key>
-				<string>App Screenshots Design</string>
-				<key>UTTypeIconFiles</key>
-				<array>
-					<string>AppShotsFileIcon</string>
-				</array>
-				<key>UTTypeIdentifier</key>
-				<string>com.progressiostudio.appscreenshots</string>
-				<key>UTTypeTagSpecification</key>
-				<dict>
-					<key>public.filename-extension</key>
-					<array>
-						<string>appshots</string>
-					</array>
-				</dict>
-			</dict>
-		</array>
-		<key>NSUbiquitousContainers</key>
+<dict>
+	<key>CADisableMinimumFrameDurationOnPhone</key>
+	<true/>
+	<key>CFBundleDevelopmentRegion</key>
+	<string>$(DEVELOPMENT_LANGUAGE)</string>
+	<key>CFBundleDisplayName</key>
+	<string>App Screenshots</string>
+	<key>CFBundleDocumentTypes</key>
+	<array>
 		<dict>
-			<key>iCloud.com.progressiostudio.appscreenshots</key>
-			<dict>
-				<key>NSUbiquitousContainerIsDocumentScopePublic</key>
-				<true/>
-				<key>NSUbiquitousContainerName</key>
-				<string>App Screenshots</string>
-				<key>NSUbiquitousContainerSupportedFolderLevels</key>
-				<string>Any</string>
-			</dict>
+			<key>CFBundleTypeIconFiles</key>
+			<array>
+				<string>AppShotsFileIcon</string>
+			</array>
+			<key>CFBundleTypeName</key>
+			<string>App Screenshots Design</string>
+			<key>CFBundleTypeRole</key>
+			<string>Viewer</string>
+			<key>LSHandlerRank</key>
+			<string>Owner</string>
+			<key>LSItemContentTypes</key>
+			<array>
+				<string>com.progressiostudio.appscreenshots</string>
+			</array>
+		</dict>
+	</array>
+	<key>CFBundleExecutable</key>
+	<string>$(EXECUTABLE_NAME)</string>
+	<key>CFBundleIdentifier</key>
+	<string>$(PRODUCT_BUNDLE_IDENTIFIER)</string>
+	<key>CFBundleInfoDictionaryVersion</key>
+	<string>6.0</string>
+	<key>CFBundleName</key>
+	<string>app_screenshots</string>
+	<key>CFBundlePackageType</key>
+	<string>APPL</string>
+	<key>CFBundleShortVersionString</key>
+	<string>$(FLUTTER_BUILD_NAME)</string>
+	<key>CFBundleSignature</key>
+	<string>????</string>
+	<key>CFBundleVersion</key>
+	<string>$(FLUTTER_BUILD_NUMBER)</string>
+	<key>LSRequiresIPhoneOS</key>
+	<true/>
+	<key>LSSupportsOpeningDocumentsInPlace</key>
+	<true/>
+	<key>NSCameraUsageDescription</key>
+	<string>App Screenshots needs access to the camera to capture images for your screenshot designs.</string>
+	<key>NSLocationWhenInUseUsageDescription</key>
+	<string>App Screenshots does not actively use your location, but it may be accessed by system components when you import photos or use the camera to design screenshots.</string>
+	<key>NSPhotoLibraryUsageDescription</key>
+	<string>App Screenshots needs access to your photo library to import images for your
+			screenshot designs.</string>
+	<key>NSUbiquitousContainers</key>
+	<dict>
+		<key>iCloud.com.progressiostudio.appscreenshots</key>
+		<dict>
+			<key>NSUbiquitousContainerIsDocumentScopePublic</key>
+			<true/>
+			<key>NSUbiquitousContainerName</key>
+			<string>App Screenshots</string>
+			<key>NSUbiquitousContainerSupportedFolderLevels</key>
+			<string>Any</string>
 		</dict>
 	</dict>
+	<key>UIApplicationSupportsIndirectInputEvents</key>
+	<true/>
+	<key>UILaunchStoryboardName</key>
+	<string>LaunchScreen</string>
+	<key>UIMainStoryboardFile</key>
+	<string>Main</string>
+	<key>UISupportedInterfaceOrientations</key>
+	<array>
+		<string>UIInterfaceOrientationLandscapeLeft</string>
+		<string>UIInterfaceOrientationLandscapeRight</string>
+		<string>UIInterfaceOrientationPortrait</string>
+	</array>
+	<key>UISupportedInterfaceOrientations~ipad</key>
+	<array>
+		<string>UIInterfaceOrientationLandscapeLeft</string>
+		<string>UIInterfaceOrientationLandscapeRight</string>
+		<string>UIInterfaceOrientationPortrait</string>
+		<string>UIInterfaceOrientationPortraitUpsideDown</string>
+	</array>
+	<key>UTExportedTypeDeclarations</key>
+	<array>
+		<dict>
+			<key>UTTypeConformsTo</key>
+			<array>
+				<string>public.data</string>
+				<string>public.content</string>
+			</array>
+			<key>UTTypeDescription</key>
+			<string>App Screenshots Design</string>
+			<key>UTTypeIconFiles</key>
+			<array>
+				<string>AppShotsFileIcon</string>
+			</array>
+			<key>UTTypeIdentifier</key>
+			<string>com.progressiostudio.appscreenshots</string>
+			<key>UTTypeTagSpecification</key>
+			<dict>
+				<key>public.filename-extension</key>
+				<array>
+					<string>appshots</string>
+				</array>
+			</dict>
+		</dict>
+	</array>
+</dict>
 </plist>
