@@ -99,7 +99,7 @@ mixin MultiScreenshotActions<T extends StatefulWidget> on State<T> {
       final isTransparent = editorCubit.state.design.transparentBackground;
       return compute(processScreenshot, (bytes, isTransparent));
     } catch (e, st) {
-      if (!context.mounted) return null;
+      if (!mounted) return null;
       context.read<ScreenshotEditorCubit>().restoreGridAfterCapture();
       AppLogger.error(
         'Capture failed',
@@ -457,7 +457,7 @@ mixin MultiScreenshotActions<T extends StatefulWidget> on State<T> {
       }
 
       if (result.isNotEmpty && mounted) {
-        context.read<MultiScreenshotCubit>().setLastRenderedAscPath(exportDir.path);
+        this.context.read<MultiScreenshotCubit>().setLastRenderedAscPath(exportDir.path);
         return result;
       }
       return null;

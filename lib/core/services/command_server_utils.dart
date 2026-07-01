@@ -10,7 +10,7 @@ class ServerResponse {
 
   static Map<String, dynamic> ok([dynamic data]) => {
     'ok': true,
-    if (data != null) 'data': data,
+    'data': ?data,
   };
 
   static Map<String, dynamic> error(String message) => {
@@ -40,5 +40,5 @@ Color? parseHexColor(String hex) {
 /// Convert a [Color] to uppercase hex (`#RRGGBB`).
 String colorToHex(Color? color) {
   if (color == null) return '#000000';
-  return '#${color.value.toRadixString(16).padLeft(8, '0').substring(2).toUpperCase()}';
+  return '#${color.toARGB32().toRadixString(16).padLeft(8, '0').substring(2).toUpperCase()}';
 }

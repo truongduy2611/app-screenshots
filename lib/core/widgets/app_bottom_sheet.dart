@@ -62,7 +62,7 @@ Future<T?> showAppBottomSheetWithTitle<T>({
                     ),
                   ),
                 ),
-                if (actions != null) ...actions,
+                ...?actions,
                 IconButton(
                   icon: const Icon(Icons.close),
                   onPressed: () => Navigator.of(context).pop(),

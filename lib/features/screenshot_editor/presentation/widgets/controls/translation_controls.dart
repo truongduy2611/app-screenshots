@@ -356,13 +356,13 @@ class _TranslationControlsState extends State<TranslationControls> {
     final repo = sl<SettingsRepository>();
     final creds = await repo.getAscCredentials();
     if (creds == null || !creds.isValid) {
-      if (!context.mounted) return;
+      if (!mounted) return;
       final saved = await AscCredentialsDialog.show(context);
-      if (!saved || !context.mounted) return;
+      if (!saved || !mounted) return;
     }
 
     // 2) Show locale picker — let user choose which locales to render.
-    if (!context.mounted) return;
+    if (!mounted) return;
     final translationCubit = context.read<TranslationCubit>();
     final bundle = translationCubit.state.bundle;
     final hasTranslations = bundle != null && bundle.translations.isNotEmpty;
@@ -379,17 +379,17 @@ class _TranslationControlsState extends State<TranslationControls> {
         allLocales: allLocales,
         sourceLocale: sourceLocale,
       );
-      if (selectedLocales == null || !context.mounted) return;
+      if (selectedLocales == null || !mounted) return;
     }
 
     // 3) Capture locale screenshots (only selected locales).
-    if (!context.mounted) return;
+    if (!mounted) return;
     final localeScreenshots = await captureProvider.captureAllLocaleScreenshots(
       context,
       selectedLocales: selectedLocales,
     );
 
-    if (!context.mounted) return;
+    if (!mounted) return;
 
     if (localeScreenshots == null || localeScreenshots.isEmpty) {
       context.showAppSnackbar(
@@ -402,7 +402,7 @@ class _TranslationControlsState extends State<TranslationControls> {
     // 4) Show upload sheet — pass saved app config for auto-selection.
     final savedConfig = captureProvider.ascAppConfig;
 
-    if (!context.mounted) return;
+    if (!mounted) return;
     final isSmallScreen = MediaQuery.sizeOf(context).width < 600;
     showDialog(
       context: context,
