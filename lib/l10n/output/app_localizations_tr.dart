@@ -333,6 +333,17 @@ class AppLocalizationsTr extends AppLocalizations {
   String get replaceImage => 'Görseli değiştir';
 
   @override
+  String replaceImageForLocale(String locale) {
+    return '$locale için görseli değiştir';
+  }
+
+  @override
+  String get revertToSourceImage => 'Kaynak görsele geri dön';
+
+  @override
+  String get alternativeScreenshots => 'Alternatif ekran görüntüleri';
+
+  @override
   String get savedToLibrary => 'Kütüphaneye kaydedildi';
 
   @override
@@ -585,6 +596,18 @@ class AppLocalizationsTr extends AppLocalizations {
 
   @override
   String get zoomToFit => 'Sığdır';
+
+  @override
+  String get zoomTo100Percent => 'Zoom to 100%';
+
+  @override
+  String get zoomToSelection => 'Zoom to Selection';
+
+  @override
+  String get zoomIn => 'Zoom In';
+
+  @override
+  String get zoomOut => 'Zoom Out';
 
   @override
   String get addScreenshot => 'Ekran Görüntüsü Ekle';
@@ -1206,6 +1229,86 @@ class AppLocalizationsTr extends AppLocalizations {
   String get uploadExistingFolderToAsc => 'Mevcut Klasörü Yükle...';
 
   @override
+  String get uploadToGooglePlay => 'Google Play\'e Yükle';
+
+  @override
+  String get googlePlayServiceAccount => 'Google Play Hizmet Hesabı';
+
+  @override
+  String get playServiceAccountHint =>
+      'Google Cloud Console\'dan Android Publisher erişimi olan hizmet hesabı JSON anahtarını seçin.';
+
+  @override
+  String get selectJsonKeyFile => 'JSON Anahtar Dosyasını Seç';
+
+  @override
+  String get noServiceAccountConfigured => 'Yapılandırılmış hizmet hesabı yok';
+
+  @override
+  String get playSetupHint =>
+      'Ekran görüntülerini yüklemek için Google Play hizmet hesabınızı kurun.';
+
+  @override
+  String get configureServiceAccount => 'Hizmet Hesabını Yapılandır';
+
+  @override
+  String invalidServiceAccount(String error) {
+    return 'Geçersiz hizmet hesabı dosyası: $error';
+  }
+
+  @override
+  String get packageName => 'Paket Adı';
+
+  @override
+  String get packageNameHint => 'com.example.app';
+
+  @override
+  String get imageType => 'Görsel Türü';
+
+  @override
+  String playMaxScreenshotsNote(int count) {
+    return 'Google Play her dil seçeneği için en fazla $count ekran görüntüsüne izin verir; fazlası yüklenmez.';
+  }
+
+  @override
+  String get googlePlay => 'Google Play';
+
+  @override
+  String get learnMore => 'Daha fazla bilgi edin';
+
+  @override
+  String get orLabel => 'veya';
+
+  @override
+  String get pasteJsonLabel => 'JSON içeriğini yapıştır';
+
+  @override
+  String get playPasteJsonHint =>
+      'Hizmet hesabınızın .json dosyasının içeriğini yapıştırın';
+
+  @override
+  String get saveJsonContents => 'JSON İçeriğini Kaydet';
+
+  @override
+  String get playInstructionsTitle => 'Anahtarınızı nasıl alırsınız';
+
+  @override
+  String get playInstructionsStep1 =>
+      'Google Play Console\'u açın → Kurulum → API erişimi.';
+
+  @override
+  String get playInstructionsStep2 =>
+      'Bir Google Cloud projesi oluşturun veya bağlayın, ardından bir hizmet hesabı oluşturun.';
+
+  @override
+  String get playInstructionsStep3 =>
+      'Kullanıcılar ve izinler altında hizmet hesabına uygulamanıza erişim yetkisi verin.';
+
+  @override
+  String get playInstructionsStep4 =>
+      'Hizmet hesabı için bir JSON anahtarı oluşturun ve indirin.';
+
+  @override
   String get noImagesFoundInFolder =>
       'Seçilen klasörde geçerli ekran görüntüsü resmi bulunamadı';
 
@@ -1669,4 +1772,61 @@ class AppLocalizationsTr extends AppLocalizations {
 
   @override
   String get resetRotation => 'Sıfırla';
+
+  @override
+  String get takePhoto => 'Fotoğraf Çek';
+
+  @override
+  String get chooseFromGallery => 'Galeriden Seç';
+
+  @override
+  String get selectSource => 'Kaynak Seç';
+
+  @override
+  String get fillCanvas => 'Tuvali Doldur';
+
+  @override
+  String get positionAssist => 'Konum Asistanı';
+
+  @override
+  String get presetTopCenter => 'Üst';
+
+  @override
+  String get presetBottomCenter => 'Alt';
+
+  @override
+  String get presetCenter => 'Orta';
+
+  @override
+  String get presetReset => 'Sıfırla';
+
+  @override
+  String get applyToAllLocales => 'Tüm dillere uygula';
+
+  @override
+  String get applyToAllOverlaysScreenshotsLocales =>
+      'Tüm metinlere, ekran görüntülerine ve dillere uygula';
+
+  @override
+  String get applyFrameToAllScreenshots =>
+      'Çerçeve ayarlarını tüm ekran görüntülerine uygula';
+
+  @override
+  String get commitAsDraft => 'Taslak Olarak Kaydet';
+
+  @override
+  String get commitAsDraftDesc =>
+      'Değişiklikleri incelemeye göndermek yerine taslak durumunda tutun.';
+
+  @override
+  String get playErrorAutoSubmitRequired =>
+      'Google Play Console, bu uygulama için tüm değişikliklerin otomatik olarak incelemeye gönderilmesini gerektirir. Lütfen \'Taslak Olarak Kaydet\' seçeneğini devre dışı bırakın ve Google Play Console\'daki tüm gerekli bildirimlerin tamamlandığından emin olun.';
+
+  @override
+  String get uploadExistingFolderToGooglePlay =>
+      'Mevcut klasörü Google Play\'e yükle';
+
+  @override
+  String get playErrorDeclarationRequired =>
+      'Yükleme Google Play tarafından reddedildi: Lütfen öncelikle Google Play Console\'u kontrol edin ve Uygulama İçeriği altındaki tüm eksik bildirimleri tamamlayın.';
 }

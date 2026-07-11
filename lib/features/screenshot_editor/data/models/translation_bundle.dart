@@ -20,10 +20,12 @@ class TranslationBundle extends Equatable {
   /// Stores per-locale position/size/scale adjustments for text overlays.
   final Map<String, Map<String, OverlayOverride>> overrides;
 
-  /// locale → imageFilePath
+  /// locale → (slotKey → imageFilePath)
   /// Stores per-locale screenshot images so each locale can show a different
-  /// app screenshot inside the device frame.
-  final Map<String, String> localeImages;
+  /// app screenshot inside the device frame. The [slotKey] is the design slot
+  /// index as a string ("0", "1", …) so each screenshot in a multi-screenshot
+  /// project can have its own per-locale image.
+  final Map<String, Map<String, String>> localeImages;
 
   /// Optional user-provided app context (e.g. "This is a fitness tracking app
   /// for runners") that is injected into the translation prompt to improve
@@ -44,7 +46,7 @@ class TranslationBundle extends Equatable {
     List<String>? targetLocales,
     Map<String, Map<String, String>>? translations,
     Map<String, Map<String, OverlayOverride>>? overrides,
-    Map<String, String>? localeImages,
+    Map<String, Map<String, String>>? localeImages,
     String? customPrompt,
   }) {
     return TranslationBundle(
@@ -127,13 +129,19 @@ class TranslationBundle extends Equatable {
 
   // ── Per-locale images ──
 
-  /// Get the locale-specific screenshot image path.
-  String? getLocaleImage(String locale) => localeImages[locale];
+  /// Get the locale-specific screenshot image path for a design slot.
+  /// Returns `null` if no per-locale image is set for that (locale, slot).
+  String? getLocaleImage(String locale, [int slot = 0]) =>
+      localeImages[locale]?['$slot'];
 
-  /// Set (or replace) the screenshot image path for a locale.
-  TranslationBundle setLocaleImage(String locale, String filePath) {
-    final updated = Map<String, String>.from(localeImages);
-    updated[locale] = filePath;
+  /// Set (or replace) the screenshot image path for a (locale, slot).
+  TranslationBundle setLocaleImage(String locale, int slot, String filePath) {
+    final updated = Map<String, Map<String, String>>.from(
+      localeImages.map((k, v) => MapEntry(k, Map<String, String>.from(v))),
+    );
+    final slots = Map<String, String>.from(updated[locale] ?? const {});
+    slots['$slot'] = filePath;
+    updated[locale] = slots;
     final targets = (targetLocales.contains(locale) || locale == sourceLocale)
         ? targetLocales
         : [...targetLocales, locale];
@@ -141,9 +149,19 @@ class TranslationBundle extends Equatable {
     return copyWith(localeImages: updated, targetLocales: targets);
   }
 
-  /// Remove the screenshot image for a locale.
-  TranslationBundle removeLocaleImage(String locale) {
-    final updated = Map<String, String>.from(localeImages)..remove(locale);
+  /// Remove the screenshot image for a (locale, slot). Drops the locale entry
+  /// entirely once it has no remaining slot images.
+  TranslationBundle removeLocaleImage(String locale, int slot) {
+    final updated = Map<String, Map<String, String>>.from(
+      localeImages.map((k, v) => MapEntry(k, Map<String, String>.from(v))),
+    );
+    final slots = Map<String, String>.from(updated[locale] ?? const {})
+      ..remove('$slot');
+    if (slots.isEmpty) {
+      updated.remove(locale);
+    } else {
+      updated[locale] = slots;
+    }
     return copyWith(localeImages: updated);
   }
 
@@ -158,8 +176,9 @@ class TranslationBundle extends Equatable {
         (k, v) => MapEntry(k, Map<String, OverlayOverride>.from(v)),
       ),
     )..remove(locale);
-    final updatedImages = Map<String, String>.from(localeImages)
-      ..remove(locale);
+    final updatedImages = Map<String, Map<String, String>>.from(
+      localeImages.map((k, v) => MapEntry(k, Map<String, String>.from(v))),
+    )..remove(locale);
     return copyWith(
       targetLocales: targetLocales.where((l) => l != locale).toList(),
       translations: updatedTranslations,
@@ -205,7 +224,14 @@ class TranslationBundle extends Equatable {
           {},
       localeImages:
           (json['localeImages'] as Map<String, dynamic>?)?.map(
-            (k, v) => MapEntry(k, v as String),
+            (locale, slots) => MapEntry(
+              locale,
+              // Back-compat: old flat shape stored `locale → path` (a String).
+              // Migrate it to the nested `locale → {"0": path}` shape.
+              slots is String
+                  ? <String, String>{'0': slots}
+                  : Map<String, String>.from(slots as Map),
+            ),
           ) ??
           {},
       customPrompt: json['customPrompt'] as String?,

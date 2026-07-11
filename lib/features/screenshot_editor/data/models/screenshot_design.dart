@@ -292,7 +292,6 @@ class ScreenshotDesign {
   }
 
   /// Builds the full list of devices including all color variants.
-  /// Cached as a static field to avoid rebuilding on every lookup.
   static List<DeviceInfo>? _allDevicesWithColors;
   static List<DeviceInfo> get _allDevices {
     return _allDevicesWithColors ??= [
@@ -302,6 +301,7 @@ class ScreenshotDesign {
       ...Devices.ios.iPhone17ProColors,
       ...Devices.ios.iPhone17Colors,
       ...Devices.ios.iPhoneAirColors,
+      ...Devices.ios.iPhone17ProMaxHandColors,
       // Watch band/color variants not in Devices.all
       ...Devices.watch.all42mm,
       ...Devices.watch.all46mm,

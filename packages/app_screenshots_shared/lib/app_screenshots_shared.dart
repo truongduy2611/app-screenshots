@@ -1,7 +1,8 @@
 /// Shared models, enums, and constants for App Screenshots.
 ///
 /// Used by both the main Flutter app and the CLI tool.
-library app_screenshots_shared;
+library;
+
 
 export 'src/api_route.dart';
 export 'src/constants.dart';

@@ -299,7 +299,7 @@ void main() {
     dir.createSync(recursive: true);
   }
   File('docs/api/openapi.yaml').writeAsStringSync(yamlContent);
-  print('Generated docs/api/openapi.yaml');
+  stdout.writeln('Generated docs/api/openapi.yaml');
 
   final dartFile = File('lib/core/services/command_server_openapi.dart');
   final dartContent =
@@ -310,7 +310,7 @@ void main() {
 part of 'command_server.dart';
 
 const String _openApiYaml = r"""
-${yamlContent}""";
+$yamlContent""";
 
 const String _swaggerUiHtml = r"""
 <!DOCTYPE html>

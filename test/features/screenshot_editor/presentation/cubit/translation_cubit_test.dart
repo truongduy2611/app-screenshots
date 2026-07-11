@@ -244,12 +244,15 @@ void main() {
       expect(cubit.state.bundle?.customPrompt, 'Super App');
     });
 
-    test('setLocaleImage and removeLocaleImage work correctly', () {
+    test('setLocaleImage and removeLocaleImage work per slot', () {
       final cubit = TranslationCubit(mockService);
-      cubit.setLocaleImage('ko', '/path/to/img.png');
-      expect(cubit.state.bundle?.getLocaleImage('ko'), '/path/to/img.png');
-      cubit.removeLocaleImage('ko');
-      expect(cubit.state.bundle?.getLocaleImage('ko'), isNull);
+      cubit.setLocaleImage('ko', 0, '/path/to/img0.png');
+      cubit.setLocaleImage('ko', 1, '/path/to/img1.png');
+      expect(cubit.state.bundle?.getLocaleImage('ko', 0), '/path/to/img0.png');
+      expect(cubit.state.bundle?.getLocaleImage('ko', 1), '/path/to/img1.png');
+      cubit.removeLocaleImage('ko', 0);
+      expect(cubit.state.bundle?.getLocaleImage('ko', 0), isNull);
+      expect(cubit.state.bundle?.getLocaleImage('ko', 1), '/path/to/img1.png');
     });
   });
 

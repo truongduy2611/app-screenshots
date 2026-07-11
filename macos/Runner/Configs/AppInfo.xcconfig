@@ -4,8 +4,6 @@
 // future. If not, the values below would default to using the project name when this becomes a
 // 'flutter create' template.
 
-#include? "Team.xcconfig"
-
 // The application's name. By default this is also the title of the Flutter window.
 PRODUCT_NAME = AppScreenshots
 
@@ -14,3 +12,6 @@ PRODUCT_BUNDLE_IDENTIFIER = com.progressiostudio.appscreenshots
 
 // The copyright displayed in application information
 PRODUCT_COPYRIGHT = Copyright © 2026 com.progressiostudio. All rights reserved.
+
+#include? "Team.xcconfig"
+

@@ -332,6 +332,17 @@ class AppLocalizationsNl extends AppLocalizations {
   String get replaceImage => 'Afbeelding vervangen';
 
   @override
+  String replaceImageForLocale(String locale) {
+    return 'Afbeelding vervangen voor $locale';
+  }
+
+  @override
+  String get revertToSourceImage => 'Terugzetten naar bronafbeelding';
+
+  @override
+  String get alternativeScreenshots => 'Alternatieve screenshots';
+
+  @override
   String get savedToLibrary => 'Opgeslagen in bibliotheek';
 
   @override
@@ -584,6 +595,18 @@ class AppLocalizationsNl extends AppLocalizations {
 
   @override
   String get zoomToFit => 'Passend maken';
+
+  @override
+  String get zoomTo100Percent => 'Zoom to 100%';
+
+  @override
+  String get zoomToSelection => 'Zoom to Selection';
+
+  @override
+  String get zoomIn => 'Zoom In';
+
+  @override
+  String get zoomOut => 'Zoom Out';
 
   @override
   String get addScreenshot => 'Screenshot toevoegen';
@@ -1206,6 +1229,86 @@ class AppLocalizationsNl extends AppLocalizations {
   String get uploadExistingFolderToAsc => 'Bestaande map uploaden...';
 
   @override
+  String get uploadToGooglePlay => 'Uploaden naar Google Play';
+
+  @override
+  String get googlePlayServiceAccount => 'Google Play-serviceaccount';
+
+  @override
+  String get playServiceAccountHint =>
+      'Selecter de JSON-sleutel van het serviceaccount uit de Google Cloud Console met Android Publisher-toegang.';
+
+  @override
+  String get selectJsonKeyFile => 'JSON-sleutelbestand selecteren';
+
+  @override
+  String get noServiceAccountConfigured => 'Geen serviceaccount geconfigureerd';
+
+  @override
+  String get playSetupHint =>
+      'Stel uw Google Play-serviceaccount in om screenshots te uploaden.';
+
+  @override
+  String get configureServiceAccount => 'Serviceaccount configureren';
+
+  @override
+  String invalidServiceAccount(String error) {
+    return 'Ongeldig serviceaccountbestand: $error';
+  }
+
+  @override
+  String get packageName => 'Pakketnaam';
+
+  @override
+  String get packageNameHint => 'com.example.app';
+
+  @override
+  String get imageType => 'Afbeeldingstype';
+
+  @override
+  String playMaxScreenshotsNote(int count) {
+    return 'Google Play staat maximaal $count screenshots per taal toe – extra screenshots worden niet geüpload.';
+  }
+
+  @override
+  String get googlePlay => 'Google Play';
+
+  @override
+  String get learnMore => 'Meer informatie';
+
+  @override
+  String get orLabel => 'of';
+
+  @override
+  String get pasteJsonLabel => 'JSON-inhoud plakken';
+
+  @override
+  String get playPasteJsonHint =>
+      'Plak de inhoud van het .json-bestand van uw serviceaccount';
+
+  @override
+  String get saveJsonContents => 'JSON-inhoud opslaan';
+
+  @override
+  String get playInstructionsTitle => 'Hoe u uw sleutel kunt krijgen';
+
+  @override
+  String get playInstructionsStep1 =>
+      'Open de Google Play Console → Instellen → API-toegang.';
+
+  @override
+  String get playInstructionsStep2 =>
+      'Maak of koppel een Google Cloud-project en maak vervolgens een serviceaccount aan.';
+
+  @override
+  String get playInstructionsStep3 =>
+      'Geef het serviceaccount toegang tot uw app onder Gebruikers en rechten.';
+
+  @override
+  String get playInstructionsStep4 =>
+      'Maak een JSON-sleutel voor het serviceaccount en download deze.';
+
+  @override
   String get noImagesFoundInFolder =>
       'Geen geldige schermafbeeldingen gevonden in de geselecteerde map';
 
@@ -1674,4 +1777,61 @@ class AppLocalizationsNl extends AppLocalizations {
 
   @override
   String get resetRotation => 'Resetten';
+
+  @override
+  String get takePhoto => 'Foto maken';
+
+  @override
+  String get chooseFromGallery => 'Kiezen uit galerij';
+
+  @override
+  String get selectSource => 'Bron selecteren';
+
+  @override
+  String get fillCanvas => 'Canvas vullen';
+
+  @override
+  String get positionAssist => 'Positiehulp';
+
+  @override
+  String get presetTopCenter => 'Boven';
+
+  @override
+  String get presetBottomCenter => 'Onder';
+
+  @override
+  String get presetCenter => 'Midden';
+
+  @override
+  String get presetReset => 'Reset';
+
+  @override
+  String get applyToAllLocales => 'Toepassen op alle talen';
+
+  @override
+  String get applyToAllOverlaysScreenshotsLocales =>
+      'Toepassen op alle teksten, screenshots & talen';
+
+  @override
+  String get applyFrameToAllScreenshots =>
+      'Kaderinstellingen toepassen op alle schermafbeeldingen';
+
+  @override
+  String get commitAsDraft => 'Opslaan als concept';
+
+  @override
+  String get commitAsDraftDesc =>
+      'Wijzigingen in conceptstatus houden in plaats von in te dienen voor beoordeling.';
+
+  @override
+  String get playErrorAutoSubmitRequired =>
+      'Google Play Console vereist dat alle wijzigingen voor deze app automatisch ter beoordeling worden ingediend. Schakel \'Opslaan als concept\' uit en zorg ervoor dat alle vereiste verklaringen zijn ingevuld in de Google Play Console.';
+
+  @override
+  String get uploadExistingFolderToGooglePlay =>
+      'Bestaande map uploaden naar Google Play';
+
+  @override
+  String get playErrorDeclarationRequired =>
+      'Upload geweigerd door Google Play: controleer uw Google Play Console en vul eerst eventuele openstaande verklaringen in onder App-inhoud.';
 }

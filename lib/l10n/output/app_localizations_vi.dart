@@ -331,6 +331,17 @@ class AppLocalizationsVi extends AppLocalizations {
   String get replaceImage => 'Thay thế hình ảnh';
 
   @override
+  String replaceImageForLocale(String locale) {
+    return 'Thay thế hình ảnh cho $locale';
+  }
+
+  @override
+  String get revertToSourceImage => 'Quay lại hình ảnh gốc';
+
+  @override
+  String get alternativeScreenshots => 'Ảnh chụp màn hình thay thế';
+
+  @override
   String get savedToLibrary => 'Đã lưu vào thư viện';
 
   @override
@@ -579,6 +590,18 @@ class AppLocalizationsVi extends AppLocalizations {
 
   @override
   String get zoomToFit => 'Thu phóng vừa khung';
+
+  @override
+  String get zoomTo100Percent => 'Zoom to 100%';
+
+  @override
+  String get zoomToSelection => 'Zoom to Selection';
+
+  @override
+  String get zoomIn => 'Zoom In';
+
+  @override
+  String get zoomOut => 'Zoom Out';
 
   @override
   String get addScreenshot => 'Thêm ảnh chụp';
@@ -1193,6 +1216,86 @@ class AppLocalizationsVi extends AppLocalizations {
   String get uploadExistingFolderToAsc => 'Tải lên thư mục có sẵn...';
 
   @override
+  String get uploadToGooglePlay => 'Tải lên Google Play';
+
+  @override
+  String get googlePlayServiceAccount => 'Tài khoản dịch vụ Google Play';
+
+  @override
+  String get playServiceAccountHint =>
+      'Chọn tệp khóa JSON của tài khoản dịch vụ từ Google Cloud Console có quyền truy cập Android Publisher.';
+
+  @override
+  String get selectJsonKeyFile => 'Chọn tệp khóa JSON';
+
+  @override
+  String get noServiceAccountConfigured => 'Chưa cấu hình tài khoản dịch vụ';
+
+  @override
+  String get playSetupHint =>
+      'Cấu hình tài khoản dịch vụ Google Play của bạn để tải lên ảnh chụp màn hình.';
+
+  @override
+  String get configureServiceAccount => 'Cấu hình tài khoản dịch vụ';
+
+  @override
+  String invalidServiceAccount(String error) {
+    return 'Tệp tài khoản dịch vụ không hợp lệ: $error';
+  }
+
+  @override
+  String get packageName => 'Tên gói (Package Name)';
+
+  @override
+  String get packageNameHint => 'com.example.app';
+
+  @override
+  String get imageType => 'Loại hình ảnh';
+
+  @override
+  String playMaxScreenshotsNote(int count) {
+    return 'Google Play cho phép tối đa $count ảnh chụp màn hình cho mỗi ngôn ngữ — các ảnh dư thừa sẽ không được tải lên.';
+  }
+
+  @override
+  String get googlePlay => 'Google Play';
+
+  @override
+  String get learnMore => 'Tìm hiểu thêm';
+
+  @override
+  String get orLabel => 'hoặc';
+
+  @override
+  String get pasteJsonLabel => 'Dán nội dung JSON';
+
+  @override
+  String get playPasteJsonHint =>
+      'Dán nội dung của tệp .json tài khoản dịch vụ của bạn';
+
+  @override
+  String get saveJsonContents => 'Lưu nội dung JSON';
+
+  @override
+  String get playInstructionsTitle => 'Cách lấy khóa của bạn';
+
+  @override
+  String get playInstructionsStep1 =>
+      'Mở Google Play Console → Cấu hình (Setup) → Truy cập API (API access).';
+
+  @override
+  String get playInstructionsStep2 =>
+      'Tạo hoặc liên kết một dự án Google Cloud, sau đó tạo một tài khoản dịch vụ.';
+
+  @override
+  String get playInstructionsStep3 =>
+      'Cấp quyền truy cập ứng dụng cho tài khoản dịch vụ trong phần Người dùng & quyền (Users & permissions).';
+
+  @override
+  String get playInstructionsStep4 =>
+      'Tạo khóa JSON cho tài khoản dịch vụ và tải về.';
+
+  @override
   String get noImagesFoundInFolder =>
       'Không tìm thấy hình ảnh hợp lệ nào trong thư mục đã chọn';
 
@@ -1648,4 +1751,61 @@ class AppLocalizationsVi extends AppLocalizations {
 
   @override
   String get resetRotation => 'Đặt lại';
+
+  @override
+  String get takePhoto => 'Chụp ảnh';
+
+  @override
+  String get chooseFromGallery => 'Chọn từ thư viện';
+
+  @override
+  String get selectSource => 'Chọn nguồn';
+
+  @override
+  String get fillCanvas => 'Lấp đầy Canvas';
+
+  @override
+  String get positionAssist => 'Hỗ trợ vị trí';
+
+  @override
+  String get presetTopCenter => 'Trên';
+
+  @override
+  String get presetBottomCenter => 'Dưới';
+
+  @override
+  String get presetCenter => 'Giữa';
+
+  @override
+  String get presetReset => 'Đặt lại';
+
+  @override
+  String get applyToAllLocales => 'Áp dụng cho tất cả ngôn ngữ';
+
+  @override
+  String get applyToAllOverlaysScreenshotsLocales =>
+      'Áp dụng cho tất cả chữ, ảnh chụp & ngôn ngữ';
+
+  @override
+  String get applyFrameToAllScreenshots =>
+      'Áp dụng cài đặt khung cho tất cả ảnh chụp màn hình';
+
+  @override
+  String get commitAsDraft => 'Lưu dưới dạng bản nháp';
+
+  @override
+  String get commitAsDraftDesc =>
+      'Giữ các thay đổi ở trạng thái nháp thay vì gửi để xem xét.';
+
+  @override
+  String get playErrorAutoSubmitRequired =>
+      'Google Play Console yêu cầu gửi tất cả thay đổi để xem xét tự động cho ứng dụng này. Vui lòng tắt \'Lưu dưới dạng bản nháp\' và đảm bảo tất cả các tuyên bố bắt buộc được hoàn thành trong Google Play Console.';
+
+  @override
+  String get uploadExistingFolderToGooglePlay =>
+      'Tải thư mục có sẵn lên Google Play';
+
+  @override
+  String get playErrorDeclarationRequired =>
+      'Tải lên bị từ chối bởi Google Play: Vui lòng kiểm tra Google Play Console và hoàn thành các tuyên bố còn thiếu trong mục Nội dung ứng dụng trước.';
 }

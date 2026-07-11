@@ -329,6 +329,17 @@ class AppLocalizationsZh extends AppLocalizations {
   String get replaceImage => '替换图片';
 
   @override
+  String replaceImageForLocale(String locale) {
+    return '替换 $locale 的图片';
+  }
+
+  @override
+  String get revertToSourceImage => '恢复为源图片';
+
+  @override
+  String get alternativeScreenshots => '备用截图';
+
+  @override
   String get savedToLibrary => '已保存至资料库';
 
   @override
@@ -577,6 +588,18 @@ class AppLocalizationsZh extends AppLocalizations {
 
   @override
   String get zoomToFit => '适应窗口';
+
+  @override
+  String get zoomTo100Percent => 'Zoom to 100%';
+
+  @override
+  String get zoomToSelection => 'Zoom to Selection';
+
+  @override
+  String get zoomIn => 'Zoom In';
+
+  @override
+  String get zoomOut => 'Zoom Out';
 
   @override
   String get addScreenshot => '添加截图';
@@ -1157,6 +1180,80 @@ class AppLocalizationsZh extends AppLocalizations {
   String get uploadExistingFolderToAsc => '上传现有文件夹...';
 
   @override
+  String get uploadToGooglePlay => '上传到 Google Play';
+
+  @override
+  String get googlePlayServiceAccount => 'Google Play 服务帐号';
+
+  @override
+  String get playServiceAccountHint =>
+      '从 Google Cloud Console 中选择具有 Android Publisher 访问权限的服务帐号 JSON 密钥。';
+
+  @override
+  String get selectJsonKeyFile => '选择 JSON 密钥文件';
+
+  @override
+  String get noServiceAccountConfigured => '未配置服务帐号';
+
+  @override
+  String get playSetupHint => '设置您的 Google Play 服务帐号以上传屏幕截图。';
+
+  @override
+  String get configureServiceAccount => '配置服务帐号';
+
+  @override
+  String invalidServiceAccount(String error) {
+    return '无效的服务帐号文件：$error';
+  }
+
+  @override
+  String get packageName => '包名';
+
+  @override
+  String get packageNameHint => 'com.example.app';
+
+  @override
+  String get imageType => '图片类型';
+
+  @override
+  String playMaxScreenshotsNote(int count) {
+    return 'Google Play 每个语言区域最多允许 $count 张屏幕截图 — 多余的截图不会被上传。';
+  }
+
+  @override
+  String get googlePlay => 'Google Play';
+
+  @override
+  String get learnMore => '了解详情';
+
+  @override
+  String get orLabel => '或';
+
+  @override
+  String get pasteJsonLabel => '粘贴 JSON 内容';
+
+  @override
+  String get playPasteJsonHint => '粘贴您的服务帐号 .json 文件的内容';
+
+  @override
+  String get saveJsonContents => '保存 JSON 内容';
+
+  @override
+  String get playInstructionsTitle => '如何获取密钥';
+
+  @override
+  String get playInstructionsStep1 => '打开 Google Play Console → 设置 → API 访问。';
+
+  @override
+  String get playInstructionsStep2 => '创建或关联 Google Cloud 项目，然后创建服务帐号。';
+
+  @override
+  String get playInstructionsStep3 => '在“用户和权限”下授予服务帐号对应用的访问权限。';
+
+  @override
+  String get playInstructionsStep4 => '为服务帐号创建 JSON 密钥并下载。';
+
+  @override
   String get noImagesFoundInFolder => '在选定文件夹中未找到有效的屏幕截图图像';
 
   @override
@@ -1581,6 +1678,59 @@ class AppLocalizationsZh extends AppLocalizations {
 
   @override
   String get resetRotation => '重置';
+
+  @override
+  String get takePhoto => '拍照';
+
+  @override
+  String get chooseFromGallery => '从相册选取';
+
+  @override
+  String get selectSource => '选择来源';
+
+  @override
+  String get fillCanvas => '填满画布';
+
+  @override
+  String get positionAssist => '位置辅助';
+
+  @override
+  String get presetTopCenter => '顶部';
+
+  @override
+  String get presetBottomCenter => '底部';
+
+  @override
+  String get presetCenter => '居中';
+
+  @override
+  String get presetReset => '重置';
+
+  @override
+  String get applyToAllLocales => '应用到所有语言';
+
+  @override
+  String get applyToAllOverlaysScreenshotsLocales => '应用到所有文本、屏幕截图和语言';
+
+  @override
+  String get applyFrameToAllScreenshots => '将外框设置应用到所有截图';
+
+  @override
+  String get commitAsDraft => '提交为草稿';
+
+  @override
+  String get commitAsDraftDesc => '将更改保持在草稿状态，而不是提交审核。';
+
+  @override
+  String get playErrorAutoSubmitRequired =>
+      'Google Play Console 要求此应用的所有更改自动提交审核。请停用“提交为草稿”，并确保在 Google Play Console 中完成所有必需的声明。';
+
+  @override
+  String get uploadExistingFolderToGooglePlay => '上传现有文件夹到 Google Play';
+
+  @override
+  String get playErrorDeclarationRequired =>
+      '上传被 Google Play 拒绝：请先检查您的 Google Play Console 并完成“应用内容”下所有未完成的声明。';
 }
 
 /// The translations for Chinese, using the Han script (`zh_Hant`).
@@ -1906,6 +2056,17 @@ class AppLocalizationsZhHant extends AppLocalizationsZh {
 
   @override
   String get replaceImage => '替換圖片';
+
+  @override
+  String replaceImageForLocale(String locale) {
+    return '替換 $locale 的圖片';
+  }
+
+  @override
+  String get revertToSourceImage => '還原為原始圖片';
+
+  @override
+  String get alternativeScreenshots => '備用截圖';
 
   @override
   String get savedToLibrary => '已儲存至資料庫';
@@ -2736,6 +2897,80 @@ class AppLocalizationsZhHant extends AppLocalizationsZh {
   String get uploadExistingFolderToAsc => '上傳現有資料夾...';
 
   @override
+  String get uploadToGooglePlay => '上傳到 Google Play';
+
+  @override
+  String get googlePlayServiceAccount => 'Google Play 服務帳戶';
+
+  @override
+  String get playServiceAccountHint =>
+      '從 Google Cloud Console 選擇具有 Android Publisher 存取權限的服務帳戶 JSON 金鑰。';
+
+  @override
+  String get selectJsonKeyFile => '選擇 JSON 金鑰檔案';
+
+  @override
+  String get noServiceAccountConfigured => '未設定服務帳戶';
+
+  @override
+  String get playSetupHint => '設定您的 Google Play 服務帳戶以上傳螢幕截圖。';
+
+  @override
+  String get configureServiceAccount => '設定服務帳戶';
+
+  @override
+  String invalidServiceAccount(String error) {
+    return '無效的服務帳戶檔案：$error';
+  }
+
+  @override
+  String get packageName => '套件名稱';
+
+  @override
+  String get packageNameHint => 'com.example.app';
+
+  @override
+  String get imageType => '圖片類型';
+
+  @override
+  String playMaxScreenshotsNote(int count) {
+    return 'Google Play 每個語言區域最多允許 $count 張螢幕截圖 — 多餘的螢幕截圖不會被上傳。';
+  }
+
+  @override
+  String get googlePlay => 'Google Play';
+
+  @override
+  String get learnMore => '了解更多';
+
+  @override
+  String get orLabel => '或';
+
+  @override
+  String get pasteJsonLabel => '貼上 JSON 內容';
+
+  @override
+  String get playPasteJsonHint => '貼上您服務帳戶 .json 檔案的內容';
+
+  @override
+  String get saveJsonContents => '儲存 JSON 內容';
+
+  @override
+  String get playInstructionsTitle => '如何取得您的金鑰';
+
+  @override
+  String get playInstructionsStep1 => '打開 Google Play Console → 設定 → API 存取。';
+
+  @override
+  String get playInstructionsStep2 => '建立或連結 Google Cloud 專案，然後建立服務帳戶。';
+
+  @override
+  String get playInstructionsStep3 => '在「使用者和權限」下授予服務帳戶存取應用程式的權限。';
+
+  @override
+  String get playInstructionsStep4 => '為服務帳戶建立 JSON 金鑰並下載。';
+
+  @override
   String get noImagesFoundInFolder => '在選定資料夾中未找到有效的螢幕截圖圖像';
 
   @override
@@ -3160,4 +3395,57 @@ class AppLocalizationsZhHant extends AppLocalizationsZh {
 
   @override
   String get resetRotation => '重設';
+
+  @override
+  String get takePhoto => '拍照';
+
+  @override
+  String get chooseFromGallery => '從相簿選取';
+
+  @override
+  String get selectSource => '選擇來源';
+
+  @override
+  String get fillCanvas => '填滿画布';
+
+  @override
+  String get positionAssist => '位置輔助';
+
+  @override
+  String get presetTopCenter => '頂部';
+
+  @override
+  String get presetBottomCenter => '底部';
+
+  @override
+  String get presetCenter => '居中';
+
+  @override
+  String get presetReset => '重置';
+
+  @override
+  String get applyToAllLocales => '應用到所有語言';
+
+  @override
+  String get applyToAllOverlaysScreenshotsLocales => '應用到所有文本、螢幕截圖和語言';
+
+  @override
+  String get applyFrameToAllScreenshots => '將外框設定套用到所有螢幕截圖';
+
+  @override
+  String get commitAsDraft => '提交為草稿';
+
+  @override
+  String get commitAsDraftDesc => '將更改保持在草稿狀態，而不是提交審核。';
+
+  @override
+  String get playErrorAutoSubmitRequired =>
+      'Google Play Console 要求此應用的所有變更自動提交審核。請停用「提交為草稿」，並確保在 Google Play Console 中完成所有必需的聲明。';
+
+  @override
+  String get uploadExistingFolderToGooglePlay => '上傳現有資料夾到 Google Play';
+
+  @override
+  String get playErrorDeclarationRequired =>
+      '上傳被 Google Play 拒絕：請先檢查您的 Google Play Console 並完成「應用內容」下所有未完成的聲明。';
 }

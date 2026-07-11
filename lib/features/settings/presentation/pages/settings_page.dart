@@ -5,7 +5,9 @@ import 'package:app_screenshots/core/di/service_locator.dart';
 import 'package:app_screenshots/core/services/icloud_backup_service.dart';
 import 'package:app_screenshots/core/utils/china_locale_helper.dart';
 import 'package:app_screenshots/features/screenshot_editor/presentation/widgets/asc_credentials_dialog.dart';
+import 'package:app_screenshots/features/screenshot_editor/presentation/widgets/play_credentials_dialog.dart';
 import 'package:app_screenshots/features/settings/domain/entities/asc_credentials.dart';
+import 'package:app_screenshots/features/settings/domain/entities/play_credentials.dart';
 import 'package:app_screenshots/features/screenshot_editor/data/models/ai_provider_config.dart';
 import 'package:app_screenshots/features/screenshot_editor/domain/repositories/ai_provider_repository.dart';
 import 'package:app_screenshots/features/screenshot_editor/presentation/widgets/translation_settings_sheet.dart';
@@ -33,6 +35,7 @@ import '../cubit/theme_cubit.dart';
 part 'settings_review_card.dart';
 part 'settings_app_icon.dart';
 part 'settings_asc_credentials.dart';
+part 'settings_play_credentials.dart';
 part 'settings_icloud_backup.dart';
 part 'settings_ai_keys.dart';
 
@@ -243,6 +246,12 @@ class _SettingsDialogState extends State<SettingsDialog> {
             _SectionHeader(title: context.l10n.appStoreConnect),
             const SizedBox(height: 8),
             _AscCredentialsSection(isDark: isDark, theme: theme),
+
+            const SizedBox(height: 24),
+            // ── Google Play ──
+            _SectionHeader(title: context.l10n.googlePlay),
+            const SizedBox(height: 8),
+            _PlayCredentialsSection(isDark: isDark, theme: theme),
 
             const SizedBox(height: 24),
             _SectionHeader(title: context.l10n.support),

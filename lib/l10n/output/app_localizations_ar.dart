@@ -332,6 +332,17 @@ class AppLocalizationsAr extends AppLocalizations {
   String get replaceImage => 'استبدال الصورة';
 
   @override
+  String replaceImageForLocale(String locale) {
+    return 'استبدال الصورة لـ $locale';
+  }
+
+  @override
+  String get revertToSourceImage => 'الرجوع إلى الصورة المصدر';
+
+  @override
+  String get alternativeScreenshots => 'لقطات شاشة بديلة';
+
+  @override
   String get savedToLibrary => 'تم الحفظ في المكتبة';
 
   @override
@@ -584,6 +595,18 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get zoomToFit => 'ملاءمة النافذة';
+
+  @override
+  String get zoomTo100Percent => 'Zoom to 100%';
+
+  @override
+  String get zoomToSelection => 'Zoom to Selection';
+
+  @override
+  String get zoomIn => 'Zoom In';
+
+  @override
+  String get zoomOut => 'Zoom Out';
 
   @override
   String get addScreenshot => 'إضافة لقطة شاشة';
@@ -1203,6 +1226,86 @@ class AppLocalizationsAr extends AppLocalizations {
   String get uploadExistingFolderToAsc => 'تحميل مجلد موجود...';
 
   @override
+  String get uploadToGooglePlay => 'تحميل إلى Google Play';
+
+  @override
+  String get googlePlayServiceAccount => 'حساب خدمة Google Play';
+
+  @override
+  String get playServiceAccountHint =>
+      'حدد مفتاح JSON لحساب الخدمة من Google Cloud Console مع صلاحية وصول Android Publisher.';
+
+  @override
+  String get selectJsonKeyFile => 'تحديد ملف مفتاح JSON';
+
+  @override
+  String get noServiceAccountConfigured => 'لم يتم تكوين حساب خدمة';
+
+  @override
+  String get playSetupHint =>
+      'قم بإعداد حساب خدمة Google Play لتحميل لقطات الشاشة.';
+
+  @override
+  String get configureServiceAccount => 'تكوين حساب الخدمة';
+
+  @override
+  String invalidServiceAccount(String error) {
+    return 'ملف حساب خدمة غير صالح: $error';
+  }
+
+  @override
+  String get packageName => 'اسم الحزمة';
+
+  @override
+  String get packageNameHint => 'com.example.app';
+
+  @override
+  String get imageType => 'نوع الصورة';
+
+  @override
+  String playMaxScreenshotsNote(int count) {
+    return 'يسمح Google Play بما يصل إلى $count من لقطات الشاشة لكل لغة — لن يتم تحميل اللقطات الإضافية.';
+  }
+
+  @override
+  String get googlePlay => 'Google Play';
+
+  @override
+  String get learnMore => 'معرفة المزيد';
+
+  @override
+  String get orLabel => 'أو';
+
+  @override
+  String get pasteJsonLabel => 'لصق محتويات JSON';
+
+  @override
+  String get playPasteJsonHint =>
+      'الصق محتويات ملف .json الخاص بحساب الخدمة الخاص بك';
+
+  @override
+  String get saveJsonContents => 'حفظ محتويات JSON';
+
+  @override
+  String get playInstructionsTitle => 'كيفية الحصول على المفتاح الخاص بك';
+
+  @override
+  String get playInstructionsStep1 =>
+      'افتح Google Play Console ← الإعداد ← الوصول إلى API.';
+
+  @override
+  String get playInstructionsStep2 =>
+      'إنشاء مشروع Google Cloud أو ربطه، ثم إنشاء حساب خدمة.';
+
+  @override
+  String get playInstructionsStep3 =>
+      'امنح حساب الخدمة حق الوصول إلى تطبيقك ضمن المستخدمين والأذونات.';
+
+  @override
+  String get playInstructionsStep4 =>
+      'قم بإنشاء مفتاح JSON لحساب الخدمة وقم بتنزيله.';
+
+  @override
   String get noImagesFoundInFolder =>
       'لم يتم العثور على صور لقطات شاشة صالحة في المجلد المحدد';
 
@@ -1660,4 +1763,61 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get resetRotation => 'إعادة تعيين';
+
+  @override
+  String get takePhoto => 'التقاط صورة';
+
+  @override
+  String get chooseFromGallery => 'اختر من المعرض';
+
+  @override
+  String get selectSource => 'اختر المصدر';
+
+  @override
+  String get fillCanvas => 'ملء الكانفاس';
+
+  @override
+  String get positionAssist => 'مساعد الموضع';
+
+  @override
+  String get presetTopCenter => 'أعلى';
+
+  @override
+  String get presetBottomCenter => 'أسفل';
+
+  @override
+  String get presetCenter => 'وسط';
+
+  @override
+  String get presetReset => 'إعادة';
+
+  @override
+  String get applyToAllLocales => 'تطبيق على جميع اللغات';
+
+  @override
+  String get applyToAllOverlaysScreenshotsLocales =>
+      'تطبيق على جميع النصوص، لقطات الشاشة واللغات';
+
+  @override
+  String get applyFrameToAllScreenshots =>
+      'تطبيق إعدادات الإطار على جميع لقطات الشاشة';
+
+  @override
+  String get commitAsDraft => 'حفظ كمسودة';
+
+  @override
+  String get commitAsDraftDesc =>
+      'الاحتفاظ بالتغييرات في حالة مسودة بدلاً من إرسالها للمراجعة.';
+
+  @override
+  String get playErrorAutoSubmitRequired =>
+      'تتطلب Google Play Console إرسال جميع التغييرات للمراجعة تلقائيًا لهذا التطبيق. يرجى تعطيل \'حفظ كمسودة\' والتأكد من إكمال جميع الإقرارات المطلوبة في Google Play Console.';
+
+  @override
+  String get uploadExistingFolderToGooglePlay =>
+      'تحميل مجلد موجود إلى Google Play';
+
+  @override
+  String get playErrorDeclarationRequired =>
+      'تم رفض التحميل من قِvel Google Play: يرجى التحقق من Google Play Console وإكمال أي إقرارات معلقة ضمن محتوى التطبيق أولاً.';
 }

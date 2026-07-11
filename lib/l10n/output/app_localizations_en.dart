@@ -333,6 +333,17 @@ class AppLocalizationsEn extends AppLocalizations {
   String get replaceImage => 'Replace Image';
 
   @override
+  String replaceImageForLocale(String locale) {
+    return 'Replace Image for $locale';
+  }
+
+  @override
+  String get revertToSourceImage => 'Revert to Source Image';
+
+  @override
+  String get alternativeScreenshots => 'Alternative Screenshots';
+
+  @override
   String get savedToLibrary => 'Saved to library';
 
   @override
@@ -583,6 +594,18 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get zoomToFit => 'Zoom to Fit';
+
+  @override
+  String get zoomTo100Percent => 'Zoom to 100%';
+
+  @override
+  String get zoomToSelection => 'Zoom to Selection';
+
+  @override
+  String get zoomIn => 'Zoom In';
+
+  @override
+  String get zoomOut => 'Zoom Out';
 
   @override
   String get addScreenshot => 'Add Screenshot';
@@ -1199,6 +1222,86 @@ class AppLocalizationsEn extends AppLocalizations {
   String get uploadExistingFolderToAsc => 'Upload Existing Folder...';
 
   @override
+  String get uploadToGooglePlay => 'Upload to Google Play';
+
+  @override
+  String get googlePlayServiceAccount => 'Google Play Service Account';
+
+  @override
+  String get playServiceAccountHint =>
+      'Select the service account JSON key from Google Cloud Console with Android Publisher access.';
+
+  @override
+  String get selectJsonKeyFile => 'Select JSON Key File';
+
+  @override
+  String get noServiceAccountConfigured => 'No service account configured';
+
+  @override
+  String get playSetupHint =>
+      'Set up your Google Play service account to upload screenshots.';
+
+  @override
+  String get configureServiceAccount => 'Configure Service Account';
+
+  @override
+  String invalidServiceAccount(String error) {
+    return 'Invalid service account file: $error';
+  }
+
+  @override
+  String get packageName => 'Package Name';
+
+  @override
+  String get packageNameHint => 'com.example.app';
+
+  @override
+  String get imageType => 'Image Type';
+
+  @override
+  String playMaxScreenshotsNote(int count) {
+    return 'Google Play allows up to $count screenshots per locale — extras won\'t be uploaded.';
+  }
+
+  @override
+  String get googlePlay => 'Google Play';
+
+  @override
+  String get learnMore => 'Learn more';
+
+  @override
+  String get orLabel => 'or';
+
+  @override
+  String get pasteJsonLabel => 'Paste JSON contents';
+
+  @override
+  String get playPasteJsonHint =>
+      'Paste the contents of your service account .json file';
+
+  @override
+  String get saveJsonContents => 'Save JSON Contents';
+
+  @override
+  String get playInstructionsTitle => 'How to get your key';
+
+  @override
+  String get playInstructionsStep1 =>
+      'Open Google Play Console → Setup → API access.';
+
+  @override
+  String get playInstructionsStep2 =>
+      'Create or link a Google Cloud project, then create a service account.';
+
+  @override
+  String get playInstructionsStep3 =>
+      'Grant the service account access to your app under Users & permissions.';
+
+  @override
+  String get playInstructionsStep4 =>
+      'Create a JSON key for the service account and download it.';
+
+  @override
   String get noImagesFoundInFolder =>
       'No valid screenshot images found in selected folder';
 
@@ -1667,4 +1770,61 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get resetRotation => 'Reset';
+
+  @override
+  String get takePhoto => 'Take Photo';
+
+  @override
+  String get chooseFromGallery => 'Choose from Gallery';
+
+  @override
+  String get selectSource => 'Select Source';
+
+  @override
+  String get fillCanvas => 'Fill Canvas';
+
+  @override
+  String get positionAssist => 'Position Assist';
+
+  @override
+  String get presetTopCenter => 'Top';
+
+  @override
+  String get presetBottomCenter => 'Bottom';
+
+  @override
+  String get presetCenter => 'Center';
+
+  @override
+  String get presetReset => 'Reset';
+
+  @override
+  String get applyToAllLocales => 'Apply to all locales';
+
+  @override
+  String get applyToAllOverlaysScreenshotsLocales =>
+      'Apply to all text overlays, screenshots & locales';
+
+  @override
+  String get applyFrameToAllScreenshots =>
+      'Apply frame settings to all screenshots';
+
+  @override
+  String get commitAsDraft => 'Commit as Draft';
+
+  @override
+  String get commitAsDraftDesc =>
+      'Keep changes staged in Google Play Console instead of submitting for review.';
+
+  @override
+  String get playErrorAutoSubmitRequired =>
+      'Google Play Console requires all changes to be sent for review automatically for this app. Please disable \'Commit as Draft\' and ensure all required declarations are completed in Google Play Console.';
+
+  @override
+  String get uploadExistingFolderToGooglePlay =>
+      'Upload existing folder to Google Play';
+
+  @override
+  String get playErrorDeclarationRequired =>
+      'Upload rejected by Google Play: Please check your Google Play Console and complete any outstanding declarations under App Content first.';
 }

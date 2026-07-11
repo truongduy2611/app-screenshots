@@ -4,6 +4,7 @@ import 'package:app_screenshots/core/widgets/app_button.dart';
 import 'package:app_screenshots/core/widgets/app_snackbar.dart';
 import 'package:app_screenshots/core/widgets/genie_dialog_route.dart';
 import 'package:app_screenshots/features/screenshot_editor/data/models/translation_bundle.dart';
+import 'package:app_screenshots/features/screenshot_editor/data/models/overlay_override.dart';
 import 'package:app_screenshots/features/screenshot_editor/presentation/cubit/asc_upload_cubit.dart';
 import 'package:app_screenshots/features/screenshot_editor/presentation/cubit/multi_screenshot_cubit.dart';
 import 'package:app_screenshots/features/screenshot_editor/presentation/cubit/screenshot_editor_cubit.dart';
@@ -19,9 +20,12 @@ import 'package:app_screenshots/features/screenshot_editor/presentation/widgets/
 import 'package:app_screenshots/features/screenshot_editor/presentation/widgets/manual_translation_dialog.dart';
 import 'package:app_screenshots/features/screenshot_editor/presentation/widgets/screenshot_capture_provider.dart';
 import 'package:app_screenshots/features/screenshot_editor/presentation/widgets/translation_settings_sheet.dart';
+import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:material_symbols_icons/symbols.dart';
+import 'package:app_screenshots/features/screenshot_editor/utils/screenshot_utils.dart';
+import 'package:app_screenshots/features/screenshot_editor/presentation/widgets/controls/app_switch.dart';
 
 part 'translation_controls.source_picker.dart';
 part 'translation_controls.locale_tile.dart';
@@ -43,6 +47,8 @@ class _TranslationControlsState extends State<TranslationControls> {
   String _sourceLocale = 'en';
   final Set<String> _selectedLocales = {};
   final Set<String> _pinnedLocales = {};
+  bool _applyToAllLocales = false;
+  bool _applyToAllScreenshotsOverlays = false;
 
   /// All supported App Store Connect locales.
   static const _availableLocales = <String, String>{
@@ -133,6 +139,15 @@ class _TranslationControlsState extends State<TranslationControls> {
     if (translationState.bundle != null) {
       _sourceLocale = translationState.bundle!.sourceLocale;
       _selectedLocales.addAll(translationState.bundle!.targetLocales);
+    }
+  }
+
+  /// Number of screenshot slots (designs) in the project; 1 in single mode.
+  int _slotCount(BuildContext context) {
+    try {
+      return context.read<MultiScreenshotCubit>().state.designs.length;
+    } catch (_) {
+      return 1;
     }
   }
 
@@ -341,13 +356,13 @@ class _TranslationControlsState extends State<TranslationControls> {
     final repo = sl<SettingsRepository>();
     final creds = await repo.getAscCredentials();
     if (creds == null || !creds.isValid) {
-      if (!context.mounted) return;
+      if (!mounted) return;
       final saved = await AscCredentialsDialog.show(context);
-      if (!saved || !context.mounted) return;
+      if (!saved || !mounted) return;
     }
 
     // 2) Show locale picker — let user choose which locales to render.
-    if (!context.mounted) return;
+    if (!mounted) return;
     final translationCubit = context.read<TranslationCubit>();
     final bundle = translationCubit.state.bundle;
     final hasTranslations = bundle != null && bundle.translations.isNotEmpty;
@@ -364,17 +379,17 @@ class _TranslationControlsState extends State<TranslationControls> {
         allLocales: allLocales,
         sourceLocale: sourceLocale,
       );
-      if (selectedLocales == null || !context.mounted) return;
+      if (selectedLocales == null || !mounted) return;
     }
 
     // 3) Capture locale screenshots (only selected locales).
-    if (!context.mounted) return;
+    if (!mounted) return;
     final localeScreenshots = await captureProvider.captureAllLocaleScreenshots(
       context,
       selectedLocales: selectedLocales,
     );
 
-    if (!context.mounted) return;
+    if (!mounted) return;
 
     if (localeScreenshots == null || localeScreenshots.isEmpty) {
       context.showAppSnackbar(
@@ -387,7 +402,7 @@ class _TranslationControlsState extends State<TranslationControls> {
     // 4) Show upload sheet — pass saved app config for auto-selection.
     final savedConfig = captureProvider.ascAppConfig;
 
-    if (!context.mounted) return;
+    if (!mounted) return;
     final isSmallScreen = MediaQuery.sizeOf(context).width < 600;
     showDialog(
       context: context,
@@ -797,6 +812,461 @@ class _TranslationControlsState extends State<TranslationControls> {
               ),
             ],
 
+            const SizedBox(height: 20),
+
+            // Alignment Assist
+            ControlSection(
+              icon: Symbols.align_center_rounded,
+              title: context.l10n.positionAssist,
+            ),
+            Builder(
+              builder: (ctx) {
+                final editorCubit = ctx.watch<ScreenshotEditorCubit>();
+                final editorState = editorCubit.state;
+                final selectedId = editorState.selectedOverlayId;
+                final selectedOverlay = selectedId != null
+                    ? editorState.design.overlays.where((e) => e.id == selectedId).firstOrNull
+                    : null;
+
+                final canvasSize = ScreenshotUtils.getDimensions(
+                  editorState.design.displayType ?? '',
+                  editorState.design.orientation,
+                );
+
+                final isLocalePreview = translationState.previewLocale != null;
+                final previewLocale = translationState.previewLocale;
+                final bundle = translationState.bundle;
+                final tCubit = ctx.read<TranslationCubit>();
+
+                int? designIndex;
+                try {
+                  designIndex = ctx.read<MultiScreenshotCubit>().state.activeIndex;
+                } catch (_) {}
+
+                String? translationKey;
+                if (selectedOverlay != null) {
+                  translationKey = designIndex != null
+                      ? '$designIndex:${selectedOverlay.id}'
+                      : selectedOverlay.id;
+                }
+
+                final canApplySingle = selectedOverlay != null;
+                final canApplyAll = _applyToAllScreenshotsOverlays;
+                final isEnabled = canApplySingle || canApplyAll;
+
+                return ControlCard(
+                  children: [
+                    if (!isEnabled)
+                      Padding(
+                        padding: const EdgeInsets.only(bottom: 12, top: 4),
+                        child: Text(
+                          "Select a text overlay on the canvas, or enable 'Apply to all text overlays'.",
+                          style: theme.textTheme.bodySmall?.copyWith(
+                            color: theme.colorScheme.onSurfaceVariant,
+                            fontStyle: FontStyle.italic,
+                          ),
+                          textAlign: TextAlign.center,
+                        ),
+                      ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      children: [
+                        _buildPresetButton(
+                          icon: Symbols.vertical_align_top_rounded,
+                          label: context.l10n.presetTopCenter,
+                          onPressed: !isEnabled ? null : () {
+                            final width = canvasSize.width - 80;
+                            final dx = (canvasSize.width - width) / 2;
+                            final dy = selectedOverlay != null && selectedOverlay.position.dy > 0
+                                ? selectedOverlay.position.dy
+                                : canvasSize.height * 0.08;
+                            final newPos = Offset(dx, dy);
+
+                            if (_applyToAllScreenshotsOverlays) {
+                              final multiCubit = ctx.read<MultiScreenshotCubit>();
+                              final updatedDesigns = multiCubit.state.designs.map((design) {
+                                final updatedOverlays = design.overlays.map((overlay) {
+                                  final newPos = Offset(dx, overlay.position.dy);
+                                  return overlay.copyWith(
+                                    position: newPos,
+                                    width: width,
+                                    textAlign: TextAlign.center,
+                                  );
+                                }).toList();
+                                return design.copyWith(overlays: updatedOverlays);
+                              }).toList();
+                              multiCubit.updateAllDesigns(updatedDesigns);
+                              editorCubit.updateDesign(updatedDesigns[multiCubit.state.activeIndex]);
+
+                              if (bundle != null) {
+                                final targetLocales = bundle.targetLocales;
+                                if (targetLocales.isNotEmpty) {
+                                  final allOverlayIds = <String>[];
+                                  for (int i = 0; i < updatedDesigns.length; i++) {
+                                    for (final ov in updatedDesigns[i].overlays) {
+                                      allOverlayIds.add('$i:${ov.id}');
+                                    }
+                                  }
+                                  tCubit.updateMultipleOverlayOverridesHorizontalOnly(
+                                    locales: targetLocales,
+                                    overlayIds: allOverlayIds,
+                                    dx: dx,
+                                    width: width,
+                                    textAlignIndex: TextAlign.center.index,
+                                  );
+                                }
+                              }
+                            } else if (_applyToAllLocales) {
+                              if (selectedOverlay == null) return;
+                              editorCubit.updateTextOverlay(
+                                selectedOverlay.id,
+                                selectedOverlay.copyWith(
+                                  position: newPos,
+                                  width: width,
+                                  textAlign: TextAlign.center,
+                                ),
+                              );
+                              if (bundle != null && bundle.targetLocales.isNotEmpty) {
+                                tCubit.updateOverlayOverrides(
+                                  bundle.targetLocales,
+                                  translationKey!,
+                                  OverlayOverride(
+                                    position: newPos,
+                                    width: width,
+                                    textAlignIndex: TextAlign.center.index,
+                                  ),
+                                );
+                              }
+                            } else {
+                              if (selectedOverlay == null) return;
+                              if (isLocalePreview) {
+                                final oo = (bundle?.getOverride(previewLocale!, translationKey!) ?? const OverlayOverride()).copyWith(
+                                  position: newPos,
+                                  width: width,
+                                  textAlignIndex: TextAlign.center.index,
+                                );
+                                tCubit.updateOverlayOverride(previewLocale!, translationKey!, oo);
+                              } else {
+                                editorCubit.updateTextOverlay(
+                                  selectedOverlay.id,
+                                  selectedOverlay.copyWith(
+                                    position: newPos,
+                                    width: width,
+                                    textAlign: TextAlign.center,
+                                  ),
+                                );
+                              }
+                            }
+                          },
+                          theme: theme,
+                        ),
+                        const SizedBox(width: 8),
+                        _buildPresetButton(
+                          icon: Symbols.vertical_align_bottom_rounded,
+                          label: context.l10n.presetBottomCenter,
+                          onPressed: !isEnabled ? null : () {
+                            final width = canvasSize.width - 80;
+                            final dx = (canvasSize.width - width) / 2;
+                            final dy = canvasSize.height * 0.85;
+                            final newPos = Offset(dx, dy);
+
+                            if (_applyToAllScreenshotsOverlays) {
+                              final multiCubit = ctx.read<MultiScreenshotCubit>();
+                              final updatedDesigns = multiCubit.state.designs.map((design) {
+                                final updatedOverlays = design.overlays.map((overlay) {
+                                  final newPos = Offset(dx, overlay.position.dy);
+                                  return overlay.copyWith(
+                                    position: newPos,
+                                    width: width,
+                                    textAlign: TextAlign.center,
+                                  );
+                                }).toList();
+                                return design.copyWith(overlays: updatedOverlays);
+                              }).toList();
+                              multiCubit.updateAllDesigns(updatedDesigns);
+                              editorCubit.updateDesign(updatedDesigns[multiCubit.state.activeIndex]);
+
+                              if (bundle != null) {
+                                final targetLocales = bundle.targetLocales;
+                                if (targetLocales.isNotEmpty) {
+                                  final allOverlayIds = <String>[];
+                                  for (int i = 0; i < updatedDesigns.length; i++) {
+                                    for (final ov in updatedDesigns[i].overlays) {
+                                      allOverlayIds.add('$i:${ov.id}');
+                                    }
+                                  }
+                                  tCubit.updateMultipleOverlayOverridesHorizontalOnly(
+                                    locales: targetLocales,
+                                    overlayIds: allOverlayIds,
+                                    dx: dx,
+                                    width: width,
+                                    textAlignIndex: TextAlign.center.index,
+                                  );
+                                }
+                              }
+                            } else if (_applyToAllLocales) {
+                              if (selectedOverlay == null) return;
+                              editorCubit.updateTextOverlay(
+                                selectedOverlay.id,
+                                selectedOverlay.copyWith(
+                                  position: newPos,
+                                  width: width,
+                                  textAlign: TextAlign.center,
+                                ),
+                              );
+                              if (bundle != null && bundle.targetLocales.isNotEmpty) {
+                                tCubit.updateOverlayOverrides(
+                                  bundle.targetLocales,
+                                  translationKey!,
+                                  OverlayOverride(
+                                    position: newPos,
+                                    width: width,
+                                    textAlignIndex: TextAlign.center.index,
+                                  ),
+                                );
+                              }
+                            } else {
+                              if (selectedOverlay == null) return;
+                              if (isLocalePreview) {
+                                final oo = (bundle?.getOverride(previewLocale!, translationKey!) ?? const OverlayOverride()).copyWith(
+                                  position: newPos,
+                                  width: width,
+                                  textAlignIndex: TextAlign.center.index,
+                                );
+                                tCubit.updateOverlayOverride(previewLocale!, translationKey!, oo);
+                              } else {
+                                editorCubit.updateTextOverlay(
+                                  selectedOverlay.id,
+                                  selectedOverlay.copyWith(
+                                    position: newPos,
+                                    width: width,
+                                    textAlign: TextAlign.center,
+                                  ),
+                                );
+                              }
+                            }
+                          },
+                          theme: theme,
+                        ),
+                        const SizedBox(width: 8),
+                        _buildPresetButton(
+                          icon: Symbols.vertical_align_center_rounded,
+                          label: context.l10n.presetCenter,
+                          onPressed: !isEnabled ? null : () {
+                            final width = canvasSize.width - 80;
+                            final dx = (canvasSize.width - width) / 2;
+                            final dy = canvasSize.height * 0.45;
+                            final newPos = Offset(dx, dy);
+
+                            if (_applyToAllScreenshotsOverlays) {
+                              final multiCubit = ctx.read<MultiScreenshotCubit>();
+                              final updatedDesigns = multiCubit.state.designs.map((design) {
+                                final updatedOverlays = design.overlays.map((overlay) {
+                                  final newPos = Offset(dx, overlay.position.dy);
+                                  return overlay.copyWith(
+                                    position: newPos,
+                                    width: width,
+                                    textAlign: TextAlign.center,
+                                  );
+                                }).toList();
+                                return design.copyWith(overlays: updatedOverlays);
+                              }).toList();
+                              multiCubit.updateAllDesigns(updatedDesigns);
+                              editorCubit.updateDesign(updatedDesigns[multiCubit.state.activeIndex]);
+
+                              if (bundle != null) {
+                                final targetLocales = bundle.targetLocales;
+                                if (targetLocales.isNotEmpty) {
+                                  final allOverlayIds = <String>[];
+                                  for (int i = 0; i < updatedDesigns.length; i++) {
+                                    for (final ov in updatedDesigns[i].overlays) {
+                                      allOverlayIds.add('$i:${ov.id}');
+                                    }
+                                  }
+                                  tCubit.updateMultipleOverlayOverridesHorizontalOnly(
+                                    locales: targetLocales,
+                                    overlayIds: allOverlayIds,
+                                    dx: dx,
+                                    width: width,
+                                    textAlignIndex: TextAlign.center.index,
+                                  );
+                                }
+                              }
+                            } else if (_applyToAllLocales) {
+                              if (selectedOverlay == null) return;
+                              editorCubit.updateTextOverlay(
+                                selectedOverlay.id,
+                                selectedOverlay.copyWith(
+                                  position: newPos,
+                                  width: width,
+                                  textAlign: TextAlign.center,
+                                ),
+                              );
+                              if (bundle != null && bundle.targetLocales.isNotEmpty) {
+                                tCubit.updateOverlayOverrides(
+                                  bundle.targetLocales,
+                                  translationKey!,
+                                  OverlayOverride(
+                                    position: newPos,
+                                    width: width,
+                                    textAlignIndex: TextAlign.center.index,
+                                  ),
+                                );
+                              }
+                            } else {
+                              if (selectedOverlay == null) return;
+                              if (isLocalePreview) {
+                                final oo = (bundle?.getOverride(previewLocale!, translationKey!) ?? const OverlayOverride()).copyWith(
+                                  position: newPos,
+                                  width: width,
+                                  textAlignIndex: TextAlign.center.index,
+                                );
+                                tCubit.updateOverlayOverride(previewLocale!, translationKey!, oo);
+                              } else {
+                                editorCubit.updateTextOverlay(
+                                  selectedOverlay.id,
+                                  selectedOverlay.copyWith(
+                                    position: newPos,
+                                    width: width,
+                                    textAlign: TextAlign.center,
+                                  ),
+                                );
+                              }
+                            }
+                          },
+                          theme: theme,
+                        ),
+                        const SizedBox(width: 8),
+                        _buildPresetButton(
+                          icon: Symbols.restore_rounded,
+                          label: context.l10n.presetReset,
+                          onPressed: !isEnabled ? null : () {
+                            if (_applyToAllScreenshotsOverlays) {
+                              final multiCubit = ctx.read<MultiScreenshotCubit>();
+                              final updatedDesigns = multiCubit.state.designs.map((design) {
+                                final updatedOverlays = design.overlays.map((overlay) {
+                                  return overlay.copyWith(
+                                    position: const Offset(100, 100),
+                                    clearWidth: true,
+                                    textAlign: TextAlign.center,
+                                  );
+                                }).toList();
+                                return design.copyWith(overlays: updatedOverlays);
+                              }).toList();
+                              multiCubit.updateAllDesigns(updatedDesigns);
+                              editorCubit.updateDesign(updatedDesigns[multiCubit.state.activeIndex]);
+
+                              if (bundle != null) {
+                                final targetLocales = bundle.targetLocales;
+                                if (targetLocales.isNotEmpty) {
+                                  final allOverlayIds = <String>[];
+                                  for (int i = 0; i < updatedDesigns.length; i++) {
+                                    for (final ov in updatedDesigns[i].overlays) {
+                                      allOverlayIds.add('$i:${ov.id}');
+                                    }
+                                  }
+                                  tCubit.clearMultipleOverlayOverrides(
+                                    targetLocales,
+                                    allOverlayIds,
+                                  );
+                                }
+                              }
+                            } else if (_applyToAllLocales) {
+                              if (selectedOverlay == null) return;
+                              editorCubit.updateTextOverlay(
+                                selectedOverlay.id,
+                                selectedOverlay.copyWith(
+                                  position: const Offset(100, 100),
+                                  clearWidth: true,
+                                  textAlign: TextAlign.center,
+                                ),
+                              );
+                              if (bundle != null && bundle.targetLocales.isNotEmpty) {
+                                tCubit.clearOverlayOverrides(
+                                  bundle.targetLocales,
+                                  translationKey!,
+                                );
+                              }
+                            } else {
+                              if (selectedOverlay == null) return;
+                              if (isLocalePreview) {
+                                final oo = (bundle?.getOverride(previewLocale!, translationKey!) ?? const OverlayOverride()).copyWith(
+                                  clearPosition: true,
+                                  clearWidth: true,
+                                  clearTextAlignIndex: true,
+                                );
+                                tCubit.updateOverlayOverride(previewLocale!, translationKey!, oo);
+                              } else {
+                                editorCubit.updateTextOverlay(
+                                  selectedOverlay.id,
+                                  selectedOverlay.copyWith(
+                                    position: const Offset(100, 100),
+                                    clearWidth: true,
+                                    textAlign: TextAlign.center,
+                                  ),
+                                );
+                              }
+                            }
+                          },
+                          theme: theme,
+                        ),
+                      ],
+                    ),
+                    const SizedBox(height: 12),
+                    Row(
+                      children: [
+                        Expanded(
+                          child: Text(
+                            context.l10n.applyToAllLocales,
+                            style: theme.textTheme.bodySmall?.copyWith(
+                              color: theme.colorScheme.onSurfaceVariant,
+                            ),
+                          ),
+                        ),
+                        AppSwitch(
+                          value: _applyToAllLocales,
+                          onChanged: (val) {
+                            setState(() {
+                              _applyToAllLocales = val;
+                              if (val) {
+                                _applyToAllScreenshotsOverlays = false;
+                              }
+                            });
+                          },
+                        ),
+                      ],
+                    ),
+                    const SizedBox(height: 8),
+                    Row(
+                      children: [
+                        Expanded(
+                          child: Text(
+                            context.l10n.applyToAllOverlaysScreenshotsLocales,
+                            style: theme.textTheme.bodySmall?.copyWith(
+                              color: theme.colorScheme.onSurfaceVariant,
+                            ),
+                          ),
+                        ),
+                        AppSwitch(
+                          value: _applyToAllScreenshotsOverlays,
+                          onChanged: (val) {
+                            setState(() {
+                              _applyToAllScreenshotsOverlays = val;
+                              if (val) {
+                                _applyToAllLocales = false;
+                              }
+                            });
+                          },
+                        ),
+                      ],
+                    ),
+                  ],
+                );
+              },
+            ),
+
+            const SizedBox(height: 20),
+
             // ── Inline Translation Editing ──
             if (translationState.bundle != null &&
                 translationState.bundle!.translations.isNotEmpty) ...[
@@ -811,6 +1281,8 @@ class _TranslationControlsState extends State<TranslationControls> {
                 if (translations == null || translations.isEmpty) {
                   return const SizedBox.shrink();
                 }
+
+                final slotCount = _slotCount(context);
 
                 return LocaleTranslationCard(
                   locale: locale,
@@ -834,12 +1306,75 @@ class _TranslationControlsState extends State<TranslationControls> {
                     context.read<TranslationCubit>().removeLocale(locale);
                     setState(() => _selectedLocales.remove(locale));
                   },
+                  slotCount: slotCount,
+                  localeImagePath: (slot) =>
+                      translationState.bundle?.getLocaleImage(locale, slot),
+                  onPickLocaleImage: (slot) async {
+                    final result = await FilePicker.platform.pickFiles(
+                      type: FileType.image,
+                    );
+                    if (result != null && result.files.single.path != null) {
+                      if (!context.mounted) return;
+                      context.read<TranslationCubit>().setLocaleImage(
+                        locale,
+                        slot,
+                        result.files.single.path!,
+                      );
+                    }
+                  },
+                  onRemoveLocaleImage: (slot) {
+                    context.read<TranslationCubit>().removeLocaleImage(
+                      locale,
+                      slot,
+                    );
+                  },
                 );
               }),
             ],
           ],
         );
       },
+    );
+  }
+
+  Widget _buildPresetButton({
+    required IconData icon,
+    required String label,
+    required VoidCallback? onPressed,
+    required ThemeData theme,
+  }) {
+    return Expanded(
+      child: OutlinedButton(
+        onPressed: onPressed,
+        style: OutlinedButton.styleFrom(
+          padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 4),
+          side: BorderSide(
+            color: theme.colorScheme.outlineVariant.withValues(alpha: 0.3),
+          ),
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(8),
+          ),
+          backgroundColor: theme.colorScheme.surfaceContainerLow,
+        ),
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Icon(icon, size: 16, color: theme.colorScheme.primary),
+            const SizedBox(height: 4),
+            Text(
+              label,
+              style: theme.textTheme.labelSmall?.copyWith(
+                fontSize: 10,
+                fontWeight: FontWeight.w600,
+                color: theme.colorScheme.onSurfaceVariant,
+              ),
+              textAlign: TextAlign.center,
+              maxLines: 1,
+              overflow: TextOverflow.ellipsis,
+            ),
+          ],
+        ),
+      ),
     );
   }
 }

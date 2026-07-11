@@ -4,7 +4,9 @@ import 'package:app_screenshots/core/services/icloud_backup_service.dart';
 import 'package:app_screenshots/core/services/icloud_sync_service.dart';
 import 'package:app_screenshots/features/screenshot_editor/data/services/asc_upload_service.dart';
 import 'package:app_screenshots/features/screenshot_editor/data/services/design_file_service.dart';
+import 'package:app_screenshots/features/screenshot_editor/data/services/play_upload_service.dart';
 import 'package:app_screenshots/features/screenshot_editor/presentation/cubit/asc_upload_cubit.dart';
+import 'package:app_screenshots/features/screenshot_editor/presentation/cubit/play_upload_cubit.dart';
 import 'package:app_screenshots/features/screenshot_editor/data/repositories/ai_provider_repository_impl.dart';
 import 'package:app_screenshots/features/screenshot_editor/data/services/screenshot_persistence_service.dart';
 import 'package:app_screenshots/features/screenshot_editor/data/services/template_persistence_service.dart';
@@ -89,6 +91,7 @@ void _registerServices(ICloudSyncService syncService) {
   sl.registerLazySingleton(() => TranslationMemoryService());
   sl.registerLazySingleton(() => TranslationService(sl(), sl()));
   sl.registerLazySingleton(() => AscUploadService(sl()));
+  sl.registerLazySingleton(() => PlayUploadService(sl()));
   sl.registerLazySingleton(() => DesignFileService());
 
   sl.registerLazySingleton(
@@ -123,6 +126,7 @@ void _registerCubits() {
   );
   sl.registerFactory(() => TranslationCubit(sl()));
   sl.registerFactory(() => AscUploadCubit(sl(), sl()));
+  sl.registerFactory(() => PlayUploadCubit(sl(), sl()));
   sl.registerLazySingleton(() => AppIconCubit(sl(), sl())..load());
   sl.registerLazySingleton(
     () => BackupCubit(sl(), sl<ICloudSyncService>())..init(),

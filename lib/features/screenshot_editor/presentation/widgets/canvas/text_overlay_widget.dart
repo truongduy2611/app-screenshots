@@ -5,9 +5,9 @@ import 'package:app_screenshots/features/screenshot_editor/presentation/cubit/tr
 import 'package:app_screenshots/features/screenshot_editor/presentation/widgets/canvas/canvas_painters.dart';
 import 'package:app_screenshots/features/screenshot_editor/presentation/widgets/canvas/grab_cursor_region.dart';
 import 'package:app_screenshots/features/screenshot_editor/utils/font_fallback.dart';
+import 'package:app_screenshots/features/screenshot_editor/utils/font_resolver.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:google_fonts/google_fonts.dart';
 
 /// Positioned text overlay with drag gesture, snap support, and
 /// optional translation overrides.
@@ -235,9 +235,9 @@ class _TextOverlayWidgetState extends State<TextOverlayWidget> {
       height: effectiveHeight,
       letterSpacing: effectiveLetterSpacing,
     );
-    final baseStyle = GoogleFonts.getFont(
+    final baseStyle = FontResolver.apply(
       effectiveGoogleFont ?? 'Roboto',
-      textStyle: textStyle,
+      textStyle,
     );
     final resolvedStyle = previewLocale != null
         ? FontFallback.resolve(baseStyle, previewLocale)
@@ -381,26 +381,29 @@ class _TextOverlayWidgetState extends State<TextOverlayWidget> {
                   },
                   child: SizedBox(
                     width: effectiveWidth,
-                    child: Container(
-                      decoration: BoxDecoration(
-                        color: effectiveBackgroundColor,
-                        border:
-                            effectiveBorderColor != null &&
-                                effectiveBorderWidth > 0
-                            ? Border.all(
-                                color: effectiveBorderColor,
-                                width: effectiveBorderWidth,
-                              )
-                            : null,
-                        borderRadius: effectiveBorderRadius > 0
-                            ? BorderRadius.circular(effectiveBorderRadius)
-                            : null,
+                    child: Align(
+                      alignment: _getAlignment(effectiveTextAlign),
+                      child: Container(
+                        decoration: BoxDecoration(
+                          color: effectiveBackgroundColor,
+                          border:
+                              effectiveBorderColor != null &&
+                                  effectiveBorderWidth > 0
+                              ? Border.all(
+                                  color: effectiveBorderColor,
+                                  width: effectiveBorderWidth,
+                                )
+                              : null,
+                          borderRadius: effectiveBorderRadius > 0
+                              ? BorderRadius.circular(effectiveBorderRadius)
+                              : null,
+                        ),
+                        padding: EdgeInsets.symmetric(
+                          horizontal: effectiveHPad,
+                          vertical: effectiveVPad,
+                        ),
+                        child: textContent,
                       ),
-                      padding: EdgeInsets.symmetric(
-                        horizontal: effectiveHPad,
-                        vertical: effectiveVPad,
-                      ),
-                      child: textContent,
                     ),
                   ),
                 ),
@@ -410,5 +413,18 @@ class _TextOverlayWidgetState extends State<TextOverlayWidget> {
         ),
       ),
     );
+  }
+
+  Alignment _getAlignment(TextAlign textAlign) {
+    switch (textAlign) {
+      case TextAlign.left:
+      case TextAlign.start:
+        return Alignment.centerLeft;
+      case TextAlign.right:
+      case TextAlign.end:
+        return Alignment.centerRight;
+      default:
+        return Alignment.center;
+    }
   }
 }

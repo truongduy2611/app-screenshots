@@ -214,6 +214,28 @@ class MultiScreenshotCubit extends Cubit<MultiScreenshotState> {
     emit(state.copyWith(designs: designs));
   }
 
+  void updateAllDesigns(List<ScreenshotDesign> newDesigns) {
+    emit(state.copyWith(designs: newDesigns));
+  }
+
+  void applyFrameSettingsToAll(int sourceIndex) {
+    final sourceDesign = state.designs[sourceIndex];
+    final updatedDesigns = state.designs.map((design) {
+      return design.copyWith(
+        deviceFrame: sourceDesign.deviceFrame,
+        orientation: sourceDesign.orientation,
+        imagePosition: sourceDesign.imagePosition,
+        padding: sourceDesign.padding,
+        frameRotationX: sourceDesign.frameRotationX,
+        frameRotationY: sourceDesign.frameRotationY,
+        frameRotation: sourceDesign.frameRotation,
+        cornerRadius: sourceDesign.cornerRadius,
+        clearDeviceFrame: sourceDesign.deviceFrame == null,
+      );
+    }).toList();
+    emit(state.copyWith(designs: updatedDesigns));
+  }
+
   Future<void> updateActiveImage(File file) async {
     final stable = await _copyToStableStorage(file);
     final files = List<File?>.from(state.imageFiles);

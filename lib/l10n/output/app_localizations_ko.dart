@@ -329,6 +329,17 @@ class AppLocalizationsKo extends AppLocalizations {
   String get replaceImage => '이미지 교체';
 
   @override
+  String replaceImageForLocale(String locale) {
+    return '$locale 이미지 교체';
+  }
+
+  @override
+  String get revertToSourceImage => '원본 이미지로 되돌리기';
+
+  @override
+  String get alternativeScreenshots => '대체 스크린샷';
+
+  @override
   String get savedToLibrary => '라이브러리에 저장됨';
 
   @override
@@ -577,6 +588,18 @@ class AppLocalizationsKo extends AppLocalizations {
 
   @override
   String get zoomToFit => '화면에 맞추기';
+
+  @override
+  String get zoomTo100Percent => 'Zoom to 100%';
+
+  @override
+  String get zoomToSelection => 'Zoom to Selection';
+
+  @override
+  String get zoomIn => 'Zoom In';
+
+  @override
+  String get zoomOut => 'Zoom Out';
 
   @override
   String get addScreenshot => '스크린샷 추가';
@@ -1162,6 +1185,82 @@ class AppLocalizationsKo extends AppLocalizations {
   String get uploadExistingFolderToAsc => '기존 폴더 업로드...';
 
   @override
+  String get uploadToGooglePlay => 'Google Play에 업로드';
+
+  @override
+  String get googlePlayServiceAccount => 'Google Play 서비스 계정';
+
+  @override
+  String get playServiceAccountHint =>
+      'Google Cloud Console에서 Android Publisher 권한이 있는 서비스 계정 JSON 키를 선택하세요.';
+
+  @override
+  String get selectJsonKeyFile => 'JSON 키 파일 선택';
+
+  @override
+  String get noServiceAccountConfigured => '구성된 서비스 계정이 없습니다';
+
+  @override
+  String get playSetupHint => '스크린샷을 업로드하려면 Google Play 서비스 계정을 설정하세요.';
+
+  @override
+  String get configureServiceAccount => '서비스 계정 구성';
+
+  @override
+  String invalidServiceAccount(String error) {
+    return '잘못된 서비스 계정 파일: $error';
+  }
+
+  @override
+  String get packageName => '패키지 이름';
+
+  @override
+  String get packageNameHint => 'com.example.app';
+
+  @override
+  String get imageType => '이미지 유형';
+
+  @override
+  String playMaxScreenshotsNote(int count) {
+    return 'Google Play는 로케일당 최대 $count개의 스크린샷을 허용합니다. 초과분은 업로드되지 않습니다.';
+  }
+
+  @override
+  String get googlePlay => 'Google Play';
+
+  @override
+  String get learnMore => '자세히 알아보기';
+
+  @override
+  String get orLabel => '또는';
+
+  @override
+  String get pasteJsonLabel => 'JSON 내용 붙여넣기';
+
+  @override
+  String get playPasteJsonHint => '서비스 계정 .json 파일의 내용을 붙여넣으세요';
+
+  @override
+  String get saveJsonContents => 'JSON 내용 저장';
+
+  @override
+  String get playInstructionsTitle => '키를 얻는 방법';
+
+  @override
+  String get playInstructionsStep1 =>
+      'Google Play Console → 설정 → API 액세스로 이동합니다.';
+
+  @override
+  String get playInstructionsStep2 =>
+      'Google Cloud 프로젝트를 만들거나 연결한 다음 서비스 계정을 만듭니다.';
+
+  @override
+  String get playInstructionsStep3 => '사용자 및 권한에서 서비스 계정에 앱 액세스 권한을 부여합니다.';
+
+  @override
+  String get playInstructionsStep4 => '서비스 계정용 JSON 키를 생성하고 다운로드합니다.';
+
+  @override
   String get noImagesFoundInFolder => '선택한 폴더에서 유효한 스크린샷 이미지를 찾을 수 없습니다';
 
   @override
@@ -1590,4 +1689,57 @@ class AppLocalizationsKo extends AppLocalizations {
 
   @override
   String get resetRotation => '초기화';
+
+  @override
+  String get takePhoto => '사진 촬영';
+
+  @override
+  String get chooseFromGallery => '갤러리에서 선택';
+
+  @override
+  String get selectSource => '소스 선택';
+
+  @override
+  String get fillCanvas => '캔버스 채우기';
+
+  @override
+  String get positionAssist => '위치 도우미';
+
+  @override
+  String get presetTopCenter => '상단';
+
+  @override
+  String get presetBottomCenter => '하단';
+
+  @override
+  String get presetCenter => '중앙';
+
+  @override
+  String get presetReset => '재설정';
+
+  @override
+  String get applyToAllLocales => '모든 언어에 적용';
+
+  @override
+  String get applyToAllOverlaysScreenshotsLocales => '모든 텍스트, 스크린샷 및 언어에 적용';
+
+  @override
+  String get applyFrameToAllScreenshots => '모든 스ครีน샷에 프레임 설정 적용';
+
+  @override
+  String get commitAsDraft => '임시 저장';
+
+  @override
+  String get commitAsDraftDesc => '검토를 위해 제출하는 대신 변경 사항을 임시 저장 상태로 유지합니다.';
+
+  @override
+  String get playErrorAutoSubmitRequired =>
+      'Google Play Console에서는 이 앱의 모든 변경 사항이 자동으로 검토를 위해 제출되어야 합니다. \'임시 저장\'을 비활성화하고 Google Play Console에서 필요한 모든 선언이 완료되었는지 확인하십시오.';
+
+  @override
+  String get uploadExistingFolderToGooglePlay => '기존 폴더를 Google Play에 업로드';
+
+  @override
+  String get playErrorDeclarationRequired =>
+      'Google Play에서 업로드를 거부했습니다. 먼저 Google Play Console의 \'앱 콘텐츠\'에서 처리되지 않은 선언을 모두 완료하십시오.';
 }

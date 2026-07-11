@@ -6,14 +6,14 @@ part of 'multi_screenshot_page.dart';
 
 class _MultiCanvasArea extends StatefulWidget {
   final ScreenshotController screenshotController;
-  final TransformationController transformController;
+  final CanvasViewportController viewportController;
   final VoidCallback onSyncBack;
   final VoidCallback onSyncActiveDesign;
   final VoidCallback onZoomToFit;
 
   const _MultiCanvasArea({
     required this.screenshotController,
-    required this.transformController,
+    required this.viewportController,
     required this.onSyncBack,
     required this.onSyncActiveDesign,
     required this.onZoomToFit,
@@ -24,8 +24,6 @@ class _MultiCanvasArea extends StatefulWidget {
 }
 
 class _MultiCanvasAreaState extends State<_MultiCanvasArea> {
-  bool _isPanning = false;
-
   static const _gap = 200.0;
 
   @override
@@ -75,137 +73,236 @@ class _MultiCanvasAreaState extends State<_MultiCanvasArea> {
                 )
               else
                 Positioned.fill(child: ColoredBox(color: canvasBg)),
-              MouseRegion(
-                cursor: _isPanning
-                    ? SystemMouseCursors.grabbing
-                    : SystemMouseCursors.grab,
-                child: Listener(
-                  onPointerDown: (_) => setState(() => _isPanning = true),
-                  onPointerUp: (_) => setState(() => _isPanning = false),
-                  onPointerCancel: (_) => setState(() => _isPanning = false),
-                  child: InteractiveViewer(
-                    transformationController: widget.transformController,
-                    constrained: false,
-                    boundaryMargin: const EdgeInsets.all(double.infinity),
-                    minScale: 0.05,
-                    maxScale: 4.0,
-                    child:
-                        BlocBuilder<MultiScreenshotCubit, MultiScreenshotState>(
-                          builder: (context, multiState) {
-                            return Padding(
-                              padding: const EdgeInsets.all(100),
-                              child: Row(
-                                mainAxisSize: MainAxisSize.min,
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  for (
-                                    int i = 0;
-                                    i < multiState.designs.length;
-                                    i++
-                                  ) ...[
-                                    if (i > 0) const SizedBox(width: _gap),
-                                    CanvasSlot(
-                                      index: i,
-                                      design: multiState.designs[i],
-                                      imageFile: multiState.imageFiles[i],
-                                      isActive: i == multiState.activeIndex,
-                                      screenshotController:
-                                          i == multiState.activeIndex
-                                          ? widget.screenshotController
-                                          : null,
-                                      onTap: () {
-                                        if (i != multiState.activeIndex) {
-                                          widget.onSyncBack();
-                                          context
-                                              .read<MultiScreenshotCubit>()
-                                              .setActiveIndex(i);
-                                        }
-                                      },
-                                      onDelete: multiState.designs.length > 1
-                                          ? () {
-                                              context
-                                                  .read<MultiScreenshotCubit>()
-                                                  .removeDesign(i);
-                                            }
-                                          : null,
-                                      onDuplicate: multiState.canAddMore
-                                          ? () {
-                                              widget.onSyncBack();
-                                              context
-                                                  .read<MultiScreenshotCubit>()
-                                                  .duplicateDesign(i);
-                                            }
-                                          : null,
-                                      onReplaceImage: () async {
-                                        if (i != multiState.activeIndex) {
-                                          widget.onSyncBack();
-                                          context
-                                              .read<MultiScreenshotCubit>()
-                                              .setActiveIndex(i);
-                                        }
-                                        final result = await FilePicker.platform
-                                            .pickFiles(type: FileType.image);
-                                        if (result != null &&
-                                            result.files.single.path != null) {
-                                          if (!context.mounted) return;
-                                          context
-                                              .read<MultiScreenshotCubit>()
-                                              .updateImageForSlot(
-                                                i,
-                                                File(result.files.single.path!),
-                                              );
-                                          WidgetsBinding.instance
-                                              .addPostFrameCallback((_) {
-                                                if (context.mounted) {
-                                                  widget.onSyncActiveDesign();
-                                                }
-                                              });
-                                        }
-                                      },
-                                      onMoveLeft: i > 0
-                                          ? () {
-                                              widget.onSyncBack();
-                                              context
-                                                  .read<MultiScreenshotCubit>()
-                                                  .moveDesignLeft(i);
-                                            }
-                                          : null,
-                                      onMoveRight:
-                                          i < multiState.designs.length - 1
-                                          ? () {
-                                              widget.onSyncBack();
-                                              context
-                                                  .read<MultiScreenshotCubit>()
-                                                  .moveDesignRight(i);
-                                            }
-                                          : null,
-                                    ),
-                                  ],
-                                  // ── Add-new placeholder ──
-                                  if (multiState.canAddMore) ...[
-                                    const SizedBox(width: _gap),
-                                    AddScreenshotPlaceholder(
-                                      design: multiState.designs.last,
-                                      onTap: () {
-                                        widget.onSyncBack();
-                                        context
-                                            .read<MultiScreenshotCubit>()
-                                            .addDesign();
-                                      },
-                                    ),
-                                  ],
-                                ],
-                              ),
-                            );
-                          },
-                        ),
-                  ),
-                ),
+              FigmaCanvasViewport(
+                controller: widget.viewportController,
+                // Only the row *skeleton* depends on the whole multi state;
+                // each slot scopes its own rebuilds via _CanvasSlotHost so a
+                // sync-back or active-index change doesn't rebuild all
+                // previews.
+                child:
+                    BlocSelector<
+                      MultiScreenshotCubit,
+                      MultiScreenshotState,
+                      (int, bool)
+                    >(
+                      selector: (state) => (
+                        state.designs.length,
+                        state.canAddMore,
+                      ),
+                      builder: (context, skeleton) {
+                        final (designCount, canAddMore) = skeleton;
+                        return Padding(
+                          padding: const EdgeInsets.all(100),
+                          child: Row(
+                            mainAxisSize: MainAxisSize.min,
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              for (int i = 0; i < designCount; i++) ...[
+                                if (i > 0) const SizedBox(width: _gap),
+                                _CanvasSlotHost(
+                                  key: ValueKey('slot-$i'),
+                                  index: i,
+                                  screenshotController:
+                                      widget.screenshotController,
+                                  onSyncBack: widget.onSyncBack,
+                                  onSyncActiveDesign:
+                                      widget.onSyncActiveDesign,
+                                ),
+                              ],
+                              // ── Add-new placeholder ──
+                              if (canAddMore) ...[
+                                const SizedBox(width: _gap),
+                                _AddPlaceholderHost(
+                                  onSyncBack: widget.onSyncBack,
+                                ),
+                              ],
+                            ],
+                          ),
+                        );
+                      },
+                    ),
               ),
             ],
           );
         },
       ),
+    );
+  }
+}
+
+// ─────────────────────────────────────────────────────────────────────────────
+// Per-slot host — scopes rebuilds to the slot's own data
+// ─────────────────────────────────────────────────────────────────────────────
+
+/// Hosts one [CanvasSlot] and rebuilds it only when that slot's design,
+/// image, active flag, or the previewed locale changes — not on every
+/// [MultiScreenshotState] emit. Also isolates the slot's repaints behind a
+/// [RepaintBoundary] so pan/zoom re-composites cached layers.
+class _CanvasSlotHost extends StatelessWidget {
+  const _CanvasSlotHost({
+    super.key,
+    required this.index,
+    required this.screenshotController,
+    required this.onSyncBack,
+    required this.onSyncActiveDesign,
+  });
+
+  final int index;
+  final ScreenshotController screenshotController;
+  final VoidCallback onSyncBack;
+  final VoidCallback onSyncActiveDesign;
+
+  @override
+  Widget build(BuildContext context) {
+    return BlocSelector<
+      MultiScreenshotCubit,
+      MultiScreenshotState,
+      (ScreenshotDesign?, File?, bool, int)
+    >(
+      // Guard the index: on removal this selector runs against the shrunken
+      // state before the row skeleton unmounts this host.
+      selector: (state) => (
+        index < state.designs.length ? state.designs[index] : null,
+        index < state.imageFiles.length ? state.imageFiles[index] : null,
+        index == state.activeIndex,
+        state.designs.length,
+      ),
+      builder: (context, vm) {
+        final (design, imageFile, isActive, designCount) = vm;
+        if (design == null) return const SizedBox.shrink();
+
+        // Locale preview state, selected per slot so only actual locale /
+        // locale-image changes rebuild this slot.
+        final (previewLocale, hasLocaleImage) = context
+            .select<TranslationCubit, (String?, bool)>((cubit) {
+              final locale = cubit.state.previewLocale;
+              return (
+                locale,
+                locale != null &&
+                    cubit.state.bundle?.getLocaleImage(locale, index) != null,
+              );
+            });
+
+        return RepaintBoundary(
+          child: CanvasSlot(
+            index: index,
+            design: design,
+            imageFile: imageFile,
+            isActive: isActive,
+            screenshotController: isActive ? screenshotController : null,
+            onTap: () {
+              if (!isActive) {
+                onSyncBack();
+                context.read<MultiScreenshotCubit>().setActiveIndex(index);
+              }
+            },
+            onDelete: designCount > 1
+                ? () {
+                    context.read<MultiScreenshotCubit>().removeDesign(index);
+                  }
+                : null,
+            onDuplicate: designCount < 10
+                ? () {
+                    onSyncBack();
+                    context.read<MultiScreenshotCubit>().duplicateDesign(index);
+                  }
+                : null,
+            onReplaceImage: () async {
+              if (!isActive) {
+                onSyncBack();
+                context.read<MultiScreenshotCubit>().setActiveIndex(index);
+              }
+              final result = await FilePicker.platform.pickFiles(
+                type: FileType.image,
+              );
+              if (result != null && result.files.single.path != null) {
+                if (!context.mounted) return;
+                context.read<MultiScreenshotCubit>().updateImageForSlot(
+                  index,
+                  File(result.files.single.path!),
+                );
+                WidgetsBinding.instance.addPostFrameCallback((_) {
+                  if (context.mounted) {
+                    onSyncActiveDesign();
+                  }
+                });
+              }
+            },
+            onMoveLeft: index > 0
+                ? () {
+                    onSyncBack();
+                    context.read<MultiScreenshotCubit>().moveDesignLeft(index);
+                  }
+                : null,
+            onMoveRight: index < designCount - 1
+                ? () {
+                    onSyncBack();
+                    context.read<MultiScreenshotCubit>().moveDesignRight(index);
+                  }
+                : null,
+            previewLocale: previewLocale,
+            hasLocaleImage: hasLocaleImage,
+            onReplaceLocaleImage: previewLocale != null
+                ? () async {
+                    final result = await FilePicker.platform.pickFiles(
+                      type: FileType.image,
+                    );
+                    if (result != null && result.files.single.path != null) {
+                      if (!context.mounted) return;
+                      context.read<TranslationCubit>().setLocaleImage(
+                        previewLocale,
+                        index,
+                        result.files.single.path!,
+                      );
+                    }
+                  }
+                : null,
+            onRevertLocaleImage: previewLocale != null
+                ? () {
+                    context.read<TranslationCubit>().removeLocaleImage(
+                      previewLocale,
+                      index,
+                    );
+                  }
+                : null,
+            onApplyFrameToAll: () {
+              onSyncBack();
+              context.read<MultiScreenshotCubit>().applyFrameSettingsToAll(
+                index,
+              );
+              WidgetsBinding.instance.addPostFrameCallback((_) {
+                if (context.mounted) {
+                  onSyncActiveDesign();
+                }
+              });
+            },
+          ),
+        );
+      },
+    );
+  }
+}
+
+/// Hosts the trailing add-new placeholder; rebuilds only when the last
+/// design changes (it mirrors that design's dimensions).
+class _AddPlaceholderHost extends StatelessWidget {
+  const _AddPlaceholderHost({required this.onSyncBack});
+
+  final VoidCallback onSyncBack;
+
+  @override
+  Widget build(BuildContext context) {
+    final lastDesign = context.select<MultiScreenshotCubit, ScreenshotDesign?>(
+      (cubit) =>
+          cubit.state.designs.isNotEmpty ? cubit.state.designs.last : null,
+    );
+    if (lastDesign == null) return const SizedBox.shrink();
+    return AddScreenshotPlaceholder(
+      design: lastDesign,
+      onTap: () {
+        onSyncBack();
+        context.read<MultiScreenshotCubit>().addDesign();
+      },
     );
   }
 }

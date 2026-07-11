@@ -9,10 +9,12 @@ import 'package:app_screenshots/features/screenshot_editor/presentation/cubit/mu
 import 'package:app_screenshots/features/screenshot_editor/presentation/cubit/screenshot_editor_cubit.dart';
 import 'package:app_screenshots/features/screenshot_editor/presentation/cubit/translation_cubit.dart';
 import 'package:app_screenshots/features/screenshot_editor/utils/screenshot_utils.dart';
+import 'package:app_screenshots/features/screenshot_editor/presentation/helpers/image_picker_helper.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:image/image.dart' as img;
 import 'package:pasteboard/pasteboard.dart';
 import 'package:path_provider/path_provider.dart';
@@ -44,12 +46,10 @@ mixin MultiScreenshotActions<T extends StatefulWidget> on State<T> {
   // ---------------------------------------------------------------------------
 
   Future<void> pickImage(BuildContext context) async {
-    final result = await FilePicker.platform.pickFiles(type: FileType.image);
-    if (result != null && result.files.single.path != null) {
+    final files = await ImagePickerHelper.pickImage(context: context);
+    if (files.isNotEmpty) {
       if (!context.mounted) return;
-      context.read<ScreenshotEditorCubit>().updateImageFile(
-        File(result.files.single.path!),
-      );
+      context.read<ScreenshotEditorCubit>().updateImageFile(files.first);
     }
   }
 
@@ -90,7 +90,10 @@ mixin MultiScreenshotActions<T extends StatefulWidget> on State<T> {
     try {
       final editorCubit = context.read<ScreenshotEditorCubit>();
       editorCubit.hideGridForCapture();
-      await Future.delayed(const Duration(milliseconds: 50));
+      // Let the grid-hide emit reach the screen before capturing: one frame
+      // for the rebuild to be scheduled, one for it to actually paint.
+      await WidgetsBinding.instance.endOfFrame;
+      await WidgetsBinding.instance.endOfFrame;
 
       final bytes = await screenshotController.capture(pixelRatio: 1.0);
 
@@ -100,7 +103,7 @@ mixin MultiScreenshotActions<T extends StatefulWidget> on State<T> {
       final isTransparent = editorCubit.state.design.transparentBackground;
       return compute(processScreenshot, (bytes, isTransparent));
     } catch (e, st) {
-      if (!context.mounted) return null;
+      if (!mounted) return null;
       context.read<ScreenshotEditorCubit>().restoreGridAfterCapture();
       AppLogger.error(
         'Capture failed',
@@ -289,6 +292,25 @@ mixin MultiScreenshotActions<T extends StatefulWidget> on State<T> {
   // Export all
   // ---------------------------------------------------------------------------
 
+  /// Waits for [imageFile] to decode and all pending Google Fonts to finish
+  /// loading, then lets two frames pass so the just-activated slot is fully
+  /// painted before capture. Replaces a fixed delay: it's both faster on the
+  /// common case (nothing pending) and more reliable (a fixed delay could
+  /// still race a slow decode/font-load and capture half-loaded content).
+  Future<void> _waitForActiveSlotSettled(File? imageFile) async {
+    final waits = <Future<void>>[GoogleFonts.pendingFonts()];
+    if (imageFile != null && imageFile.existsSync()) {
+      waits.add(precacheImage(FileImage(imageFile), context));
+    }
+    await Future.wait(waits);
+    if (!mounted) return;
+    await WidgetsBinding.instance.endOfFrame;
+    await WidgetsBinding.instance.endOfFrame;
+    // Small safety margin for any post-frame work (e.g. layout settling)
+    // that isn't captured by endOfFrame alone.
+    await Future.delayed(const Duration(milliseconds: 32));
+  }
+
   Future<void> exportAll(BuildContext context) async {
     final multiCubit = context.read<MultiScreenshotCubit>();
     final editorCubit = context.read<ScreenshotEditorCubit>();
@@ -306,7 +328,8 @@ mixin MultiScreenshotActions<T extends StatefulWidget> on State<T> {
           multiCubit.state.designs[i],
           imageFile: multiCubit.state.imageFiles[i],
         );
-        await Future.delayed(const Duration(milliseconds: 200));
+        await _waitForActiveSlotSettled(multiCubit.state.imageFiles[i]);
+        if (!mounted) break;
         final bytes = await captureImage();
         if (bytes != null) images.add(bytes);
       }
@@ -436,8 +459,17 @@ mixin MultiScreenshotActions<T extends StatefulWidget> on State<T> {
             multiCubit.state.designs[i],
             imageFile: multiCubit.state.imageFiles[i],
           );
-          // Wait for the UI to rebuild with the new locale text.
-          await Future.delayed(const Duration(milliseconds: 300));
+          // Wait for the UI to rebuild with the new locale text, and for
+          // any locale-specific override image to decode.
+          final localeImagePath = hasTranslations
+              ? bundle.getLocaleImage(locale, i)
+              : null;
+          await _waitForActiveSlotSettled(
+            localeImagePath != null
+                ? File(localeImagePath)
+                : multiCubit.state.imageFiles[i],
+          );
+          if (!mounted) break;
 
           final bytes = await captureImage();
           if (bytes != null) {
@@ -458,7 +490,7 @@ mixin MultiScreenshotActions<T extends StatefulWidget> on State<T> {
       }
 
       if (result.isNotEmpty && mounted) {
-        context.read<MultiScreenshotCubit>().setLastRenderedAscPath(exportDir.path);
+        this.context.read<MultiScreenshotCubit>().setLastRenderedAscPath(exportDir.path);
         return result;
       }
       return null;

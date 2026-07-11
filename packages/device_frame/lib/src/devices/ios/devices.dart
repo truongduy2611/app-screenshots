@@ -49,6 +49,8 @@ import 'package:device_frame/src/devices/ios/iphone_17_pro_max/device.dart'
     as i_iphone_17_pro_max;
 import 'package:device_frame/src/devices/ios/iphone_air/device.dart'
     as i_iphone_air;
+import 'package:device_frame/src/devices/ios/iphone_17_pro_max_hand/device.dart'
+    as i_iphone_17_pro_max_hand;
 
 /// A set of iOS devices.
 class IosDevices {
@@ -89,6 +91,9 @@ class IosDevices {
   DeviceInfo get iPhoneAir => i_iphone_air.info;
   List<DeviceInfo> get iPhoneAirColors => i_iphone_air.allColors;
 
+  DeviceInfo get iPhone17ProMaxHand => i_iphone_17_pro_max_hand.info;
+  List<DeviceInfo> get iPhone17ProMaxHandColors => i_iphone_17_pro_max_hand.allColors;
+
   /// All devices.
   List<DeviceInfo> get all => [
         // Phones
@@ -111,6 +116,7 @@ class IosDevices {
         iPhone17Pro,
         iPhone17ProMax,
         iPhoneAir,
+        iPhone17ProMaxHand,
         //Tablets
         iPadAir4,
         iPad,

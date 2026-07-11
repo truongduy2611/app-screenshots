@@ -71,3 +71,6 @@ scripts.swift
 # Build artifacts
 *.dmg
 *.tar.gz
+
+# PSD Mockups
+/mockups/

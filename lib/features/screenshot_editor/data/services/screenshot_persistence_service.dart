@@ -65,6 +65,124 @@ class ScreenshotPersistenceService {
     return _toAbsolute(dirPath, relativePath);
   }
 
+  /// Copies each per-locale image into the designs dir and returns a bundle
+  /// whose `localeImages` paths are relative basenames (for portable JSON).
+  /// Files already stored relative or already inside the designs dir are left
+  /// in place; missing source files are dropped.
+  Future<TranslationBundle?> _persistLocaleImages(
+    String dirPath,
+    String id,
+    TranslationBundle? bundle,
+  ) async {
+    if (bundle == null || bundle.localeImages.isEmpty) return bundle;
+    final updated = <String, Map<String, String>>{};
+    for (final localeEntry in bundle.localeImages.entries) {
+      final locale = localeEntry.key;
+      final slotMap = <String, String>{};
+      for (final slotEntry in localeEntry.value.entries) {
+        final slotKey = slotEntry.key;
+        final srcPath = slotEntry.value;
+
+        // Already relative → keep as-is.
+        if (!p.isAbsolute(srcPath)) {
+          slotMap[slotKey] = srcPath;
+          continue;
+        }
+        final ext = srcPath.split('.').last;
+        final dest = File(
+          '$dirPath/${id}_slot${slotKey}_${locale}_source.$ext',
+        );
+        // Already stored under this design's own filename → just relativize.
+        if (p.equals(srcPath, dest.path)) {
+          slotMap[slotKey] = p.basename(dest.path);
+          continue;
+        }
+        // Otherwise copy into this design's dir (handles picked temp files and
+        // duplicated projects that still reference another design's files).
+        final src = File(srcPath);
+        if (await src.exists()) {
+          await src.copy(dest.path);
+          slotMap[slotKey] = p.basename(dest.path);
+        }
+        // else: missing source → drop this entry.
+      }
+      if (slotMap.isNotEmpty) updated[locale] = slotMap;
+    }
+    return bundle.copyWith(localeImages: updated);
+  }
+
+  /// Returns a bundle whose `localeImages` paths are resolved to absolute
+  /// paths within the designs dir (for runtime use after load/save).
+  static TranslationBundle? _bundleLocaleImagesToAbsolute(
+    String dirPath,
+    TranslationBundle? bundle,
+  ) {
+    if (bundle == null || bundle.localeImages.isEmpty) return bundle;
+    final updated = bundle.localeImages.map(
+      (locale, slots) => MapEntry(
+        locale,
+        slots.map((slot, path) => MapEntry(slot, _toAbsolute(dirPath, path))),
+      ),
+    );
+    return bundle.copyWith(localeImages: updated);
+  }
+
+  /// Copies each overlay image into the designs dir and returns a list of
+  /// overlays whose paths are relative basenames.
+  Future<List<ImageOverlay>> _persistImageOverlays(
+    String dirPath,
+    String id,
+    List<ImageOverlay> overlays, {
+    required String prefix,
+  }) async {
+    if (overlays.isEmpty) return overlays;
+    final List<ImageOverlay> updated = [];
+    for (final overlay in overlays) {
+      final srcPath = overlay.filePath;
+      if (srcPath == null) {
+        updated.add(overlay);
+        continue;
+      }
+
+      // Already relative → keep as-is.
+      if (!p.isAbsolute(srcPath)) {
+        updated.add(overlay);
+        continue;
+      }
+
+      final ext = srcPath.split('.').last;
+      final dest = File('$dirPath/${id}_${prefix}_overlay_${overlay.id}.$ext');
+
+      // Already stored under this design's own filename → just relativize.
+      if (p.equals(srcPath, dest.path)) {
+        updated.add(overlay.copyWith(filePath: p.basename(dest.path)));
+        continue;
+      }
+
+      final src = File(srcPath);
+      if (await src.exists()) {
+        await src.copy(dest.path);
+        updated.add(overlay.copyWith(filePath: p.basename(dest.path)));
+      } else {
+        updated.add(overlay);
+      }
+    }
+    return updated;
+  }
+
+  /// Returns a list of overlays whose paths are resolved to absolute paths.
+  static List<ImageOverlay> _imageOverlaysToAbsolute(
+    String dirPath,
+    List<ImageOverlay> overlays,
+  ) {
+    if (overlays.isEmpty) return overlays;
+    return overlays.map((overlay) {
+      final path = overlay.filePath;
+      if (path == null || p.isAbsolute(path)) return overlay;
+      return overlay.copyWith(filePath: _toAbsolute(dirPath, path));
+    }).toList();
+  }
+
   Future<SavedDesign> saveDesign({
     required ScreenshotDesign design,
     required Uint8List thumbnailBytes,
@@ -158,6 +276,37 @@ class ScreenshotPersistenceService {
       }
     }
 
+    // Copy per-locale images into the designs dir; JSON stores relative paths.
+    final relativeBundle = await _persistLocaleImages(
+      dir.path,
+      id,
+      translationBundle,
+    );
+
+    // Persist image overlays
+    final relativeImageOverlays = await _persistImageOverlays(
+      dir.path,
+      id,
+      design.imageOverlays,
+      prefix: 'base',
+    );
+    final relativeDesign = design.copyWith(imageOverlays: relativeImageOverlays);
+
+    List<ScreenshotDesign>? relativeMultiDesigns;
+    if (multiDesigns != null) {
+      relativeMultiDesigns = [];
+      for (int i = 0; i < multiDesigns.length; i++) {
+        final d = multiDesigns[i];
+        final relOverlays = await _persistImageOverlays(
+          dir.path,
+          id,
+          d.imageOverlays,
+          prefix: 'multi_$i',
+        );
+        relativeMultiDesigns.add(d.copyWith(imageOverlays: relOverlays));
+      }
+    }
+
     // Store relative filenames in JSON for portability.
     final savedDesign = SavedDesign(
       id: id,
@@ -166,10 +315,10 @@ class ScreenshotPersistenceService {
       thumbnailPath: _toRelative(thumbnailFile.path)!,
       imagePath: _toRelative(imagePath),
       folderId: folderId,
-      design: design,
-      multiDesigns: multiDesigns,
+      design: relativeDesign,
+      multiDesigns: relativeMultiDesigns,
       imagePaths: savedImagePaths?.map(_toRelative).toList(),
-      translationBundle: translationBundle,
+      translationBundle: relativeBundle,
       ascAppConfig: ascAppConfig,
     );
 
@@ -184,10 +333,14 @@ class ScreenshotPersistenceService {
       thumbnailPath: thumbnailFile.path,
       imagePath: imagePath,
       folderId: folderId,
-      design: design,
-      multiDesigns: multiDesigns,
+      design: relativeDesign.copyWith(
+        imageOverlays: _imageOverlaysToAbsolute(dir.path, relativeImageOverlays),
+      ),
+      multiDesigns: relativeMultiDesigns?.map((d) => d.copyWith(
+        imageOverlays: _imageOverlaysToAbsolute(dir.path, d.imageOverlays),
+      )).toList(),
       imagePaths: savedImagePaths,
-      translationBundle: translationBundle,
+      translationBundle: _bundleLocaleImagesToAbsolute(dir.path, relativeBundle),
       ascAppConfig: ascAppConfig,
     );
   }
@@ -211,6 +364,16 @@ class ScreenshotPersistenceService {
         imagePaths: design.imagePaths
             ?.map((p) => _toAbsoluteNullable(dirPath, p))
             .toList(),
+        translationBundle: _bundleLocaleImagesToAbsolute(
+          dirPath,
+          design.translationBundle,
+        ),
+        design: design.design.copyWith(
+          imageOverlays: _imageOverlaysToAbsolute(dirPath, design.design.imageOverlays),
+        ),
+        multiDesigns: design.multiDesigns?.map((d) => d.copyWith(
+          imageOverlays: _imageOverlaysToAbsolute(dirPath, d.imageOverlays),
+        )).toList(),
       );
     } catch (e, st) {
       AppLogger.error(
@@ -263,6 +426,16 @@ class ScreenshotPersistenceService {
             imagePaths: design.imagePaths
                 ?.map((path) => _toAbsoluteNullable(dirPath, path))
                 .toList(),
+            translationBundle: _bundleLocaleImagesToAbsolute(
+              dirPath,
+              design.translationBundle,
+            ),
+            design: design.design.copyWith(
+              imageOverlays: _imageOverlaysToAbsolute(dirPath, design.design.imageOverlays),
+            ),
+            multiDesigns: design.multiDesigns?.map((d) => d.copyWith(
+              imageOverlays: _imageOverlaysToAbsolute(dirPath, d.imageOverlays),
+            )).toList(),
           ),
         );
       } catch (e, st) {
@@ -301,26 +474,26 @@ class ScreenshotPersistenceService {
 
   Future<void> deleteDesign(String id) async {
     final dir = await _designsDir;
-    final jsonFile = File('${dir.path}/$id.json');
-    final thumbFile = File('${dir.path}/$id.png');
-
-    if (await jsonFile.exists()) {
-      try {
-        final content = await jsonFile.readAsString();
-        final json = jsonDecode(content);
-        final imagePath = json['imagePath'];
-        if (imagePath != null) {
-          final imageFile = File(imagePath);
-          if (await imageFile.exists()) {
-            await imageFile.delete();
+    try {
+      if (await dir.exists()) {
+        final entities = dir.listSync();
+        for (final entity in entities) {
+          if (entity is File) {
+            final filename = p.basename(entity.path);
+            if (filename.startsWith(id)) {
+              await entity.delete();
+            }
           }
         }
-      } catch (e) {
-        AppLogger.w('Error cleaning up source image', tag: 'Persistence');
       }
-      await jsonFile.delete();
+    } catch (e, st) {
+      AppLogger.error(
+        'Error cleaning up design files for $id',
+        tag: 'Persistence',
+        error: e,
+        stackTrace: st,
+      );
     }
-    if (await thumbFile.exists()) await thumbFile.delete();
   }
 
   // Folder Operations

@@ -331,6 +331,17 @@ class AppLocalizationsTh extends AppLocalizations {
   String get replaceImage => 'แทนที่รูปภาพ';
 
   @override
+  String replaceImageForLocale(String locale) {
+    return 'แทนที่รูปภาพสำหรับ $locale';
+  }
+
+  @override
+  String get revertToSourceImage => 'ย้อนกลับเป็นรูปภาพต้นฉบับ';
+
+  @override
+  String get alternativeScreenshots => 'ภาพหน้าจอทางเลือก';
+
+  @override
   String get savedToLibrary => 'บันทึกไปยังไลบรารีแล้ว';
 
   @override
@@ -580,6 +591,18 @@ class AppLocalizationsTh extends AppLocalizations {
 
   @override
   String get zoomToFit => 'ซูมให้พอดี';
+
+  @override
+  String get zoomTo100Percent => 'Zoom to 100%';
+
+  @override
+  String get zoomToSelection => 'Zoom to Selection';
+
+  @override
+  String get zoomIn => 'Zoom In';
+
+  @override
+  String get zoomOut => 'Zoom Out';
 
   @override
   String get addScreenshot => 'เพิ่มสกรีนช็อต';
@@ -1170,6 +1193,85 @@ class AppLocalizationsTh extends AppLocalizations {
   String get uploadExistingFolderToAsc => 'อัปโหลดโฟลเดอร์ที่มีอยู่...';
 
   @override
+  String get uploadToGooglePlay => 'อัปโหลดไปยัง Google Play';
+
+  @override
+  String get googlePlayServiceAccount => 'บัญชีบริการ Google Play';
+
+  @override
+  String get playServiceAccountHint =>
+      'เลือกคีย์ JSON ของบัญชีบริการจาก Google Cloud Console ที่มีสิทธิ์เข้าถึง Android Publisher';
+
+  @override
+  String get selectJsonKeyFile => 'เลือกไฟล์คีย์ JSON';
+
+  @override
+  String get noServiceAccountConfigured => 'ไม่ได้กำหนดค่าบัญชีบริการ';
+
+  @override
+  String get playSetupHint =>
+      'ตั้งค่าบัญชีบริการ Google Play ของคุณเพื่ออัปโหลดภาพหน้าจอ';
+
+  @override
+  String get configureServiceAccount => 'กำหนดค่าบัญชีบริการ';
+
+  @override
+  String invalidServiceAccount(String error) {
+    return 'ไฟล์บัญชีบริการไม่ถูกต้อง: $error';
+  }
+
+  @override
+  String get packageName => 'ชื่อแพ็กเกจ';
+
+  @override
+  String get packageNameHint => 'com.example.app';
+
+  @override
+  String get imageType => 'ประเภทรูปภาพ';
+
+  @override
+  String playMaxScreenshotsNote(int count) {
+    return 'Google Play อนุญาตให้มีภาพหน้าจอได้สูงสุด $count ภาพต่อหนึ่งภาษา — ภาพส่วนเกินจะไม่ถูกอัปโหลด';
+  }
+
+  @override
+  String get googlePlay => 'Google Play';
+
+  @override
+  String get learnMore => 'เรียนรู้เพิ่มเติม';
+
+  @override
+  String get orLabel => 'หรือ';
+
+  @override
+  String get pasteJsonLabel => 'วางเนื้อหา JSON';
+
+  @override
+  String get playPasteJsonHint => 'วางเนื้อหาของไฟล์บัญชีบริการ .json ของคุณ';
+
+  @override
+  String get saveJsonContents => 'บันทึกเนื้อหา JSON';
+
+  @override
+  String get playInstructionsTitle => 'วิธีรับคีย์ของคุณ';
+
+  @override
+  String get playInstructionsStep1 =>
+      'เปิด Google Play Console → ตั้งค่า → การเข้าถึง API';
+
+  @override
+  String get playInstructionsStep2 =>
+      'สร้างหรือลิงก์โปรเจกต์ Google Cloud แล้วสร้างบัญชีบริการ';
+
+  @override
+  String get playInstructionsStep3 =>
+      'มอบสิทธิ์เข้าถึงแอปให้กับบัญชีบริการภายใต้ ผู้ใช้และสิทธิ์';
+
+  @override
+  String get playInstructionsStep4 =>
+      'สร้างคีย์ JSON สำหรับบัญชีบริการแล้วดาวน์โหลด';
+
+  @override
   String get noImagesFoundInFolder =>
       'ไม่พบภาพหน้าจอที่ถูกต้องในโฟลเดอร์ที่เลือก';
 
@@ -1613,4 +1715,61 @@ class AppLocalizationsTh extends AppLocalizations {
 
   @override
   String get resetRotation => 'รีเซ็ต';
+
+  @override
+  String get takePhoto => 'ถ่ายภาพ';
+
+  @override
+  String get chooseFromGallery => 'เลือกจากแกลเลอรี';
+
+  @override
+  String get selectSource => 'เลือกแหล่งที่มา';
+
+  @override
+  String get fillCanvas => 'เติมเต็มผืนผ้าใบ';
+
+  @override
+  String get positionAssist => 'ตัวช่วยจัดตำแหน่ง';
+
+  @override
+  String get presetTopCenter => 'บน';
+
+  @override
+  String get presetBottomCenter => 'ล่าง';
+
+  @override
+  String get presetCenter => 'กลาง';
+
+  @override
+  String get presetReset => 'รีเซ็ต';
+
+  @override
+  String get applyToAllLocales => 'ใช้กับทุกภาษา';
+
+  @override
+  String get applyToAllOverlaysScreenshotsLocales =>
+      'ใช้กับข้อความ ภาพหน้าจอ และทุกภาษาทั้งหมด';
+
+  @override
+  String get applyFrameToAllScreenshots =>
+      'ใช้การตั้งค่าเฟรมกับภาพหน้าจอทั้งหมด';
+
+  @override
+  String get commitAsDraft => 'บันทึกเป็นแบบร่าง';
+
+  @override
+  String get commitAsDraftDesc =>
+      'เก็บการเปลี่ยนแปลงไว้ในสถานะแบบร่างแทนที่จะส่งเพื่อตรวจสอบ';
+
+  @override
+  String get playErrorAutoSubmitRequired =>
+      'Google Play Console กำหนดให้ส่งการเปลี่ยนแปลงทั้งหมดเพื่อตรวจสอบโดยอัตโนมัติสำหรับแอปนี้ โปรดปิดใช้งาน \'บันทึกเป็นแบบร่าง\' และตรวจสอบว่าได้กรอกคำประกาศที่จำเป็นทั้งหมดใน Google Play Console ครบถ้วนแล้ว';
+
+  @override
+  String get uploadExistingFolderToGooglePlay =>
+      'อัปโหลดโฟลเดอร์ที่มีอยู่ไปยัง Google Play';
+
+  @override
+  String get playErrorDeclarationRequired =>
+      'การอัปโหลดถูกปฏิเสธโดย Google Play: โปรดตรวจสอบ Google Play Console ของคุณและกรอกคำประกาศที่ค้างอยู่ภายใต้เนื้อหาแอปก่อน';
 }

@@ -30,6 +30,11 @@ class CanvasSlot extends StatefulWidget {
     this.onReplaceImage,
     this.onMoveLeft,
     this.onMoveRight,
+    this.previewLocale,
+    this.hasLocaleImage = false,
+    this.onReplaceLocaleImage,
+    this.onRevertLocaleImage,
+    this.onApplyFrameToAll,
   });
 
   final int index;
@@ -43,6 +48,20 @@ class CanvasSlot extends StatefulWidget {
   final VoidCallback? onReplaceImage;
   final VoidCallback? onMoveLeft;
   final VoidCallback? onMoveRight;
+  final VoidCallback? onApplyFrameToAll;
+
+  /// The non-source locale currently previewed (uppercased label is shown in
+  /// the context menu), or `null` when viewing the source locale.
+  final String? previewLocale;
+
+  /// Whether a per-locale image override exists for this slot + [previewLocale].
+  final bool hasLocaleImage;
+
+  /// Replace the screenshot image for [previewLocale] on this slot.
+  final VoidCallback? onReplaceLocaleImage;
+
+  /// Remove the per-locale image override for [previewLocale] on this slot.
+  final VoidCallback? onRevertLocaleImage;
 
   @override
   State<CanvasSlot> createState() => _CanvasSlotState();
@@ -51,6 +70,43 @@ class CanvasSlot extends StatefulWidget {
 class _CanvasSlotState extends State<CanvasSlot> {
   bool _hovered = false;
   bool _dragging = false;
+
+  // The canvas child is expensive (full design render). Cache it so
+  // hover/drag setState only rebuilds the label/border chrome. Translation
+  // changes rebuild StaticCanvasPreview through its own inherited
+  // dependencies, so they don't need to invalidate this cache.
+  Widget? _canvasChild;
+  ScreenshotDesign? _cachedDesign;
+  String? _cachedImagePath;
+  bool? _cachedIsActive;
+  ScreenshotController? _cachedController;
+  int? _cachedIndex;
+
+  Widget _buildCanvasChild(double cornerRadius) {
+    final stale =
+        _canvasChild == null ||
+        !identical(_cachedDesign, widget.design) ||
+        _cachedImagePath != widget.imageFile?.path ||
+        _cachedIsActive != widget.isActive ||
+        _cachedController != widget.screenshotController ||
+        _cachedIndex != widget.index;
+    if (stale) {
+      _cachedDesign = widget.design;
+      _cachedImagePath = widget.imageFile?.path;
+      _cachedIsActive = widget.isActive;
+      _cachedController = widget.screenshotController;
+      _cachedIndex = widget.index;
+      _canvasChild = widget.isActive && widget.screenshotController != null
+          ? EditorCanvas(screenshotController: widget.screenshotController!)
+          : StaticCanvasPreview(
+              design: widget.design,
+              borderRadius: cornerRadius,
+              imageFile: widget.imageFile,
+              designIndex: widget.index,
+            );
+    }
+    return _canvasChild!;
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -171,16 +227,7 @@ class _CanvasSlotState extends State<CanvasSlot> {
                   ),
                 ],
               ),
-              child: widget.isActive && widget.screenshotController != null
-                  ? EditorCanvas(
-                      screenshotController: widget.screenshotController!,
-                    )
-                  : StaticCanvasPreview(
-                      design: widget.design,
-                      borderRadius: cornerRadius,
-                      imageFile: widget.imageFile,
-                      designIndex: widget.index,
-                    ),
+              child: _buildCanvasChild(cornerRadius),
             ),
           ],
         ),
@@ -205,11 +252,34 @@ class _CanvasSlotState extends State<CanvasSlot> {
                 title: context.l10n.replaceImage,
                 icon: Symbols.image_rounded,
               ),
+            if (widget.previewLocale != null &&
+                widget.onReplaceLocaleImage != null)
+              AppPopupMenuItem(
+                value: 'replaceLocale',
+                title: context.l10n.replaceImageForLocale(
+                  widget.previewLocale!.toUpperCase(),
+                ),
+                icon: Symbols.translate_rounded,
+              ),
+            if (widget.previewLocale != null &&
+                widget.hasLocaleImage &&
+                widget.onRevertLocaleImage != null)
+              AppPopupMenuItem(
+                value: 'revertLocale',
+                title: context.l10n.revertToSourceImage,
+                icon: Symbols.undo_rounded,
+              ),
             if (widget.onDuplicate != null)
               AppPopupMenuItem(
                 value: 'duplicate',
                 title: context.l10n.duplicate,
                 icon: Symbols.content_copy_rounded,
+              ),
+            if (widget.onApplyFrameToAll != null)
+              AppPopupMenuItem(
+                value: 'applyFrameToAll',
+                title: context.l10n.applyFrameToAllScreenshots,
+                icon: Symbols.photo_frame_rounded,
               ),
             if (widget.onMoveLeft != null)
               AppPopupMenuItem(
@@ -234,7 +304,10 @@ class _CanvasSlotState extends State<CanvasSlot> {
         )
         .then((value) {
           if (value == 'replace') widget.onReplaceImage?.call();
+          if (value == 'replaceLocale') widget.onReplaceLocaleImage?.call();
+          if (value == 'revertLocale') widget.onRevertLocaleImage?.call();
           if (value == 'duplicate') widget.onDuplicate?.call();
+          if (value == 'applyFrameToAll') widget.onApplyFrameToAll?.call();
           if (value == 'moveLeft') widget.onMoveLeft?.call();
           if (value == 'moveRight') widget.onMoveRight?.call();
           if (value == 'delete') widget.onDelete?.call();

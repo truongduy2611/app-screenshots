@@ -24,6 +24,7 @@ dev_dependencies:
 
 flutter:
   assets:
+    - assets/iphone_17_pro_max_hand/
     - assets/iphone_17/
     - assets/iphone_17_pro/
     - assets/iphone_17_pro_max/

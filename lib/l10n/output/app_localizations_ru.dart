@@ -333,6 +333,17 @@ class AppLocalizationsRu extends AppLocalizations {
   String get replaceImage => 'Заменить изображение';
 
   @override
+  String replaceImageForLocale(String locale) {
+    return 'Заменить изображение для $locale';
+  }
+
+  @override
+  String get revertToSourceImage => 'Вернуть исходное изображение';
+
+  @override
+  String get alternativeScreenshots => 'Альтернативные скриншоты';
+
+  @override
   String get savedToLibrary => 'Сохранено в библиотеку';
 
   @override
@@ -584,6 +595,18 @@ class AppLocalizationsRu extends AppLocalizations {
 
   @override
   String get zoomToFit => 'По размеру';
+
+  @override
+  String get zoomTo100Percent => 'Zoom to 100%';
+
+  @override
+  String get zoomToSelection => 'Zoom to Selection';
+
+  @override
+  String get zoomIn => 'Zoom In';
+
+  @override
+  String get zoomOut => 'Zoom Out';
 
   @override
   String get addScreenshot => 'Добавить скриншот';
@@ -1205,6 +1228,86 @@ class AppLocalizationsRu extends AppLocalizations {
   String get uploadExistingFolderToAsc => 'Загрузить существующую папку...';
 
   @override
+  String get uploadToGooglePlay => 'Загрузить в Google Play';
+
+  @override
+  String get googlePlayServiceAccount => 'Сервисный аккаунт Google Play';
+
+  @override
+  String get playServiceAccountHint =>
+      'Выберите JSON-ключ сервисного аккаунта в Google Cloud Console с доступом к Android Publisher.';
+
+  @override
+  String get selectJsonKeyFile => 'Выбрать файл JSON-ключа';
+
+  @override
+  String get noServiceAccountConfigured => 'Сервисный аккаунт не настроен';
+
+  @override
+  String get playSetupHint =>
+      'Настройте сервисный аккаунт Google Play для загрузки скриншотов.';
+
+  @override
+  String get configureServiceAccount => 'Настроить сервисный аккаунт';
+
+  @override
+  String invalidServiceAccount(String error) {
+    return 'Недопустимый файл сервисного аккаунта: $error';
+  }
+
+  @override
+  String get packageName => 'Имя пакета';
+
+  @override
+  String get packageNameHint => 'com.example.app';
+
+  @override
+  String get imageType => 'Тип изображения';
+
+  @override
+  String playMaxScreenshotsNote(int count) {
+    return 'Google Play разрешает до $count скриншотов на один язык. Лишние загружены не будут.';
+  }
+
+  @override
+  String get googlePlay => 'Google Play';
+
+  @override
+  String get learnMore => 'Подробнее';
+
+  @override
+  String get orLabel => 'или';
+
+  @override
+  String get pasteJsonLabel => 'Вставить содержимое JSON';
+
+  @override
+  String get playPasteJsonHint =>
+      'Вставьте содержимое файла .json вашего сервисного аккаунта';
+
+  @override
+  String get saveJsonContents => 'Сохранить содержимое JSON';
+
+  @override
+  String get playInstructionsTitle => 'Как получить ключ';
+
+  @override
+  String get playInstructionsStep1 =>
+      'Откройте Google Play Console → Настройка → Доступ к API.';
+
+  @override
+  String get playInstructionsStep2 =>
+      'Создайте или свяжите проект Google Cloud, а затем создайте сервисный аккаунт.';
+
+  @override
+  String get playInstructionsStep3 =>
+      'Предоставьте сервисному аккаунту доступ к вашему приложению в разделе «Пользователи и разрешения».';
+
+  @override
+  String get playInstructionsStep4 =>
+      'Создайте JSON-ключ для сервисного аккаунта и скачайте его.';
+
+  @override
   String get noImagesFoundInFolder =>
       'В выбранной папке не найдено допустимых снимков экрана';
 
@@ -1673,4 +1776,61 @@ class AppLocalizationsRu extends AppLocalizations {
 
   @override
   String get resetRotation => 'Сбросить';
+
+  @override
+  String get takePhoto => 'Сделать фото';
+
+  @override
+  String get chooseFromGallery => 'Выбрать из галереи';
+
+  @override
+  String get selectSource => 'Выберите источник';
+
+  @override
+  String get fillCanvas => 'Заполнить холст';
+
+  @override
+  String get positionAssist => 'Помощник позиционирования';
+
+  @override
+  String get presetTopCenter => 'Верх';
+
+  @override
+  String get presetBottomCenter => 'Низ';
+
+  @override
+  String get presetCenter => 'Центр';
+
+  @override
+  String get presetReset => 'Сброс';
+
+  @override
+  String get applyToAllLocales => 'Применить ко всем языкам';
+
+  @override
+  String get applyToAllOverlaysScreenshotsLocales =>
+      'Применить ко всем текстам, скриншотам и языкам';
+
+  @override
+  String get applyFrameToAllScreenshots =>
+      'Применить настройки кадра ко всем скриншотам';
+
+  @override
+  String get commitAsDraft => 'Сохранить как черновик';
+
+  @override
+  String get commitAsDraftDesc =>
+      'Сохранить изменения в статусе черновика вместо отправки на проверку.';
+
+  @override
+  String get playErrorAutoSubmitRequired =>
+      'Google Play Console требует, чтобы все изменения для этого приложения отправлялись на проверку автоматически. Пожалуйста, отключите \'Сохранить как черновик\' и убедитесь, что все необходимые декларации заполнены в Google Play Console.';
+
+  @override
+  String get uploadExistingFolderToGooglePlay =>
+      'Загрузить существующую папку в Google Play';
+
+  @override
+  String get playErrorDeclarationRequired =>
+      'Загрузка отклонена Google Play: пожалуйста, проверьте Google Play Console и сначала заполните все незавершенные декларации в разделе \'Контент приложения\'.';
 }

@@ -242,15 +242,20 @@ class DeviceFrame extends StatelessWidget {
       final rightFrac = (frameSize.width - bounds.right) / frameSize.width;
       final bottomFrac = (frameSize.height - bounds.bottom) / frameSize.height;
 
+      final hMargin = leftFrac + rightFrac;
+      final vMargin = topFrac + bottomFrac;
+      final alignX = hMargin > 0 ? 2 * leftFrac / hMargin - 1 : 0.0;
+      final alignY = vMargin > 0 ? 2 * topFrac / vMargin - 1 : 0.0;
+
       stack = Stack(
         fit: StackFit.passthrough,
         children: [
           Positioned.fill(
             key: const Key('Screen'),
             child: FractionallySizedBox(
-              alignment: Alignment.center,
-              widthFactor: 1.0 - leftFrac - rightFrac,
-              heightFactor: 1.0 - topFrac - bottomFrac,
+              alignment: Alignment(alignX, alignY),
+              widthFactor: 1.0 - hMargin,
+              heightFactor: 1.0 - vMargin,
               child: LayoutBuilder(
                 builder: (context, constraints) {
                   final cornerRadiusFrac = bounds.width > 0

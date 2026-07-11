@@ -1,4 +1,5 @@
 import 'package:app_screenshots/features/settings/domain/entities/asc_credentials.dart';
+import 'package:app_screenshots/features/settings/domain/entities/play_credentials.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -11,6 +12,8 @@ class SettingsRepositoryImpl implements SettingsRepository {
   static const _ascIssuerIdKey = 'asc_issuer_id';
   static const _ascPrivateKeyKey = 'asc_private_key_content';
   static const _cliServerEnabledKey = 'cli_server_enabled';
+  static const _playServiceAccountKey = 'play_service_account_json';
+  static const _playPackageNameKey = 'play_package_name';
 
   final SharedPreferences _prefs;
   final FlutterSecureStorage _secureStorage;
@@ -88,6 +91,42 @@ class SettingsRepositoryImpl implements SettingsRepository {
     await _secureStorage.delete(key: _ascKeyIdKey);
     await _secureStorage.delete(key: _ascIssuerIdKey);
     await _secureStorage.delete(key: _ascPrivateKeyKey);
+  }
+
+  @override
+  Future<PlayCredentials?> getPlayCredentials() async {
+    final raw = await _secureStorage.read(key: _playServiceAccountKey);
+    if (raw == null || raw.isEmpty) return null;
+    try {
+      return PlayCredentials.fromServiceAccountJson(raw);
+    } on FormatException {
+      // Stored value is corrupt — treat as not configured.
+      return null;
+    }
+  }
+
+  @override
+  Future<void> savePlayCredentials(PlayCredentials credentials) async {
+    await _secureStorage.write(
+      key: _playServiceAccountKey,
+      value: credentials.rawJson,
+    );
+  }
+
+  @override
+  Future<void> clearPlayCredentials() async {
+    await _secureStorage.delete(key: _playServiceAccountKey);
+  }
+
+  @override
+  Future<String?> getPlayPackageName() async {
+    final value = _prefs.getString(_playPackageNameKey);
+    return (value == null || value.isEmpty) ? null : value;
+  }
+
+  @override
+  Future<void> setPlayPackageName(String packageName) async {
+    await _prefs.setString(_playPackageNameKey, packageName);
   }
 
   @override

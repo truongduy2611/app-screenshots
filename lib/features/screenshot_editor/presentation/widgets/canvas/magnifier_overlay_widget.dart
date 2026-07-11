@@ -1,6 +1,7 @@
 import 'dart:math' as math;
 import 'dart:ui' as ui;
 
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -23,7 +24,7 @@ class MagnifierOverlayWidget extends StatefulWidget {
 
   final MagnifierOverlay overlay;
   final bool isSelected;
-  final ui.Image? canvasSnapshot;
+  final ValueListenable<ui.Image?> canvasSnapshot;
   final Size canvasSize;
 
   @override
@@ -33,35 +34,81 @@ class MagnifierOverlayWidget extends StatefulWidget {
 class _MagnifierOverlayWidgetState extends State<MagnifierOverlayWidget> {
   bool _isDragging = false;
 
+  // In-progress gesture state. Drags and resizes are kept local (setState
+  // only repaints this subtree) and committed to the cubit once on gesture
+  // end, so a drag produces a single emit and a single undo entry.
+  Offset? _dragPosition;
+  double? _dragWidth;
+  double? _dragHeight;
+
+  void _commitGesture() {
+    final position = _dragPosition;
+    final width = _dragWidth;
+    final height = _dragHeight;
+    if (position != null || width != null || height != null) {
+      context.read<ScreenshotEditorCubit>().updateMagnifierOverlay(
+        widget.overlay.id,
+        widget.overlay.copyWith(
+          position: position,
+          width: width,
+          height: height,
+        ),
+      );
+    }
+    setState(() {
+      _isDragging = false;
+      _dragPosition = null;
+      _dragWidth = null;
+      _dragHeight = null;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
-    final overlay = widget.overlay;
+    // Effective overlay reflects the in-progress gesture that hasn't been
+    // committed to the cubit yet.
+    final overlay = widget.overlay.copyWith(
+      position: _dragPosition,
+      width: _dragWidth,
+      height: _dragHeight,
+    );
 
-    return MouseRegion(
-      cursor: _isDragging
-          ? SystemMouseCursors.grabbing
-          : SystemMouseCursors.move,
-      child: GestureDetector(
-        behavior: widget.isSelected ? HitTestBehavior.opaque : HitTestBehavior.deferToChild,
-        onTap: () {
-          context.read<ScreenshotEditorCubit>().selectOverlay(overlay.id);
-        },
-        onPanStart: (_) => setState(() => _isDragging = true),
-        onPanUpdate: (details) {
-          context.read<ScreenshotEditorCubit>().updateMagnifierOverlay(
-            overlay.id,
-            overlay.copyWith(position: overlay.position + details.delta),
-          );
-        },
-        onPanEnd: (_) => setState(() => _isDragging = false),
-        child: Opacity(
-          opacity: overlay.opacity,
-          child: Stack(
-            clipBehavior: Clip.none,
-            children: [
-              _buildMagnifierLens(overlay),
-              if (widget.isSelected) ..._buildResizeHandles(overlay),
-            ],
+    return Transform.translate(
+      // The parent Positioned places this widget from the committed
+      // overlay.position; shift by the uncommitted drag delta.
+      offset: overlay.position - widget.overlay.position,
+      child: MouseRegion(
+        cursor: _isDragging
+            ? SystemMouseCursors.grabbing
+            : SystemMouseCursors.move,
+        child: GestureDetector(
+          behavior: widget.isSelected
+              ? HitTestBehavior.opaque
+              : HitTestBehavior.deferToChild,
+          onTap: () {
+            context.read<ScreenshotEditorCubit>().selectOverlay(
+              widget.overlay.id,
+            );
+          },
+          onPanStart: (_) => setState(() {
+            _isDragging = true;
+            _dragPosition = widget.overlay.position;
+          }),
+          onPanUpdate: (details) => setState(() {
+            _dragPosition =
+                (_dragPosition ?? widget.overlay.position) + details.delta;
+          }),
+          onPanEnd: (_) => _commitGesture(),
+          onPanCancel: _commitGesture,
+          child: Opacity(
+            opacity: overlay.opacity,
+            child: Stack(
+              clipBehavior: Clip.none,
+              children: [
+                _buildMagnifierLens(overlay),
+                if (widget.isSelected) ..._buildResizeHandles(overlay),
+              ],
+            ),
           ),
         ),
       ),
@@ -104,53 +151,59 @@ class _MagnifierOverlayWidgetState extends State<MagnifierOverlayWidget> {
   }
 
   Widget _buildZoomedContent(MagnifierOverlay overlay) {
-    final snapshot = widget.canvasSnapshot;
-    if (snapshot == null) {
-      return Container(
-        color: Colors.grey.withValues(alpha: 0.3),
-        child: const Center(
-          child: Icon(Icons.search, color: Colors.white54, size: 40),
-        ),
-      );
-    }
-
-    final w = overlay.width;
-    final h = overlay.height;
-    final zoom = overlay.zoomLevel;
-
-    // Source center in canvas coordinates
-    final sourceCenterX = overlay.position.dx + w / 2 + overlay.sourceOffset.dx;
-    final sourceCenterY = overlay.position.dy + h / 2 + overlay.sourceOffset.dy;
-
-    // Scale the full canvas snapshot uniformly
-    final imgWidth = widget.canvasSize.width * zoom;
-    final imgHeight = widget.canvasSize.height * zoom;
-
-    // Position so that sourceCenterX/Y maps to the center of the viewport
-    final translateX = w / 2 - sourceCenterX * zoom;
-    final translateY = h / 2 - sourceCenterY * zoom;
-
-    return SizedBox(
-      width: w,
-      height: h,
-      child: Stack(
-        clipBehavior: Clip.hardEdge,
-        children: [
-          Positioned(
-            left: translateX,
-            top: translateY,
-            width: imgWidth,
-            height: imgHeight,
-            child: RawImage(
-              image: snapshot,
-              width: imgWidth,
-              height: imgHeight,
-              fit: BoxFit.fill,
-              filterQuality: FilterQuality.high,
+    return ValueListenableBuilder<ui.Image?>(
+      valueListenable: widget.canvasSnapshot,
+      builder: (context, snapshot, _) {
+        if (snapshot == null) {
+          return Container(
+            color: Colors.grey.withValues(alpha: 0.3),
+            child: const Center(
+              child: Icon(Icons.search, color: Colors.white54, size: 40),
             ),
+          );
+        }
+
+        final w = overlay.width;
+        final h = overlay.height;
+        final zoom = overlay.zoomLevel;
+
+        // Source center in canvas coordinates
+        final sourceCenterX =
+            overlay.position.dx + w / 2 + overlay.sourceOffset.dx;
+        final sourceCenterY =
+            overlay.position.dy + h / 2 + overlay.sourceOffset.dy;
+
+        // Scale the full canvas snapshot uniformly
+        final imgWidth = widget.canvasSize.width * zoom;
+        final imgHeight = widget.canvasSize.height * zoom;
+
+        // Position so that sourceCenterX/Y maps to the center of the viewport
+        final translateX = w / 2 - sourceCenterX * zoom;
+        final translateY = h / 2 - sourceCenterY * zoom;
+
+        return SizedBox(
+          width: w,
+          height: h,
+          child: Stack(
+            clipBehavior: Clip.hardEdge,
+            children: [
+              Positioned(
+                left: translateX,
+                top: translateY,
+                width: imgWidth,
+                height: imgHeight,
+                child: RawImage(
+                  image: snapshot,
+                  width: imgWidth,
+                  height: imgHeight,
+                  fit: BoxFit.fill,
+                  filterQuality: FilterQuality.high,
+                ),
+              ),
+            ],
           ),
-        ],
-      ),
+        );
+      },
     );
   }
 
@@ -172,6 +225,8 @@ class _MagnifierOverlayWidgetState extends State<MagnifierOverlayWidget> {
           cursor: cursor,
           child: GestureDetector(
             onPanUpdate: onPan,
+            onPanEnd: (_) => _commitGesture(),
+            onPanCancel: _commitGesture,
             child: Container(
               width: handleSize,
               height: handleSize,
@@ -186,20 +241,40 @@ class _MagnifierOverlayWidgetState extends State<MagnifierOverlayWidget> {
       );
     }
 
-    void resize(DragUpdateDetails details) {
-      final cubit = context.read<ScreenshotEditorCubit>();
+    // Resizes work on the local gesture state so each frame only repaints
+    // this subtree; _commitGesture pushes the result to the cubit once.
+    final base = widget.overlay;
+    final ratio = base.height / base.width;
+    final maxW = widget.canvasSize.width;
+    final maxH = widget.canvasSize.height;
+
+    void resizeBottomRight(DragUpdateDetails details) {
+      final curW = _dragWidth ?? base.width;
       final delta = details.delta.dx.abs() > details.delta.dy.abs()
           ? details.delta.dx
           : details.delta.dy;
-      final ratio = overlay.height / overlay.width;
-      final maxW = widget.canvasSize.width;
-      final maxH = widget.canvasSize.height;
-      final newW = (overlay.width + delta).clamp(40.0, maxW);
+      final newW = (curW + delta).clamp(40.0, maxW);
       final newH = (newW * ratio).clamp(40.0, maxH);
-      cubit.updateMagnifierOverlay(
-        overlay.id,
-        overlay.copyWith(width: newW, height: newH),
-      );
+      setState(() {
+        _dragWidth = newW;
+        _dragHeight = newH;
+      });
+    }
+
+    void resizeTopLeft(DragUpdateDetails details) {
+      final curW = _dragWidth ?? base.width;
+      final curH = _dragHeight ?? base.height;
+      final curPos = _dragPosition ?? base.position;
+      final delta = -(details.delta.dx.abs() > details.delta.dy.abs()
+          ? details.delta.dx
+          : details.delta.dy);
+      final newW = (curW + delta).clamp(40.0, maxW);
+      final newH = (newW * ratio).clamp(40.0, maxH);
+      setState(() {
+        _dragPosition = curPos - Offset(newW - curW, newH - curH);
+        _dragWidth = newW;
+        _dragHeight = newH;
+      });
     }
 
     return [
@@ -207,33 +282,13 @@ class _MagnifierOverlayWidgetState extends State<MagnifierOverlayWidget> {
         left: w - handleSize / 2,
         top: h - handleSize / 2,
         cursor: SystemMouseCursors.resizeUpLeftDownRight,
-        onPan: resize,
+        onPan: resizeBottomRight,
       ),
       handle(
         left: -handleSize / 2,
         top: -handleSize / 2,
         cursor: SystemMouseCursors.resizeUpLeftDownRight,
-        onPan: (details) {
-          final cubit = context.read<ScreenshotEditorCubit>();
-          final delta = -(details.delta.dx.abs() > details.delta.dy.abs()
-              ? details.delta.dx
-              : details.delta.dy);
-          final ratio = overlay.height / overlay.width;
-          final maxW = widget.canvasSize.width;
-          final maxH = widget.canvasSize.height;
-          final newW = (overlay.width + delta).clamp(40.0, maxW);
-          final newH = (newW * ratio).clamp(40.0, maxH);
-          final wDiff = newW - overlay.width;
-          final hDiff = newH - overlay.height;
-          cubit.updateMagnifierOverlay(
-            overlay.id,
-            overlay.copyWith(
-              width: newW,
-              height: newH,
-              position: overlay.position - Offset(wDiff, hDiff),
-            ),
-          );
-        },
+        onPan: resizeTopLeft,
       ),
     ];
   }

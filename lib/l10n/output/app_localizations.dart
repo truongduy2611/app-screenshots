@@ -761,6 +761,24 @@ abstract class AppLocalizations {
   /// **'Replace Image'**
   String get replaceImage;
 
+  /// Action to replace the screenshot image for a specific locale
+  ///
+  /// In en, this message translates to:
+  /// **'Replace Image for {locale}'**
+  String replaceImageForLocale(String locale);
+
+  /// Action to remove a locale-specific image and fall back to the source image
+  ///
+  /// In en, this message translates to:
+  /// **'Revert to Source Image'**
+  String get revertToSourceImage;
+
+  /// Label for the per-locale alternative screenshot images section
+  ///
+  /// In en, this message translates to:
+  /// **'Alternative Screenshots'**
+  String get alternativeScreenshots;
+
   /// Snackbar message after saving a design to the library
   ///
   /// In en, this message translates to:
@@ -1228,6 +1246,30 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Zoom to Fit'**
   String get zoomToFit;
+
+  /// Action to set the canvas zoom level to exactly 100%
+  ///
+  /// In en, this message translates to:
+  /// **'Zoom to 100%'**
+  String get zoomTo100Percent;
+
+  /// Action to zoom the canvas to frame the currently active screenshot
+  ///
+  /// In en, this message translates to:
+  /// **'Zoom to Selection'**
+  String get zoomToSelection;
+
+  /// Action to increase the canvas zoom level
+  ///
+  /// In en, this message translates to:
+  /// **'Zoom In'**
+  String get zoomIn;
+
+  /// Action to decrease the canvas zoom level
+  ///
+  /// In en, this message translates to:
+  /// **'Zoom Out'**
+  String get zoomOut;
 
   /// Action to add another screenshot in multi-screenshot mode
   ///
@@ -2297,6 +2339,144 @@ abstract class AppLocalizations {
   /// **'Upload Existing Folder...'**
   String get uploadExistingFolderToAsc;
 
+  /// Menu item / sheet title to upload screenshots to the Google Play Console
+  ///
+  /// In en, this message translates to:
+  /// **'Upload to Google Play'**
+  String get uploadToGooglePlay;
+
+  /// Title of the Google Play credentials dialog
+  ///
+  /// In en, this message translates to:
+  /// **'Google Play Service Account'**
+  String get googlePlayServiceAccount;
+
+  /// Hint explaining how to obtain the Google Play service account key
+  ///
+  /// In en, this message translates to:
+  /// **'Select the service account JSON key from Google Cloud Console with Android Publisher access.'**
+  String get playServiceAccountHint;
+
+  /// Button to pick the Google Play service account JSON key file
+  ///
+  /// In en, this message translates to:
+  /// **'Select JSON Key File'**
+  String get selectJsonKeyFile;
+
+  /// Empty state when no Google Play credentials are set
+  ///
+  /// In en, this message translates to:
+  /// **'No service account configured'**
+  String get noServiceAccountConfigured;
+
+  /// Prompt to configure the Google Play service account
+  ///
+  /// In en, this message translates to:
+  /// **'Set up your Google Play service account to upload screenshots.'**
+  String get playSetupHint;
+
+  /// Button to configure the Google Play service account
+  ///
+  /// In en, this message translates to:
+  /// **'Configure Service Account'**
+  String get configureServiceAccount;
+
+  /// Error shown when the selected JSON key file is invalid
+  ///
+  /// In en, this message translates to:
+  /// **'Invalid service account file: {error}'**
+  String invalidServiceAccount(String error);
+
+  /// Label for the Google Play package name field
+  ///
+  /// In en, this message translates to:
+  /// **'Package Name'**
+  String get packageName;
+
+  /// Placeholder for the package name input
+  ///
+  /// In en, this message translates to:
+  /// **'com.example.app'**
+  String get packageNameHint;
+
+  /// Label for the Google Play screenshot image type selector
+  ///
+  /// In en, this message translates to:
+  /// **'Image Type'**
+  String get imageType;
+
+  /// Warning shown when a locale has more screenshots than Google Play's per-type limit
+  ///
+  /// In en, this message translates to:
+  /// **'Google Play allows up to {count} screenshots per locale — extras won\'t be uploaded.'**
+  String playMaxScreenshotsNote(int count);
+
+  /// Settings section header for Google Play
+  ///
+  /// In en, this message translates to:
+  /// **'Google Play'**
+  String get googlePlay;
+
+  /// Link label to open external documentation
+  ///
+  /// In en, this message translates to:
+  /// **'Learn more'**
+  String get learnMore;
+
+  /// Divider label between two alternative actions
+  ///
+  /// In en, this message translates to:
+  /// **'or'**
+  String get orLabel;
+
+  /// Label for the paste-JSON text field in the Play credentials dialog
+  ///
+  /// In en, this message translates to:
+  /// **'Paste JSON contents'**
+  String get pasteJsonLabel;
+
+  /// Hint for pasting the Google Play service account JSON
+  ///
+  /// In en, this message translates to:
+  /// **'Paste the contents of your service account .json file'**
+  String get playPasteJsonHint;
+
+  /// Button to save pasted service account JSON
+  ///
+  /// In en, this message translates to:
+  /// **'Save JSON Contents'**
+  String get saveJsonContents;
+
+  /// Heading for the Google Play service account setup steps
+  ///
+  /// In en, this message translates to:
+  /// **'How to get your key'**
+  String get playInstructionsTitle;
+
+  /// Google Play service account setup step 1
+  ///
+  /// In en, this message translates to:
+  /// **'Open Google Play Console → Setup → API access.'**
+  String get playInstructionsStep1;
+
+  /// Google Play service account setup step 2
+  ///
+  /// In en, this message translates to:
+  /// **'Create or link a Google Cloud project, then create a service account.'**
+  String get playInstructionsStep2;
+
+  /// Google Play service account setup step 3
+  ///
+  /// In en, this message translates to:
+  /// **'Grant the service account access to your app under Users & permissions.'**
+  String get playInstructionsStep3;
+
+  /// Google Play service account setup step 4
+  ///
+  /// In en, this message translates to:
+  /// **'Create a JSON key for the service account and download it.'**
+  String get playInstructionsStep4;
+
   /// Error message when the selected folder for ASC upload contains no valid images
   ///
   /// In en, this message translates to:
@@ -3070,6 +3250,108 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Reset'**
   String get resetRotation;
+
+  /// Option to capture an image directly using the device camera
+  ///
+  /// In en, this message translates to:
+  /// **'Take Photo'**
+  String get takePhoto;
+
+  /// Option to pick an existing image from the gallery/files library
+  ///
+  /// In en, this message translates to:
+  /// **'Choose from Gallery'**
+  String get chooseFromGallery;
+
+  /// Title for the dialog or bottom sheet prompting the user to choose an image source
+  ///
+  /// In en, this message translates to:
+  /// **'Select Source'**
+  String get selectSource;
+
+  /// Button label to scale and position the selected image to completely cover the canvas background
+  ///
+  /// In en, this message translates to:
+  /// **'Fill Canvas'**
+  String get fillCanvas;
+
+  /// Section header for text position assist preset controls
+  ///
+  /// In en, this message translates to:
+  /// **'Position Assist'**
+  String get positionAssist;
+
+  /// Text layout preset to center horizontally near the top
+  ///
+  /// In en, this message translates to:
+  /// **'Top'**
+  String get presetTopCenter;
+
+  /// Text layout preset to center horizontally near the bottom
+  ///
+  /// In en, this message translates to:
+  /// **'Bottom'**
+  String get presetBottomCenter;
+
+  /// Text layout preset to center horizontally and vertically
+  ///
+  /// In en, this message translates to:
+  /// **'Center'**
+  String get presetCenter;
+
+  /// Text layout preset to reset custom position overrides
+  ///
+  /// In en, this message translates to:
+  /// **'Reset'**
+  String get presetReset;
+
+  /// Label for the switch to apply text alignment presets to all locales
+  ///
+  /// In en, this message translates to:
+  /// **'Apply to all locales'**
+  String get applyToAllLocales;
+
+  /// Label for the switch to apply text alignment presets to all text overlays, screenshots and locales
+  ///
+  /// In en, this message translates to:
+  /// **'Apply to all text overlays, screenshots & locales'**
+  String get applyToAllOverlaysScreenshotsLocales;
+
+  /// No description provided for @applyFrameToAllScreenshots.
+  ///
+  /// In en, this message translates to:
+  /// **'Apply frame settings to all screenshots'**
+  String get applyFrameToAllScreenshots;
+
+  /// Label for toggle to upload screenshots as draft
+  ///
+  /// In en, this message translates to:
+  /// **'Commit as Draft'**
+  String get commitAsDraft;
+
+  /// Description for the commit as draft toggle
+  ///
+  /// In en, this message translates to:
+  /// **'Keep changes staged in Google Play Console instead of submitting for review.'**
+  String get commitAsDraftDesc;
+
+  /// Error message when Google Play Console requires changes to be sent for review automatically
+  ///
+  /// In en, this message translates to:
+  /// **'Google Play Console requires all changes to be sent for review automatically for this app. Please disable \'Commit as Draft\' and ensure all required declarations are completed in Google Play Console.'**
+  String get playErrorAutoSubmitRequired;
+
+  /// Menu item and dialog title to upload an existing screenshot folder to Google Play
+  ///
+  /// In en, this message translates to:
+  /// **'Upload existing folder to Google Play'**
+  String get uploadExistingFolderToGooglePlay;
+
+  /// Error message when Google Play rejects upload due to missing declarations under App Content
+  ///
+  /// In en, this message translates to:
+  /// **'Upload rejected by Google Play: Please check your Google Play Console and complete any outstanding declarations under App Content first.'**
+  String get playErrorDeclarationRequired;
 }
 
 class _AppLocalizationsDelegate

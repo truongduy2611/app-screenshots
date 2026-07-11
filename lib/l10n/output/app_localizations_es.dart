@@ -333,6 +333,17 @@ class AppLocalizationsEs extends AppLocalizations {
   String get replaceImage => 'Reemplazar imagen';
 
   @override
+  String replaceImageForLocale(String locale) {
+    return 'Reemplazar imagen para $locale';
+  }
+
+  @override
+  String get revertToSourceImage => 'Volver a la imagen original';
+
+  @override
+  String get alternativeScreenshots => 'Capturas de pantalla alternativas';
+
+  @override
   String get savedToLibrary => 'Guardado en la biblioteca';
 
   @override
@@ -585,6 +596,18 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get zoomToFit => 'Ajustar a ventana';
+
+  @override
+  String get zoomTo100Percent => 'Zoom to 100%';
+
+  @override
+  String get zoomToSelection => 'Zoom to Selection';
+
+  @override
+  String get zoomIn => 'Zoom In';
+
+  @override
+  String get zoomOut => 'Zoom Out';
 
   @override
   String get addScreenshot => 'Añadir captura';
@@ -1207,6 +1230,86 @@ class AppLocalizationsEs extends AppLocalizations {
   String get uploadExistingFolderToAsc => 'Subir carpeta existente...';
 
   @override
+  String get uploadToGooglePlay => 'Subir a Google Play';
+
+  @override
+  String get googlePlayServiceAccount => 'Cuenta de servicio de Google Play';
+
+  @override
+  String get playServiceAccountHint =>
+      'Seleccione la clave JSON de la cuenta de servicio de Google Cloud Console con acceso de Android Publisher.';
+
+  @override
+  String get selectJsonKeyFile => 'Seleccionar archivo de clave JSON';
+
+  @override
+  String get noServiceAccountConfigured => 'Sin cuenta de servicio configurada';
+
+  @override
+  String get playSetupHint =>
+      'Configure su cuenta de servicio de Google Play para subir capturas de pantalla.';
+
+  @override
+  String get configureServiceAccount => 'Configurar cuenta de servicio';
+
+  @override
+  String invalidServiceAccount(String error) {
+    return 'Archivo de cuenta de servicio no válido: $error';
+  }
+
+  @override
+  String get packageName => 'Nombre del paquete';
+
+  @override
+  String get packageNameHint => 'com.example.app';
+
+  @override
+  String get imageType => 'Tipo de imagen';
+
+  @override
+  String playMaxScreenshotsNote(int count) {
+    return 'Google Play permite hasta $count capturas de pantalla por idioma; las adicionales no se subirán.';
+  }
+
+  @override
+  String get googlePlay => 'Google Play';
+
+  @override
+  String get learnMore => 'Más información';
+
+  @override
+  String get orLabel => 'o';
+
+  @override
+  String get pasteJsonLabel => 'Pegar contenido JSON';
+
+  @override
+  String get playPasteJsonHint =>
+      'Pegue el contenido del archivo .json de su cuenta de servicio';
+
+  @override
+  String get saveJsonContents => 'Guardar contenido JSON';
+
+  @override
+  String get playInstructionsTitle => 'Cómo obtener su clave';
+
+  @override
+  String get playInstructionsStep1 =>
+      'Abra Google Play Console → Configuración → Acceso a la API.';
+
+  @override
+  String get playInstructionsStep2 =>
+      'Cree o vincule un proyecto de Google Cloud, luego cree una cuenta de servicio.';
+
+  @override
+  String get playInstructionsStep3 =>
+      'Otorgue acceso de cuenta de servicio a su aplicación en Usuarios y permisos.';
+
+  @override
+  String get playInstructionsStep4 =>
+      'Cree una clave JSON para la cuenta de servicio y descárguela.';
+
+  @override
   String get noImagesFoundInFolder =>
       'No se encontraron imágenes de captura de pantalla válidas en la carpeta seleccionada';
 
@@ -1675,4 +1778,61 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get resetRotation => 'Restablecer';
+
+  @override
+  String get takePhoto => 'Tomar foto';
+
+  @override
+  String get chooseFromGallery => 'Elegir de la galería';
+
+  @override
+  String get selectSource => 'Seleccionar origen';
+
+  @override
+  String get fillCanvas => 'Llenar lienzo';
+
+  @override
+  String get positionAssist => 'Asistente de posición';
+
+  @override
+  String get presetTopCenter => 'Superior';
+
+  @override
+  String get presetBottomCenter => 'Inferior';
+
+  @override
+  String get presetCenter => 'Centro';
+
+  @override
+  String get presetReset => 'Restab.';
+
+  @override
+  String get applyToAllLocales => 'Aplicar a todos los idiomas';
+
+  @override
+  String get applyToAllOverlaysScreenshotsLocales =>
+      'Aplicar a todas las superposiciones, capturas e idiomas';
+
+  @override
+  String get applyFrameToAllScreenshots =>
+      'Aplicar la configuración de marco a todas las capturas de pantalla';
+
+  @override
+  String get commitAsDraft => 'Guardar como borrador';
+
+  @override
+  String get commitAsDraftDesc =>
+      'Mantener los cambios en estado de borrador en lugar de enviarlos a revisión.';
+
+  @override
+  String get playErrorAutoSubmitRequired =>
+      'Google Play Console requiere que todos los cambios se envíen a revisión automáticamente para esta aplicación. Desactive \'Guardar como borrador\' y asegúrese de que todas las declaraciones requeridas estén completadas en Google Play Console.';
+
+  @override
+  String get uploadExistingFolderToGooglePlay =>
+      'Subir carpeta existente a Google Play';
+
+  @override
+  String get playErrorDeclarationRequired =>
+      'Carga rechazada por Google Play: consulte su Google Play Console y complete primero las declaraciones pendientes en Contenido de la aplicación.';
 }
