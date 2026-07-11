@@ -85,7 +85,8 @@ class ImagePickerHelper {
     final initialDir = prefs.getString(_lastOpenPathKey);
 
     final result = await FilePicker.platform.pickFiles(
-      type: FileType.image,
+      type: FileType.custom,
+      allowedExtensions: ['png', 'jpg', 'jpeg', 'gif', 'webp', 'svg'],
       allowMultiple: allowMultiple,
       initialDirectory: initialDir,
     );

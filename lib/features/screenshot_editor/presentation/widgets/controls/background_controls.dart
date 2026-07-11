@@ -17,6 +17,10 @@ import 'package:app_screenshots/features/screenshot_editor/presentation/helpers/
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:material_symbols_icons/symbols.dart';
+import 'package:path_provider/path_provider.dart';
+import 'package:pasteboard/pasteboard.dart';
+import 'package:app_screenshots/core/services/app_logger.dart';
+import 'package:app_screenshots/core/widgets/app_snackbar.dart';
 
 class BackgroundControls extends StatelessWidget {
   const BackgroundControls({super.key});
@@ -155,6 +159,26 @@ class BackgroundControls extends StatelessWidget {
                       size: 18,
                     ),
                     label: Text(context.l10n.addImages),
+                    style: OutlinedButton.styleFrom(
+                      padding: const EdgeInsets.symmetric(vertical: 10),
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(8),
+                      ),
+                    ),
+                  ),
+                ),
+                const SizedBox(height: 8),
+                SizedBox(
+                  width: double.infinity,
+                  child: OutlinedButton.icon(
+                    onPressed: state.design.imageOverlays.length >= 10
+                        ? null
+                        : () => _pasteImageOverlay(context),
+                    icon: const Icon(
+                      Symbols.content_paste_rounded,
+                      size: 18,
+                    ),
+                    label: Text(context.l10n.pasteFromClipboard),
                     style: OutlinedButton.styleFrom(
                       padding: const EdgeInsets.symmetric(vertical: 10),
                       shape: RoundedRectangleBorder(
@@ -1224,6 +1248,39 @@ class BackgroundControls extends StatelessWidget {
       cubit.addImageOverlay(files.first);
     } else {
       cubit.addMultipleImageOverlays(files);
+    }
+  }
+
+  Future<void> _pasteImageOverlay(BuildContext context) async {
+    try {
+      final bytes = await Pasteboard.image;
+      if (bytes == null) {
+        if (!context.mounted) return;
+        context.showAppSnackbar(
+          context.l10n.noImageInClipboard,
+          type: AppSnackbarType.info,
+        );
+        return;
+      }
+      final tempDir = await getTemporaryDirectory();
+      final file = File(
+        '${tempDir.path}/clipboard_${DateTime.now().millisecondsSinceEpoch}.png',
+      );
+      await file.writeAsBytes(bytes);
+      if (!context.mounted) return;
+      context.read<ScreenshotEditorCubit>().addImageOverlay(file);
+    } catch (e, st) {
+      AppLogger.error(
+        'Failed to paste overlay from clipboard',
+        tag: 'BackgroundControls',
+        error: e,
+        stackTrace: st,
+      );
+      if (!context.mounted) return;
+      context.showAppSnackbar(
+        '${context.l10n.failedToExport}: $e',
+        type: AppSnackbarType.error,
+      );
     }
   }
 

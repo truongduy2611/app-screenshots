@@ -22,16 +22,21 @@ import 'package:app_screenshots/features/screenshot_editor/presentation/widgets/
 import 'package:app_screenshots/features/screenshot_editor/presentation/widgets/controls/mobile_editor_controls.dart';
 import 'package:app_screenshots/features/screenshot_editor/presentation/widgets/dot_grid_painter.dart';
 import 'package:app_screenshots/features/screenshot_editor/presentation/widgets/screenshot_capture_provider.dart';
+import 'package:app_screenshots/features/screenshot_editor/presentation/helpers/multi_screenshot_actions.dart'
+    show processScreenshot;
+import 'package:app_screenshots/features/screenshot_editor/presentation/widgets/viewport/canvas_viewport_controller.dart';
+import 'package:app_screenshots/features/screenshot_editor/presentation/widgets/viewport/figma_canvas_viewport.dart';
+import 'package:app_screenshots/features/screenshot_editor/presentation/widgets/viewport/zoom_control_bar.dart';
 
 import 'package:desktop_drop/desktop_drop.dart';
 import 'package:app_screenshots/features/screenshot_editor/presentation/helpers/image_picker_helper.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:get_it/get_it.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:image/image.dart' as img;
 import 'package:material_symbols_icons/symbols.dart';
 import 'package:app_screenshots/features/screenshot_editor/utils/screenshot_utils.dart';
 import 'package:path_provider/path_provider.dart';
@@ -119,15 +124,21 @@ class ScreenshotEditorView extends StatefulWidget {
   State<ScreenshotEditorView> createState() => _ScreenshotEditorViewState();
 }
 
-class _ScreenshotEditorViewState extends State<ScreenshotEditorView> {
+class _ScreenshotEditorViewState extends State<ScreenshotEditorView>
+    with SingleTickerProviderStateMixin {
   final ScreenshotController _screenshotController = ScreenshotController();
   late final _screenShotCubit = context.read<ScreenshotEditorCubit>();
-  bool _isPanning = false;
+  late final CanvasViewportController _viewportController;
   final _mobileControlsKey = GlobalKey<MobileEditorControlsState>();
 
   @override
   void initState() {
     super.initState();
+    _viewportController = CanvasViewportController(
+      vsync: this,
+      minScale: 0.1,
+      maxScale: 4.0,
+    );
     // Register undo/redo for the macOS Edit menu
     MenuCallbacks.onUndo = () => _screenShotCubit.undo();
     MenuCallbacks.onRedo = () => _screenShotCubit.redo();
@@ -138,6 +149,7 @@ class _ScreenshotEditorViewState extends State<ScreenshotEditorView> {
     WidgetsBinding.instance.addPostFrameCallback((_) {
       if (mounted) {
         server.registerTranslation(context.read<TranslationCubit>());
+        _zoomToFit(animate: false);
       }
     });
   }
@@ -151,7 +163,24 @@ class _ScreenshotEditorViewState extends State<ScreenshotEditorView> {
     // Unregister cubits from the CLI command server.
     final server = GetIt.I<CommandServer>();
     server.unregisterEditor(_screenShotCubit);
+    _viewportController.dispose();
     super.dispose();
+  }
+
+  /// Frames the canvas (desktop only — mobile relies on EditorCanvas's own
+  /// FittedBox auto-fit and doesn't use world-space zoom).
+  void _zoomToFit({bool animate = true}) {
+    if (!FigmaCanvasViewport.isDesktopPlatform) return;
+    final design = _screenShotCubit.state.design;
+    final canvasSize = ScreenshotUtils.getDimensions(
+      design.displayType ?? '',
+      design.orientation,
+    );
+    _viewportController.zoomToRect(
+      Rect.fromLTWH(0, 0, canvasSize.width, canvasSize.height),
+      padding: 60,
+      animate: animate,
+    );
   }
 
   KeyEventResult _handleKeyEvent(FocusNode node, KeyEvent event) {
@@ -226,6 +255,30 @@ class _ScreenshotEditorViewState extends State<ScreenshotEditorView> {
         _screenShotCubit.deselectOverlay();
         return KeyEventResult.handled;
       }
+
+      // Cmd+0 — zoom to fit
+      if (key == LogicalKeyboardKey.digit0) {
+        _zoomToFit();
+        return KeyEventResult.handled;
+      }
+
+      // Cmd+1 — zoom to 100%
+      if (key == LogicalKeyboardKey.digit1) {
+        _viewportController.setScale(1.0);
+        return KeyEventResult.handled;
+      }
+
+      // Cmd+= — zoom in / Cmd+- — zoom out, around the viewport center
+      if (key == LogicalKeyboardKey.equal ||
+          key == LogicalKeyboardKey.numpadAdd) {
+        _viewportController.zoomBy(1.25, animate: true);
+        return KeyEventResult.handled;
+      }
+      if (key == LogicalKeyboardKey.minus ||
+          key == LogicalKeyboardKey.numpadSubtract) {
+        _viewportController.zoomBy(0.8, animate: true);
+        return KeyEventResult.handled;
+      }
     }
 
     // ── Non-modifier shortcuts ───────────────────────────────────────────
@@ -267,9 +320,12 @@ class _ScreenshotEditorViewState extends State<ScreenshotEditorView> {
 
   Future<Uint8List?> _captureImage() async {
     try {
-      // Hide grid/center lines before capture
+      // Hide grid/center lines before capture. Let the resulting emit
+      // reach the screen before capturing: one frame for the rebuild to be
+      // scheduled, one for it to actually paint.
       _screenShotCubit.hideGridForCapture();
-      await Future.delayed(const Duration(milliseconds: 50));
+      await WidgetsBinding.instance.endOfFrame;
+      await WidgetsBinding.instance.endOfFrame;
 
       final bytes = await _screenshotController.capture(pixelRatio: 1.0);
 
@@ -283,11 +339,8 @@ class _ScreenshotEditorViewState extends State<ScreenshotEditorView> {
         return bytes;
       }
 
-      final image = img.decodePng(bytes);
-      if (image == null) return bytes;
-
-      final noAlphaImage = image.convert(numChannels: 3);
-      return img.encodePng(noAlphaImage);
+      // Strip alpha off the UI isolate.
+      return compute(processScreenshot, (bytes, false));
     } catch (e, st) {
       // Ensure grid is restored even on error
       _screenShotCubit.restoreGridAfterCapture();
@@ -982,15 +1035,25 @@ class _ScreenshotEditorViewState extends State<ScreenshotEditorView> {
       builder: (context, constraints) {
         final isDesktop = constraints.maxWidth > 800;
 
-        return BlocListener<ScreenshotEditorCubit, ScreenshotEditorState>(
-          listenWhen: (previous, current) {
-            return !isDesktop &&
-                previous.selectedOverlayId != current.selectedOverlayId &&
-                current.selectedOverlayId != null;
-          },
-          listener: (context, state) {
-            _mobileControlsKey.currentState?.selectTab(kTextTabIndex);
-          },
+        return MultiBlocListener(
+          listeners: [
+            BlocListener<ScreenshotEditorCubit, ScreenshotEditorState>(
+              listenWhen: (previous, current) {
+                return !isDesktop &&
+                    previous.selectedOverlayId != current.selectedOverlayId &&
+                    current.selectedOverlayId != null;
+              },
+              listener: (context, state) {
+                _mobileControlsKey.currentState?.selectTab(kTextTabIndex);
+              },
+            ),
+            BlocListener<ScreenshotEditorCubit, ScreenshotEditorState>(
+              listenWhen: (previous, current) =>
+                  previous.design.orientation != current.design.orientation ||
+                  previous.design.displayType != current.design.displayType,
+              listener: (context, state) => _zoomToFit(),
+            ),
+          ],
           child: ScreenshotCaptureProvider(
             captureAllLocaleScreenshots: _captureAllLocaleScreenshots,
             child: FocusScope(
@@ -1025,6 +1088,11 @@ class _ScreenshotEditorViewState extends State<ScreenshotEditorView> {
             FloatingPanel(
               constraints: constraints,
               child: const DesktopEditorControls(),
+            ),
+            ZoomControlBar(
+              constraints: constraints,
+              controller: _viewportController,
+              onZoomToFit: _zoomToFit,
             ),
           ],
         );
@@ -1075,10 +1143,16 @@ class _ScreenshotEditorViewState extends State<ScreenshotEditorView> {
             child: BlocBuilder<ScreenshotEditorCubit, ScreenshotEditorState>(
               buildWhen: (prev, curr) =>
                   prev.design.gridSettings.showDotGrid !=
-                  curr.design.gridSettings.showDotGrid,
+                      curr.design.gridSettings.showDotGrid ||
+                  prev.design.displayType != curr.design.displayType ||
+                  prev.design.orientation != curr.design.orientation,
               builder: (context, state) {
                 final bgColor = theme.colorScheme.surfaceContainerLowest;
                 final showDots = state.design.gridSettings.showDotGrid;
+                final canvasSize = ScreenshotUtils.getDimensions(
+                  state.design.displayType ?? '',
+                  state.design.orientation,
+                );
 
                 return Stack(
                   children: [
@@ -1094,33 +1168,32 @@ class _ScreenshotEditorViewState extends State<ScreenshotEditorView> {
                       )
                     else
                       Positioned.fill(child: ColoredBox(color: bgColor)),
-                    MouseRegion(
-                      cursor: _isPanning
-                          ? SystemMouseCursors.grabbing
-                          : SystemMouseCursors.grab,
-                      child: Listener(
-                        onPointerDown: (_) => setState(() => _isPanning = true),
-                        onPointerUp: (_) => setState(() => _isPanning = false),
-                        onPointerCancel: (_) =>
-                            setState(() => _isPanning = false),
-                        child: InteractiveViewer(
-                          boundaryMargin: const EdgeInsets.all(8000),
-                          minScale: 0.1,
-                          maxScale: 4.0,
-                          child: Center(
-                            child: Padding(
-                              padding: EdgeInsets.all(
-                                MediaQuery.sizeOf(context).width < 600
-                                    ? 12
-                                    : 24,
-                              ),
+                    FigmaCanvasViewport(
+                      controller: _viewportController,
+                      // Preserves mobile's original constrained:true
+                      // auto-fit; desktop always lays out unconstrained at
+                      // native size (see child branch below).
+                      constrainedOnTouch: true,
+                      child: FigmaCanvasViewport.isDesktopPlatform
+                          ? SizedBox(
+                              width: canvasSize.width,
+                              height: canvasSize.height,
                               child: EditorCanvas(
                                 screenshotController: _screenshotController,
                               ),
+                            )
+                          : Center(
+                              child: Padding(
+                                padding: EdgeInsets.all(
+                                  MediaQuery.sizeOf(context).width < 600
+                                      ? 12
+                                      : 24,
+                                ),
+                                child: EditorCanvas(
+                                  screenshotController: _screenshotController,
+                                ),
+                              ),
                             ),
-                          ),
-                        ),
-                      ),
                     ),
                   ],
                 );

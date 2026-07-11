@@ -1247,6 +1247,30 @@ abstract class AppLocalizations {
   /// **'Zoom to Fit'**
   String get zoomToFit;
 
+  /// Action to set the canvas zoom level to exactly 100%
+  ///
+  /// In en, this message translates to:
+  /// **'Zoom to 100%'**
+  String get zoomTo100Percent;
+
+  /// Action to zoom the canvas to frame the currently active screenshot
+  ///
+  /// In en, this message translates to:
+  /// **'Zoom to Selection'**
+  String get zoomToSelection;
+
+  /// Action to increase the canvas zoom level
+  ///
+  /// In en, this message translates to:
+  /// **'Zoom In'**
+  String get zoomIn;
+
+  /// Action to decrease the canvas zoom level
+  ///
+  /// In en, this message translates to:
+  /// **'Zoom Out'**
+  String get zoomOut;
+
   /// Action to add another screenshot in multi-screenshot mode
   ///
   /// In en, this message translates to:

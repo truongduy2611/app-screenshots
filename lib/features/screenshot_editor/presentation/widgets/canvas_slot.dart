@@ -71,6 +71,43 @@ class _CanvasSlotState extends State<CanvasSlot> {
   bool _hovered = false;
   bool _dragging = false;
 
+  // The canvas child is expensive (full design render). Cache it so
+  // hover/drag setState only rebuilds the label/border chrome. Translation
+  // changes rebuild StaticCanvasPreview through its own inherited
+  // dependencies, so they don't need to invalidate this cache.
+  Widget? _canvasChild;
+  ScreenshotDesign? _cachedDesign;
+  String? _cachedImagePath;
+  bool? _cachedIsActive;
+  ScreenshotController? _cachedController;
+  int? _cachedIndex;
+
+  Widget _buildCanvasChild(double cornerRadius) {
+    final stale =
+        _canvasChild == null ||
+        !identical(_cachedDesign, widget.design) ||
+        _cachedImagePath != widget.imageFile?.path ||
+        _cachedIsActive != widget.isActive ||
+        _cachedController != widget.screenshotController ||
+        _cachedIndex != widget.index;
+    if (stale) {
+      _cachedDesign = widget.design;
+      _cachedImagePath = widget.imageFile?.path;
+      _cachedIsActive = widget.isActive;
+      _cachedController = widget.screenshotController;
+      _cachedIndex = widget.index;
+      _canvasChild = widget.isActive && widget.screenshotController != null
+          ? EditorCanvas(screenshotController: widget.screenshotController!)
+          : StaticCanvasPreview(
+              design: widget.design,
+              borderRadius: cornerRadius,
+              imageFile: widget.imageFile,
+              designIndex: widget.index,
+            );
+    }
+    return _canvasChild!;
+  }
+
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
@@ -190,16 +227,7 @@ class _CanvasSlotState extends State<CanvasSlot> {
                   ),
                 ],
               ),
-              child: widget.isActive && widget.screenshotController != null
-                  ? EditorCanvas(
-                      screenshotController: widget.screenshotController!,
-                    )
-                  : StaticCanvasPreview(
-                      design: widget.design,
-                      borderRadius: cornerRadius,
-                      imageFile: widget.imageFile,
-                      designIndex: widget.index,
-                    ),
+              child: _buildCanvasChild(cornerRadius),
             ),
           ],
         ),

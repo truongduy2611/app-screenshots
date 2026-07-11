@@ -35,6 +35,9 @@ import 'package:app_screenshots/features/screenshot_editor/presentation/widgets/
 import 'package:app_screenshots/features/screenshot_editor/presentation/widgets/dot_grid_painter.dart';
 import 'package:app_screenshots/features/screenshot_editor/presentation/widgets/floating_panel.dart';
 import 'package:app_screenshots/features/screenshot_editor/presentation/widgets/preset_picker_dialog.dart';
+import 'package:app_screenshots/features/screenshot_editor/presentation/widgets/viewport/canvas_viewport_controller.dart';
+import 'package:app_screenshots/features/screenshot_editor/presentation/widgets/viewport/figma_canvas_viewport.dart';
+import 'package:app_screenshots/features/screenshot_editor/presentation/widgets/viewport/zoom_control_bar.dart';
 import 'package:app_screenshots/features/screenshot_editor/utils/screenshot_utils.dart';
 import 'package:desktop_drop/desktop_drop.dart';
 import 'package:file_picker/file_picker.dart';
@@ -132,10 +135,7 @@ class _MultiScreenshotView extends StatefulWidget {
 class _MultiScreenshotViewState extends State<_MultiScreenshotView>
     with TickerProviderStateMixin, MultiScreenshotActions {
   final ScreenshotController _screenshotController = ScreenshotController();
-  final TransformationController _transformController =
-      TransformationController();
-  late final AnimationController _zoomAnimController;
-  Animation<Matrix4>? _zoomAnimation;
+  late final CanvasViewportController _viewportController;
   bool _isExporting = false;
   final _mobileControlsKey = GlobalKey<MobileEditorControlsState>();
 
@@ -236,6 +236,24 @@ class _MultiScreenshotViewState extends State<_MultiScreenshotView>
         return KeyEventResult.handled;
       }
 
+      // Cmd+1 — zoom to 100%
+      if (key == LogicalKeyboardKey.digit1) {
+        _viewportController.setScale(1.0);
+        return KeyEventResult.handled;
+      }
+
+      // Cmd+= — zoom in / Cmd+- — zoom out, around the viewport center
+      if (key == LogicalKeyboardKey.equal ||
+          key == LogicalKeyboardKey.numpadAdd) {
+        _viewportController.zoomBy(1.25, animate: true);
+        return KeyEventResult.handled;
+      }
+      if (key == LogicalKeyboardKey.minus ||
+          key == LogicalKeyboardKey.numpadSubtract) {
+        _viewportController.zoomBy(0.8, animate: true);
+        return KeyEventResult.handled;
+      }
+
       // Cmd+Z — undo / Cmd+Shift+Z — redo
       if (key == LogicalKeyboardKey.keyZ) {
         if (isShift) {
@@ -300,15 +318,11 @@ class _MultiScreenshotViewState extends State<_MultiScreenshotView>
     super.initState();
     _editorCubit = context.read<ScreenshotEditorCubit>();
     _multiCubit = context.read<MultiScreenshotCubit>();
-    _zoomAnimController = AnimationController(
+    _viewportController = CanvasViewportController(
       vsync: this,
-      duration: const Duration(milliseconds: 400),
+      minScale: 0.05,
+      maxScale: 4.0,
     );
-    _zoomAnimController.addListener(() {
-      if (_zoomAnimation != null) {
-        _transformController.value = _zoomAnimation!.value;
-      }
-    });
     WidgetsBinding.instance.addPostFrameCallback((_) {
       _syncActiveDesign();
       _zoomToFit(animate: false);
@@ -335,34 +349,18 @@ class _MultiScreenshotViewState extends State<_MultiScreenshotView>
     server.unregisterEditor(_editorCubit);
     server.unregisterMulti(_multiCubit);
     server.unregisterCapture();
-    _zoomAnimController.dispose();
-    _transformController.dispose();
+    _viewportController.dispose();
     super.dispose();
-  }
-
-  /// Smoothly animate from the current transform to [target].
-  void _animateTransform(Matrix4 target) {
-    _zoomAnimation =
-        Matrix4Tween(begin: _transformController.value, end: target).animate(
-          CurvedAnimation(
-            parent: _zoomAnimController,
-            curve: Curves.easeOutCubic,
-          ),
-        );
-    _zoomAnimController
-      ..reset()
-      ..forward();
   }
 
   // ---------------------------------------------------------------------------
   // Zoom to fit
   // ---------------------------------------------------------------------------
 
-  void _zoomToFit({bool animate = true}) {
-    final size = MediaQuery.of(context).size;
-    final multiState = context.read<MultiScreenshotCubit>().state;
-    if (multiState.designs.isEmpty) return;
-
+  /// World-space bounding box of the design row's content (matches the
+  /// child layout in [_MultiCanvasArea]: `Padding(100) > Row(...)`), plus
+  /// the trailing add-placeholder when it will be rendered.
+  Rect _contentBounds(MultiScreenshotState multiState) {
     double totalWidth = 0;
     double maxHeight = 0;
     for (final d in multiState.designs) {
@@ -375,7 +373,6 @@ class _MultiScreenshotViewState extends State<_MultiScreenshotView>
     }
     totalWidth += _gap * (multiState.designs.length - 1);
 
-    // Include the add-new placeholder if it will be rendered.
     if (multiState.canAddMore) {
       final lastDims = ScreenshotUtils.getDimensions(
         multiState.designs.last.displayType ?? '',
@@ -384,83 +381,47 @@ class _MultiScreenshotViewState extends State<_MultiScreenshotView>
       totalWidth += _gap + lastDims.width;
     }
 
-    const padding = 200.0;
-    final contentW = totalWidth + padding * 2;
-    final contentH = maxHeight + padding * 2;
+    return Rect.fromLTWH(0, 0, totalWidth, maxHeight);
+  }
 
-    final viewportW = size.width;
-    final viewportH = size.height - 100;
-
-    final scaleX = (viewportW / contentW).clamp(0.05, 1.0).toDouble();
-    final scaleY = (viewportH / contentH).clamp(0.05, 1.0).toDouble();
-    final fitScale = scaleX < scaleY ? scaleX : scaleY;
-
-    final scaledW = contentW * fitScale;
-    final scaledH = contentH * fitScale;
-    final tx = (viewportW - scaledW) / 2 + padding * fitScale;
-    final ty = (viewportH - scaledH) / 2 + padding * fitScale;
-
-    final target = Matrix4.diagonal3Values(fitScale, fitScale, 1)
-      ..setTranslationRaw(tx, ty, 0);
-
-    if (animate) {
-      _animateTransform(target);
-    } else {
-      _transformController.value = target;
-    }
+  void _zoomToFit({bool animate = true}) {
+    final multiState = context.read<MultiScreenshotCubit>().state;
+    if (multiState.designs.isEmpty) return;
+    _viewportController.zoomToRect(
+      _contentBounds(multiState),
+      padding: 200,
+      animate: animate,
+    );
   }
 
   /// Zoom / pan so the design at [index] is centred in the viewport.
   void _zoomToActive([int? index]) {
-    final size = MediaQuery.of(context).size;
     final multiState = context.read<MultiScreenshotCubit>().state;
     if (multiState.designs.isEmpty) return;
 
     final targetIdx = index ?? multiState.activeIndex;
 
-    // Compute the X-offset of the target design's centre.
     double xOffset = 0;
     double targetW = 0;
-    double maxHeight = 0;
+    double targetH = 0;
     for (int i = 0; i < multiState.designs.length; i++) {
       final dims = ScreenshotUtils.getDimensions(
         multiState.designs[i].displayType ?? '',
         multiState.designs[i].orientation,
       );
-      if (i < targetIdx) {
-        xOffset += dims.width + _gap;
+      if (i < targetIdx) xOffset += dims.width + _gap;
+      if (i == targetIdx) {
+        targetW = dims.width;
+        targetH = dims.height;
       }
-      if (i == targetIdx) targetW = dims.width;
-      if (dims.height > maxHeight) maxHeight = dims.height;
     }
 
-    const contentPad = 100.0; // Padding from the Row
-    final centreX = contentPad + xOffset + targetW / 2;
-    final centreY = contentPad + maxHeight / 2;
-
-    final viewportW = size.width;
-    final viewportH = size.height - 100;
-
-    // Pick a scale that comfortably fits the single design.
-    const vertPad = 300.0;
-    final targetDims = ScreenshotUtils.getDimensions(
-      multiState.designs[targetIdx].displayType ?? '',
-      multiState.designs[targetIdx].orientation,
+    const contentPad = 100.0; // Row's own Padding
+    _viewportController.zoomToRect(
+      Rect.fromLTWH(contentPad + xOffset, contentPad, targetW, targetH),
+      padding: 150,
+      animate: true,
     );
-    final scaleX = (viewportW / (targetDims.width + vertPad))
-        .clamp(0.05, 1.0)
-        .toDouble();
-    final scaleY = (viewportH / (targetDims.height + vertPad))
-        .clamp(0.05, 1.0)
-        .toDouble();
-    final scale = scaleX < scaleY ? scaleX : scaleY;
-
-    final tx = viewportW / 2 - centreX * scale;
-    final ty = viewportH / 2 - centreY * scale;
-
-    final target = Matrix4.diagonal3Values(scale, scale, 1)
-      ..setTranslationRaw(tx, ty, 0);
-    _animateTransform(target);
   }
 
   // ---------------------------------------------------------------------------
@@ -1340,7 +1301,7 @@ class _MultiScreenshotViewState extends State<_MultiScreenshotView>
                   Positioned.fill(
                     child: _MultiCanvasArea(
                       screenshotController: _screenshotController,
-                      transformController: _transformController,
+                      viewportController: _viewportController,
                       onSyncBack: _syncEditorChangesBack,
                       onSyncActiveDesign: _syncActiveDesign,
                       onZoomToFit: _zoomToFit,
@@ -1350,6 +1311,12 @@ class _MultiScreenshotViewState extends State<_MultiScreenshotView>
                   FloatingPanel(
                     constraints: bodyConstraints,
                     child: const DesktopEditorControls(),
+                  ),
+                  ZoomControlBar(
+                    constraints: bodyConstraints,
+                    controller: _viewportController,
+                    onZoomToFit: _zoomToFit,
+                    onZoomToSelection: () => _zoomToActive(),
                   ),
                 ],
               );
@@ -1379,7 +1346,7 @@ class _MultiScreenshotViewState extends State<_MultiScreenshotView>
                         Positioned.fill(
                           child: _MultiCanvasArea(
                             screenshotController: _screenshotController,
-                            transformController: _transformController,
+                            viewportController: _viewportController,
                             onSyncBack: _syncEditorChangesBack,
                             onSyncActiveDesign: _syncActiveDesign,
                             onZoomToFit: _zoomToFit,

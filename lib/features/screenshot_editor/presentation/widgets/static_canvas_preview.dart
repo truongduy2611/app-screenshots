@@ -1,17 +1,26 @@
 import 'dart:io';
 
 import 'package:app_screenshots/features/screenshot_editor/data/models/screenshot_design.dart';
+import 'package:app_screenshots/features/screenshot_editor/data/models/translation_bundle.dart';
 import 'package:app_screenshots/features/screenshot_editor/presentation/widgets/canvas/magnifier_overlay_widget.dart';
 import 'package:app_screenshots/features/screenshot_editor/presentation/cubit/translation_cubit.dart';
 import 'package:app_screenshots/features/screenshot_editor/presentation/widgets/doodle_background.dart';
 import 'package:app_screenshots/features/screenshot_editor/presentation/widgets/grid_overlay.dart';
 import 'package:app_screenshots/features/screenshot_editor/utils/font_fallback.dart';
+import 'package:app_screenshots/features/screenshot_editor/utils/font_resolver.dart';
 import 'package:app_screenshots/features/screenshot_editor/utils/screenshot_utils.dart';
 import 'package:device_frame/device_frame.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:google_fonts/google_fonts.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:mesh_gradient/mesh_gradient.dart';
+
+/// Fraction of native resolution decoded for inactive-slot preview images.
+/// These previews are shown at a fraction of native size inside the
+/// multi-canvas, so a full-resolution decode wastes memory/CPU. The active
+/// editor's own decode paths are untouched — that canvas is the export
+/// surface at pixelRatio 1.0.
+const double kPreviewDecodeScale = 0.5;
 
 /// Read-only preview of a screenshot canvas.
 ///
@@ -41,6 +50,21 @@ class StaticCanvasPreview extends StatelessWidget {
       design.displayType ?? '',
       design.orientation,
     );
+
+    // Translation preview state, selected once so this preview rebuilds only
+    // when the previewed locale or the bundle actually changes (not on other
+    // TranslationState emits like per-locale progress updates). The cubit is
+    // absent in some contexts (e.g. thumbnails), hence the try/catch.
+    String? previewLocale;
+    TranslationBundle? bundle;
+    try {
+      final selected = context
+          .select<TranslationCubit, (String?, TranslationBundle?)>(
+            (cubit) => (cubit.state.previewLocale, cubit.state.bundle),
+          );
+      previewLocale = selected.$1;
+      bundle = selected.$2;
+    } catch (_) {}
 
     return Material(
       borderRadius: BorderRadius.circular(borderRadius),
@@ -102,13 +126,8 @@ class StaticCanvasPreview extends StatelessWidget {
                       // previewing a non-source locale; fall back to the slot's
                       // source image otherwise.
                       File? effectiveImageFile = imageFile;
-                      TranslationState? tState;
-                      try {
-                        tState = context.watch<TranslationCubit>().state;
-                      } catch (_) {}
-                      final previewLocale = tState?.previewLocale;
                       if (previewLocale != null) {
-                        final localePath = tState?.bundle?.getLocaleImage(
+                        final localePath = bundle?.getLocaleImage(
                           previewLocale,
                           designIndex ?? 0,
                         );
@@ -137,10 +156,19 @@ class StaticCanvasPreview extends StatelessWidget {
                                             isFrameVisible: true,
                                             orientation: design.orientation,
                                             screen: effectiveImageFile != null
-                                                ? Image.file(
-                                                    effectiveImageFile,
-                                                    fit: BoxFit.cover,
-                                                  )
+                                                ? (effectiveImageFile.path.toLowerCase().endsWith('.svg')
+                                                    ? SvgPicture.file(
+                                                        effectiveImageFile,
+                                                        fit: BoxFit.cover,
+                                                      )
+                                                    : Image.file(
+                                                        effectiveImageFile,
+                                                        fit: BoxFit.cover,
+                                                        cacheWidth:
+                                                            (canvasSize.width *
+                                                                    kPreviewDecodeScale)
+                                                                .round(),
+                                                      ))
                                                 : Container(
                                                     color: const Color(
                                                       0xFF1C1C1E,
@@ -161,10 +189,19 @@ class StaticCanvasPreview extends StatelessWidget {
                                                     design.cornerRadius,
                                                   ),
                                               child: effectiveImageFile != null
-                                                  ? Image.file(
-                                                      effectiveImageFile,
-                                                      fit: BoxFit.cover,
-                                                    )
+                                                  ? (effectiveImageFile.path.toLowerCase().endsWith('.svg')
+                                                      ? SvgPicture.file(
+                                                          effectiveImageFile,
+                                                          fit: BoxFit.cover,
+                                                        )
+                                                      : Image.file(
+                                                          effectiveImageFile,
+                                                          fit: BoxFit.cover,
+                                                          cacheWidth:
+                                                              (canvasSize.width *
+                                                                      kPreviewDecodeScale)
+                                                                  .round(),
+                                                        ))
                                                   : Container(
                                                       color: const Color(
                                                         0xFF1C1C1E,
@@ -185,18 +222,11 @@ class StaticCanvasPreview extends StatelessWidget {
 
                       // Text overlays
                       for (final overlay in design.overlays) {
-                        TranslationCubit? translationCubit;
-                        try {
-                          translationCubit = context.watch<TranslationCubit>();
-                        } catch (_) {}
-
-                        final previewLocale =
-                            translationCubit?.state.previewLocale;
                         final translationKey = designIndex != null
                             ? '$designIndex:${overlay.id}'
                             : overlay.id;
                         final localeOverride = previewLocale != null
-                            ? translationCubit?.state.bundle?.getOverride(
+                            ? bundle?.getOverride(
                                 previewLocale,
                                 translationKey,
                               )
@@ -239,10 +269,9 @@ class StaticCanvasPreview extends StatelessWidget {
                             overlay.textAlign;
 
                         String displayText = overlay.text;
-                        if (previewLocale != null &&
-                            translationCubit?.state.bundle != null) {
+                        if (previewLocale != null && bundle != null) {
                           displayText =
-                              translationCubit!.state.bundle!.getTranslation(
+                              bundle.getTranslation(
                                 previewLocale,
                                 translationKey,
                               ) ??
@@ -256,9 +285,9 @@ class StaticCanvasPreview extends StatelessWidget {
                           );
                         }
 
-                        final baseStyle = GoogleFonts.getFont(
+                        final baseStyle = FontResolver.apply(
                           overlay.googleFont ?? 'Roboto',
-                          textStyle: textStyle,
+                          textStyle,
                         );
                         final resolvedStyle = previewLocale != null
                             ? FontFallback.resolve(baseStyle, previewLocale)
@@ -355,14 +384,31 @@ class StaticCanvasPreview extends StatelessWidget {
                                           overlay.cornerRadius,
                                         ),
                                         child: overlay.filePath != null
-                                            ? Image.file(
-                                                File(overlay.filePath!),
-                                                fit: overlay.fit,
-                                              )
+                                            ? (overlay.filePath!.toLowerCase().endsWith('.svg')
+                                                ? SvgPicture.file(
+                                                    File(overlay.filePath!),
+                                                    fit: overlay.fit,
+                                                  )
+                                                : Image.file(
+                                                    File(overlay.filePath!),
+                                                    fit: overlay.fit,
+                                                    cacheWidth:
+                                                        (overlay.width *
+                                                                overlay.scale *
+                                                                kPreviewDecodeScale)
+                                                            .clamp(1, 4096)
+                                                            .round(),
+                                                  ))
                                             : overlay.bytes != null
                                             ? Image.memory(
                                                 overlay.bytes!,
                                                 fit: overlay.fit,
+                                                cacheWidth:
+                                                    (overlay.width *
+                                                            overlay.scale *
+                                                            kPreviewDecodeScale)
+                                                        .clamp(1, 4096)
+                                                        .round(),
                                               )
                                             : const SizedBox.shrink(),
                                       ),
@@ -480,13 +526,23 @@ class StaticCanvasPreview extends StatelessWidget {
                                   top: ty,
                                   width: imgW,
                                   height: imgH,
-                                  child: Image.file(
-                                    imageFile!,
-                                    width: imgW,
-                                    height: imgH,
-                                    fit: BoxFit.fill,
-                                    filterQuality: FilterQuality.high,
-                                  ),
+                                  child: imageFile!.path.toLowerCase().endsWith('.svg')
+                                      ? SvgPicture.file(
+                                          imageFile!,
+                                          width: imgW,
+                                          height: imgH,
+                                          fit: BoxFit.fill,
+                                        )
+                                      : Image.file(
+                                          imageFile!,
+                                          width: imgW,
+                                          height: imgH,
+                                          fit: BoxFit.fill,
+                                          filterQuality: FilterQuality.high,
+                                          cacheWidth: (imgW * kPreviewDecodeScale)
+                                              .clamp(1, 8192)
+                                              .round(),
+                                        ),
                                 ),
                               ],
                             ),

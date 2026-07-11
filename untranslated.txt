@@ -1,1 +1,106 @@
-{}
+{
+  "ar": [
+    "zoomTo100Percent",
+    "zoomToSelection",
+    "zoomIn",
+    "zoomOut"
+  ],
+
+  "de": [
+    "zoomTo100Percent",
+    "zoomToSelection",
+    "zoomIn",
+    "zoomOut"
+  ],
+
+  "es": [
+    "zoomTo100Percent",
+    "zoomToSelection",
+    "zoomIn",
+    "zoomOut"
+  ],
+
+  "fr": [
+    "zoomTo100Percent",
+    "zoomToSelection",
+    "zoomIn",
+    "zoomOut"
+  ],
+
+  "it": [
+    "zoomTo100Percent",
+    "zoomToSelection",
+    "zoomIn",
+    "zoomOut"
+  ],
+
+  "ja": [
+    "zoomTo100Percent",
+    "zoomToSelection",
+    "zoomIn",
+    "zoomOut"
+  ],
+
+  "ko": [
+    "zoomTo100Percent",
+    "zoomToSelection",
+    "zoomIn",
+    "zoomOut"
+  ],
+
+  "nl": [
+    "zoomTo100Percent",
+    "zoomToSelection",
+    "zoomIn",
+    "zoomOut"
+  ],
+
+  "pt": [
+    "zoomTo100Percent",
+    "zoomToSelection",
+    "zoomIn",
+    "zoomOut"
+  ],
+
+  "ru": [
+    "zoomTo100Percent",
+    "zoomToSelection",
+    "zoomIn",
+    "zoomOut"
+  ],
+
+  "th": [
+    "zoomTo100Percent",
+    "zoomToSelection",
+    "zoomIn",
+    "zoomOut"
+  ],
+
+  "tr": [
+    "zoomTo100Percent",
+    "zoomToSelection",
+    "zoomIn",
+    "zoomOut"
+  ],
+
+  "vi": [
+    "zoomTo100Percent",
+    "zoomToSelection",
+    "zoomIn",
+    "zoomOut"
+  ],
+
+  "zh": [
+    "zoomTo100Percent",
+    "zoomToSelection",
+    "zoomIn",
+    "zoomOut"
+  ],
+
+  "zh_Hant": [
+    "zoomTo100Percent",
+    "zoomToSelection",
+    "zoomIn",
+    "zoomOut"
+  ]
+}

@@ -4,6 +4,7 @@ import 'package:app_screenshots/core/extensions/context_extensions.dart';
 import 'package:app_screenshots/features/screenshot_editor/presentation/cubit/translation_cubit.dart';
 import 'package:app_screenshots/features/screenshot_editor/presentation/widgets/controls/translation_status_dot.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:material_symbols_icons/symbols.dart';
 
 /// An expandable card showing per-locale translations with inline editing.
@@ -306,7 +307,9 @@ class _LocaleTranslationCardState extends State<LocaleTranslationCard> {
                     ),
                     clipBehavior: Clip.antiAlias,
                     child: hasImage
-                        ? Image.file(File(path), fit: BoxFit.cover)
+                        ? (path.toLowerCase().endsWith('.svg')
+                            ? SvgPicture.file(File(path), fit: BoxFit.cover)
+                            : Image.file(File(path), fit: BoxFit.cover))
                         : Icon(
                             Symbols.add_photo_alternate_rounded,
                             size: 20,

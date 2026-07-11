@@ -593,6 +593,18 @@ class AppLocalizationsTh extends AppLocalizations {
   String get zoomToFit => 'ซูมให้พอดี';
 
   @override
+  String get zoomTo100Percent => 'Zoom to 100%';
+
+  @override
+  String get zoomToSelection => 'Zoom to Selection';
+
+  @override
+  String get zoomIn => 'Zoom In';
+
+  @override
+  String get zoomOut => 'Zoom Out';
+
+  @override
   String get addScreenshot => 'เพิ่มสกรีนช็อต';
 
   @override

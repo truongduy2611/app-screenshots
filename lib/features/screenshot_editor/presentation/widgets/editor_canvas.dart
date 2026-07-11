@@ -1,5 +1,7 @@
 import 'dart:ui' as ui;
 import 'package:flutter/rendering.dart';
+import 'package:app_screenshots/features/screenshot_editor/data/models/mesh_gradient_settings.dart';
+import 'package:app_screenshots/features/screenshot_editor/data/models/screenshot_design.dart';
 import 'package:app_screenshots/features/screenshot_editor/presentation/cubit/multi_screenshot_cubit.dart';
 import 'package:app_screenshots/features/screenshot_editor/presentation/cubit/screenshot_editor_cubit.dart';
 import 'package:app_screenshots/features/screenshot_editor/presentation/cubit/translation_cubit.dart';
@@ -30,18 +32,68 @@ class EditorCanvas extends StatefulWidget {
 class _EditorCanvasState extends State<EditorCanvas> {
   bool _isSnapped = false;
 
-  // Canvas capture for magnifier
+  // Canvas capture for magnifier. The snapshot lives in a ValueNotifier so
+  // updating it repaints only the magnifier lenses instead of rebuilding the
+  // whole canvas (a setState here would re-trigger capture scheduling in
+  // build, looping full-canvas toImage readbacks every frame).
   final GlobalKey _canvasBoundaryKey = GlobalKey();
-  ui.Image? _canvasSnapshot;
+  final ValueNotifier<ui.Image?> _canvasSnapshot = ValueNotifier<ui.Image?>(
+    null,
+  );
   bool _captureScheduled = false;
+
+  // Signature of the content in the current snapshot. Captures are skipped
+  // while lens-relevant content is unchanged (e.g. while a magnifier itself
+  // is dragged or an overlay is merely selected/deselected... except the
+  // selection border is part of the captured pixels, so selection is
+  // included in the signature).
+  ScreenshotDesign? _capturedDesign;
+  String? _capturedSelectedOverlayId;
+  String? _capturedImagePath;
+  String? _capturedImageUrl;
 
   @override
   void dispose() {
-    _canvasSnapshot?.dispose();
+    _canvasSnapshot.value?.dispose();
+    _canvasSnapshot.dispose();
     super.dispose();
   }
 
-  void _scheduleCaptureCanvas() {
+  /// Whether anything rendered inside the capture boundary differs from what
+  /// the current snapshot shows. Magnifier overlays themselves render outside
+  /// the boundary and are deliberately excluded, so dragging a lens never
+  /// triggers a capture. List/object fields use identity: the cubit always
+  /// allocates new instances when content changes.
+  bool _lensContentChanged(ScreenshotEditorState state) {
+    final last = _capturedDesign;
+    if (last == null) return true;
+    final d = state.design;
+    return !identical(last.overlays, d.overlays) ||
+        !identical(last.imageOverlays, d.imageOverlays) ||
+        !identical(last.iconOverlays, d.iconOverlays) ||
+        !identical(last.meshGradient, d.meshGradient) ||
+        !identical(last.doodleSettings, d.doodleSettings) ||
+        !identical(last.gridSettings, d.gridSettings) ||
+        !identical(last.deviceFrame, d.deviceFrame) ||
+        last.backgroundColor != d.backgroundColor ||
+        last.backgroundGradient != d.backgroundGradient ||
+        last.padding != d.padding ||
+        last.imagePosition != d.imagePosition ||
+        last.frameRotationX != d.frameRotationX ||
+        last.frameRotationY != d.frameRotationY ||
+        last.frameRotation != d.frameRotation ||
+        last.cornerRadius != d.cornerRadius ||
+        last.orientation != d.orientation ||
+        last.displayType != d.displayType ||
+        last.transparentBackground != d.transparentBackground ||
+        _capturedSelectedOverlayId != state.selectedOverlayId ||
+        _capturedImagePath != state.selectedImageFile?.path ||
+        _capturedImageUrl != state.selectedImageUrl;
+  }
+
+  void _maybeScheduleCapture(ScreenshotEditorState state) {
+    if (state.design.magnifierOverlays.isEmpty) return;
+    if (!_lensContentChanged(state)) return;
     if (_captureScheduled) return;
     _captureScheduled = true;
     WidgetsBinding.instance.addPostFrameCallback((_) {
@@ -51,20 +103,37 @@ class _EditorCanvasState extends State<EditorCanvas> {
   }
 
   Future<void> _captureCanvas() async {
+    if (!mounted) return;
+    final state = context.read<ScreenshotEditorCubit>().state;
     try {
+      // If the screenshot image changed, wait for it to decode and paint so
+      // the snapshot doesn't capture a half-loaded frame.
+      final file = state.selectedImageFile;
+      final url = state.selectedImageUrl;
+      if (file != null && file.path != _capturedImagePath) {
+        await precacheImage(FileImage(file), context);
+        await WidgetsBinding.instance.endOfFrame;
+      } else if (url != null && url != _capturedImageUrl) {
+        await precacheImage(NetworkImage(url), context);
+        await WidgetsBinding.instance.endOfFrame;
+      }
+      if (!mounted) return;
       final boundary =
           _canvasBoundaryKey.currentContext?.findRenderObject()
               as RenderRepaintBoundary?;
       if (boundary == null || !boundary.attached) return;
       final image = await boundary.toImage(pixelRatio: 1.0);
-      if (mounted) {
-        setState(() {
-          _canvasSnapshot?.dispose();
-          _canvasSnapshot = image;
-        });
-      } else {
+      if (!mounted) {
         image.dispose();
+        return;
       }
+      final old = _canvasSnapshot.value;
+      _canvasSnapshot.value = image;
+      old?.dispose();
+      _capturedDesign = state.design;
+      _capturedSelectedOverlayId = state.selectedOverlayId;
+      _capturedImagePath = state.selectedImageFile?.path;
+      _capturedImageUrl = state.selectedImageUrl;
     } catch (_) {
       // Ignore capture errors (e.g. during layout)
     }
@@ -125,10 +194,9 @@ class _EditorCanvasState extends State<EditorCanvas> {
                         height: canvasSize.height,
                         child: Builder(
                           builder: (context) {
-                            // Schedule canvas capture for magnifier after this frame
-                            if (state.design.magnifierOverlays.isNotEmpty) {
-                              _scheduleCaptureCanvas();
-                            }
+                            // Schedule canvas capture for magnifier after this
+                            // frame, only if lens-relevant content changed.
+                            _maybeScheduleCapture(state);
                             return Stack(
                               children: [
                                 // RepaintBoundary wraps everything except magnifiers
@@ -200,26 +268,47 @@ class _EditorCanvasState extends State<EditorCanvas> {
     );
   }
 
+  // The cubit always allocates a new ScreenshotDesign on every edit, even
+  // when meshGradient itself is untouched — so re-mapping its points/options
+  // into fresh lists on every build defeats MeshGradientPainter's
+  // identity-based shouldRepaint and forces a full shader repaint per
+  // keystroke/slider tick. Cache the built widget keyed on the settings
+  // object's identity so unrelated edits reuse the same instance.
+  Widget? _cachedMeshWidget;
+  MeshGradientSettings? _cachedMeshSettings;
+
+  Widget? _buildMeshGradientLayer(MeshGradientSettings? settings) {
+    if (settings == null) {
+      _cachedMeshWidget = null;
+      _cachedMeshSettings = null;
+      return null;
+    }
+    if (_cachedMeshWidget != null && identical(_cachedMeshSettings, settings)) {
+      return _cachedMeshWidget;
+    }
+    final widget = Positioned.fill(
+      child: MeshGradient(
+        points: settings.points
+            .map((p) => MeshGradientPoint(position: p.position, color: p.color))
+            .toList(),
+        options: MeshGradientOptions(
+          blend: settings.blend,
+          noiseIntensity: settings.noiseIntensity,
+        ),
+      ),
+    );
+    _cachedMeshWidget = widget;
+    _cachedMeshSettings = settings;
+    return widget;
+  }
+
   List<Widget> _buildBackgroundLayers(
     ScreenshotEditorState state,
     Size canvasSize,
   ) {
+    final meshLayer = _buildMeshGradientLayer(state.design.meshGradient);
     return [
-      if (state.design.meshGradient != null)
-        Positioned.fill(
-          child: MeshGradient(
-            points: state.design.meshGradient!.points
-                .map(
-                  (p) =>
-                      MeshGradientPoint(position: p.position, color: p.color),
-                )
-                .toList(),
-            options: MeshGradientOptions(
-              blend: state.design.meshGradient!.blend,
-              noiseIntensity: state.design.meshGradient!.noiseIntensity,
-            ),
-          ),
-        ),
+      ?meshLayer,
       if (state.design.doodleSettings != null)
         DoodleBackground(
           settings: state.design.doodleSettings!,
@@ -233,11 +322,33 @@ class _EditorCanvasState extends State<EditorCanvas> {
   // Overlay lists
   // ─────────────────────────────────────────────────────────────────
 
+  // Cached result of the last sort, keyed on the inputs that actually affect
+  // it. TextOverlayWidget/ImageOverlayWidget/IconOverlayWidget only read
+  // overlay data + selection state (verified), so any other design edit
+  // (background, padding, frame rotation...) can safely reuse this list
+  // instead of re-mapping + re-sorting every overlay on every build.
+  ({List<Widget> behind, List<Widget> inFront})? _cachedSortedOverlays;
+  List<TextOverlay>? _cachedTextOverlaySource;
+  List<ImageOverlay>? _cachedImageOverlaySource;
+  List<IconOverlay>? _cachedIconOverlaySource;
+  String? _cachedOverlaySelectedId;
+  Size? _cachedOverlayCanvasSize;
+
   ({List<Widget> behind, List<Widget> inFront}) _buildSortedOverlays(
     BuildContext context,
     ScreenshotEditorState state,
     Size canvasSize,
   ) {
+    final cached = _cachedSortedOverlays;
+    if (cached != null &&
+        identical(_cachedTextOverlaySource, state.design.overlays) &&
+        identical(_cachedImageOverlaySource, state.design.imageOverlays) &&
+        identical(_cachedIconOverlaySource, state.design.iconOverlays) &&
+        _cachedOverlaySelectedId == state.selectedOverlayId &&
+        _cachedOverlayCanvasSize == canvasSize) {
+      return cached;
+    }
+
     final imageOverlays = _buildImageOverlays(state);
     final textOverlays = _buildTextOverlays(context, state, canvasSize);
     final iconOverlays = _buildIconOverlays(state, canvasSize);
@@ -283,7 +394,14 @@ class _EditorCanvasState extends State<EditorCanvas> {
         .map((z) => z.widget)
         .toList();
 
-    return (behind: behind, inFront: inFront);
+    final result = (behind: behind, inFront: inFront);
+    _cachedSortedOverlays = result;
+    _cachedTextOverlaySource = state.design.overlays;
+    _cachedImageOverlaySource = state.design.imageOverlays;
+    _cachedIconOverlaySource = state.design.iconOverlays;
+    _cachedOverlaySelectedId = state.selectedOverlayId;
+    _cachedOverlayCanvasSize = canvasSize;
+    return result;
   }
 
   List<Widget> _buildImageOverlays(ScreenshotEditorState state) {

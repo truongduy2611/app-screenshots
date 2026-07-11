@@ -601,6 +601,18 @@ class AppLocalizationsPt extends AppLocalizations {
   String get zoomToFit => 'Ajustar à Tela';
 
   @override
+  String get zoomTo100Percent => 'Zoom to 100%';
+
+  @override
+  String get zoomToSelection => 'Zoom to Selection';
+
+  @override
+  String get zoomIn => 'Zoom In';
+
+  @override
+  String get zoomOut => 'Zoom Out';
+
+  @override
   String get addScreenshot => 'Adicionar Captura';
 
   @override

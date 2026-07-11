@@ -784,6 +784,22 @@
   "@zoomToFit": {
     "description": "Action to zoom the canvas to fit the screenshot"
   },
+  "zoomTo100Percent": "Zoom to 100%",
+  "@zoomTo100Percent": {
+    "description": "Action to set the canvas zoom level to exactly 100%"
+  },
+  "zoomToSelection": "Zoom to Selection",
+  "@zoomToSelection": {
+    "description": "Action to zoom the canvas to frame the currently active screenshot"
+  },
+  "zoomIn": "Zoom In",
+  "@zoomIn": {
+    "description": "Action to increase the canvas zoom level"
+  },
+  "zoomOut": "Zoom Out",
+  "@zoomOut": {
+    "description": "Action to decrease the canvas zoom level"
+  },
   "addScreenshot": "Add Screenshot",
   "@addScreenshot": {
     "description": "Action to add another screenshot in multi-screenshot mode"

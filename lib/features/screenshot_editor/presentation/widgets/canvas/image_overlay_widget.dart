@@ -6,6 +6,7 @@ import 'package:app_screenshots/features/screenshot_editor/presentation/widgets/
 import 'package:app_screenshots/features/screenshot_editor/utils/screenshot_utils.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 
 /// Positioned image overlay with drag, rotate, and resize gestures.
 ///
@@ -169,7 +170,9 @@ class _ImageOverlayWidgetState extends State<ImageOverlayWidget> {
       child: ClipRRect(
         borderRadius: BorderRadius.circular(overlay.cornerRadius),
         child: overlay.filePath != null
-            ? Image.file(File(overlay.filePath!), fit: overlay.fit)
+            ? (overlay.filePath!.toLowerCase().endsWith('.svg')
+                ? SvgPicture.file(File(overlay.filePath!), fit: overlay.fit)
+                : Image.file(File(overlay.filePath!), fit: overlay.fit))
             : overlay.bytes != null
             ? Image.memory(overlay.bytes!, fit: overlay.fit)
             : const Placeholder(),

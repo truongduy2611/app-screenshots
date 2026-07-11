@@ -597,6 +597,18 @@ class AppLocalizationsAr extends AppLocalizations {
   String get zoomToFit => 'ملاءمة النافذة';
 
   @override
+  String get zoomTo100Percent => 'Zoom to 100%';
+
+  @override
+  String get zoomToSelection => 'Zoom to Selection';
+
+  @override
+  String get zoomIn => 'Zoom In';
+
+  @override
+  String get zoomOut => 'Zoom Out';
+
+  @override
   String get addScreenshot => 'إضافة لقطة شاشة';
 
   @override

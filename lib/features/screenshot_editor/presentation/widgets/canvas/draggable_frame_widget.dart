@@ -6,9 +6,10 @@ import 'package:app_screenshots/features/screenshot_editor/presentation/cubit/tr
 import 'package:app_screenshots/features/screenshot_editor/presentation/widgets/canvas/grab_cursor_region.dart';
 import 'package:app_screenshots/features/screenshot_editor/presentation/widgets/canvas/import_hint_placeholder.dart';
 import 'package:device_frame/device_frame.dart';
-import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_svg/flutter_svg.dart';
+import 'package:app_screenshots/features/screenshot_editor/presentation/helpers/image_picker_helper.dart';
 import 'package:material_symbols_icons/symbols.dart';
 
 /// The device frame / background screenshot image — draggable to reposition.
@@ -48,10 +49,10 @@ class _DraggableFrameWidgetState extends State<DraggableFrameWidget> {
   }
 
   Future<void> _pickImageForCanvas() async {
-    final result = await FilePicker.platform.pickFiles(type: FileType.image);
-    if (result != null && result.files.single.path != null) {
+    final files = await ImagePickerHelper.pickImage(context: context);
+    if (files.isNotEmpty) {
       if (!mounted) return;
-      _cubit.updateImageFile(File(result.files.single.path!));
+      _cubit.updateImageFile(files.first);
     }
   }
 
@@ -195,6 +196,13 @@ class _DraggableFrameWidgetState extends State<DraggableFrameWidget> {
       if (localeImagePath != null) {
         final localeFile = File(localeImagePath);
         if (localeFile.existsSync()) {
+          final path = localeImagePath.toLowerCase();
+          if (path.endsWith('.svg')) {
+            return SvgPicture.file(
+              localeFile,
+              fit: fit,
+            );
+          }
           return Image.file(
             localeFile,
             fit: fit,
@@ -206,6 +214,13 @@ class _DraggableFrameWidgetState extends State<DraggableFrameWidget> {
     }
 
     if (state.selectedImageFile != null) {
+      final path = state.selectedImageFile!.path.toLowerCase();
+      if (path.endsWith('.svg')) {
+        return SvgPicture.file(
+          state.selectedImageFile!,
+          fit: fit,
+        );
+      }
       return Image.file(
         state.selectedImageFile!,
         fit: fit,
@@ -214,6 +229,13 @@ class _DraggableFrameWidgetState extends State<DraggableFrameWidget> {
       );
     }
     if (state.selectedImageUrl != null) {
+      final path = state.selectedImageUrl!.toLowerCase();
+      if (path.contains('.svg') || path.endsWith('.svg')) {
+        return SvgPicture.network(
+          state.selectedImageUrl!,
+          fit: fit,
+        );
+      }
       return Image.network(
         state.selectedImageUrl!,
         fit: fit,

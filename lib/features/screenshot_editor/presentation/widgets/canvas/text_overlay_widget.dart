@@ -5,9 +5,9 @@ import 'package:app_screenshots/features/screenshot_editor/presentation/cubit/tr
 import 'package:app_screenshots/features/screenshot_editor/presentation/widgets/canvas/canvas_painters.dart';
 import 'package:app_screenshots/features/screenshot_editor/presentation/widgets/canvas/grab_cursor_region.dart';
 import 'package:app_screenshots/features/screenshot_editor/utils/font_fallback.dart';
+import 'package:app_screenshots/features/screenshot_editor/utils/font_resolver.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:google_fonts/google_fonts.dart';
 
 /// Positioned text overlay with drag gesture, snap support, and
 /// optional translation overrides.
@@ -235,9 +235,9 @@ class _TextOverlayWidgetState extends State<TextOverlayWidget> {
       height: effectiveHeight,
       letterSpacing: effectiveLetterSpacing,
     );
-    final baseStyle = GoogleFonts.getFont(
+    final baseStyle = FontResolver.apply(
       effectiveGoogleFont ?? 'Roboto',
-      textStyle: textStyle,
+      textStyle,
     );
     final resolvedStyle = previewLocale != null
         ? FontFallback.resolve(baseStyle, previewLocale)
