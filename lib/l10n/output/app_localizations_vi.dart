@@ -1805,4 +1805,62 @@ class AppLocalizationsVi extends AppLocalizations {
   @override
   String get playErrorDeclarationRequired =>
       'Tải lên bị từ chối bởi Google Play: Vui lòng kiểm tra Google Play Console và hoàn thành các tuyên bố còn thiếu trong mục Nội dung ứng dụng trước.';
+
+  @override
+  String get ascAppConfigSettings => 'Cấu hình ứng dụng App Store Connect';
+
+  @override
+  String get ascAppConfigAppName => 'Tên ứng dụng';
+
+  @override
+  String get ascAppConfigAppId => 'Mã ứng dụng (App ID)';
+
+  @override
+  String get ascAppConfigBundleId => 'Mã gói (Bundle ID)';
+
+  @override
+  String get ascAppConfigClear => 'Xóa cấu hình';
+
+  @override
+  String get ascAppConfigLoad => 'Tải từ App Store Connect';
+
+  @override
+  String get ascAppConfigNoCreds =>
+      'Vui lòng cấu hình thông tin đăng nhập ASC API trong Cài đặt trước.';
+
+  @override
+  String get ascAppConfigSave => 'Lưu cấu hình';
+
+  @override
+  String ascAppConfigFetchError(String error) {
+    return 'Tải ứng dụng thất bại: $error';
+  }
+
+  @override
+  String get ascAppConfigAppIdEmpty => 'Mã ứng dụng không được để trống';
+
+  @override
+  String get ascAppConfigUnnamedApp => 'Ứng dụng chưa đặt tên';
+
+  @override
+  String get ascAppConfigUnknownBundleId => 'unknown.bundle.id';
+
+  @override
+  String get ascAppConfigLoadingApps =>
+      'Đang tải ứng dụng từ App Store Connect...';
+
+  @override
+  String get ascAppConfigAppNameHint => 'vd: Cute Sausage Sticker Extension';
+
+  @override
+  String get ascAppConfigAppIdHint => 'vd: 647281920';
+
+  @override
+  String get ascAppConfigBundleIdHint => 'vd: com.example.stickerapp';
+
+  @override
+  String get ascAppConfigCleared => 'Đã xóa cấu hình App Store Connect';
+
+  @override
+  String get ascAppConfigSaved => 'Đã lưu cấu hình App Store Connect';
 }

@@ -23,6 +23,7 @@ import 'package:app_screenshots/features/screenshot_editor/presentation/widgets/
 import 'package:app_screenshots/features/screenshot_editor/presentation/cubit/play_upload_cubit.dart';
 import 'package:app_screenshots/features/screenshot_editor/presentation/widgets/play_credentials_dialog.dart';
 import 'package:app_screenshots/features/screenshot_editor/presentation/widgets/play_upload_sheet.dart';
+import 'package:app_screenshots/features/screenshot_editor/presentation/widgets/asc_app_config_dialog.dart';
 import 'package:app_screenshots/features/settings/domain/repositories/settings_repository.dart';
 import 'package:app_screenshots/features/screenshot_editor/presentation/widgets/locale_switcher.dart';
 import 'package:app_screenshots/features/screenshot_editor/presentation/helpers/multi_screenshot_actions.dart';
@@ -72,6 +73,7 @@ enum _MultiMenuAction {
   uploadExistingToAsc,
   uploadToGooglePlay,
   uploadExistingToGooglePlay,
+  ascSettings,
 }
 
 /// Multi-screenshot editor page – horizontal row of artboards.
@@ -753,6 +755,8 @@ class _MultiScreenshotViewState extends State<_MultiScreenshotView>
         _showUploadSheet(context);
       case _MultiMenuAction.uploadExistingToAsc:
         _uploadExistingFolder(context);
+      case _MultiMenuAction.ascSettings:
+        _showAscSettings(context);
       case _MultiMenuAction.uploadToGooglePlay:
         _showPlayUploadSheet(context);
       case _MultiMenuAction.uploadExistingToGooglePlay:
@@ -1074,6 +1078,22 @@ class _MultiScreenshotViewState extends State<_MultiScreenshotView>
               ),
       ),
     );
+  }
+
+  Future<void> _showAscSettings(BuildContext context) async {
+    final cubit = context.read<MultiScreenshotCubit>();
+    final initialConfig = cubit.state.ascAppConfig;
+    final result = await AscAppConfigDialog.show(
+      context,
+      initialConfig: initialConfig,
+    );
+    if (result != null && result.didSave && context.mounted) {
+      cubit.setAscAppConfig(result.config);
+      context.showAppSnackbar(
+        result.config == null ? context.l10n.ascAppConfigCleared : context.l10n.ascAppConfigSaved,
+        type: AppSnackbarType.success,
+      );
+    }
   }
 
   /// Opens the Google Play upload sheet from the export menu.

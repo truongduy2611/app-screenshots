@@ -1826,4 +1826,63 @@ class AppLocalizationsTr extends AppLocalizations {
   @override
   String get playErrorDeclarationRequired =>
       'Yükleme Google Play tarafından reddedildi: Lütfen öncelikle Google Play Console\'u kontrol edin ve Uygulama İçeriği altındaki tüm eksik bildirimleri tamamlayın.';
+
+  @override
+  String get ascAppConfigSettings => 'App Store Connect Uygulama Ayarları';
+
+  @override
+  String get ascAppConfigAppName => 'Uygulama Adı';
+
+  @override
+  String get ascAppConfigAppId => 'Uygulama Kimliği (App ID)';
+
+  @override
+  String get ascAppConfigBundleId => 'Paket Kimliği (Bundle ID)';
+
+  @override
+  String get ascAppConfigClear => 'Yapılandırmayı Temizle';
+
+  @override
+  String get ascAppConfigLoad => 'App Store Connect\'ten Yükle';
+
+  @override
+  String get ascAppConfigNoCreds =>
+      'Öncelikle Ayarlar\'dan ASC API kimlik bilgilerini yapılandırın.';
+
+  @override
+  String get ascAppConfigSave => 'Ayarları Kaydet';
+
+  @override
+  String ascAppConfigFetchError(String error) {
+    return 'Uygulamalar yüklenemedi: $error';
+  }
+
+  @override
+  String get ascAppConfigAppIdEmpty => 'Uygulama kimliği boş olamaz';
+
+  @override
+  String get ascAppConfigUnnamedApp => 'Adlandırılmamış Uygulama';
+
+  @override
+  String get ascAppConfigUnknownBundleId => 'unknown.bundle.id';
+
+  @override
+  String get ascAppConfigLoadingApps =>
+      'Uygulamalar App Store Connect\'ten yükleniyor...';
+
+  @override
+  String get ascAppConfigAppNameHint => 'ör. Cute Sausage Sticker Extension';
+
+  @override
+  String get ascAppConfigAppIdHint => 'ör. 647281920';
+
+  @override
+  String get ascAppConfigBundleIdHint => 'ör. com.example.stickerapp';
+
+  @override
+  String get ascAppConfigCleared =>
+      'App Store Connect yapılandırması temizlendi';
+
+  @override
+  String get ascAppConfigSaved => 'App Store Connect yapılandırması kaydedildi';
 }

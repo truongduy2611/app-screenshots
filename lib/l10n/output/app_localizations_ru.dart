@@ -1830,4 +1830,64 @@ class AppLocalizationsRu extends AppLocalizations {
   @override
   String get playErrorDeclarationRequired =>
       'Загрузка отклонена Google Play: пожалуйста, проверьте Google Play Console и сначала заполните все незавершенные декларации в разделе \'Контент приложения\'.';
+
+  @override
+  String get ascAppConfigSettings => 'Настройки приложения App Store Connect';
+
+  @override
+  String get ascAppConfigAppName => 'Имя приложения';
+
+  @override
+  String get ascAppConfigAppId => 'Идентификатор приложения (App ID)';
+
+  @override
+  String get ascAppConfigBundleId => 'Идентификатор пакета (Bundle ID)';
+
+  @override
+  String get ascAppConfigClear => 'Очистить конфигурацию';
+
+  @override
+  String get ascAppConfigLoad => 'Загрузить из App Store Connect';
+
+  @override
+  String get ascAppConfigNoCreds =>
+      'Сначала настройте учетные данные ASC API в Настройках.';
+
+  @override
+  String get ascAppConfigSave => 'Сохранить настройки';
+
+  @override
+  String ascAppConfigFetchError(String error) {
+    return 'Не удалось загрузить приложения: $error';
+  }
+
+  @override
+  String get ascAppConfigAppIdEmpty =>
+      'Идентификатор приложения не может быть пустым';
+
+  @override
+  String get ascAppConfigUnnamedApp => 'Безымянное приложение';
+
+  @override
+  String get ascAppConfigUnknownBundleId => 'unknown.bundle.id';
+
+  @override
+  String get ascAppConfigLoadingApps =>
+      'Загрузка приложений из App Store Connect...';
+
+  @override
+  String get ascAppConfigAppNameHint =>
+      'например, Cute Sausage Sticker Extension';
+
+  @override
+  String get ascAppConfigAppIdHint => 'например, 647281920';
+
+  @override
+  String get ascAppConfigBundleIdHint => 'например, com.example.stickerapp';
+
+  @override
+  String get ascAppConfigCleared => 'Конфигурация App Store Connect очищена';
+
+  @override
+  String get ascAppConfigSaved => 'Конфигурация App Store Connect сохранена';
 }

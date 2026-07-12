@@ -1769,4 +1769,61 @@ class AppLocalizationsTh extends AppLocalizations {
   @override
   String get playErrorDeclarationRequired =>
       'การอัปโหลดถูกปฏิเสธโดย Google Play: โปรดตรวจสอบ Google Play Console ของคุณและกรอกคำประกาศที่ค้างอยู่ภายใต้เนื้อหาแอปก่อน';
+
+  @override
+  String get ascAppConfigSettings => 'การตั้งค่าแอป App Store Connect';
+
+  @override
+  String get ascAppConfigAppName => 'ชื่อแอป';
+
+  @override
+  String get ascAppConfigAppId => 'รหัสแอป (App ID)';
+
+  @override
+  String get ascAppConfigBundleId => 'รหัสแพ็กเกจ (Bundle ID)';
+
+  @override
+  String get ascAppConfigClear => 'ล้างการตั้งค่า';
+
+  @override
+  String get ascAppConfigLoad => 'โหลดจาก App Store Connect';
+
+  @override
+  String get ascAppConfigNoCreds =>
+      'โปรดตั้งค่าข้อมูลประจำตัว ASC API ในการตั้งค่าก่อน';
+
+  @override
+  String get ascAppConfigSave => 'บันทึกการตั้งค่า';
+
+  @override
+  String ascAppConfigFetchError(String error) {
+    return 'ไม่สามารถโหลดแอปได้: $error';
+  }
+
+  @override
+  String get ascAppConfigAppIdEmpty => 'รหัสแอปต้องไม่ว่างเปล่า';
+
+  @override
+  String get ascAppConfigUnnamedApp => 'แอปไม่มีชื่อ';
+
+  @override
+  String get ascAppConfigUnknownBundleId => 'unknown.bundle.id';
+
+  @override
+  String get ascAppConfigLoadingApps => 'กำลังโหลดแอปจาก App Store Connect...';
+
+  @override
+  String get ascAppConfigAppNameHint => 'เช่น Cute Sausage Sticker Extension';
+
+  @override
+  String get ascAppConfigAppIdHint => 'เช่น 647281920';
+
+  @override
+  String get ascAppConfigBundleIdHint => 'เช่น com.example.stickerapp';
+
+  @override
+  String get ascAppConfigCleared => 'ล้างการกำหนดค่า App Store Connect แล้ว';
+
+  @override
+  String get ascAppConfigSaved => 'บันทึกการกำหนดค่า App Store Connect แล้ว';
 }

@@ -1817,4 +1817,62 @@ class AppLocalizationsAr extends AppLocalizations {
   @override
   String get playErrorDeclarationRequired =>
       'تم رفض التحميل من قِvel Google Play: يرجى التحقق من Google Play Console وإكمال أي إقرارات معلقة ضمن محتوى التطبيق أولاً.';
+
+  @override
+  String get ascAppConfigSettings => 'إعدادات تطبيق App Store Connect';
+
+  @override
+  String get ascAppConfigAppName => 'اسم التطبيق';
+
+  @override
+  String get ascAppConfigAppId => 'معرف التطبيق (App ID)';
+
+  @override
+  String get ascAppConfigBundleId => 'معرف الحزمة (Bundle ID)';
+
+  @override
+  String get ascAppConfigClear => 'مسح التكوين';
+
+  @override
+  String get ascAppConfigLoad => 'تحميل من App Store Connect';
+
+  @override
+  String get ascAppConfigNoCreds =>
+      'قم بتكوين بيانات اعتماد ASC API في الإعدادات أولاً.';
+
+  @override
+  String get ascAppConfigSave => 'حفظ الإعدادات';
+
+  @override
+  String ascAppConfigFetchError(String error) {
+    return 'فشل تحميل التطبيقات: $error';
+  }
+
+  @override
+  String get ascAppConfigAppIdEmpty => 'لا يمكن أن يكون معرّف التطبيق فارغًا';
+
+  @override
+  String get ascAppConfigUnnamedApp => 'تطبيق بدون اسم';
+
+  @override
+  String get ascAppConfigUnknownBundleId => 'unknown.bundle.id';
+
+  @override
+  String get ascAppConfigLoadingApps =>
+      'جاري تحميل التطبيقات من App Store Connect...';
+
+  @override
+  String get ascAppConfigAppNameHint => 'مثال: Cute Sausage Sticker Extension';
+
+  @override
+  String get ascAppConfigAppIdHint => 'مثال: 647281920';
+
+  @override
+  String get ascAppConfigBundleIdHint => 'مثال: com.example.stickerapp';
+
+  @override
+  String get ascAppConfigCleared => 'تم مسح تكوين App Store Connect';
+
+  @override
+  String get ascAppConfigSaved => 'تم حفظ تكوين App Store Connect';
 }

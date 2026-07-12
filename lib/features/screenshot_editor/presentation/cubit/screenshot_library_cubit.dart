@@ -336,7 +336,7 @@ class ScreenshotLibraryCubit extends Cubit<ScreenshotLibraryState> {
         multiDesigns: clonedMultiDesigns,
         imageFiles: imageFiles,
         translationBundle: originalSavedDesign.translationBundle,
-        ascAppConfig: originalSavedDesign.ascAppConfig,
+        ascAppConfig: null,
       );
 
       await loadDesigns();

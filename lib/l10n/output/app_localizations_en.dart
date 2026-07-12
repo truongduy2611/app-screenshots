@@ -1824,4 +1824,62 @@ class AppLocalizationsEn extends AppLocalizations {
   @override
   String get playErrorDeclarationRequired =>
       'Upload rejected by Google Play: Please check your Google Play Console and complete any outstanding declarations under App Content first.';
+
+  @override
+  String get ascAppConfigSettings => 'App Store Connect App Settings';
+
+  @override
+  String get ascAppConfigAppName => 'App Name';
+
+  @override
+  String get ascAppConfigAppId => 'App ID';
+
+  @override
+  String get ascAppConfigBundleId => 'Bundle ID';
+
+  @override
+  String get ascAppConfigClear => 'Clear Configuration';
+
+  @override
+  String get ascAppConfigLoad => 'Load from App Store Connect';
+
+  @override
+  String get ascAppConfigNoCreds =>
+      'Configure ASC API credentials in Settings first.';
+
+  @override
+  String get ascAppConfigSave => 'Save Settings';
+
+  @override
+  String ascAppConfigFetchError(String error) {
+    return 'Failed to load apps: $error';
+  }
+
+  @override
+  String get ascAppConfigAppIdEmpty => 'App ID cannot be empty';
+
+  @override
+  String get ascAppConfigUnnamedApp => 'Unnamed App';
+
+  @override
+  String get ascAppConfigUnknownBundleId => 'unknown.bundle.id';
+
+  @override
+  String get ascAppConfigLoadingApps =>
+      'Loading apps from App Store Connect...';
+
+  @override
+  String get ascAppConfigAppNameHint => 'e.g., Cute Sausage Sticker Extension';
+
+  @override
+  String get ascAppConfigAppIdHint => 'e.g., 647281920';
+
+  @override
+  String get ascAppConfigBundleIdHint => 'e.g., com.example.stickerapp';
+
+  @override
+  String get ascAppConfigCleared => 'App Store Connect config cleared';
+
+  @override
+  String get ascAppConfigSaved => 'App Store Connect config saved';
 }

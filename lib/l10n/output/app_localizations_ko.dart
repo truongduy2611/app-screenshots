@@ -1739,4 +1739,60 @@ class AppLocalizationsKo extends AppLocalizations {
   @override
   String get playErrorDeclarationRequired =>
       'Google Play에서 업로드를 거부했습니다. 먼저 Google Play Console의 \'앱 콘텐츠\'에서 처리되지 않은 선언을 모두 완료하십시오.';
+
+  @override
+  String get ascAppConfigSettings => 'App Store Connect 앱 설정';
+
+  @override
+  String get ascAppConfigAppName => '앱 이름';
+
+  @override
+  String get ascAppConfigAppId => '앱 ID';
+
+  @override
+  String get ascAppConfigBundleId => '번들 ID';
+
+  @override
+  String get ascAppConfigClear => '설정 초기화';
+
+  @override
+  String get ascAppConfigLoad => 'App Store Connect에서 불러오기';
+
+  @override
+  String get ascAppConfigNoCreds => '설정에서 ASC API 자격 증명을 먼저 구성하십시오.';
+
+  @override
+  String get ascAppConfigSave => '설정 저장';
+
+  @override
+  String ascAppConfigFetchError(String error) {
+    return '앱을 불러오지 못했습니다: $error';
+  }
+
+  @override
+  String get ascAppConfigAppIdEmpty => '앱 ID는 비워둘 수 없습니다';
+
+  @override
+  String get ascAppConfigUnnamedApp => '이름 없는 앱';
+
+  @override
+  String get ascAppConfigUnknownBundleId => 'unknown.bundle.id';
+
+  @override
+  String get ascAppConfigLoadingApps => 'App Store Connect에서 앱을 불러오는 중...';
+
+  @override
+  String get ascAppConfigAppNameHint => '예: Cute Sausage Sticker Extension';
+
+  @override
+  String get ascAppConfigAppIdHint => '예: 647281920';
+
+  @override
+  String get ascAppConfigBundleIdHint => '예: com.example.stickerapp';
+
+  @override
+  String get ascAppConfigCleared => 'App Store Connect 설정이 초기화되었습니다';
+
+  @override
+  String get ascAppConfigSaved => 'App Store Connect 설정이 저장되었습니다';
 }

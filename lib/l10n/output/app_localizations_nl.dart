@@ -1831,4 +1831,61 @@ class AppLocalizationsNl extends AppLocalizations {
   @override
   String get playErrorDeclarationRequired =>
       'Upload geweigerd door Google Play: controleer uw Google Play Console en vul eerst eventuele openstaande verklaringen in onder App-inhoud.';
+
+  @override
+  String get ascAppConfigSettings => 'App Store Connect App-instellingen';
+
+  @override
+  String get ascAppConfigAppName => 'App-naam';
+
+  @override
+  String get ascAppConfigAppId => 'App-ID';
+
+  @override
+  String get ascAppConfigBundleId => 'Bundle-ID';
+
+  @override
+  String get ascAppConfigClear => 'Configuratie wissen';
+
+  @override
+  String get ascAppConfigLoad => 'Laden van App Store Connect';
+
+  @override
+  String get ascAppConfigNoCreds =>
+      'Configureer eerst de ASC API-inloggegevens in Instellingen.';
+
+  @override
+  String get ascAppConfigSave => 'Instellingen opslaan';
+
+  @override
+  String ascAppConfigFetchError(String error) {
+    return 'Fout bij laden van apps: $error';
+  }
+
+  @override
+  String get ascAppConfigAppIdEmpty => 'App-ID mag niet leeg zijn';
+
+  @override
+  String get ascAppConfigUnnamedApp => 'Naamloze app';
+
+  @override
+  String get ascAppConfigUnknownBundleId => 'unknown.bundle.id';
+
+  @override
+  String get ascAppConfigLoadingApps => 'Apps laden van App Store Connect...';
+
+  @override
+  String get ascAppConfigAppNameHint => 'bijv. Cute Sausage Sticker Extension';
+
+  @override
+  String get ascAppConfigAppIdHint => 'bijv. 647281920';
+
+  @override
+  String get ascAppConfigBundleIdHint => 'bijv. com.example.stickerapp';
+
+  @override
+  String get ascAppConfigCleared => 'App Store Connect-configuratie gewist';
+
+  @override
+  String get ascAppConfigSaved => 'App Store Connect-configuratie opgeslagen';
 }

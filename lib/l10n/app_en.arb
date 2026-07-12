@@ -2377,5 +2377,82 @@
   "playErrorDeclarationRequired": "Upload rejected by Google Play: Please check your Google Play Console and complete any outstanding declarations under App Content first.",
   "@playErrorDeclarationRequired": {
     "description": "Error message when Google Play rejects upload due to missing declarations under App Content"
+  },
+  "ascAppConfigSettings": "App Store Connect App Settings",
+  "@ascAppConfigSettings": {
+    "description": "Title of the App Store Connect App configuration settings dialog"
+  },
+  "ascAppConfigAppName": "App Name",
+  "@ascAppConfigAppName": {
+    "description": "Label for App Name in ASC config"
+  },
+  "ascAppConfigAppId": "App ID",
+  "@ascAppConfigAppId": {
+    "description": "Label for App ID in ASC config"
+  },
+  "ascAppConfigBundleId": "Bundle ID",
+  "@ascAppConfigBundleId": {
+    "description": "Label for Bundle ID in ASC config"
+  },
+  "ascAppConfigClear": "Clear Configuration",
+  "@ascAppConfigClear": {
+    "description": "Button to clear the App Store Connect configuration"
+  },
+  "ascAppConfigLoad": "Load from App Store Connect",
+  "@ascAppConfigLoad": {
+    "description": "Button to fetch and select app from App Store Connect"
+  },
+  "ascAppConfigNoCreds": "Configure ASC API credentials in Settings first.",
+  "@ascAppConfigNoCreds": {
+    "description": "Hint shown when ASC credentials are not set up"
+  },
+  "ascAppConfigSave": "Save Settings",
+  "@ascAppConfigSave": {
+    "description": "Button to save App Store Connect configuration settings"
+  },
+  "ascAppConfigFetchError": "Failed to load apps: {error}",
+  "@ascAppConfigFetchError": {
+    "description": "Error message when app loading from ASC fails",
+    "placeholders": {
+      "error": {
+        "type": "String"
+      }
+    }
+  },
+  "ascAppConfigAppIdEmpty": "App ID cannot be empty",
+  "@ascAppConfigAppIdEmpty": {
+    "description": "Validation error message when App ID field is empty"
+  },
+  "ascAppConfigUnnamedApp": "Unnamed App",
+  "@ascAppConfigUnnamedApp": {
+    "description": "Fallback label for unnamed app"
+  },
+  "ascAppConfigUnknownBundleId": "unknown.bundle.id",
+  "@ascAppConfigUnknownBundleId": {
+    "description": "Fallback label for unknown bundle ID"
+  },
+  "ascAppConfigLoadingApps": "Loading apps from App Store Connect...",
+  "@ascAppConfigLoadingApps": {
+    "description": "Text shown while loading apps from App Store Connect in settings"
+  },
+  "ascAppConfigAppNameHint": "e.g., Cute Sausage Sticker Extension",
+  "@ascAppConfigAppNameHint": {
+    "description": "Hint for App Name field"
+  },
+  "ascAppConfigAppIdHint": "e.g., 647281920",
+  "@ascAppConfigAppIdHint": {
+    "description": "Hint for App ID field"
+  },
+  "ascAppConfigBundleIdHint": "e.g., com.example.stickerapp",
+  "@ascAppConfigBundleIdHint": {
+    "description": "Hint for Bundle ID field"
+  },
+  "ascAppConfigCleared": "App Store Connect config cleared",
+  "@ascAppConfigCleared": {
+    "description": "Snackbar message when ASC configuration is cleared"
+  },
+  "ascAppConfigSaved": "App Store Connect config saved",
+  "@ascAppConfigSaved": {
+    "description": "Snackbar message when ASC configuration is saved"
   }
 }

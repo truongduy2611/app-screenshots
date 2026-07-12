@@ -1728,6 +1728,62 @@ class AppLocalizationsZh extends AppLocalizations {
   @override
   String get playErrorDeclarationRequired =>
       '上传被 Google Play 拒绝：请先检查您的 Google Play Console 并完成“应用内容”下所有未完成的声明。';
+
+  @override
+  String get ascAppConfigSettings => 'App Store Connect 应用设置';
+
+  @override
+  String get ascAppConfigAppName => '应用名称';
+
+  @override
+  String get ascAppConfigAppId => '应用 ID';
+
+  @override
+  String get ascAppConfigBundleId => '套装 ID (Bundle ID)';
+
+  @override
+  String get ascAppConfigClear => '清除配置';
+
+  @override
+  String get ascAppConfigLoad => '从 App Store Connect 加载';
+
+  @override
+  String get ascAppConfigNoCreds => '请先在“设置”中配置 ASC API 凭据。';
+
+  @override
+  String get ascAppConfigSave => '保存设置';
+
+  @override
+  String ascAppConfigFetchError(String error) {
+    return '加载应用失败: $error';
+  }
+
+  @override
+  String get ascAppConfigAppIdEmpty => '应用 ID 不能为空';
+
+  @override
+  String get ascAppConfigUnnamedApp => '未命名应用';
+
+  @override
+  String get ascAppConfigUnknownBundleId => 'unknown.bundle.id';
+
+  @override
+  String get ascAppConfigLoadingApps => '正在从 App Store Connect 加载应用...';
+
+  @override
+  String get ascAppConfigAppNameHint => '例如 Cute Sausage Sticker Extension';
+
+  @override
+  String get ascAppConfigAppIdHint => '例如 647281920';
+
+  @override
+  String get ascAppConfigBundleIdHint => '例如 com.example.stickerapp';
+
+  @override
+  String get ascAppConfigCleared => 'App Store Connect 配置已清除';
+
+  @override
+  String get ascAppConfigSaved => 'App Store Connect 配置已保存';
 }
 
 /// The translations for Chinese, using the Han script (`zh_Hant`).
@@ -3442,4 +3498,60 @@ class AppLocalizationsZhHant extends AppLocalizationsZh {
   @override
   String get playErrorDeclarationRequired =>
       '上傳被 Google Play 拒絕：請先檢查您的 Google Play Console 並完成「應用內容」下所有未完成的聲明。';
+
+  @override
+  String get ascAppConfigSettings => 'App Store Connect 應用程式設定';
+
+  @override
+  String get ascAppConfigAppName => '應用程式名稱';
+
+  @override
+  String get ascAppConfigAppId => '應用程式 ID';
+
+  @override
+  String get ascAppConfigBundleId => '套件 ID (Bundle ID)';
+
+  @override
+  String get ascAppConfigClear => '清除設定';
+
+  @override
+  String get ascAppConfigLoad => '從 App Store Connect 載入';
+
+  @override
+  String get ascAppConfigNoCreds => '請先在「設定」中配置 ASC API 憑據。';
+
+  @override
+  String get ascAppConfigSave => '儲存設定';
+
+  @override
+  String ascAppConfigFetchError(String error) {
+    return '載入應用程式失敗: $error';
+  }
+
+  @override
+  String get ascAppConfigAppIdEmpty => '應用程式 ID 欄位不能為空';
+
+  @override
+  String get ascAppConfigUnnamedApp => '未命名應用程式';
+
+  @override
+  String get ascAppConfigUnknownBundleId => 'unknown.bundle.id';
+
+  @override
+  String get ascAppConfigLoadingApps => '正在從 App Store Connect 載入應用程式...';
+
+  @override
+  String get ascAppConfigAppNameHint => '例如 Cute Sausage Sticker Extension';
+
+  @override
+  String get ascAppConfigAppIdHint => '例如 647281920';
+
+  @override
+  String get ascAppConfigBundleIdHint => '例如 com.example.stickerapp';
+
+  @override
+  String get ascAppConfigCleared => 'App Store Connect 設定已清除';
+
+  @override
+  String get ascAppConfigSaved => 'App Store Connect 設定已儲存';
 }
