@@ -248,7 +248,6 @@
   "backupNow": "Şimdi yedekle",
   "restoreFromBackup": "Yedekten geri yükle",
   "lastBackup": "Son yedekleme",
-  "backupsAutomatic": "Yedekler otomatik olarak oluşturulur",
   "noBackupsAvailable": "Yedek mevcut değil",
   "restoreWarning": "Geri yükleme tüm mevcut tasarımları değiştirecektir. Bu işlem geri alınamaz.",
   "backupRestoredSuccessfully": "Yedek başarıyla geri yüklendi",

@@ -849,9 +849,6 @@ class AppLocalizationsZh extends AppLocalizations {
   String get lastBackup => '上次备份';
 
   @override
-  String get backupsAutomatic => '备份自动创建';
-
-  @override
   String get noBackupsAvailable => '没有可用的备份';
 
   @override
@@ -2564,9 +2561,6 @@ class AppLocalizationsZhHant extends AppLocalizationsZh {
 
   @override
   String get lastBackup => '上次備份';
-
-  @override
-  String get backupsAutomatic => '備份會自動建立';
 
   @override
   String get noBackupsAvailable => '沒有可用的備份';

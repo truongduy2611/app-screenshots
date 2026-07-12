@@ -852,9 +852,6 @@ class AppLocalizationsKo extends AppLocalizations {
   String get lastBackup => '마지막 백업';
 
   @override
-  String get backupsAutomatic => '백업은 자동으로 생성됩니다';
-
-  @override
   String get noBackupsAvailable => '사용 가능한 백업 없음';
 
   @override

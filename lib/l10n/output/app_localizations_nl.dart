@@ -866,9 +866,6 @@ class AppLocalizationsNl extends AppLocalizations {
   String get lastBackup => 'Laatste back-up';
 
   @override
-  String get backupsAutomatic => 'Back-ups worden automatisch gemaakt';
-
-  @override
   String get noBackupsAvailable => 'Geen back-ups beschikbaar';
 
   @override

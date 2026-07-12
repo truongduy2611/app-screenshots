@@ -1,17 +1,20 @@
 import 'dart:io';
 
+import 'package:app_screenshots/core/services/icloud_collaboration_service.dart';
 import 'package:app_screenshots/features/screenshot_editor/data/models/saved_design.dart';
 import 'package:app_screenshots/features/screenshot_editor/data/services/design_file_service.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:share_plus/share_plus.dart';
 
 /// Utility for sharing and importing `.appshots` design files.
 class DesignShareHelper {
   /// Exports and shares a [SavedDesign] as a `.appshots` file.
   ///
-  /// On iOS/Android, uses the native share sheet.
-  /// On macOS/desktop, opens a file save dialog.
+  /// On Apple platforms, shares an open-in-place iCloud document so the system
+  /// offers Collaborate and Send Copy. Android uses its native share sheet;
+  /// other desktop platforms open a file save dialog.
   static Future<void> shareDesign(
     BuildContext context,
     SavedDesign design, {
@@ -24,6 +27,19 @@ class DesignShareHelper {
     final platform = Theme.of(context).platform;
     final isMobile =
         platform == TargetPlatform.iOS || platform == TargetPlatform.android;
+
+    if (ICloudCollaborationService.isSupported) {
+      try {
+        await ICloudCollaborationService.shareDocument(
+          localPath: file.path,
+          fileName: _collaborationFileName(design),
+        );
+        return;
+      } on PlatformException {
+        // iCloud may be disabled or unavailable. Fall through to the existing
+        // send-copy/save-file experience instead of blocking sharing.
+      }
+    }
 
     if (isMobile) {
       await SharePlus.instance.share(
@@ -52,7 +68,29 @@ class DesignShareHelper {
   static Future<void> saveToFile(SavedDesign design, String targetPath) async {
     final designFileService = DesignFileService();
     final exportFile = await designFileService.createExportFile(design);
+
+    if (ICloudCollaborationService.isSupported) {
+      try {
+        final saved = await ICloudCollaborationService.saveOpenedDocument(
+          localPath: exportFile.path,
+          workingPath: targetPath,
+        );
+        if (saved) return;
+      } on PlatformException {
+        // Fall back to the direct copy for ordinary local files.
+      }
+    }
+
     await exportFile.copy(targetPath);
+  }
+
+  static String _collaborationFileName(SavedDesign design) {
+    final safeName = design.name
+        .replaceAll(RegExp(r'[\\/:*?"<>|]'), '-')
+        .replaceAll(RegExp(r'\s+'), ' ')
+        .trim();
+    final baseName = safeName.isEmpty ? 'Untitled Design' : safeName;
+    return '$baseName - ${design.id}.appshots';
   }
 
   /// Opens a file picker for importing `.appshots` files.

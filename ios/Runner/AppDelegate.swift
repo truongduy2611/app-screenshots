@@ -74,7 +74,7 @@ import UIKit
     if let url = launchOptions?[.url] as? URL {
       NSLog("[AppDelegate-iOS] Launch URL detected: \(url.path)")
       if url.pathExtension == "appshots" {
-        if let localPath = copyToAppSandbox(url: url) {
+        if let localPath = ICloudBackupHandler.shared.prepareOpenedDocument(url: url) {
           pendingFilePaths.append(localPath)
         }
       }
@@ -92,7 +92,7 @@ import UIKit
     NSLog("[AppDelegate-iOS] application:open:url called: \(url.path)")
 
     if url.pathExtension == "appshots" {
-      guard let localPath = copyToAppSandbox(url: url) else {
+      guard let localPath = ICloudBackupHandler.shared.prepareOpenedDocument(url: url) else {
         NSLog("[AppDelegate-iOS] Failed to copy file to sandbox")
         return false
       }
@@ -107,36 +107,6 @@ import UIKit
       return true
     }
     return super.application(app, open: url, options: options)
-  }
-
-  /// Copies a file from a security-scoped URL (e.g. File Provider Storage)
-  /// into the app's temporary directory so Flutter can access it.
-  private func copyToAppSandbox(url: URL) -> String? {
-    // Start security-scoped access (required for File Provider / shared container files)
-    let accessing = url.startAccessingSecurityScopedResource()
-    NSLog("[AppDelegate-iOS] startAccessingSecurityScopedResource: \(accessing)")
-
-    defer {
-      if accessing {
-        url.stopAccessingSecurityScopedResource()
-      }
-    }
-
-    let tempDir = FileManager.default.temporaryDirectory
-    let destURL = tempDir.appendingPathComponent(url.lastPathComponent)
-
-    do {
-      // Remove existing copy if present
-      if FileManager.default.fileExists(atPath: destURL.path) {
-        try FileManager.default.removeItem(at: destURL)
-      }
-      try FileManager.default.copyItem(at: url, to: destURL)
-      NSLog("[AppDelegate-iOS] Copied file to sandbox: \(destURL.path)")
-      return destURL.path
-    } catch {
-      NSLog("[AppDelegate-iOS] Failed to copy file: \(error.localizedDescription)")
-      return nil
-    }
   }
 
   private func flushPendingFiles() {

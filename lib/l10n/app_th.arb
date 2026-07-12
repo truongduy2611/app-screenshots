@@ -248,7 +248,6 @@
   "backupNow": "สำรองข้อมูลตอนนี้",
   "restoreFromBackup": "กู้คืนจากข้อมูลสำรอง",
   "lastBackup": "สำรองข้อมูลล่าสุด",
-  "backupsAutomatic": "สำรองข้อมูลถูกสร้างโดยอัตโนมัติ",
   "noBackupsAvailable": "ไม่มีข้อมูลสำรอง",
   "restoreWarning": "การกู้คืนจะแทนที่การออกแบบทั้งหมดในปัจจุบัน ไม่สามารถเลิกทำได้",
   "backupRestoredSuccessfully": "กู้คืนข้อมูลสำรองสำเร็จ",

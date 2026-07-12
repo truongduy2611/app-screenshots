@@ -248,7 +248,6 @@
   "backupNow": "立即备份",
   "restoreFromBackup": "从备份恢复",
   "lastBackup": "上次备份",
-  "backupsAutomatic": "备份自动创建",
   "noBackupsAvailable": "没有可用的备份",
   "restoreWarning": "恢复将替换所有当前设计。此操作无法撤消。",
   "backupRestoredSuccessfully": "备份恢复成功",

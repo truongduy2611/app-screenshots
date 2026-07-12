@@ -248,7 +248,6 @@
   "backupNow": "Sao lưu ngay",
   "restoreFromBackup": "Khôi phục từ bản sao lưu",
   "lastBackup": "Sao lưu lần cuối",
-  "backupsAutomatic": "Bản sao lưu được tạo tự động",
   "noBackupsAvailable": "Không có bản sao lưu",
   "restoreWarning": "Khôi phục sẽ thay thế tất cả thiết kế hiện tại. Không thể hoàn tác.",
   "backupRestoredSuccessfully": "Đã khôi phục bản sao lưu thành công",

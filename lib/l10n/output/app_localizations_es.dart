@@ -868,9 +868,6 @@ class AppLocalizationsEs extends AppLocalizations {
   String get lastBackup => 'Última copia de seguridad';
 
   @override
-  String get backupsAutomatic => 'Las copias se crean automáticamente';
-
-  @override
   String get noBackupsAvailable => 'No hay copias disponibles';
 
   @override

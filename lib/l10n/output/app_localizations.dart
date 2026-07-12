@@ -1745,12 +1745,6 @@ abstract class AppLocalizations {
   /// **'Last backup'**
   String get lastBackup;
 
-  /// Info text about automatic backups
-  ///
-  /// In en, this message translates to:
-  /// **'Backups are created automatically'**
-  String get backupsAutomatic;
-
   /// Message when no iCloud backups exist
   ///
   /// In en, this message translates to:

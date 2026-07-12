@@ -248,7 +248,6 @@
   "backupNow": "Nu back-uppen",
   "restoreFromBackup": "Herstel vanuit back-up",
   "lastBackup": "Laatste back-up",
-  "backupsAutomatic": "Back-ups worden automatisch gemaakt",
   "noBackupsAvailable": "Geen back-ups beschikbaar",
   "restoreWarning": "Herstellen vervangt alle huidige ontwerpen. Dit kan niet ongedaan worden gemaakt.",
   "backupRestoredSuccessfully": "Back-up succesvol hersteld",

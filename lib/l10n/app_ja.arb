@@ -247,7 +247,6 @@
   "backupNow": "今すぐバックアップ",
   "restoreFromBackup": "バックアップから復元",
   "lastBackup": "最後のバックアップ",
-  "backupsAutomatic": "バックアップは自動的に作成されます",
   "noBackupsAvailable": "バックアップはありません",
   "restoreWarning": "復元すると現在のデザインがすべて置き換えられます。この操作は取り消せません。",
   "backupRestoredSuccessfully": "バックアップを復元しました",

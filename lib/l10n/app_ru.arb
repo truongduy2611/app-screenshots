@@ -248,7 +248,6 @@
   "backupNow": "Создать копию сейчас",
   "restoreFromBackup": "Восстановить из копии",
   "lastBackup": "Последняя копия",
-  "backupsAutomatic": "Копии создаются автоматически",
   "noBackupsAvailable": "Нет доступных копий",
   "restoreWarning": "Восстановление заменит все текущие дизайны. Это действие нельзя отменить.",
   "backupRestoredSuccessfully": "Копия успешно восстановлена",

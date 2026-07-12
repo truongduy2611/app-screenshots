@@ -864,9 +864,6 @@ class AppLocalizationsAr extends AppLocalizations {
   String get lastBackup => 'آخر نسخة احتياطية';
 
   @override
-  String get backupsAutomatic => 'يتم إنشاء النسخ الاحتياطية تلقائياً';
-
-  @override
   String get noBackupsAvailable => 'لا توجد نسخ احتياطية';
 
   @override

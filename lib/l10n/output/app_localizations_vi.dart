@@ -860,9 +860,6 @@ class AppLocalizationsVi extends AppLocalizations {
   String get lastBackup => 'Sao lưu lần cuối';
 
   @override
-  String get backupsAutomatic => 'Bản sao lưu được tạo tự động';
-
-  @override
   String get noBackupsAvailable => 'Không có bản sao lưu';
 
   @override

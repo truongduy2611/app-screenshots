@@ -864,9 +864,6 @@ class AppLocalizationsRu extends AppLocalizations {
   String get lastBackup => 'Последняя копия';
 
   @override
-  String get backupsAutomatic => 'Копии создаются автоматически';
-
-  @override
   String get noBackupsAvailable => 'Нет доступных копий';
 
   @override

@@ -852,9 +852,6 @@ class AppLocalizationsJa extends AppLocalizations {
   String get lastBackup => '最後のバックアップ';
 
   @override
-  String get backupsAutomatic => 'バックアップは自動的に作成されます';
-
-  @override
   String get noBackupsAvailable => 'バックアップはありません';
 
   @override

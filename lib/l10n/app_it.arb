@@ -248,7 +248,6 @@
   "backupNow": "Esegui backup ora",
   "restoreFromBackup": "Ripristina da backup",
   "lastBackup": "Ultimo backup",
-  "backupsAutomatic": "I backup vengono creati automaticamente",
   "noBackupsAvailable": "Nessun backup disponibile",
   "restoreWarning": "Il ripristino sostituirà tutti i design attuali. Questa azione non può essere annullata.",
   "backupRestoredSuccessfully": "Backup ripristinato con successo",

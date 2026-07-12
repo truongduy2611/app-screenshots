@@ -874,9 +874,6 @@ class AppLocalizationsFr extends AppLocalizations {
   String get lastBackup => 'Dernière sauvegarde';
 
   @override
-  String get backupsAutomatic => 'Les sauvegardes sont créées automatiquement';
-
-  @override
   String get noBackupsAvailable => 'Aucune sauvegarde disponible';
 
   @override

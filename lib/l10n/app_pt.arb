@@ -253,7 +253,6 @@
   "backupNow": "Fazer backup agora",
   "restoreFromBackup": "Restaurar do backup",
   "lastBackup": "Último backup",
-  "backupsAutomatic": "Os backups são criados automaticamente",
   "noBackupsAvailable": "Nenhum backup disponível",
   "restoreWarning": "A restauração substituirá todos os designs atuais. Isso não pode ser desfeito.",
   "backupRestoredSuccessfully": "Backup restaurado com sucesso",

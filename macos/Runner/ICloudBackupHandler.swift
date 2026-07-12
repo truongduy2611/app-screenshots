@@ -20,6 +20,15 @@ class ICloudBackupHandler: NSObject {
     /// Cached ubiquity container URL — resolved once, reused for the session.
     private var cachedContainerURL: URL?
     private var containerResolved = false
+
+    private struct OpenedDocument {
+        let originalURL: URL
+        let hasSecurityScope: Bool
+    }
+
+    /// Working-copy path to original open-in-place document mapping.
+    private var openedDocuments: [String: OpenedDocument] = [:]
+    private let openedDocumentsLock = NSLock()
     
     private override init() {
         super.init()
@@ -86,6 +95,24 @@ class ICloudBackupHandler: NSObject {
         case "stopMonitoringChanges":
             stopMonitoringChanges()
             result(nil)
+
+        case "shareICloudDocument":
+            guard let args = call.arguments as? [String: Any],
+                  let localPath = args["localPath"] as? String,
+                  let fileName = args["fileName"] as? String else {
+                result(FlutterError(code: "INVALID_ARGUMENTS", message: "Missing arguments", details: nil))
+                return
+            }
+            shareICloudDocument(localPath: localPath, fileName: fileName, result: result)
+
+        case "saveOpenedDocument":
+            guard let args = call.arguments as? [String: Any],
+                  let localPath = args["localPath"] as? String,
+                  let workingPath = args["workingPath"] as? String else {
+                result(FlutterError(code: "INVALID_ARGUMENTS", message: "Missing arguments", details: nil))
+                return
+            }
+            saveOpenedDocument(localPath: localPath, workingPath: workingPath, result: result)
             
         default:
             result(FlutterMethodNotImplemented)
@@ -124,6 +151,172 @@ class ICloudBackupHandler: NSObject {
             try? FileManager.default.createDirectory(at: documentsURL, withIntermediateDirectories: true)
         }
         return documentsURL
+    }
+
+    // MARK: - iCloud Drive Collaboration
+
+    /// Creates a coordinated sandbox copy while retaining access to the
+    /// original shared file so Save can write changes back to it.
+    func prepareOpenedDocument(url: URL) -> String? {
+        let hasSecurityScope = url.startAccessingSecurityScopedResource()
+        let destination = FileManager.default.temporaryDirectory
+            .appendingPathComponent("appshots_open_\(UUID().uuidString)_\(url.lastPathComponent)")
+
+        var coordinationError: NSError?
+        var copyError: Error?
+        NSFileCoordinator(filePresenter: nil).coordinate(
+            readingItemAt: url,
+            options: [],
+            error: &coordinationError
+        ) { coordinatedURL in
+            do {
+                try FileManager.default.copyItem(at: coordinatedURL, to: destination)
+            } catch {
+                copyError = error
+            }
+        }
+
+        if let error = coordinationError ?? copyError as NSError? {
+            if hasSecurityScope { url.stopAccessingSecurityScopedResource() }
+            NSLog("[ICloudBackupHandler] Failed to open coordinated document: \(error.localizedDescription)")
+            return nil
+        }
+
+        openedDocumentsLock.lock()
+        openedDocuments[destination.path] = OpenedDocument(
+            originalURL: url,
+            hasSecurityScope: hasSecurityScope
+        )
+        openedDocumentsLock.unlock()
+        return destination.path
+    }
+
+    private func saveOpenedDocument(
+        localPath: String,
+        workingPath: String,
+        result: @escaping FlutterResult
+    ) {
+        openedDocumentsLock.lock()
+        let openedDocument = openedDocuments[workingPath]
+        openedDocumentsLock.unlock()
+
+        guard let openedDocument = openedDocument else {
+            result(false)
+            return
+        }
+
+        iCloudQueue.async {
+            let sourceURL = URL(fileURLWithPath: localPath)
+            var coordinationError: NSError?
+            var writeError: Error?
+            NSFileCoordinator(filePresenter: nil).coordinate(
+                writingItemAt: openedDocument.originalURL,
+                options: .forReplacing,
+                error: &coordinationError
+            ) { coordinatedURL in
+                do {
+                    let stagedURL = coordinatedURL.deletingLastPathComponent()
+                        .appendingPathComponent(".appshots-save-\(UUID().uuidString)")
+                    try FileManager.default.copyItem(at: sourceURL, to: stagedURL)
+                    if FileManager.default.fileExists(atPath: coordinatedURL.path) {
+                        try FileManager.default.removeItem(at: coordinatedURL)
+                    }
+                    try FileManager.default.moveItem(at: stagedURL, to: coordinatedURL)
+                } catch {
+                    writeError = error
+                }
+            }
+
+            let error = coordinationError ?? writeError as NSError?
+            if error == nil {
+                let workingURL = URL(fileURLWithPath: workingPath)
+                try? FileManager.default.removeItem(at: workingURL)
+                try? FileManager.default.copyItem(at: sourceURL, to: workingURL)
+            }
+
+            DispatchQueue.main.async {
+                if let error = error {
+                    result(FlutterError(
+                        code: "COLLABORATION_SAVE_FAILED",
+                        message: error.localizedDescription,
+                        details: nil
+                    ))
+                } else {
+                    result(true)
+                }
+            }
+        }
+    }
+
+    private func shareICloudDocument(
+        localPath: String,
+        fileName: String,
+        result: @escaping FlutterResult
+    ) {
+        iCloudQueue.async { [weak self] in
+            guard let self = self else { return }
+            let _ = self.resolveContainerURL()
+            guard let documentsURL = self.getICloudDocumentsURL() else {
+                DispatchQueue.main.async {
+                    result(FlutterError(code: "ICLOUD_UNAVAILABLE", message: "iCloud Drive is unavailable", details: nil))
+                }
+                return
+            }
+
+            let sharedDirectory = documentsURL.appendingPathComponent("Shared Designs", isDirectory: true)
+            let safeFileName = URL(fileURLWithPath: fileName).lastPathComponent
+            let cloudURL = sharedDirectory.appendingPathComponent(safeFileName)
+            let sourceURL = URL(fileURLWithPath: localPath)
+
+            do {
+                try FileManager.default.createDirectory(
+                    at: sharedDirectory,
+                    withIntermediateDirectories: true
+                )
+                if FileManager.default.fileExists(atPath: cloudURL.path) {
+                    var coordinationError: NSError?
+                    var writeError: Error?
+                    NSFileCoordinator(filePresenter: nil).coordinate(
+                        writingItemAt: cloudURL,
+                        options: .forReplacing,
+                        error: &coordinationError
+                    ) { coordinatedURL in
+                        do {
+                            try FileManager.default.removeItem(at: coordinatedURL)
+                            try FileManager.default.copyItem(at: sourceURL, to: coordinatedURL)
+                        } catch {
+                            writeError = error
+                        }
+                    }
+                    if let error = coordinationError ?? writeError as NSError? { throw error }
+                } else {
+                    try FileManager.default.copyItem(at: sourceURL, to: cloudURL)
+                }
+            } catch {
+                DispatchQueue.main.async {
+                    result(FlutterError(
+                        code: "ICLOUD_SHARE_PREPARATION_FAILED",
+                        message: error.localizedDescription,
+                        details: nil
+                    ))
+                }
+                return
+            }
+
+            DispatchQueue.main.async {
+                guard let view = (NSApplication.shared.keyWindow ?? NSApplication.shared.windows.first)?.contentView else {
+                    result(FlutterError(code: "NO_PRESENTER", message: "Unable to present sharing controls", details: nil))
+                    return
+                }
+                let picker = NSSharingServicePicker(items: [cloudURL])
+                picker.show(
+                    relativeTo: NSRect(x: view.bounds.midX, y: view.bounds.midY, width: 1, height: 1),
+                    of: view,
+                    preferredEdge: .minY
+                )
+                result(["cloudPath": cloudURL.path])
+            }
+        }
     }
     
     // MARK: - iCloud Sync

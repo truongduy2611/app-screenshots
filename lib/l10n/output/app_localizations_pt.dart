@@ -870,9 +870,6 @@ class AppLocalizationsPt extends AppLocalizations {
   String get lastBackup => 'Último backup';
 
   @override
-  String get backupsAutomatic => 'Os backups são criados automaticamente';
-
-  @override
   String get noBackupsAvailable => 'Nenhum backup disponível';
 
   @override

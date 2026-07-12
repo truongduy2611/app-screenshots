@@ -867,9 +867,6 @@ class AppLocalizationsTr extends AppLocalizations {
   String get lastBackup => 'Son yedekleme';
 
   @override
-  String get backupsAutomatic => 'Yedekler otomatik olarak oluşturulur';
-
-  @override
   String get noBackupsAvailable => 'Yedek mevcut değil';
 
   @override

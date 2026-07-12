@@ -1126,10 +1126,6 @@
   "@lastBackup": {
     "description": "Label showing the last backup date"
   },
-  "backupsAutomatic": "Backups are created automatically",
-  "@backupsAutomatic": {
-    "description": "Info text about automatic backups"
-  },
   "noBackupsAvailable": "No backups available",
   "@noBackupsAvailable": {
     "description": "Message when no iCloud backups exist"

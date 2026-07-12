@@ -1,4 +1,5 @@
 import 'dart:io';
+import 'dart:isolate';
 
 import 'package:archive/archive.dart';
 
@@ -53,8 +54,8 @@ class BackupMetadata {
 
 /// iCloud backup service for App Screenshots.
 ///
-/// Zips the `screenshot_designs` directory and uploads it to iCloud.
-/// Auto-backup runs on app launch with a 5-minute cooldown.
+/// Creates user-requested ZIP snapshots of the `screenshot_designs` directory
+/// and uploads them to iCloud.
 class ICloudBackupService {
   static const _channel = MethodChannel(
     'com.progressiostudio.appscreenshots/icloud',
@@ -62,10 +63,7 @@ class ICloudBackupService {
 
   static const String _designsDirName = 'screenshot_designs';
   static const String _lastBackupKey = 'last_icloud_backup_timestamp';
-  static const String _autoBackupEnabledKey = 'icloud_auto_backup_enabled';
-  static const int _cooldownMinutes = 5;
   static const int _maxBackups = 3;
-  static const String _autoBackupFileName = 'appshots_auto_backup.zip';
 
   final SharedPreferences _prefs;
   final Future<String>? _storageRootFuture;
@@ -83,54 +81,6 @@ class ICloudBackupService {
     }
   }
 
-  /// Whether auto-backup is enabled.
-  bool get isAutoBackupEnabled => _prefs.getBool(_autoBackupEnabledKey) ?? true;
-
-  /// Sets whether auto-backup is enabled.
-  Future<void> setAutoBackupEnabled(bool enabled) =>
-      _prefs.setBool(_autoBackupEnabledKey, enabled);
-
-  /// Performs a backup if enough time has passed since the last one.
-  ///
-  /// Returns `true` if a backup was created, `false` if skipped or failed.
-  Future<bool> performBackupIfNeeded() async {
-    try {
-      if (!isAutoBackupEnabled) {
-        AppLogger.d('Auto-backup disabled, skipping', tag: 'iCloudBackup');
-        return false;
-      }
-
-      if (!await isAvailable()) {
-        AppLogger.d('iCloud not available, skipping', tag: 'iCloudBackup');
-        return false;
-      }
-
-      final lastTimestamp = _prefs.getInt(_lastBackupKey);
-      if (lastTimestamp != null) {
-        final lastBackup = DateTime.fromMillisecondsSinceEpoch(lastTimestamp);
-        final diff = DateTime.now().difference(lastBackup);
-        if (diff.inMinutes < _cooldownMinutes) {
-          AppLogger.d(
-            'Cooldown active (${diff.inMinutes}m < ${_cooldownMinutes}m), skipping',
-            tag: 'iCloudBackup',
-          );
-          return false;
-        }
-      }
-
-      final result = await _createAutoBackup();
-      return result != null;
-    } catch (e, st) {
-      AppLogger.error(
-        'Auto-backup failed',
-        tag: 'iCloudBackup',
-        error: e,
-        stackTrace: st,
-      );
-      return false;
-    }
-  }
-
   /// Creates a backup of the screenshot_designs directory.
   ///
   /// Returns [BackupMetadata] on success, `null` on failure.
@@ -143,8 +93,7 @@ class ICloudBackupService {
       }
 
       // Check if directory has any content
-      final entries = designsDir.listSync();
-      if (entries.isEmpty) {
+      if (await designsDir.list().isEmpty) {
         AppLogger.d(
           'Designs directory is empty, skipping',
           tag: 'iCloudBackup',
@@ -385,84 +334,6 @@ class ICloudBackupService {
   // Private
   // ---------------------------------------------------------------------------
 
-  /// Creates an auto-backup using a fixed filename, overriding the previous one.
-  Future<BackupMetadata?> _createAutoBackup() async {
-    try {
-      final designsDir = await _getDesignsDir();
-      if (!await designsDir.exists()) {
-        AppLogger.d('No designs directory, skipping', tag: 'iCloudBackup');
-        return null;
-      }
-
-      final entries = designsDir.listSync();
-      if (entries.isEmpty) {
-        AppLogger.d(
-          'Designs directory is empty, skipping',
-          tag: 'iCloudBackup',
-        );
-        return null;
-      }
-
-      // Create zip in temp directory with fixed name using archive package
-      final tempDir = await getTemporaryDirectory();
-      final zipPath = p.join(tempDir.path, _autoBackupFileName);
-
-      // Remove old temp zip if exists
-      final oldZip = File(zipPath);
-      if (await oldZip.exists()) {
-        await oldZip.delete();
-      }
-
-      final zipBytes = await _zipDirectory(designsDir);
-      if (zipBytes == null) {
-        AppLogger.w('Failed to create zip', tag: 'iCloudBackup');
-        return null;
-      }
-
-      final zipFile = File(zipPath);
-      await zipFile.writeAsBytes(zipBytes);
-
-      // Upload to iCloud – uses fixed filename so it overrides the previous one
-      final result = await _channel.invokeMethod<Map>('uploadToICloud', {
-        'localPath': zipPath,
-        'cloudFileName': _autoBackupFileName,
-      });
-
-      if (result == null) {
-        AppLogger.w('Upload returned null', tag: 'iCloudBackup');
-        return null;
-      }
-
-      final now = DateTime.now();
-      final metadata = BackupMetadata(
-        createdAt: now,
-        sizeInBytes: await zipFile.length(),
-        fileName: _autoBackupFileName,
-        filePath: result['cloudPath'] as String?,
-      );
-
-      await _prefs.setInt(_lastBackupKey, now.millisecondsSinceEpoch);
-
-      try {
-        await zipFile.delete();
-      } catch (_) {}
-
-      AppLogger.i(
-        'Auto-backup overridden: $_autoBackupFileName',
-        tag: 'iCloudBackup',
-      );
-      return metadata;
-    } catch (e, st) {
-      AppLogger.error(
-        '_createAutoBackup error',
-        tag: 'iCloudBackup',
-        error: e,
-        stackTrace: st,
-      );
-      return null;
-    }
-  }
-
   Future<Directory> _getDesignsDir() async {
     if (_storageRootFuture != null) {
       final root = await _storageRootFuture;
@@ -477,18 +348,8 @@ class ICloudBackupService {
   /// Returns `null` if the directory cannot be zipped.
   Future<Uint8List?> _zipDirectory(Directory dir) async {
     try {
-      final archive = Archive();
-
-      await for (final entity in dir.list(recursive: true)) {
-        if (entity is File) {
-          final relativePath = p.relative(entity.path, from: dir.path);
-          final bytes = await entity.readAsBytes();
-          archive.addFile(ArchiveFile.bytes(relativePath, bytes));
-        }
-      }
-
-      final encoded = ZipEncoder().encode(archive);
-      return Uint8List.fromList(encoded);
+      final path = dir.path;
+      return await Isolate.run(() => _encodeDirectory(path));
     } catch (e, st) {
       AppLogger.error(
         '_zipDirectory error',
@@ -498,6 +359,21 @@ class ICloudBackupService {
       );
       return null;
     }
+  }
+
+  static Future<Uint8List> _encodeDirectory(String dirPath) async {
+    final directory = Directory(dirPath);
+    final archive = Archive();
+
+    await for (final entity in directory.list(recursive: true)) {
+      if (entity is File) {
+        final relativePath = p.relative(entity.path, from: dirPath);
+        final bytes = await entity.readAsBytes();
+        archive.addFile(ArchiveFile.bytes(relativePath, bytes));
+      }
+    }
+
+    return Uint8List.fromList(ZipEncoder().encode(archive));
   }
 
   /// Keeps only the most recent [_maxBackups] backups.

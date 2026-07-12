@@ -248,7 +248,6 @@
   "backupNow": "Hacer copia ahora",
   "restoreFromBackup": "Restaurar desde copia",
   "lastBackup": "Última copia de seguridad",
-  "backupsAutomatic": "Las copias se crean automáticamente",
   "noBackupsAvailable": "No hay copias disponibles",
   "restoreWarning": "Restaurar reemplazará todos los diseños actuales. Esto no se puede deshacer.",
   "backupRestoredSuccessfully": "Copia restaurada correctamente",

@@ -859,9 +859,6 @@ class AppLocalizationsTh extends AppLocalizations {
   String get lastBackup => 'สำรองข้อมูลล่าสุด';
 
   @override
-  String get backupsAutomatic => 'สำรองข้อมูลถูกสร้างโดยอัตโนมัติ';
-
-  @override
   String get noBackupsAvailable => 'ไม่มีข้อมูลสำรอง';
 
   @override
