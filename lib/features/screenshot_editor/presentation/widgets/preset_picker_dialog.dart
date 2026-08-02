@@ -8,8 +8,8 @@ import 'package:app_screenshots/features/screenshot_editor/data/screenshot_prese
 import 'package:app_screenshots/features/screenshot_editor/data/services/template_persistence_service.dart';
 import 'package:app_screenshots/features/screenshot_editor/domain/repositories/ai_provider_repository.dart';
 import 'package:app_screenshots/features/screenshot_editor/presentation/widgets/ai_template_dialog.dart';
+import 'package:app_screenshots/features/screenshot_editor/utils/font_resolver.dart';
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:material_symbols_icons/symbols.dart';
 
 /// A dialog that displays all available presets as beautiful cards.
@@ -323,9 +323,9 @@ class _PresetCardState extends State<_PresetCard> {
                                     : preset.name,
                                 maxLines: 2,
                                 overflow: TextOverflow.ellipsis,
-                                style: GoogleFonts.getFont(
+                                style: FontResolver.apply(
                                   preset.titleFont,
-                                  textStyle: TextStyle(
+                                  TextStyle(
                                     fontSize: 9,
                                     fontWeight: FontWeight.w700,
                                     color: textColor,
