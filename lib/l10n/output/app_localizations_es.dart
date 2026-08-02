@@ -598,16 +598,16 @@ class AppLocalizationsEs extends AppLocalizations {
   String get zoomToFit => 'Ajustar a ventana';
 
   @override
-  String get zoomTo100Percent => 'Zoom to 100%';
+  String get zoomTo100Percent => 'Zoom al 100%';
 
   @override
-  String get zoomToSelection => 'Zoom to Selection';
+  String get zoomToSelection => 'Zoom a la selección';
 
   @override
-  String get zoomIn => 'Zoom In';
+  String get zoomIn => 'Acercar';
 
   @override
-  String get zoomOut => 'Zoom Out';
+  String get zoomOut => 'Alejar';
 
   @override
   String get addScreenshot => 'Añadir captura';
@@ -971,6 +971,23 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get uploadToAppStoreConnect => 'Subir a App Store Connect';
+
+  @override
+  String get uploadDestination => 'Destino de subida';
+
+  @override
+  String get primaryAppVersion => 'Versión principal de la aplicación';
+
+  @override
+  String get customProductPage => 'Página de producto personalizada';
+
+  @override
+  String get selectCustomProductPage =>
+      'Seleccionar página de producto personalizada';
+
+  @override
+  String get noCustomProductPagesFound =>
+      'No se encontraron páginas de producto personalizadas para esta aplicación';
 
   @override
   String get loadingApps => 'Cargando apps...';

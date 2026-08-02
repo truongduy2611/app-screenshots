@@ -550,5 +550,14 @@
   "ascAppConfigAppIdHint": "p. ej., 647281920",
   "ascAppConfigBundleIdHint": "p. ej., com.example.stickerapp",
   "ascAppConfigCleared": "Configuración de App Store Connect borrada",
-  "ascAppConfigSaved": "Configuración de App Store Connect guardada"
+  "ascAppConfigSaved": "Configuración de App Store Connect guardada",
+  "zoomTo100Percent": "Zoom al 100%",
+  "zoomToSelection": "Zoom a la selección",
+  "zoomIn": "Acercar",
+  "zoomOut": "Alejar",
+  "uploadDestination": "Destino de subida",
+  "primaryAppVersion": "Versión principal de la aplicación",
+  "customProductPage": "Página de producto personalizada",
+  "selectCustomProductPage": "Seleccionar página de producto personalizada",
+  "noCustomProductPagesFound": "No se encontraron páginas de producto personalizadas para esta aplicación"
 }

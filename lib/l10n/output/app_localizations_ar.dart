@@ -597,16 +597,16 @@ class AppLocalizationsAr extends AppLocalizations {
   String get zoomToFit => 'ملاءمة النافذة';
 
   @override
-  String get zoomTo100Percent => 'Zoom to 100%';
+  String get zoomTo100Percent => 'التكبير إلى 100%';
 
   @override
-  String get zoomToSelection => 'Zoom to Selection';
+  String get zoomToSelection => 'التكبير على المحدد';
 
   @override
-  String get zoomIn => 'Zoom In';
+  String get zoomIn => 'تكبير';
 
   @override
-  String get zoomOut => 'Zoom Out';
+  String get zoomOut => 'تصغير';
 
   @override
   String get addScreenshot => 'إضافة لقطة شاشة';
@@ -967,6 +967,22 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get uploadToAppStoreConnect => 'رفع إلى App Store Connect';
+
+  @override
+  String get uploadDestination => 'وجهة الرفع';
+
+  @override
+  String get primaryAppVersion => 'الإصدار الرئيسي للتطبيق';
+
+  @override
+  String get customProductPage => 'صفحة منتج مخصصة';
+
+  @override
+  String get selectCustomProductPage => 'حدد صفحة منتج مخصصة';
+
+  @override
+  String get noCustomProductPagesFound =>
+      'لم يتم العثور على صفحات منتجات مخصصة لهذا التطبيق';
 
   @override
   String get loadingApps => 'جارٍ تحميل التطبيقات...';

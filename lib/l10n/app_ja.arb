@@ -550,5 +550,14 @@
   "ascAppConfigAppIdHint": "例：647281920",
   "ascAppConfigBundleIdHint": "例：com.example.stickerapp",
   "ascAppConfigCleared": "App Store Connect の設定をクリアしました",
-  "ascAppConfigSaved": "App Store Connect の設定を保存しました"
+  "ascAppConfigSaved": "App Store Connect の設定を保存しました",
+  "zoomTo100Percent": "100%に拡大",
+  "zoomToSelection": "選択範囲にズーム",
+  "zoomIn": "拡大",
+  "zoomOut": "縮小",
+  "uploadDestination": "アップロード先",
+  "primaryAppVersion": "プライマリ アプリのバージョン",
+  "customProductPage": "カスタムプロダクトページ",
+  "selectCustomProductPage": "カスタムプロダクトページを選択",
+  "noCustomProductPagesFound": "このアプリのカスタムプロダクトページが見つかりません"
 }

@@ -597,16 +597,16 @@ class AppLocalizationsRu extends AppLocalizations {
   String get zoomToFit => 'По размеру';
 
   @override
-  String get zoomTo100Percent => 'Zoom to 100%';
+  String get zoomTo100Percent => 'Масштаб 100%';
 
   @override
-  String get zoomToSelection => 'Zoom to Selection';
+  String get zoomToSelection => 'Масштаб по выделению';
 
   @override
-  String get zoomIn => 'Zoom In';
+  String get zoomIn => 'Увеличить';
 
   @override
-  String get zoomOut => 'Zoom Out';
+  String get zoomOut => 'Уменьшить';
 
   @override
   String get addScreenshot => 'Добавить скриншот';
@@ -968,6 +968,23 @@ class AppLocalizationsRu extends AppLocalizations {
 
   @override
   String get uploadToAppStoreConnect => 'Загрузить в App Store Connect';
+
+  @override
+  String get uploadDestination => 'Назначение загрузки';
+
+  @override
+  String get primaryAppVersion => 'Основная версия приложения';
+
+  @override
+  String get customProductPage => 'Пользовательская страница продукта';
+
+  @override
+  String get selectCustomProductPage =>
+      'Выбрать пользовательскую страницу продукта';
+
+  @override
+  String get noCustomProductPagesFound =>
+      'Пользовательские страницы продуктов для этого приложения не найдены';
 
   @override
   String get loadingApps => 'Загрузка приложений...';

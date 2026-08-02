@@ -550,5 +550,14 @@
   "ascAppConfigAppIdHint": "مثال: 647281920",
   "ascAppConfigBundleIdHint": "مثال: com.example.stickerapp",
   "ascAppConfigCleared": "تم مسح تكوين App Store Connect",
-  "ascAppConfigSaved": "تم حفظ تكوين App Store Connect"
+  "ascAppConfigSaved": "تم حفظ تكوين App Store Connect",
+  "zoomTo100Percent": "التكبير إلى 100%",
+  "zoomToSelection": "التكبير على المحدد",
+  "zoomIn": "تكبير",
+  "zoomOut": "تصغير",
+  "uploadDestination": "وجهة الرفع",
+  "primaryAppVersion": "الإصدار الرئيسي للتطبيق",
+  "customProductPage": "صفحة منتج مخصصة",
+  "selectCustomProductPage": "حدد صفحة منتج مخصصة",
+  "noCustomProductPagesFound": "لم يتم العثور على صفحات منتجات مخصصة لهذا التطبيق"
 }

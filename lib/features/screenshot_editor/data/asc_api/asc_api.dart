@@ -10,6 +10,7 @@ export 'asc_token.dart';
 export 'models/asc_app.dart';
 export 'models/asc_app_info.dart';
 export 'models/asc_app_info_localization.dart';
+export 'models/asc_custom_product_page.dart';
 export 'models/asc_screenshot.dart';
 export 'models/asc_screenshot_set.dart';
 export 'models/asc_version.dart';

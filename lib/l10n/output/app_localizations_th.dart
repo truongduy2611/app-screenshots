@@ -593,16 +593,16 @@ class AppLocalizationsTh extends AppLocalizations {
   String get zoomToFit => 'ซูมให้พอดี';
 
   @override
-  String get zoomTo100Percent => 'Zoom to 100%';
+  String get zoomTo100Percent => 'ย่อ/ขยายเป็น 100%';
 
   @override
-  String get zoomToSelection => 'Zoom to Selection';
+  String get zoomToSelection => 'ย่อ/ขยายตามส่วนที่เลือก';
 
   @override
-  String get zoomIn => 'Zoom In';
+  String get zoomIn => 'ขยาย';
 
   @override
-  String get zoomOut => 'Zoom Out';
+  String get zoomOut => 'ย่อ';
 
   @override
   String get addScreenshot => 'เพิ่มสกรีนช็อต';
@@ -960,6 +960,22 @@ class AppLocalizationsTh extends AppLocalizations {
 
   @override
   String get uploadToAppStoreConnect => 'อัปโหลดไปยัง App Store Connect';
+
+  @override
+  String get uploadDestination => 'ปลายทางการอัปโหลด';
+
+  @override
+  String get primaryAppVersion => 'เวอร์ชันแอปหลัก';
+
+  @override
+  String get customProductPage => 'หน้าผลิตภัณฑ์ที่กำหนดเอง';
+
+  @override
+  String get selectCustomProductPage => 'เลือกหน้าผลิตภัณฑ์ที่กำหนดเอง';
+
+  @override
+  String get noCustomProductPagesFound =>
+      'ไม่พบหน้าผลิตภัณฑ์ที่กำหนดเองสำหรับแอปนี้';
 
   @override
   String get loadingApps => 'กำลังโหลดแอป...';

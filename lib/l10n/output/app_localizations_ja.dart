@@ -590,16 +590,16 @@ class AppLocalizationsJa extends AppLocalizations {
   String get zoomToFit => '画面に合わせる';
 
   @override
-  String get zoomTo100Percent => 'Zoom to 100%';
+  String get zoomTo100Percent => '100%に拡大';
 
   @override
-  String get zoomToSelection => 'Zoom to Selection';
+  String get zoomToSelection => '選択範囲にズーム';
 
   @override
-  String get zoomIn => 'Zoom In';
+  String get zoomIn => '拡大';
 
   @override
-  String get zoomOut => 'Zoom Out';
+  String get zoomOut => '縮小';
 
   @override
   String get addScreenshot => 'スクリーンショットを追加';
@@ -952,6 +952,21 @@ class AppLocalizationsJa extends AppLocalizations {
 
   @override
   String get uploadToAppStoreConnect => 'App Store Connectにアップロード';
+
+  @override
+  String get uploadDestination => 'アップロード先';
+
+  @override
+  String get primaryAppVersion => 'プライマリ アプリのバージョン';
+
+  @override
+  String get customProductPage => 'カスタムプロダクトページ';
+
+  @override
+  String get selectCustomProductPage => 'カスタムプロダクトページを選択';
+
+  @override
+  String get noCustomProductPagesFound => 'このアプリのカスタムプロダクトページが見つかりません';
 
   @override
   String get loadingApps => 'アプリを読み込み中...';

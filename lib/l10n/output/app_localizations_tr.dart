@@ -598,16 +598,16 @@ class AppLocalizationsTr extends AppLocalizations {
   String get zoomToFit => 'Sığdır';
 
   @override
-  String get zoomTo100Percent => 'Zoom to 100%';
+  String get zoomTo100Percent => '%100 Yakınlaştır';
 
   @override
-  String get zoomToSelection => 'Zoom to Selection';
+  String get zoomToSelection => 'Seçime Yakınlaştır';
 
   @override
-  String get zoomIn => 'Zoom In';
+  String get zoomIn => 'Yakınlaştır';
 
   @override
-  String get zoomOut => 'Zoom Out';
+  String get zoomOut => 'Uzaklaştır';
 
   @override
   String get addScreenshot => 'Ekran Görüntüsü Ekle';
@@ -970,6 +970,22 @@ class AppLocalizationsTr extends AppLocalizations {
 
   @override
   String get uploadToAppStoreConnect => 'App Store Connect\'e yükle';
+
+  @override
+  String get uploadDestination => 'Yükleme Hedefi';
+
+  @override
+  String get primaryAppVersion => 'Birincil Uygulama Sürümü';
+
+  @override
+  String get customProductPage => 'Özel Ürün Sayfası';
+
+  @override
+  String get selectCustomProductPage => 'Özel Ürün Sayfası Seçin';
+
+  @override
+  String get noCustomProductPagesFound =>
+      'Bu uygulama için özel ürün sayfası bulunamadı';
 
   @override
   String get loadingApps => 'Uygulamalar yükleniyor...';

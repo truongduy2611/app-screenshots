@@ -966,6 +966,22 @@ class AppLocalizationsEn extends AppLocalizations {
   String get uploadToAppStoreConnect => 'Upload to App Store Connect';
 
   @override
+  String get uploadDestination => 'Upload Destination';
+
+  @override
+  String get primaryAppVersion => 'Primary App Version';
+
+  @override
+  String get customProductPage => 'Custom Product Page';
+
+  @override
+  String get selectCustomProductPage => 'Select Custom Product Page';
+
+  @override
+  String get noCustomProductPagesFound =>
+      'No custom product pages found for this app';
+
+  @override
   String get loadingApps => 'Loading apps...';
 
   @override

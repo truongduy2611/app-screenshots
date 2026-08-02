@@ -279,6 +279,11 @@
   "xAxis": "X",
   "yAxis": "Y",
   "uploadToAppStoreConnect": "Tải lên App Store Connect",
+  "uploadDestination": "Đích tải lên",
+  "primaryAppVersion": "Phiên bản ứng dụng chính",
+  "customProductPage": "Trang sản phẩm tùy chỉnh",
+  "selectCustomProductPage": "Chọn trang sản phẩm tùy chỉnh",
+  "noCustomProductPagesFound": "Không tìm thấy trang sản phẩm tùy chỉnh nào cho ứng dụng này",
   "loadingApps": "Đang tải ứng dụng...",
   "loadingVersionForApp": "Đang tải phiên bản cho {appName}...",
   "unknownError": "Lỗi không xác định",
@@ -550,5 +555,9 @@
   "ascAppConfigAppIdHint": "vd: 647281920",
   "ascAppConfigBundleIdHint": "vd: com.example.stickerapp",
   "ascAppConfigCleared": "Đã xóa cấu hình App Store Connect",
-  "ascAppConfigSaved": "Đã lưu cấu hình App Store Connect"
+  "ascAppConfigSaved": "Đã lưu cấu hình App Store Connect",
+  "zoomTo100Percent": "Thu phóng 100%",
+  "zoomToSelection": "Thu phóng theo lựa chọn",
+  "zoomIn": "Phóng to",
+  "zoomOut": "Thu nhỏ"
 }

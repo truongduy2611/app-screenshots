@@ -590,16 +590,16 @@ class AppLocalizationsKo extends AppLocalizations {
   String get zoomToFit => '화면에 맞추기';
 
   @override
-  String get zoomTo100Percent => 'Zoom to 100%';
+  String get zoomTo100Percent => '100%로 확대';
 
   @override
-  String get zoomToSelection => 'Zoom to Selection';
+  String get zoomToSelection => '선택 영역에 맞게 확대';
 
   @override
-  String get zoomIn => 'Zoom In';
+  String get zoomIn => '확대';
 
   @override
-  String get zoomOut => 'Zoom Out';
+  String get zoomOut => '축소';
 
   @override
   String get addScreenshot => '스크린샷 추가';
@@ -952,6 +952,21 @@ class AppLocalizationsKo extends AppLocalizations {
 
   @override
   String get uploadToAppStoreConnect => 'App Store Connect에 업로드';
+
+  @override
+  String get uploadDestination => '업로드 대상';
+
+  @override
+  String get primaryAppVersion => '기본 앱 버전';
+
+  @override
+  String get customProductPage => '맞춤 제품 페이지';
+
+  @override
+  String get selectCustomProductPage => '맞춤 제품 페이지 선택';
+
+  @override
+  String get noCustomProductPagesFound => '이 앱에 대한 맞춤 제품 페이지를 찾을 수 없습니다';
 
   @override
   String get loadingApps => '앱 불러오는 중...';

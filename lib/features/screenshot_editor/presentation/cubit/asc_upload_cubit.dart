@@ -11,6 +11,8 @@ import 'package:app_screenshots/features/settings/domain/repositories/settings_r
 import 'package:equatable/equatable.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
+import 'package:app_screenshots/features/screenshot_editor/data/asc_api/models/asc_custom_product_page.dart';
+
 part 'asc_upload_state.dart';
 
 class AscUploadCubit extends Cubit<AscUploadState> {
@@ -104,7 +106,7 @@ class AscUploadCubit extends Cubit<AscUploadState> {
     }
   }
 
-  /// Select an app and find its editable version.
+  /// Select an app and find its editable version & custom product pages.
   Future<void> selectApp(App app) async {
     emit(
       state.copyWith(selectedApp: app, status: AscUploadStatus.loadingVersion),
@@ -114,7 +116,27 @@ class AscUploadCubit extends Cubit<AscUploadState> {
         app.id,
         platform: _apiPlatform(state.platform),
       );
-      if (version == null) {
+
+      // Fetch custom product pages asynchronously for this app.
+      List<AppCustomProductPage> cpps = const [];
+      try {
+        cpps = await _uploadService.listCustomProductPages(app.id);
+      } catch (e) {
+        AppLogger.w('Failed to load custom product pages: $e', tag: 'AscUpload');
+      }
+
+      AppCustomProductPage? selectedCpp;
+      AppCustomProductPageVersion? cppVersion;
+      if (cpps.isNotEmpty) {
+        selectedCpp = cpps.first;
+        try {
+          cppVersion = await _uploadService.getEditableCustomProductPageVersion(
+            selectedCpp.id,
+          );
+        } catch (_) {}
+      }
+
+      if (version == null && cpps.isEmpty) {
         emit(
           state.copyWith(
             status: AscUploadStatus.error,
@@ -125,9 +147,13 @@ class AscUploadCubit extends Cubit<AscUploadState> {
         );
         return;
       }
+
       emit(
         state.copyWith(
           version: version,
+          customProductPages: cpps,
+          selectedCustomProductPage: selectedCpp,
+          customProductPageVersion: cppVersion,
           status: AscUploadStatus.readyToUpload,
           ascAppConfig: AscAppConfig(
             appId: app.id,
@@ -151,6 +177,35 @@ class AscUploadCubit extends Cubit<AscUploadState> {
           errorMessage: 'Failed to load version: $e',
         ),
       );
+    }
+  }
+
+  /// Change target type (Primary Version vs Custom Product Page).
+  void setTargetType(AscUploadTargetType targetType) {
+    emit(state.copyWith(targetType: targetType));
+  }
+
+  /// Select a Custom Product Page.
+  Future<void> selectCustomProductPage(AppCustomProductPage cpp) async {
+    emit(
+      state.copyWith(
+        selectedCustomProductPage: cpp,
+        loadingCustomProductPages: true,
+      ),
+    );
+    try {
+      final cppVersion =
+          await _uploadService.getEditableCustomProductPageVersion(cpp.id);
+      emit(
+        state.copyWith(
+          selectedCustomProductPage: cpp,
+          customProductPageVersion: cppVersion,
+          loadingCustomProductPages: false,
+        ),
+      );
+    } catch (e) {
+      AppLogger.w('Failed to load CPP version: $e', tag: 'AscUpload');
+      emit(state.copyWith(loadingCustomProductPages: false));
     }
   }
 
@@ -233,12 +288,16 @@ class AscUploadCubit extends Cubit<AscUploadState> {
 
     emit(state.copyWith(status: AscUploadStatus.uploading));
     try {
+      final isCpp =
+          state.targetType == AscUploadTargetType.customProductPage;
       final result = await _uploadService.uploadAll(
         appId: state.selectedApp!.id,
         localeScreenshots: filtered,
         displayType: state.displayType,
         platform: _apiPlatform(state.platform),
         deleteExisting: state.deleteExisting,
+        isCustomProductPage: isCpp,
+        customProductPageId: state.selectedCustomProductPage?.id,
         onProgress: (progress) {
           emit(
             state.copyWith(

@@ -550,5 +550,14 @@
   "ascAppConfigAppIdHint": "например, 647281920",
   "ascAppConfigBundleIdHint": "например, com.example.stickerapp",
   "ascAppConfigCleared": "Конфигурация App Store Connect очищена",
-  "ascAppConfigSaved": "Конфигурация App Store Connect сохранена"
+  "ascAppConfigSaved": "Конфигурация App Store Connect сохранена",
+  "zoomTo100Percent": "Масштаб 100%",
+  "zoomToSelection": "Масштаб по выделению",
+  "zoomIn": "Увеличить",
+  "zoomOut": "Уменьшить",
+  "uploadDestination": "Назначение загрузки",
+  "primaryAppVersion": "Основная версия приложения",
+  "customProductPage": "Пользовательская страница продукта",
+  "selectCustomProductPage": "Выбрать пользовательскую страницу продукта",
+  "noCustomProductPagesFound": "Пользовательские страницы продуктов для этого приложения не найдены"
 }

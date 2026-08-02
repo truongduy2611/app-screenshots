@@ -1260,6 +1260,26 @@
   "@uploadToAppStoreConnect": {
     "description": "ASC upload sheet header title"
   },
+  "uploadDestination": "Upload Destination",
+  "@uploadDestination": {
+    "description": "Label for selecting where screenshots will be uploaded (Primary Version vs Custom Product Page)"
+  },
+  "primaryAppVersion": "Primary App Version",
+  "@primaryAppVersion": {
+    "description": "Option for uploading screenshots to the primary app version"
+  },
+  "customProductPage": "Custom Product Page",
+  "@customProductPage": {
+    "description": "Option for uploading screenshots to a Custom Product Page"
+  },
+  "selectCustomProductPage": "Select Custom Product Page",
+  "@selectCustomProductPage": {
+    "description": "Title/placeholder for choosing a Custom Product Page"
+  },
+  "noCustomProductPagesFound": "No custom product pages found for this app",
+  "@noCustomProductPagesFound": {
+    "description": "Helper text shown when an app has no Custom Product Pages created"
+  },
   "loadingApps": "Loading apps...",
   "@loadingApps": {
     "description": "Loading state text while fetching apps from ASC"

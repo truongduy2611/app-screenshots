@@ -550,5 +550,14 @@
   "ascAppConfigAppIdHint": "ör. 647281920",
   "ascAppConfigBundleIdHint": "ör. com.example.stickerapp",
   "ascAppConfigCleared": "App Store Connect yapılandırması temizlendi",
-  "ascAppConfigSaved": "App Store Connect yapılandırması kaydedildi"
+  "ascAppConfigSaved": "App Store Connect yapılandırması kaydedildi",
+  "zoomTo100Percent": "%100 Yakınlaştır",
+  "zoomToSelection": "Seçime Yakınlaştır",
+  "zoomIn": "Yakınlaştır",
+  "zoomOut": "Uzaklaştır",
+  "uploadDestination": "Yükleme Hedefi",
+  "primaryAppVersion": "Birincil Uygulama Sürümü",
+  "customProductPage": "Özel Ürün Sayfası",
+  "selectCustomProductPage": "Özel Ürün Sayfası Seçin",
+  "noCustomProductPagesFound": "Bu uygulama için özel ürün sayfası bulunamadı"
 }

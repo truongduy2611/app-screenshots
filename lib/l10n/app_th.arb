@@ -550,5 +550,14 @@
   "ascAppConfigAppIdHint": "เช่น 647281920",
   "ascAppConfigBundleIdHint": "เช่น com.example.stickerapp",
   "ascAppConfigCleared": "ล้างการกำหนดค่า App Store Connect แล้ว",
-  "ascAppConfigSaved": "บันทึกการกำหนดค่า App Store Connect แล้ว"
+  "ascAppConfigSaved": "บันทึกการกำหนดค่า App Store Connect แล้ว",
+  "zoomTo100Percent": "ย่อ/ขยายเป็น 100%",
+  "zoomToSelection": "ย่อ/ขยายตามส่วนที่เลือก",
+  "zoomIn": "ขยาย",
+  "zoomOut": "ย่อ",
+  "uploadDestination": "ปลายทางการอัปโหลด",
+  "primaryAppVersion": "เวอร์ชันแอปหลัก",
+  "customProductPage": "หน้าผลิตภัณฑ์ที่กำหนดเอง",
+  "selectCustomProductPage": "เลือกหน้าผลิตภัณฑ์ที่กำหนดเอง",
+  "noCustomProductPagesFound": "ไม่พบหน้าผลิตภัณฑ์ที่กำหนดเองสำหรับแอปนี้"
 }

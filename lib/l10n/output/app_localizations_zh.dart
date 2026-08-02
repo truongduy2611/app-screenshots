@@ -590,16 +590,16 @@ class AppLocalizationsZh extends AppLocalizations {
   String get zoomToFit => '适应窗口';
 
   @override
-  String get zoomTo100Percent => 'Zoom to 100%';
+  String get zoomTo100Percent => '缩放至 100%';
 
   @override
-  String get zoomToSelection => 'Zoom to Selection';
+  String get zoomToSelection => '缩放至选中项';
 
   @override
-  String get zoomIn => 'Zoom In';
+  String get zoomIn => '放大';
 
   @override
-  String get zoomOut => 'Zoom Out';
+  String get zoomOut => '缩小';
 
   @override
   String get addScreenshot => '添加截图';
@@ -949,6 +949,21 @@ class AppLocalizationsZh extends AppLocalizations {
 
   @override
   String get uploadToAppStoreConnect => '上传至App Store Connect';
+
+  @override
+  String get uploadDestination => '上传目的地';
+
+  @override
+  String get primaryAppVersion => '主 App 版本';
+
+  @override
+  String get customProductPage => '自定产品页';
+
+  @override
+  String get selectCustomProductPage => '选择自定产品页';
+
+  @override
+  String get noCustomProductPagesFound => '未找到此 App 的自定产品页';
 
   @override
   String get loadingApps => '正在加载应用...';
@@ -2372,6 +2387,18 @@ class AppLocalizationsZhHant extends AppLocalizationsZh {
   String get zoomToFit => '縮放至適當大小';
 
   @override
+  String get zoomTo100Percent => '縮放至 100%';
+
+  @override
+  String get zoomToSelection => '縮放至選取項目';
+
+  @override
+  String get zoomIn => '放大';
+
+  @override
+  String get zoomOut => '縮小';
+
+  @override
   String get addScreenshot => '新增截圖';
 
   @override
@@ -2719,6 +2746,21 @@ class AppLocalizationsZhHant extends AppLocalizationsZh {
 
   @override
   String get uploadToAppStoreConnect => '上傳至App Store Connect';
+
+  @override
+  String get uploadDestination => '上傳目的地';
+
+  @override
+  String get primaryAppVersion => '主 App 版本';
+
+  @override
+  String get customProductPage => '自訂產品頁面';
+
+  @override
+  String get selectCustomProductPage => '選取自訂產品頁面';
+
+  @override
+  String get noCustomProductPagesFound => '未找到此 App 的自訂產品頁面';
 
   @override
   String get loadingApps => '正在載入應用程式...';

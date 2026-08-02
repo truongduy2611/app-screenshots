@@ -592,16 +592,16 @@ class AppLocalizationsVi extends AppLocalizations {
   String get zoomToFit => 'Thu phóng vừa khung';
 
   @override
-  String get zoomTo100Percent => 'Zoom to 100%';
+  String get zoomTo100Percent => 'Thu phóng 100%';
 
   @override
-  String get zoomToSelection => 'Zoom to Selection';
+  String get zoomToSelection => 'Thu phóng theo lựa chọn';
 
   @override
-  String get zoomIn => 'Zoom In';
+  String get zoomIn => 'Phóng to';
 
   @override
-  String get zoomOut => 'Zoom Out';
+  String get zoomOut => 'Thu nhỏ';
 
   @override
   String get addScreenshot => 'Thêm ảnh chụp';
@@ -963,6 +963,22 @@ class AppLocalizationsVi extends AppLocalizations {
 
   @override
   String get uploadToAppStoreConnect => 'Tải lên App Store Connect';
+
+  @override
+  String get uploadDestination => 'Đích tải lên';
+
+  @override
+  String get primaryAppVersion => 'Phiên bản ứng dụng chính';
+
+  @override
+  String get customProductPage => 'Trang sản phẩm tùy chỉnh';
+
+  @override
+  String get selectCustomProductPage => 'Chọn trang sản phẩm tùy chỉnh';
+
+  @override
+  String get noCustomProductPagesFound =>
+      'Không tìm thấy trang sản phẩm tùy chỉnh nào cho ứng dụng này';
 
   @override
   String get loadingApps => 'Đang tải ứng dụng...';

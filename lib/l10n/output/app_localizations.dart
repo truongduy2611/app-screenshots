@@ -1931,6 +1931,36 @@ abstract class AppLocalizations {
   /// **'Upload to App Store Connect'**
   String get uploadToAppStoreConnect;
 
+  /// Label for selecting where screenshots will be uploaded (Primary Version vs Custom Product Page)
+  ///
+  /// In en, this message translates to:
+  /// **'Upload Destination'**
+  String get uploadDestination;
+
+  /// Option for uploading screenshots to the primary app version
+  ///
+  /// In en, this message translates to:
+  /// **'Primary App Version'**
+  String get primaryAppVersion;
+
+  /// Option for uploading screenshots to a Custom Product Page
+  ///
+  /// In en, this message translates to:
+  /// **'Custom Product Page'**
+  String get customProductPage;
+
+  /// Title/placeholder for choosing a Custom Product Page
+  ///
+  /// In en, this message translates to:
+  /// **'Select Custom Product Page'**
+  String get selectCustomProductPage;
+
+  /// Helper text shown when an app has no Custom Product Pages created
+  ///
+  /// In en, this message translates to:
+  /// **'No custom product pages found for this app'**
+  String get noCustomProductPagesFound;
+
   /// Loading state text while fetching apps from ASC
   ///
   /// In en, this message translates to:

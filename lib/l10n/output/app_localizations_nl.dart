@@ -597,16 +597,16 @@ class AppLocalizationsNl extends AppLocalizations {
   String get zoomToFit => 'Passend maken';
 
   @override
-  String get zoomTo100Percent => 'Zoom to 100%';
+  String get zoomTo100Percent => 'Zoomen naar 100%';
 
   @override
-  String get zoomToSelection => 'Zoom to Selection';
+  String get zoomToSelection => 'Zoomen naar selectie';
 
   @override
-  String get zoomIn => 'Zoom In';
+  String get zoomIn => 'Inzoomen';
 
   @override
-  String get zoomOut => 'Zoom Out';
+  String get zoomOut => 'Uitzoomen';
 
   @override
   String get addScreenshot => 'Screenshot toevoegen';
@@ -969,6 +969,22 @@ class AppLocalizationsNl extends AppLocalizations {
 
   @override
   String get uploadToAppStoreConnect => 'Uploaden naar App Store Connect';
+
+  @override
+  String get uploadDestination => 'Uploadbestemming';
+
+  @override
+  String get primaryAppVersion => 'Primaire app-versie';
+
+  @override
+  String get customProductPage => 'Aangepaste productpagina';
+
+  @override
+  String get selectCustomProductPage => 'Aangepaste productpagina selecteren';
+
+  @override
+  String get noCustomProductPagesFound =>
+      'Geen aangepaste productpagina\'s gevonden voor deze app';
 
   @override
   String get loadingApps => 'Apps laden...';

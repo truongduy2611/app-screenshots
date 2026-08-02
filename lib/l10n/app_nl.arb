@@ -550,5 +550,14 @@
   "ascAppConfigAppIdHint": "bijv. 647281920",
   "ascAppConfigBundleIdHint": "bijv. com.example.stickerapp",
   "ascAppConfigCleared": "App Store Connect-configuratie gewist",
-  "ascAppConfigSaved": "App Store Connect-configuratie opgeslagen"
+  "ascAppConfigSaved": "App Store Connect-configuratie opgeslagen",
+  "zoomTo100Percent": "Zoomen naar 100%",
+  "zoomToSelection": "Zoomen naar selectie",
+  "zoomIn": "Inzoomen",
+  "zoomOut": "Uitzoomen",
+  "uploadDestination": "Uploadbestemming",
+  "primaryAppVersion": "Primaire app-versie",
+  "customProductPage": "Aangepaste productpagina",
+  "selectCustomProductPage": "Aangepaste productpagina selecteren",
+  "noCustomProductPagesFound": "Geen aangepaste productpagina's gevonden voor deze app"
 }

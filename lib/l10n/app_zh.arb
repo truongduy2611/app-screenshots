@@ -550,5 +550,14 @@
   "ascAppConfigAppIdHint": "例如 647281920",
   "ascAppConfigBundleIdHint": "例如 com.example.stickerapp",
   "ascAppConfigCleared": "App Store Connect 配置已清除",
-  "ascAppConfigSaved": "App Store Connect 配置已保存"
+  "ascAppConfigSaved": "App Store Connect 配置已保存",
+  "zoomTo100Percent": "缩放至 100%",
+  "zoomToSelection": "缩放至选中项",
+  "zoomIn": "放大",
+  "zoomOut": "缩小",
+  "uploadDestination": "上传目的地",
+  "primaryAppVersion": "主 App 版本",
+  "customProductPage": "自定产品页",
+  "selectCustomProductPage": "选择自定产品页",
+  "noCustomProductPagesFound": "未找到此 App 的自定产品页"
 }

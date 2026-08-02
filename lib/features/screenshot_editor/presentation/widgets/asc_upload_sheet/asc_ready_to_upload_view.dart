@@ -20,6 +20,11 @@ class _ReadyToUploadView extends StatelessWidget {
   final ValueChanged<bool> onDeleteExistingChanged;
   final bool rememberApp;
   final ValueChanged<bool> onRememberAppChanged;
+  final AscUploadTargetType targetType;
+  final ValueChanged<AscUploadTargetType> onTargetTypeChanged;
+  final List<AppCustomProductPage> customProductPages;
+  final AppCustomProductPage? selectedCustomProductPage;
+  final ValueChanged<AppCustomProductPage?> onCustomProductPageChanged;
 
   const _ReadyToUploadView({
     required this.app,
@@ -39,6 +44,11 @@ class _ReadyToUploadView extends StatelessWidget {
     required this.onDeleteExistingChanged,
     required this.rememberApp,
     required this.onRememberAppChanged,
+    required this.targetType,
+    required this.onTargetTypeChanged,
+    required this.customProductPages,
+    required this.selectedCustomProductPage,
+    required this.onCustomProductPageChanged,
   });
 
   int get _totalSelectedFiles {
@@ -146,6 +156,60 @@ class _ReadyToUploadView extends StatelessWidget {
           ),
         ),
         const SizedBox(height: 14),
+
+        // ── Destination selector ──
+        SegmentedButton<AscUploadTargetType>(
+          segments: [
+            ButtonSegment(
+              value: AscUploadTargetType.primaryVersion,
+              label: Text(context.l10n.primaryAppVersion),
+              icon: isSmall
+                  ? null
+                  : const Icon(Symbols.devices_rounded, size: 16),
+            ),
+            ButtonSegment(
+              value: AscUploadTargetType.customProductPage,
+              label: Text(context.l10n.customProductPage),
+              icon: isSmall ? null : const Icon(Symbols.web_rounded, size: 16),
+            ),
+          ],
+          selected: {targetType},
+          onSelectionChanged: (s) => onTargetTypeChanged(s.first),
+          showSelectedIcon: false,
+        ),
+        const SizedBox(height: 14),
+
+        if (targetType == AscUploadTargetType.customProductPage) ...[
+          if (customProductPages.isNotEmpty)
+            DropdownButtonFormField<AppCustomProductPage>(
+              initialValue: selectedCustomProductPage ?? customProductPages.first,
+              decoration: InputDecoration(
+                labelText: context.l10n.selectCustomProductPage,
+              ),
+              icon: const Icon(Symbols.keyboard_arrow_down_rounded, size: 22),
+              borderRadius: BorderRadius.circular(14),
+              items: customProductPages
+                  .map<DropdownMenuItem<AppCustomProductPage>>(
+                    (AppCustomProductPage cpp) => DropdownMenuItem<AppCustomProductPage>(
+                      value: cpp,
+                      child: Text(cpp.name.isNotEmpty ? cpp.name : cpp.id),
+                    ),
+                  )
+                  .toList(),
+              onChanged: onCustomProductPageChanged,
+            )
+          else
+            Padding(
+              padding: const EdgeInsets.symmetric(vertical: 4),
+              child: Text(
+                context.l10n.noCustomProductPagesFound,
+                style: theme.textTheme.bodySmall?.copyWith(
+                  color: theme.colorScheme.error,
+                ),
+              ),
+            ),
+          const SizedBox(height: 14),
+        ],
 
         // ── Platform selector ──
         SingleChildScrollView(

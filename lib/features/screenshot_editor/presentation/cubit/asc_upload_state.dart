@@ -11,6 +11,11 @@ enum AscUploadStatus {
   error,
 }
 
+enum AscUploadTargetType {
+  primaryVersion,
+  customProductPage,
+}
+
 class AscUploadState extends Equatable {
   final AscUploadStatus status;
   final List<App> apps;
@@ -26,6 +31,11 @@ class AscUploadState extends Equatable {
   final Set<String> selectedLocales;
   final bool deleteExisting;
   final bool rememberApp;
+  final AscUploadTargetType targetType;
+  final List<AppCustomProductPage> customProductPages;
+  final AppCustomProductPage? selectedCustomProductPage;
+  final AppCustomProductPageVersion? customProductPageVersion;
+  final bool loadingCustomProductPages;
 
   const AscUploadState({
     this.status = AscUploadStatus.initial,
@@ -42,6 +52,11 @@ class AscUploadState extends Equatable {
     this.selectedLocales = const {},
     this.deleteExisting = true,
     this.rememberApp = false,
+    this.targetType = AscUploadTargetType.primaryVersion,
+    this.customProductPages = const [],
+    this.selectedCustomProductPage,
+    this.customProductPageVersion,
+    this.loadingCustomProductPages = false,
   });
 
   AscUploadState copyWith({
@@ -59,6 +74,11 @@ class AscUploadState extends Equatable {
     Set<String>? selectedLocales,
     bool? deleteExisting,
     bool? rememberApp,
+    AscUploadTargetType? targetType,
+    List<AppCustomProductPage>? customProductPages,
+    AppCustomProductPage? selectedCustomProductPage,
+    AppCustomProductPageVersion? customProductPageVersion,
+    bool? loadingCustomProductPages,
   }) {
     return AscUploadState(
       status: status ?? this.status,
@@ -75,6 +95,14 @@ class AscUploadState extends Equatable {
       selectedLocales: selectedLocales ?? this.selectedLocales,
       deleteExisting: deleteExisting ?? this.deleteExisting,
       rememberApp: rememberApp ?? this.rememberApp,
+      targetType: targetType ?? this.targetType,
+      customProductPages: customProductPages ?? this.customProductPages,
+      selectedCustomProductPage:
+          selectedCustomProductPage ?? this.selectedCustomProductPage,
+      customProductPageVersion:
+          customProductPageVersion ?? this.customProductPageVersion,
+      loadingCustomProductPages:
+          loadingCustomProductPages ?? this.loadingCustomProductPages,
     );
   }
 
@@ -94,5 +122,10 @@ class AscUploadState extends Equatable {
     selectedLocales,
     deleteExisting,
     rememberApp,
+    targetType,
+    customProductPages,
+    selectedCustomProductPage,
+    customProductPageVersion,
+    loadingCustomProductPages,
   ];
 }
