@@ -559,5 +559,9 @@
   "primaryAppVersion": "เวอร์ชันแอปหลัก",
   "customProductPage": "หน้าผลิตภัณฑ์ที่กำหนดเอง",
   "selectCustomProductPage": "เลือกหน้าผลิตภัณฑ์ที่กำหนดเอง",
-  "noCustomProductPagesFound": "ไม่พบหน้าผลิตภัณฑ์ที่กำหนดเองสำหรับแอปนี้"
+  "noCustomProductPagesFound": "ไม่พบหน้าผลิตภัณฑ์ที่กำหนดเองสำหรับแอปนี้",
+  "mainStoreListing": "ข้อมูลร้านค้าหลัก",
+  "customStoreListing": "ข้อมูลร้านค้าที่กำหนดเอง",
+  "selectCustomStoreListing": "เลือกข้อมูลร้านค้าที่กำหนดเอง",
+  "noCustomStoreListingsFound": "ไม่พบข้อมูลร้านค้าที่กำหนดเองสำหรับแอปนี้"
 }

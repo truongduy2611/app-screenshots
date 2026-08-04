@@ -990,6 +990,20 @@ class AppLocalizationsEs extends AppLocalizations {
       'No se encontraron páginas de producto personalizadas para esta aplicación';
 
   @override
+  String get mainStoreListing => 'Ficha de tienda principal';
+
+  @override
+  String get customStoreListing => 'Ficha de tienda personalizada';
+
+  @override
+  String get selectCustomStoreListing =>
+      'Seleccionar ficha de tienda personalizada';
+
+  @override
+  String get noCustomStoreListingsFound =>
+      'No se encontraron fichas de tienda personalizadas para esta aplicación';
+
+  @override
   String get loadingApps => 'Cargando apps...';
 
   @override

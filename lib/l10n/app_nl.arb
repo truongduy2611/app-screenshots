@@ -559,5 +559,9 @@
   "primaryAppVersion": "Primaire app-versie",
   "customProductPage": "Aangepaste productpagina",
   "selectCustomProductPage": "Aangepaste productpagina selecteren",
-  "noCustomProductPagesFound": "Geen aangepaste productpagina's gevonden voor deze app"
+  "noCustomProductPagesFound": "Geen aangepaste productpagina's gevonden voor deze app",
+  "mainStoreListing": "Hoofdwinkelvermelding",
+  "customStoreListing": "Aangepaste winkelvermelding",
+  "selectCustomStoreListing": "Aangepaste winkelvermelding selecteren",
+  "noCustomStoreListingsFound": "Geen aangepaste winkelvermeldingen gevonden voor deze app"
 }

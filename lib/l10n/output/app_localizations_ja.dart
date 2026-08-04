@@ -969,6 +969,18 @@ class AppLocalizationsJa extends AppLocalizations {
   String get noCustomProductPagesFound => 'このアプリのカスタムプロダクトページが見つかりません';
 
   @override
+  String get mainStoreListing => 'メインストアの掲載情報';
+
+  @override
+  String get customStoreListing => 'カスタムストアの掲載情報';
+
+  @override
+  String get selectCustomStoreListing => 'カスタムストアの掲載情報を選択';
+
+  @override
+  String get noCustomStoreListingsFound => 'このアプリのカスタムストアの掲載情報が見つかりません';
+
+  @override
   String get loadingApps => 'アプリを読み込み中...';
 
   @override

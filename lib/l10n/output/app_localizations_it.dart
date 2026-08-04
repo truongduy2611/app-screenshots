@@ -990,6 +990,20 @@ class AppLocalizationsIt extends AppLocalizations {
       'Nessuna pagina del prodotto personalizzata trovata per questa app';
 
   @override
+  String get mainStoreListing => 'Scheda dello store principale';
+
+  @override
+  String get customStoreListing => 'Scheda dello store personalizzata';
+
+  @override
+  String get selectCustomStoreListing =>
+      'Seleziona scheda dello store personalizzata';
+
+  @override
+  String get noCustomStoreListingsFound =>
+      'Nessuna scheda dello store personalizzata trovata per questa app';
+
+  @override
   String get loadingApps => 'Caricamento app...';
 
   @override

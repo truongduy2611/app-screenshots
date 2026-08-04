@@ -559,5 +559,9 @@
   "primaryAppVersion": "الإصدار الرئيسي للتطبيق",
   "customProductPage": "صفحة منتج مخصصة",
   "selectCustomProductPage": "حدد صفحة منتج مخصصة",
-  "noCustomProductPagesFound": "لم يتم العثور على صفحات منتجات مخصصة لهذا التطبيق"
+  "noCustomProductPagesFound": "لم يتم العثور على صفحات منتجات مخصصة لهذا التطبيق",
+  "mainStoreListing": "قائمة المتجر الرئيسية",
+  "customStoreListing": "قائمة متجر مخصصة",
+  "selectCustomStoreListing": "حدد قائمة متجر مخصصة",
+  "noCustomStoreListingsFound": "لم يتم العثور على قوائم متجر مخصصة لهذا التطبيق"
 }

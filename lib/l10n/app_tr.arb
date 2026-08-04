@@ -559,5 +559,9 @@
   "primaryAppVersion": "Birincil Uygulama Sürümü",
   "customProductPage": "Özel Ürün Sayfası",
   "selectCustomProductPage": "Özel Ürün Sayfası Seçin",
-  "noCustomProductPagesFound": "Bu uygulama için özel ürün sayfası bulunamadı"
+  "noCustomProductPagesFound": "Bu uygulama için özel ürün sayfası bulunamadı",
+  "mainStoreListing": "Ana Mağaza Girişi",
+  "customStoreListing": "Özel Mağaza Girişi",
+  "selectCustomStoreListing": "Özel Mağaza Girişi Seçin",
+  "noCustomStoreListingsFound": "Bu uygulama için özel mağaza girişi bulunamadı"
 }

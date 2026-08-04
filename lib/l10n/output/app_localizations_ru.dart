@@ -987,6 +987,20 @@ class AppLocalizationsRu extends AppLocalizations {
       'Пользовательские страницы продуктов для этого приложения не найдены';
 
   @override
+  String get mainStoreListing => 'Главная страница приложения в магазине';
+
+  @override
+  String get customStoreListing => 'Пользовательская страница в магазине';
+
+  @override
+  String get selectCustomStoreListing =>
+      'Выбрать пользовательскую страницу в магазине';
+
+  @override
+  String get noCustomStoreListingsFound =>
+      'Пользовательские страницы в магазине для этого приложения не найдены';
+
+  @override
   String get loadingApps => 'Загрузка приложений...';
 
   @override

@@ -996,6 +996,20 @@ class AppLocalizationsFr extends AppLocalizations {
       'Aucune page de produit personnalisée trouvée pour cette application';
 
   @override
+  String get mainStoreListing => 'Fiche du store principale';
+
+  @override
+  String get customStoreListing => 'Fiche du store personnalisée';
+
+  @override
+  String get selectCustomStoreListing =>
+      'Sélectionner une fiche du store personnalisée';
+
+  @override
+  String get noCustomStoreListingsFound =>
+      'Aucune fiche du store personnalisée trouvée pour cette application';
+
+  @override
   String get loadingApps => 'Chargement des apps...';
 
   @override

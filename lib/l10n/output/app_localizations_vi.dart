@@ -981,6 +981,19 @@ class AppLocalizationsVi extends AppLocalizations {
       'Không tìm thấy trang sản phẩm tùy chỉnh nào cho ứng dụng này';
 
   @override
+  String get mainStoreListing => 'Trang cửa hàng chính';
+
+  @override
+  String get customStoreListing => 'Trang cửa hàng tùy chỉnh';
+
+  @override
+  String get selectCustomStoreListing => 'Chọn trang cửa hàng tùy chỉnh';
+
+  @override
+  String get noCustomStoreListingsFound =>
+      'Không tìm thấy trang cửa hàng tùy chỉnh nào cho ứng dụng này';
+
+  @override
   String get loadingApps => 'Đang tải ứng dụng...';
 
   @override

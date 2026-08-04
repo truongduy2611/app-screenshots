@@ -978,6 +978,19 @@ class AppLocalizationsTh extends AppLocalizations {
       'ไม่พบหน้าผลิตภัณฑ์ที่กำหนดเองสำหรับแอปนี้';
 
   @override
+  String get mainStoreListing => 'ข้อมูลร้านค้าหลัก';
+
+  @override
+  String get customStoreListing => 'ข้อมูลร้านค้าที่กำหนดเอง';
+
+  @override
+  String get selectCustomStoreListing => 'เลือกข้อมูลร้านค้าที่กำหนดเอง';
+
+  @override
+  String get noCustomStoreListingsFound =>
+      'ไม่พบข้อมูลร้านค้าที่กำหนดเองสำหรับแอปนี้';
+
+  @override
   String get loadingApps => 'กำลังโหลดแอป...';
 
   @override

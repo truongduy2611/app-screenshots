@@ -987,6 +987,20 @@ class AppLocalizationsNl extends AppLocalizations {
       'Geen aangepaste productpagina\'s gevonden voor deze app';
 
   @override
+  String get mainStoreListing => 'Hoofdwinkelvermelding';
+
+  @override
+  String get customStoreListing => 'Aangepaste winkelvermelding';
+
+  @override
+  String get selectCustomStoreListing =>
+      'Aangepaste winkelvermelding selecteren';
+
+  @override
+  String get noCustomStoreListingsFound =>
+      'Geen aangepaste winkelvermeldingen gevonden voor deze app';
+
+  @override
   String get loadingApps => 'Apps laden...';
 
   @override

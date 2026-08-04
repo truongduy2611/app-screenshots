@@ -559,5 +559,9 @@
   "primaryAppVersion": "主 App 版本",
   "customProductPage": "自定产品页",
   "selectCustomProductPage": "选择自定产品页",
-  "noCustomProductPagesFound": "未找到此 App 的自定产品页"
+  "noCustomProductPagesFound": "未找到此 App 的自定产品页",
+  "mainStoreListing": "主商品详情",
+  "customStoreListing": "自定义商品详情",
+  "selectCustomStoreListing": "选择自定义商品详情",
+  "noCustomStoreListingsFound": "未找到此 App 的自定义商品详情"
 }

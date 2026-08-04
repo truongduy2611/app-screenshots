@@ -969,6 +969,18 @@ class AppLocalizationsKo extends AppLocalizations {
   String get noCustomProductPagesFound => '이 앱에 대한 맞춤 제품 페이지를 찾을 수 없습니다';
 
   @override
+  String get mainStoreListing => '기본 스토어 등록정보';
+
+  @override
+  String get customStoreListing => '맞춤 스토어 등록정보';
+
+  @override
+  String get selectCustomStoreListing => '맞춤 스토어 등록정보 선택';
+
+  @override
+  String get noCustomStoreListingsFound => '이 앱에 대한 맞춤 스토어 등록정보를 찾을 수 없습니다';
+
+  @override
   String get loadingApps => '앱 불러오는 중...';
 
   @override

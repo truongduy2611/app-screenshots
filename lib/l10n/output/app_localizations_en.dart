@@ -982,6 +982,19 @@ class AppLocalizationsEn extends AppLocalizations {
       'No custom product pages found for this app';
 
   @override
+  String get mainStoreListing => 'Main Store Listing';
+
+  @override
+  String get customStoreListing => 'Custom Store Listing';
+
+  @override
+  String get selectCustomStoreListing => 'Select Custom Store Listing';
+
+  @override
+  String get noCustomStoreListingsFound =>
+      'No custom store listings found for this app';
+
+  @override
   String get loadingApps => 'Loading apps...';
 
   @override

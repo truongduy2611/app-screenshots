@@ -988,6 +988,19 @@ class AppLocalizationsTr extends AppLocalizations {
       'Bu uygulama için özel ürün sayfası bulunamadı';
 
   @override
+  String get mainStoreListing => 'Ana Mağaza Girişi';
+
+  @override
+  String get customStoreListing => 'Özel Mağaza Girişi';
+
+  @override
+  String get selectCustomStoreListing => 'Özel Mağaza Girişi Seçin';
+
+  @override
+  String get noCustomStoreListingsFound =>
+      'Bu uygulama için özel mağaza girişi bulunamadı';
+
+  @override
   String get loadingApps => 'Uygulamalar yükleniyor...';
 
   @override

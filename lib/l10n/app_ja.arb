@@ -559,5 +559,9 @@
   "primaryAppVersion": "プライマリ アプリのバージョン",
   "customProductPage": "カスタムプロダクトページ",
   "selectCustomProductPage": "カスタムプロダクトページを選択",
-  "noCustomProductPagesFound": "このアプリのカスタムプロダクトページが見つかりません"
+  "noCustomProductPagesFound": "このアプリのカスタムプロダクトページが見つかりません",
+  "mainStoreListing": "メインストアの掲載情報",
+  "customStoreListing": "カスタムストアの掲載情報",
+  "selectCustomStoreListing": "カスタムストアの掲載情報を選択",
+  "noCustomStoreListingsFound": "このアプリのカスタムストアの掲載情報が見つかりません"
 }

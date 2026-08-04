@@ -559,5 +559,9 @@
   "primaryAppVersion": "기본 앱 버전",
   "customProductPage": "맞춤 제품 페이지",
   "selectCustomProductPage": "맞춤 제품 페이지 선택",
-  "noCustomProductPagesFound": "이 앱에 대한 맞춤 제품 페이지를 찾을 수 없습니다"
+  "noCustomProductPagesFound": "이 앱에 대한 맞춤 제품 페이지를 찾을 수 없습니다",
+  "mainStoreListing": "기본 스토어 등록정보",
+  "customStoreListing": "맞춤 스토어 등록정보",
+  "selectCustomStoreListing": "맞춤 스토어 등록정보 선택",
+  "noCustomStoreListingsFound": "이 앱에 대한 맞춤 스토어 등록정보를 찾을 수 없습니다"
 }

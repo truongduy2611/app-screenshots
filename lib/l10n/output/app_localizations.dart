@@ -1961,6 +1961,30 @@ abstract class AppLocalizations {
   /// **'No custom product pages found for this app'**
   String get noCustomProductPagesFound;
 
+  /// Option for uploading screenshots to the main Play Store listing
+  ///
+  /// In en, this message translates to:
+  /// **'Main Store Listing'**
+  String get mainStoreListing;
+
+  /// Option for uploading screenshots to a Google Play Custom Store Listing
+  ///
+  /// In en, this message translates to:
+  /// **'Custom Store Listing'**
+  String get customStoreListing;
+
+  /// Title/placeholder for choosing a Google Play Custom Store Listing
+  ///
+  /// In en, this message translates to:
+  /// **'Select Custom Store Listing'**
+  String get selectCustomStoreListing;
+
+  /// Helper text shown when an app has no Custom Store Listings created
+  ///
+  /// In en, this message translates to:
+  /// **'No custom store listings found for this app'**
+  String get noCustomStoreListingsFound;
+
   /// Loading state text while fetching apps from ASC
   ///
   /// In en, this message translates to:

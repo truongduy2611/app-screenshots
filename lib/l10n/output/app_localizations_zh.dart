@@ -966,6 +966,18 @@ class AppLocalizationsZh extends AppLocalizations {
   String get noCustomProductPagesFound => '未找到此 App 的自定产品页';
 
   @override
+  String get mainStoreListing => '主商品详情';
+
+  @override
+  String get customStoreListing => '自定义商品详情';
+
+  @override
+  String get selectCustomStoreListing => '选择自定义商品详情';
+
+  @override
+  String get noCustomStoreListingsFound => '未找到此 App 的自定义商品详情';
+
+  @override
   String get loadingApps => '正在加载应用...';
 
   @override
@@ -2761,6 +2773,18 @@ class AppLocalizationsZhHant extends AppLocalizationsZh {
 
   @override
   String get noCustomProductPagesFound => '未找到此 App 的自訂產品頁面';
+
+  @override
+  String get mainStoreListing => '主商品詳情';
+
+  @override
+  String get customStoreListing => '自訂商品詳情';
+
+  @override
+  String get selectCustomStoreListing => '選取自訂商品詳情';
+
+  @override
+  String get noCustomStoreListingsFound => '未找到此 App 的自訂商品詳情';
 
   @override
   String get loadingApps => '正在載入應用程式...';

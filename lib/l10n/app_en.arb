@@ -1280,6 +1280,22 @@
   "@noCustomProductPagesFound": {
     "description": "Helper text shown when an app has no Custom Product Pages created"
   },
+  "mainStoreListing": "Main Store Listing",
+  "@mainStoreListing": {
+    "description": "Option for uploading screenshots to the main Play Store listing"
+  },
+  "customStoreListing": "Custom Store Listing",
+  "@customStoreListing": {
+    "description": "Option for uploading screenshots to a Google Play Custom Store Listing"
+  },
+  "selectCustomStoreListing": "Select Custom Store Listing",
+  "@selectCustomStoreListing": {
+    "description": "Title/placeholder for choosing a Google Play Custom Store Listing"
+  },
+  "noCustomStoreListingsFound": "No custom store listings found for this app",
+  "@noCustomStoreListingsFound": {
+    "description": "Helper text shown when an app has no Custom Store Listings created"
+  },
   "loadingApps": "Loading apps...",
   "@loadingApps": {
     "description": "Loading state text while fetching apps from ASC"

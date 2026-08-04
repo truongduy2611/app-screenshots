@@ -559,5 +559,9 @@
   "primaryAppVersion": "Versão principal do aplicativo",
   "customProductPage": "Página de produto personalizada",
   "selectCustomProductPage": "Selecionar página de produto personalizada",
-  "noCustomProductPagesFound": "Nenhuma página de produto personalizada encontrada para este aplicativo"
+  "noCustomProductPagesFound": "Nenhuma página de produto personalizada encontrada para este aplicativo",
+  "mainStoreListing": "Ficha da loja principal",
+  "customStoreListing": "Ficha da loja personalizada",
+  "selectCustomStoreListing": "Selecionar ficha da loja personalizada",
+  "noCustomStoreListingsFound": "Nenhuma ficha da loja personalizada encontrada para este aplicativo"
 }

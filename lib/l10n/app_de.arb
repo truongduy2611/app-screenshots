@@ -559,5 +559,9 @@
   "primaryAppVersion": "Haupt-App-Version",
   "customProductPage": "Benutzerdefinierte Produktseite",
   "selectCustomProductPage": "Benutzerdefinierte Produktseite auswählen",
-  "noCustomProductPagesFound": "Keine benutzerdefinierten Produktseiten für diese App gefunden"
+  "noCustomProductPagesFound": "Keine benutzerdefinierten Produktseiten für diese App gefunden",
+  "mainStoreListing": "Haupt-Store-Eintrag",
+  "customStoreListing": "Benutzerdefinierter Store-Eintrag",
+  "selectCustomStoreListing": "Benutzerdefinierten Store-Eintrag auswählen",
+  "noCustomStoreListingsFound": "Keine benutzerdefinierten Store-Einträge für diese App gefunden"
 }

@@ -985,6 +985,19 @@ class AppLocalizationsAr extends AppLocalizations {
       'لم يتم العثور على صفحات منتجات مخصصة لهذا التطبيق';
 
   @override
+  String get mainStoreListing => 'قائمة المتجر الرئيسية';
+
+  @override
+  String get customStoreListing => 'قائمة متجر مخصصة';
+
+  @override
+  String get selectCustomStoreListing => 'حدد قائمة متجر مخصصة';
+
+  @override
+  String get noCustomStoreListingsFound =>
+      'لم يتم العثور على قوائم متجر مخصصة لهذا التطبيق';
+
+  @override
   String get loadingApps => 'جارٍ تحميل التطبيقات...';
 
   @override

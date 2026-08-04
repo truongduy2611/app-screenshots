@@ -991,6 +991,20 @@ class AppLocalizationsDe extends AppLocalizations {
       'Keine benutzerdefinierten Produktseiten für diese App gefunden';
 
   @override
+  String get mainStoreListing => 'Haupt-Store-Eintrag';
+
+  @override
+  String get customStoreListing => 'Benutzerdefinierter Store-Eintrag';
+
+  @override
+  String get selectCustomStoreListing =>
+      'Benutzerdefinierten Store-Eintrag auswählen';
+
+  @override
+  String get noCustomStoreListingsFound =>
+      'Keine benutzerdefinierten Store-Einträge für diese App gefunden';
+
+  @override
   String get loadingApps => 'Apps werden geladen...';
 
   @override
