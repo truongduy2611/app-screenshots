@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:app_screenshots/core/extensions/context_extensions.dart';
 import 'package:app_screenshots/core/widgets/app_button.dart';
 import 'package:app_screenshots/core/widgets/app_card.dart';
+import 'package:app_screenshots/features/screenshot_editor/data/play_api/models/play_custom_store_listing.dart';
 import 'package:app_screenshots/features/screenshot_editor/data/services/play_upload_service.dart';
 import 'package:app_screenshots/features/screenshot_editor/presentation/cubit/play_upload_cubit.dart';
 import 'package:app_screenshots/features/screenshot_editor/presentation/widgets/play_credentials_dialog.dart';
@@ -291,6 +292,75 @@ class _ReadyViewState extends State<_ReadyView> {
           ),
         ),
         const SizedBox(height: 14),
+
+        // ── Destination selector ──
+        SegmentedButton<PlayUploadTargetType>(
+          segments: [
+            ButtonSegment(
+              value: PlayUploadTargetType.mainListing,
+              label: Text(context.l10n.mainStoreListing),
+              icon: isSmall
+                  ? null
+                  : const Icon(Symbols.storefront_rounded, size: 16),
+            ),
+            ButtonSegment(
+              value: PlayUploadTargetType.customListing,
+              label: Text(context.l10n.customStoreListing),
+              icon: isSmall ? null : const Icon(Symbols.web_rounded, size: 16),
+            ),
+          ],
+          selected: {state.targetType},
+          onSelectionChanged: (s) => cubit.setTargetType(s.first),
+          showSelectedIcon: false,
+        ),
+        const SizedBox(height: 14),
+
+        if (state.targetType == PlayUploadTargetType.customListing) ...[
+          if (state.loadingCustomStoreListings)
+            const Padding(
+              padding: EdgeInsets.symmetric(vertical: 8),
+              child: Center(
+                child: SizedBox(
+                  width: 20,
+                  height: 20,
+                  child: CircularProgressIndicator(strokeWidth: 2),
+                ),
+              ),
+            )
+          else if (state.customStoreListings.isNotEmpty)
+            DropdownButtonFormField<PlayCustomStoreListing>(
+              initialValue: state.selectedCustomStoreListing ??
+                  state.customStoreListings.first,
+              decoration: InputDecoration(
+                labelText: context.l10n.selectCustomStoreListing,
+              ),
+              icon: const Icon(Symbols.keyboard_arrow_down_rounded, size: 22),
+              borderRadius: BorderRadius.circular(14),
+              items: state.customStoreListings
+                  .map<DropdownMenuItem<PlayCustomStoreListing>>(
+                    (PlayCustomStoreListing csl) =>
+                        DropdownMenuItem<PlayCustomStoreListing>(
+                      value: csl,
+                      child: Text(csl.title.isNotEmpty ? csl.title : csl.id),
+                    ),
+                  )
+                  .toList(),
+              onChanged: (csl) {
+                if (csl != null) cubit.selectCustomStoreListing(csl);
+              },
+            )
+          else
+            Padding(
+              padding: const EdgeInsets.symmetric(vertical: 4),
+              child: Text(
+                context.l10n.noCustomStoreListingsFound,
+                style: theme.textTheme.bodySmall?.copyWith(
+                  color: theme.colorScheme.error,
+                ),
+              ),
+            ),
+          const SizedBox(height: 14),
+        ],
 
         // ── Image type dropdown ──
         DropdownButtonFormField<String>(

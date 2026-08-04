@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'dart:typed_data';
 
+import 'package:app_screenshots/features/screenshot_editor/data/play_api/models/play_custom_store_listing.dart';
 import 'package:app_screenshots/features/screenshot_editor/data/play_api/play_token.dart';
 import 'package:http/http.dart' as http;
 
@@ -140,6 +141,27 @@ class GooglePlayClient {
     if (r.statusCode < 200 || r.statusCode >= 300) _fail(r);
   }
 
+  /// Lists all Custom Store Listings configured for the app.
+  Future<List<PlayCustomStoreListing>> listCustomStoreListings(
+    String packageName,
+    String editId,
+  ) async {
+    final uri = Uri.parse(
+      '$_base/applications/$packageName/edits/$editId/customstorelistings',
+    );
+    final r = await _httpClient.get(uri, headers: await _headers());
+    if (r.statusCode < 200 || r.statusCode >= 300) _fail(r);
+    final body = jsonDecode(r.body) as Map<String, dynamic>;
+    final listings = (body['customStoreListings'] as List?) ?? const [];
+    return listings
+        .map(
+          (e) => PlayCustomStoreListing.fromJson(
+            e as Map<String, dynamic>,
+          ),
+        )
+        .toList();
+  }
+
   /// Abandons an edit, discarding all staged changes. Best-effort.
   Future<void> deleteEdit(String packageName, String editId) async {
     final uri = Uri.parse('$_base/applications/$packageName/edits/$editId');
@@ -150,15 +172,32 @@ class GooglePlayClient {
     }
   }
 
+  String _listingPath(
+    String language,
+    String imageType, {
+    String? customStoreListingId,
+  }) {
+    if (customStoreListingId != null && customStoreListingId.isNotEmpty) {
+      return 'customstorelistings/$customStoreListingId/listings/$language/$imageType';
+    }
+    return 'listings/$language/$imageType';
+  }
+
   /// Lists image ids for a given language + image type.
   Future<List<String>> listImages(
     String packageName,
     String editId,
     String language,
-    String imageType,
-  ) async {
+    String imageType, {
+    String? customStoreListingId,
+  }) async {
+    final path = _listingPath(
+      language,
+      imageType,
+      customStoreListingId: customStoreListingId,
+    );
     final uri = Uri.parse(
-      '$_base/applications/$packageName/edits/$editId/listings/$language/$imageType',
+      '$_base/applications/$packageName/edits/$editId/$path',
     );
     final r = await _httpClient.get(uri, headers: await _headers());
     if (r.statusCode < 200 || r.statusCode >= 300) _fail(r);
@@ -176,10 +215,16 @@ class GooglePlayClient {
     String packageName,
     String editId,
     String language,
-    String imageType,
-  ) async {
+    String imageType, {
+    String? customStoreListingId,
+  }) async {
+    final path = _listingPath(
+      language,
+      imageType,
+      customStoreListingId: customStoreListingId,
+    );
     final uri = Uri.parse(
-      '$_base/applications/$packageName/edits/$editId/listings/$language/$imageType',
+      '$_base/applications/$packageName/edits/$editId/$path',
     );
     final r = await _httpClient.delete(uri, headers: await _headers());
     if (r.statusCode < 200 || r.statusCode >= 300) _fail(r);
@@ -194,15 +239,24 @@ class GooglePlayClient {
     required Uint8List bytes,
     required String contentType,
     String? filename,
+    String? customStoreListingId,
   }) async {
     final token = await _token.getValue();
+    final path = _listingPath(
+      language,
+      imageType,
+      customStoreListingId: customStoreListingId,
+    );
+    final uploadUrl =
+        '$_uploadBase/applications/$packageName/edits/$editId/$path';
 
     if (filename != null) {
-      final uri = Uri.parse(
-        '$_uploadBase/applications/$packageName/edits/$editId/listings/$language/$imageType',
-      ).replace(queryParameters: {'uploadType': 'multipart'});
+      final uri = Uri.parse(uploadUrl).replace(
+        queryParameters: {'uploadType': 'multipart'},
+      );
 
-      final boundary = 'app_screenshots_boundary_${DateTime.now().millisecondsSinceEpoch}';
+      final boundary =
+          'app_screenshots_boundary_${DateTime.now().millisecondsSinceEpoch}';
 
       final metadataHeader = '--$boundary\r\n'
           'Content-Type: application/json; charset=UTF-8\r\n\r\n'
@@ -237,9 +291,9 @@ class GooglePlayClient {
         return null;
       }
     } else {
-      final uri = Uri.parse(
-        '$_uploadBase/applications/$packageName/edits/$editId/listings/$language/$imageType',
-      ).replace(queryParameters: {'uploadType': 'media'});
+      final uri = Uri.parse(uploadUrl).replace(
+        queryParameters: {'uploadType': 'media'},
+      );
 
       final r = await _httpClient.post(
         uri,
