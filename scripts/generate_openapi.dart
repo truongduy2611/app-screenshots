@@ -31,6 +31,13 @@ void main() {
   buffer.writeln('        error:');
   buffer.writeln('          type: string');
   buffer.writeln('          example: "Invalid parameter"');
+  buffer.writeln('  securitySchemes:');
+  buffer.writeln('    bearerAuth:');
+  buffer.writeln('      type: http');
+  buffer.writeln('      scheme: bearer');
+  buffer.writeln('      bearerFormat: LocalSessionToken');
+  buffer.writeln('security:');
+  buffer.writeln('  - bearerAuth: []');
   buffer.writeln('paths:');
 
   void writeAction(
@@ -192,11 +199,10 @@ void main() {
       },
     },
     TranslateAction.overrideOverlay: {
-      'req': ['locale', 'id'],
+      'req': ['locale', 'overlayId'],
       'props': {
         'locale': 'type: string',
-        'id': 'type: string',
-        'text': 'type: string',
+        'overlayId': 'type: string',
         'fontSize': 'type: number',
         'font': 'type: string',
         'color': 'type: string',
@@ -208,8 +214,12 @@ void main() {
       },
     },
     TranslateAction.setLocaleImage: {
-      'req': ['locale', 'file'],
-      'props': {'locale': 'type: string', 'file': 'type: string'},
+      'req': ['locale', 'data'],
+      'props': {
+        'locale': 'type: string',
+        'data': 'type: string\ndescription: Base64-encoded image bytes',
+        'slot': 'type: integer',
+      },
     },
   };
 
@@ -227,6 +237,54 @@ void main() {
         'color': 'type: string',
         'file': 'type: string',
       },
+    },
+  };
+
+  final Map<AscAction, Map<String, dynamic>> ascSchemas = {
+    AscAction.customProductPages: {
+      'req': ['appId'],
+      'props': {'appId': 'type: string'},
+    },
+    AscAction.upload: {
+      'req': ['appId', 'displayType'],
+      'props': {
+        'appId': 'type: string',
+        'sourceDirectory': 'type: string',
+        'screenshots':
+            'type: object\ndescription: Map of locale to base64 image objects',
+        'displayType': 'type: string',
+        'platform': 'type: string',
+        'customProductPageId': 'type: string',
+        'locales': 'type: array',
+        'deleteExisting': 'type: boolean',
+      },
+    },
+  };
+
+  final Map<PlayAction, Map<String, dynamic>> playSchemas = {
+    PlayAction.upload: {
+      'req': ['packageName', 'imageType'],
+      'props': {
+        'packageName': 'type: string',
+        'sourceDirectory': 'type: string',
+        'screenshots':
+            'type: object\ndescription: Map of locale to base64 image objects',
+        'imageType': 'type: string',
+        'locales': 'type: array',
+        'deleteExisting': 'type: boolean',
+        'changesNotSentForReview': 'type: boolean',
+      },
+    },
+  };
+
+  final Map<CollaborationAction, Map<String, dynamic>> collaborationSchemas = {
+    CollaborationAction.share: {
+      'req': ['file'],
+      'props': {'file': 'type: string', 'fileName': 'type: string'},
+    },
+    CollaborationAction.save: {
+      'req': ['localPath', 'workingPath'],
+      'props': {'localPath': 'type: string', 'workingPath': 'type: string'},
     },
   };
 
@@ -276,6 +334,43 @@ void main() {
     writeAction('Preset', action.path, action.actionName);
   }
 
+  for (final action in AscAction.values) {
+    final schema = ascSchemas[action];
+    writeAction(
+      'App Store Connect',
+      action.path,
+      action.actionName,
+      schemaProps: (schema?['props'] as Map?)?.cast<String, String>(),
+      required: (schema?['req'] as List?)?.cast<String>(),
+    );
+  }
+
+  for (final action in PlayAction.values) {
+    final schema = playSchemas[action];
+    writeAction(
+      'Google Play',
+      action.path,
+      action.actionName,
+      schemaProps: (schema?['props'] as Map?)?.cast<String, String>(),
+      required: (schema?['req'] as List?)?.cast<String>(),
+    );
+  }
+
+  for (final action in CollaborationAction.values) {
+    final schema = collaborationSchemas[action];
+    writeAction(
+      'Collaboration',
+      action.path,
+      action.actionName,
+      schemaProps: (schema?['props'] as Map?)?.cast<String, String>(),
+      required: (schema?['req'] as List?)?.cast<String>(),
+    );
+  }
+
+  for (final action in JobAction.values) {
+    writeAction('Jobs', action.path, action.actionName);
+  }
+
   // Status route
   buffer.writeln('  /api/status:');
   buffer.writeln('    get:');
@@ -291,6 +386,17 @@ void main() {
   buffer.writeln(
     '                \$ref: "#/components/schemas/SuccessResponse"',
   );
+
+  buffer.writeln('  /api/capabilities:');
+  buffer.writeln('    get:');
+  buffer.writeln('      tags:');
+  buffer.writeln('        - Server');
+  buffer.writeln(
+    '      summary: Get supported integrations and credential state',
+  );
+  buffer.writeln('      responses:');
+  buffer.writeln('        "200":');
+  buffer.writeln('          description: Successful execution');
 
   final yamlContent = buffer.toString();
 
@@ -332,6 +438,10 @@ const String _swaggerUiHtml = r"""
 window.onload = () => {
   window.ui = SwaggerUIBundle({
     url: '/api/docs/openapi.yaml',
+    requestInterceptor: (request) => {
+      request.headers['Authorization'] = 'Bearer __APPSHOTS_TOKEN__';
+      return request;
+    },
     dom_id: '#swagger-ui',
     presets: [
       SwaggerUIBundle.presets.apis,

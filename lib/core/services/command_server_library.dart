@@ -126,7 +126,31 @@ extension _LibraryRoutes on CommandServer {
         if (imported == null) {
           return ServerResponse.error('Failed to parse .appshots file');
         }
-        return ServerResponse.ok({'name': imported.name, 'id': imported.id});
+        final thumbnailFile = File(imported.thumbnailPath);
+        final thumbnailBytes = await thumbnailFile.exists()
+            ? await thumbnailFile.readAsBytes()
+            : Uint8List(0);
+        final originalImageFile = imported.imagePath == null
+            ? null
+            : File(imported.imagePath!);
+        final imageFiles = imported.imagePaths
+            ?.map((path) => path == null ? null : File(path))
+            .toList();
+        final saved = await _persistenceService.saveDesign(
+          design: imported.design,
+          thumbnailBytes: thumbnailBytes,
+          name: imported.name,
+          originalImageFile:
+              originalImageFile != null && await originalImageFile.exists()
+              ? originalImageFile
+              : null,
+          multiDesigns: imported.multiDesigns,
+          imageFiles: imageFiles,
+          translationBundle: imported.translationBundle,
+          ascAppConfig: imported.ascAppConfig,
+        );
+        await _libraryCubit?.loadDesigns();
+        return ServerResponse.ok({'name': saved.name, 'id': saved.id});
 
       case LibraryAction.export_:
         final body = await _readBody(request);

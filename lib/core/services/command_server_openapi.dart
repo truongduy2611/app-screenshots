@@ -30,6 +30,13 @@ components:
         error:
           type: string
           example: "Invalid parameter"
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: LocalSessionToken
+security:
+  - bearerAuth: []
 paths:
   /api/editor/state:
     post:
@@ -1156,13 +1163,11 @@ paths:
               type: object
               required:
                 - locale
-                - id
+                - overlayId
               properties:
                 locale:
                   type: string
-                id:
-                  type: string
-                text:
+                overlayId:
                   type: string
                 fontSize:
                   type: number
@@ -1200,12 +1205,15 @@ paths:
               type: object
               required:
                 - locale
-                - file
+                - data
               properties:
                 locale:
                   type: string
-                file:
+                data:
                   type: string
+description: Base64-encoded image bytes
+                slot:
+                  type: integer
       responses:
         "200":
           description: Successful execution
@@ -1237,6 +1245,192 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/SuccessResponse"
+  /api/asc/apps:
+    post:
+      tags:
+        - App Store Connect
+      summary: Execute apps
+      responses:
+        "200":
+          description: Successful execution
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/SuccessResponse"
+  /api/asc/custom-product-pages:
+    post:
+      tags:
+        - App Store Connect
+      summary: Execute custom-product-pages
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - appId
+              properties:
+                appId:
+                  type: string
+      responses:
+        "200":
+          description: Successful execution
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/SuccessResponse"
+  /api/asc/upload:
+    post:
+      tags:
+        - App Store Connect
+      summary: Execute upload
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - appId
+                - displayType
+              properties:
+                appId:
+                  type: string
+                sourceDirectory:
+                  type: string
+                screenshots:
+                  type: object
+description: Map of locale to base64 image objects
+                displayType:
+                  type: string
+                platform:
+                  type: string
+                customProductPageId:
+                  type: string
+                locales:
+                  type: array
+                deleteExisting:
+                  type: boolean
+      responses:
+        "200":
+          description: Successful execution
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/SuccessResponse"
+  /api/play/upload:
+    post:
+      tags:
+        - Google Play
+      summary: Execute upload
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - packageName
+                - imageType
+              properties:
+                packageName:
+                  type: string
+                sourceDirectory:
+                  type: string
+                screenshots:
+                  type: object
+description: Map of locale to base64 image objects
+                imageType:
+                  type: string
+                locales:
+                  type: array
+                deleteExisting:
+                  type: boolean
+                changesNotSentForReview:
+                  type: boolean
+      responses:
+        "200":
+          description: Successful execution
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/SuccessResponse"
+  /api/collaboration/share:
+    post:
+      tags:
+        - Collaboration
+      summary: Execute share
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - file
+              properties:
+                file:
+                  type: string
+                fileName:
+                  type: string
+      responses:
+        "200":
+          description: Successful execution
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/SuccessResponse"
+  /api/collaboration/save:
+    post:
+      tags:
+        - Collaboration
+      summary: Execute save
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - localPath
+                - workingPath
+              properties:
+                localPath:
+                  type: string
+                workingPath:
+                  type: string
+      responses:
+        "200":
+          description: Successful execution
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/SuccessResponse"
+  /api/jobs/list:
+    post:
+      tags:
+        - Jobs
+      summary: Execute list
+      responses:
+        "200":
+          description: Successful execution
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/SuccessResponse"
+  /api/jobs/status:
+    post:
+      tags:
+        - Jobs
+      summary: Execute status
+      responses:
+        "200":
+          description: Successful execution
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/SuccessResponse"
   /api/status:
     get:
       tags:
@@ -1249,6 +1443,14 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/SuccessResponse"
+  /api/capabilities:
+    get:
+      tags:
+        - Server
+      summary: Get supported integrations and credential state
+      responses:
+        "200":
+          description: Successful execution
 """;
 
 const String _swaggerUiHtml = r"""
@@ -1271,6 +1473,10 @@ const String _swaggerUiHtml = r"""
 window.onload = () => {
   window.ui = SwaggerUIBundle({
     url: '/api/docs/openapi.yaml',
+    requestInterceptor: (request) => {
+      request.headers['Authorization'] = 'Bearer __APPSHOTS_TOKEN__';
+      return request;
+    },
     dom_id: '#swagger-ui',
     presets: [
       SwaggerUIBundle.presets.apis,
