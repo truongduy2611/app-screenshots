@@ -18,6 +18,10 @@ class FontResolver {
   >
   _cache = {};
 
+  /// Cached Google Fonts map to avoid re-creating it on every resolution call.
+  static final Map<String, TextStyle Function({TextStyle? textStyle})>
+      _googleFontsMap = GoogleFonts.asMap();
+
   /// Alias mapping for Google Sans, native iOS fonts (SF Pro, SF Rounded, etc.), and related variants.
   static const Map<String, String> _fontAliases = {
     // Google Sans variants
@@ -63,7 +67,7 @@ class FontResolver {
 
   /// Resolves the given [family] name, checking alias mappings first.
   static String resolveFamilyName(String family) {
-    if (GoogleFonts.asMap().containsKey(family)) {
+    if (_googleFontsMap.containsKey(family)) {
       return family;
     }
     return _fontAliases[family] ?? family;
@@ -153,5 +157,3 @@ class FontResolver {
     return lower.contains('rounded') || lower.contains('round');
   }
 }
-
-
