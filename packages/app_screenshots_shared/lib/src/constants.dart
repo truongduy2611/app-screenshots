@@ -10,4 +10,7 @@ class AppConstants {
 
   /// Port file name within the config directory.
   static const String portFileName = 'server.port';
+
+  /// JSON session file containing the discovered port and bearer token.
+  static const String sessionFileName = 'server.session.json';
 }

@@ -32,6 +32,21 @@ void main() {
         expect(ApiRoute.fromPath('/api/multi/state'), ApiRoute.multi);
       });
 
+      test('matches capabilities exactly', () {
+        expect(ApiRoute.fromPath('/api/capabilities'), ApiRoute.capabilities);
+        expect(ApiRoute.fromPath('/api/capabilities/extra'), isNull);
+      });
+
+      test('matches publishing and job prefixes', () {
+        expect(ApiRoute.fromPath('/api/asc/upload'), ApiRoute.asc);
+        expect(ApiRoute.fromPath('/api/play/upload'), ApiRoute.play);
+        expect(
+          ApiRoute.fromPath('/api/collaboration/share'),
+          ApiRoute.collaboration,
+        );
+        expect(ApiRoute.fromPath('/api/jobs/status'), ApiRoute.jobs);
+      });
+
       test('returns null for unknown path', () {
         expect(ApiRoute.fromPath('/api/unknown/something'), isNull);
       });
@@ -78,6 +93,10 @@ void main() {
         expect(ApiRoute.translate.prefix, '/api/translate/');
         expect(ApiRoute.preset.prefix, '/api/preset/');
         expect(ApiRoute.multi.prefix, '/api/multi/');
+        expect(ApiRoute.asc.prefix, '/api/asc/');
+        expect(ApiRoute.play.prefix, '/api/play/');
+        expect(ApiRoute.collaboration.prefix, '/api/collaboration/');
+        expect(ApiRoute.jobs.prefix, '/api/jobs/');
       });
     });
   });
@@ -93,6 +112,10 @@ void main() {
 
     test('portFileName is correct', () {
       expect(AppConstants.portFileName, 'server.port');
+    });
+
+    test('sessionFileName is correct', () {
+      expect(AppConstants.sessionFileName, 'server.session.json');
     });
   });
 }
