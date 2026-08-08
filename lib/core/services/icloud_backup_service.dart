@@ -92,8 +92,10 @@ class ICloudBackupService {
         return null;
       }
 
-      // Check if directory has any content
-      if (await designsDir.list().isEmpty) {
+      // Check if directory has any content — stop at the first entry rather
+      // than consuming the entire directory stream via Stream.isEmpty.
+      final hasContent = await designsDir.list().any((_) => true);
+      if (!hasContent) {
         AppLogger.d(
           'Designs directory is empty, skipping',
           tag: 'iCloudBackup',
