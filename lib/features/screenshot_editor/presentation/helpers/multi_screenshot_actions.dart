@@ -152,9 +152,10 @@ mixin MultiScreenshotActions<T extends StatefulWidget> on State<T> {
       }
 
       if (!context.mounted) return;
-      final path = await FilePicker.platform.saveFile(
+      final path = await FilePicker.saveFile(
         dialogTitle: context.l10n.export,
         fileName: fileName,
+        bytes: bytes,
       );
 
       if (path == null) return;
@@ -359,7 +360,7 @@ mixin MultiScreenshotActions<T extends StatefulWidget> on State<T> {
         // ignore: deprecated_member_use
         await Share.shareXFiles(xFiles, text: context.l10n.appTitle);
       } else {
-        final dir = await FilePicker.platform.getDirectoryPath(
+        final dir = await FilePicker.getDirectoryPath(
           dialogTitle: context.l10n.selectExportFolder,
         );
         if (dir == null) return;

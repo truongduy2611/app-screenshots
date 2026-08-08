@@ -24,6 +24,7 @@ class _ReadyToUploadView extends StatelessWidget {
   final ValueChanged<AscUploadTargetType> onTargetTypeChanged;
   final List<AppCustomProductPage> customProductPages;
   final AppCustomProductPage? selectedCustomProductPage;
+  final bool hasEditableCustomProductPage;
   final ValueChanged<AppCustomProductPage?> onCustomProductPageChanged;
 
   const _ReadyToUploadView({
@@ -48,6 +49,7 @@ class _ReadyToUploadView extends StatelessWidget {
     required this.onTargetTypeChanged,
     required this.customProductPages,
     required this.selectedCustomProductPage,
+    required this.hasEditableCustomProductPage,
     required this.onCustomProductPageChanged,
   });
 
@@ -83,6 +85,9 @@ class _ReadyToUploadView extends StatelessWidget {
         ? displayType
         : displayTypes.keys.first;
     final totalFiles = _totalSelectedFiles;
+    final hasUploadTarget =
+        targetType == AscUploadTargetType.primaryVersion ||
+        selectedCustomProductPage != null && hasEditableCustomProductPage;
 
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -182,7 +187,8 @@ class _ReadyToUploadView extends StatelessWidget {
         if (targetType == AscUploadTargetType.customProductPage) ...[
           if (customProductPages.isNotEmpty)
             DropdownButtonFormField<AppCustomProductPage>(
-              initialValue: selectedCustomProductPage ?? customProductPages.first,
+              initialValue:
+                  selectedCustomProductPage ?? customProductPages.first,
               decoration: InputDecoration(
                 labelText: context.l10n.selectCustomProductPage,
               ),
@@ -190,10 +196,11 @@ class _ReadyToUploadView extends StatelessWidget {
               borderRadius: BorderRadius.circular(14),
               items: customProductPages
                   .map<DropdownMenuItem<AppCustomProductPage>>(
-                    (AppCustomProductPage cpp) => DropdownMenuItem<AppCustomProductPage>(
-                      value: cpp,
-                      child: Text(cpp.name.isNotEmpty ? cpp.name : cpp.id),
-                    ),
+                    (AppCustomProductPage cpp) =>
+                        DropdownMenuItem<AppCustomProductPage>(
+                          value: cpp,
+                          child: Text(cpp.name.isNotEmpty ? cpp.name : cpp.id),
+                        ),
                   )
                   .toList(),
               onChanged: onCustomProductPageChanged,
@@ -400,7 +407,9 @@ class _ReadyToUploadView extends StatelessWidget {
 
         // ── Upload button ──
         AppButton.primary(
-          onPressed: selectedLocales.isNotEmpty ? onUpload : null,
+          onPressed: selectedLocales.isNotEmpty && hasUploadTarget
+              ? onUpload
+              : null,
           icon: Symbols.cloud_upload,
           label: selectedLocales.isEmpty
               ? context.l10n.selectLocalesToUpload

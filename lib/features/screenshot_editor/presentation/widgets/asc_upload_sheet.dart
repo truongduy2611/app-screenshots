@@ -198,6 +198,8 @@ class AscUploadSheet extends StatelessWidget {
                 context.read<AscUploadCubit>().setTargetType(type),
             customProductPages: state.customProductPages,
             selectedCustomProductPage: state.selectedCustomProductPage,
+            hasEditableCustomProductPage:
+                state.customProductPageVersion != null,
             onCustomProductPageChanged: (cpp) {
               if (cpp != null) {
                 context.read<AscUploadCubit>().selectCustomProductPage(cpp);

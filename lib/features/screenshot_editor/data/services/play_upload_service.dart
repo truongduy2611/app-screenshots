@@ -1,7 +1,6 @@
 import 'dart:io';
 
 import 'package:app_screenshots/core/services/app_logger.dart';
-import 'package:app_screenshots/features/screenshot_editor/data/play_api/models/play_custom_store_listing.dart';
 import 'package:app_screenshots/features/screenshot_editor/data/play_api/play_client.dart';
 import 'package:app_screenshots/features/screenshot_editor/data/play_api/play_token.dart';
 import 'package:app_screenshots/features/screenshot_editor/data/services/asc_upload_service.dart'
@@ -60,19 +59,6 @@ class PlayUploadService {
     _client = null;
   }
 
-  /// Lists all Custom Store Listings configured for the package.
-  Future<List<PlayCustomStoreListing>> listCustomStoreListings(
-    String packageName,
-  ) async {
-    final client = await _getClient();
-    final editId = await client.insertEdit(packageName);
-    try {
-      return await client.listCustomStoreListings(packageName, editId);
-    } finally {
-      await client.deleteEdit(packageName, editId);
-    }
-  }
-
   /// Uploads screenshots for multiple locales under a single image type.
   ///
   /// [localeScreenshots] maps an app/translation locale → ordered files.
@@ -84,11 +70,8 @@ class PlayUploadService {
     required void Function(AscUploadProgress) onProgress,
     bool deleteExisting = true,
     bool changesNotSentForReview = true,
-    bool isCustomStoreListing = false,
-    String? customStoreListingId,
   }) async {
     final client = await _getClient();
-    final targetCslId = isCustomStoreListing ? customStoreListingId : null;
 
     int totalFiles = 0;
     for (final files in localeScreenshots.values) {
@@ -158,7 +141,6 @@ class PlayUploadService {
                 editId,
                 playLocale,
                 imageType,
-                customStoreListingId: targetCslId,
               );
             } else {
               existingCount = (await client.listImages(
@@ -166,7 +148,6 @@ class PlayUploadService {
                 editId,
                 playLocale,
                 imageType,
-                customStoreListingId: targetCslId,
               )).length;
             }
           } on PlayApiException catch (e) {
@@ -198,8 +179,10 @@ class PlayUploadService {
           }
 
           // Cap to the free slots so we never exceed Google Play's limit.
-          final freeSlots = (kPlayMaxScreenshotsPerType - existingCount)
-              .clamp(0, kPlayMaxScreenshotsPerType);
+          final freeSlots = (kPlayMaxScreenshotsPerType - existingCount).clamp(
+            0,
+            kPlayMaxScreenshotsPerType,
+          );
           final filesToUpload = files.take(freeSlots).toList();
           final skipped = files.length - filesToUpload.length;
 
@@ -209,7 +192,8 @@ class PlayUploadService {
               emitProgress(appLocale);
               final bytes = await file.readAsBytes();
               final ext = file.path.split('.').last.toLowerCase();
-              final filename = '${playLocale.replaceAll('-', '_')}_${index.toString().padLeft(2, '0')}.$ext';
+              final filename =
+                  '${playLocale.replaceAll('-', '_')}_${index.toString().padLeft(2, '0')}.$ext';
               await client.uploadImage(
                 packageName: packageName,
                 editId: editId,
@@ -218,7 +202,6 @@ class PlayUploadService {
                 bytes: bytes,
                 contentType: _contentType(file.path),
                 filename: filename,
-                customStoreListingId: targetCslId,
               );
               localeSuccess++;
               successCount++;

@@ -1,7 +1,6 @@
 import 'dart:convert';
 import 'dart:typed_data';
 
-import 'package:app_screenshots/features/screenshot_editor/data/play_api/models/play_custom_store_listing.dart';
 import 'package:app_screenshots/features/screenshot_editor/data/play_api/play_token.dart';
 import 'package:http/http.dart' as http;
 
@@ -58,8 +57,7 @@ class PlayApiException implements Exception {
   /// feature declaration first.
   bool get isHealthDeclarationRequired {
     final lower = message.toLowerCase();
-    return statusCode == 403 &&
-        lower.contains('health features');
+    return statusCode == 403 && lower.contains('health features');
   }
 
   @override
@@ -112,7 +110,10 @@ class GooglePlayClient {
     final body = jsonDecode(r.body) as Map<String, dynamic>;
     final id = body['id'] as String?;
     if (id == null) {
-      throw PlayApiException(r.statusCode, 'Edit response missing id: ${r.body}');
+      throw PlayApiException(
+        r.statusCode,
+        'Edit response missing id: ${r.body}',
+      );
     }
     return id;
   }
@@ -134,32 +135,9 @@ class GooglePlayClient {
     }
     final uri = Uri.parse(
       '$_base/applications/$packageName/edits/$editId:commit',
-    ).replace(
-      queryParameters: queryParams.isEmpty ? null : queryParams,
-    );
+    ).replace(queryParameters: queryParams.isEmpty ? null : queryParams);
     final r = await _httpClient.post(uri, headers: await _headers());
     if (r.statusCode < 200 || r.statusCode >= 300) _fail(r);
-  }
-
-  /// Lists all Custom Store Listings configured for the app.
-  Future<List<PlayCustomStoreListing>> listCustomStoreListings(
-    String packageName,
-    String editId,
-  ) async {
-    final uri = Uri.parse(
-      '$_base/applications/$packageName/edits/$editId/customstorelistings',
-    );
-    final r = await _httpClient.get(uri, headers: await _headers());
-    if (r.statusCode < 200 || r.statusCode >= 300) _fail(r);
-    final body = jsonDecode(r.body) as Map<String, dynamic>;
-    final listings = (body['customStoreListings'] as List?) ?? const [];
-    return listings
-        .map(
-          (e) => PlayCustomStoreListing.fromJson(
-            e as Map<String, dynamic>,
-          ),
-        )
-        .toList();
   }
 
   /// Abandons an edit, discarding all staged changes. Best-effort.
@@ -172,32 +150,15 @@ class GooglePlayClient {
     }
   }
 
-  String _listingPath(
-    String language,
-    String imageType, {
-    String? customStoreListingId,
-  }) {
-    if (customStoreListingId != null && customStoreListingId.isNotEmpty) {
-      return 'customstorelistings/$customStoreListingId/listings/$language/$imageType';
-    }
-    return 'listings/$language/$imageType';
-  }
-
   /// Lists image ids for a given language + image type.
   Future<List<String>> listImages(
     String packageName,
     String editId,
     String language,
-    String imageType, {
-    String? customStoreListingId,
-  }) async {
-    final path = _listingPath(
-      language,
-      imageType,
-      customStoreListingId: customStoreListingId,
-    );
+    String imageType,
+  ) async {
     final uri = Uri.parse(
-      '$_base/applications/$packageName/edits/$editId/$path',
+      '$_base/applications/$packageName/edits/$editId/listings/$language/$imageType',
     );
     final r = await _httpClient.get(uri, headers: await _headers());
     if (r.statusCode < 200 || r.statusCode >= 300) _fail(r);
@@ -215,16 +176,10 @@ class GooglePlayClient {
     String packageName,
     String editId,
     String language,
-    String imageType, {
-    String? customStoreListingId,
-  }) async {
-    final path = _listingPath(
-      language,
-      imageType,
-      customStoreListingId: customStoreListingId,
-    );
+    String imageType,
+  ) async {
     final uri = Uri.parse(
-      '$_base/applications/$packageName/edits/$editId/$path',
+      '$_base/applications/$packageName/edits/$editId/listings/$language/$imageType',
     );
     final r = await _httpClient.delete(uri, headers: await _headers());
     if (r.statusCode < 200 || r.statusCode >= 300) _fail(r);
@@ -239,30 +194,26 @@ class GooglePlayClient {
     required Uint8List bytes,
     required String contentType,
     String? filename,
-    String? customStoreListingId,
   }) async {
     final token = await _token.getValue();
-    final path = _listingPath(
-      language,
-      imageType,
-      customStoreListingId: customStoreListingId,
-    );
     final uploadUrl =
-        '$_uploadBase/applications/$packageName/edits/$editId/$path';
+        '$_uploadBase/applications/$packageName/edits/$editId/listings/$language/$imageType';
 
     if (filename != null) {
-      final uri = Uri.parse(uploadUrl).replace(
-        queryParameters: {'uploadType': 'multipart'},
-      );
+      final uri = Uri.parse(
+        uploadUrl,
+      ).replace(queryParameters: {'uploadType': 'multipart'});
 
       final boundary =
           'app_screenshots_boundary_${DateTime.now().millisecondsSinceEpoch}';
 
-      final metadataHeader = '--$boundary\r\n'
+      final metadataHeader =
+          '--$boundary\r\n'
           'Content-Type: application/json; charset=UTF-8\r\n\r\n'
           '{}\r\n';
 
-      final mediaHeader = '--$boundary\r\n'
+      final mediaHeader =
+          '--$boundary\r\n'
           'Content-Type: $contentType\r\n'
           'Content-Disposition: attachment; filename="$filename"\r\n\r\n';
 
@@ -291,9 +242,9 @@ class GooglePlayClient {
         return null;
       }
     } else {
-      final uri = Uri.parse(uploadUrl).replace(
-        queryParameters: {'uploadType': 'media'},
-      );
+      final uri = Uri.parse(
+        uploadUrl,
+      ).replace(queryParameters: {'uploadType': 'media'});
 
       final r = await _httpClient.post(
         uri,

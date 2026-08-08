@@ -11,10 +11,7 @@ enum AscUploadStatus {
   error,
 }
 
-enum AscUploadTargetType {
-  primaryVersion,
-  customProductPage,
-}
+enum AscUploadTargetType { primaryVersion, customProductPage }
 
 class AscUploadState extends Equatable {
   final AscUploadStatus status;
@@ -78,6 +75,8 @@ class AscUploadState extends Equatable {
     List<AppCustomProductPage>? customProductPages,
     AppCustomProductPage? selectedCustomProductPage,
     AppCustomProductPageVersion? customProductPageVersion,
+    bool clearSelectedCustomProductPage = false,
+    bool clearCustomProductPageVersion = false,
     bool? loadingCustomProductPages,
   }) {
     return AscUploadState(
@@ -97,10 +96,12 @@ class AscUploadState extends Equatable {
       rememberApp: rememberApp ?? this.rememberApp,
       targetType: targetType ?? this.targetType,
       customProductPages: customProductPages ?? this.customProductPages,
-      selectedCustomProductPage:
-          selectedCustomProductPage ?? this.selectedCustomProductPage,
-      customProductPageVersion:
-          customProductPageVersion ?? this.customProductPageVersion,
+      selectedCustomProductPage: clearSelectedCustomProductPage
+          ? null
+          : selectedCustomProductPage ?? this.selectedCustomProductPage,
+      customProductPageVersion: clearCustomProductPageVersion
+          ? null
+          : customProductPageVersion ?? this.customProductPageVersion,
       loadingCustomProductPages:
           loadingCustomProductPages ?? this.loadingCustomProductPages,
     );

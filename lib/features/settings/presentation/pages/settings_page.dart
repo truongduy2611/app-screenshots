@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:app_screenshots/core/app_constants.dart';
 import 'package:app_screenshots/core/di/service_locator.dart';
+import 'package:app_screenshots/core/services/command_server.dart';
 import 'package:app_screenshots/core/services/icloud_backup_service.dart';
 import 'package:app_screenshots/core/utils/china_locale_helper.dart';
 import 'package:app_screenshots/features/screenshot_editor/presentation/widgets/asc_credentials_dialog.dart';
@@ -60,7 +61,6 @@ class SettingsDialog extends StatefulWidget {
         BlocProvider.value(value: context.read<ThemeCubit>()),
         BlocProvider.value(value: context.read<AppIconCubit>()),
         BlocProvider.value(value: context.read<BackupCubit>()),
-
       ],
       child: child,
     );
@@ -149,7 +149,6 @@ class _SettingsDialogState extends State<SettingsDialog> {
         return ListView(
           padding: const EdgeInsets.all(20),
           children: [
-
             // ── Appearance ──
             _SectionHeader(title: context.l10n.appearance),
             const SizedBox(height: 8),

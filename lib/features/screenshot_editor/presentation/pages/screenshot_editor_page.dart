@@ -535,9 +535,10 @@ class _ScreenshotEditorViewState extends State<ScreenshotEditorView>
       }
 
       if (!context.mounted) return;
-      final path = await FilePicker.platform.saveFile(
+      final path = await FilePicker.saveFile(
         dialogTitle: context.l10n.export,
         fileName: fileName,
+        bytes: bytes,
       );
 
       if (path == null) return;

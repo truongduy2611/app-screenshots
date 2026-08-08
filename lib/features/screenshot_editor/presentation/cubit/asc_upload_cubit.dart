@@ -122,7 +122,10 @@ class AscUploadCubit extends Cubit<AscUploadState> {
       try {
         cpps = await _uploadService.listCustomProductPages(app.id);
       } catch (e) {
-        AppLogger.w('Failed to load custom product pages: $e', tag: 'AscUpload');
+        AppLogger.w(
+          'Failed to load custom product pages: $e',
+          tag: 'AscUpload',
+        );
       }
 
       AppCustomProductPage? selectedCpp;
@@ -154,6 +157,8 @@ class AscUploadCubit extends Cubit<AscUploadState> {
           customProductPages: cpps,
           selectedCustomProductPage: selectedCpp,
           customProductPageVersion: cppVersion,
+          clearSelectedCustomProductPage: selectedCpp == null,
+          clearCustomProductPageVersion: cppVersion == null,
           status: AscUploadStatus.readyToUpload,
           ascAppConfig: AscAppConfig(
             appId: app.id,
@@ -190,12 +195,13 @@ class AscUploadCubit extends Cubit<AscUploadState> {
     emit(
       state.copyWith(
         selectedCustomProductPage: cpp,
+        clearCustomProductPageVersion: true,
         loadingCustomProductPages: true,
       ),
     );
     try {
-      final cppVersion =
-          await _uploadService.getEditableCustomProductPageVersion(cpp.id);
+      final cppVersion = await _uploadService
+          .getEditableCustomProductPageVersion(cpp.id);
       emit(
         state.copyWith(
           selectedCustomProductPage: cpp,
@@ -205,7 +211,12 @@ class AscUploadCubit extends Cubit<AscUploadState> {
       );
     } catch (e) {
       AppLogger.w('Failed to load CPP version: $e', tag: 'AscUpload');
-      emit(state.copyWith(loadingCustomProductPages: false));
+      emit(
+        state.copyWith(
+          clearCustomProductPageVersion: true,
+          loadingCustomProductPages: false,
+        ),
+      );
     }
   }
 
@@ -288,8 +299,7 @@ class AscUploadCubit extends Cubit<AscUploadState> {
 
     emit(state.copyWith(status: AscUploadStatus.uploading));
     try {
-      final isCpp =
-          state.targetType == AscUploadTargetType.customProductPage;
+      final isCpp = state.targetType == AscUploadTargetType.customProductPage;
       final result = await _uploadService.uploadAll(
         appId: state.selectedApp!.id,
         localeScreenshots: filtered,

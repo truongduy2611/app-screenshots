@@ -2,15 +2,7 @@ part of 'play_upload_cubit.dart';
 
 enum PlayUploadStatus { initial, ready, uploading, done, error }
 
-enum PlayUploadFailure {
-  autoSubmitRequired,
-  declarationRequired,
-}
-
-enum PlayUploadTargetType {
-  mainListing,
-  customListing,
-}
+enum PlayUploadFailure { autoSubmitRequired, declarationRequired }
 
 class PlayUploadState extends Equatable {
   final PlayUploadStatus status;
@@ -24,10 +16,6 @@ class PlayUploadState extends Equatable {
   final AscUploadResult? result;
   final String? errorMessage;
   final PlayUploadFailure? failure;
-  final PlayUploadTargetType targetType;
-  final List<PlayCustomStoreListing> customStoreListings;
-  final PlayCustomStoreListing? selectedCustomStoreListing;
-  final bool loadingCustomStoreListings;
 
   const PlayUploadState({
     this.status = PlayUploadStatus.initial,
@@ -41,10 +29,6 @@ class PlayUploadState extends Equatable {
     this.result,
     this.errorMessage,
     this.failure,
-    this.targetType = PlayUploadTargetType.mainListing,
-    this.customStoreListings = const [],
-    this.selectedCustomStoreListing,
-    this.loadingCustomStoreListings = false,
   });
 
   PlayUploadState copyWith({
@@ -59,10 +43,6 @@ class PlayUploadState extends Equatable {
     AscUploadResult? result,
     String? errorMessage,
     PlayUploadFailure? failure,
-    PlayUploadTargetType? targetType,
-    List<PlayCustomStoreListing>? customStoreListings,
-    PlayCustomStoreListing? selectedCustomStoreListing,
-    bool? loadingCustomStoreListings,
   }) {
     return PlayUploadState(
       status: status ?? this.status,
@@ -76,12 +56,6 @@ class PlayUploadState extends Equatable {
       result: result ?? this.result,
       errorMessage: errorMessage,
       failure: failure ?? this.failure,
-      targetType: targetType ?? this.targetType,
-      customStoreListings: customStoreListings ?? this.customStoreListings,
-      selectedCustomStoreListing:
-          selectedCustomStoreListing ?? this.selectedCustomStoreListing,
-      loadingCustomStoreListings:
-          loadingCustomStoreListings ?? this.loadingCustomStoreListings,
     );
   }
 
@@ -98,9 +72,5 @@ class PlayUploadState extends Equatable {
     result,
     errorMessage,
     failure,
-    targetType,
-    customStoreListings,
-    selectedCustomStoreListing,
-    loadingCustomStoreListings,
   ];
 }

@@ -212,7 +212,7 @@ class _CanvasSlotHost extends StatelessWidget {
                 onSyncBack();
                 context.read<MultiScreenshotCubit>().setActiveIndex(index);
               }
-              final result = await FilePicker.platform.pickFiles(
+              final result = await FilePicker.pickFiles(
                 type: FileType.image,
               );
               if (result != null && result.files.single.path != null) {
@@ -244,7 +244,7 @@ class _CanvasSlotHost extends StatelessWidget {
             hasLocaleImage: hasLocaleImage,
             onReplaceLocaleImage: previewLocale != null
                 ? () async {
-                    final result = await FilePicker.platform.pickFiles(
+                    final result = await FilePicker.pickFiles(
                       type: FileType.image,
                     );
                     if (result != null && result.files.single.path != null) {

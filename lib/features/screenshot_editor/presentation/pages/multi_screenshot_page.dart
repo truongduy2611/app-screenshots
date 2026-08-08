@@ -810,12 +810,12 @@ class _MultiScreenshotViewState extends State<_MultiScreenshotView>
       if (useCached) {
         path = multiState.lastRenderedAscPath;
       } else {
-        path = await FilePicker.platform.getDirectoryPath(
+        path = await FilePicker.getDirectoryPath(
           dialogTitle: context.l10n.uploadExistingFolderToAsc,
         );
       }
     } else {
-      path = await FilePicker.platform.getDirectoryPath(
+      path = await FilePicker.getDirectoryPath(
         dialogTitle: context.l10n.uploadExistingFolderToAsc,
       );
     }
@@ -929,12 +929,12 @@ class _MultiScreenshotViewState extends State<_MultiScreenshotView>
       if (useCached) {
         path = multiState.lastRenderedAscPath;
       } else {
-        path = await FilePicker.platform.getDirectoryPath(
+        path = await FilePicker.getDirectoryPath(
           dialogTitle: context.l10n.uploadExistingFolderToGooglePlay,
         );
       }
     } else {
-      path = await FilePicker.platform.getDirectoryPath(
+      path = await FilePicker.getDirectoryPath(
         dialogTitle: context.l10n.uploadExistingFolderToGooglePlay,
       );
     }

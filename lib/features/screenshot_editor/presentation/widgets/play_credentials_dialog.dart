@@ -92,9 +92,10 @@ class _PlayCredentialsDialogState extends State<PlayCredentialsDialog> {
 
   Future<void> _pickFile() async {
     setState(() => _error = null);
-    final result = await FilePicker.platform.pickFiles(
+    final result = await FilePicker.pickFiles(
       type: FileType.custom,
       allowedExtensions: ['json'],
+      // ignore: deprecated_member_use
       withData: true,
     );
     if (result == null || result.files.isEmpty) return;
@@ -102,7 +103,9 @@ class _PlayCredentialsDialogState extends State<PlayCredentialsDialog> {
     final picked = result.files.single;
     try {
       String contents;
+      // ignore: deprecated_member_use
       if (picked.bytes != null) {
+        // ignore: deprecated_member_use
         contents = String.fromCharCodes(picked.bytes!);
       } else if (picked.path != null) {
         contents = await File(picked.path!).readAsString();

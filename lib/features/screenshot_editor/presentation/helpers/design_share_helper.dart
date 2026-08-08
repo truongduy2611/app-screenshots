@@ -49,9 +49,11 @@ class DesignShareHelper {
         ),
       );
     } else {
-      final outputPath = await FilePicker.platform.saveFile(
+      final bytes = await file.readAsBytes();
+      final outputPath = await FilePicker.saveFile(
         dialogTitle: 'Save Design File',
         fileName: file.path.split('/').last,
+        bytes: bytes,
         allowedExtensions: ['appshots'],
         type: FileType.custom,
       );
@@ -70,17 +72,15 @@ class DesignShareHelper {
     final exportFile = await designFileService.createExportFile(design);
 
     if (ICloudCollaborationService.isSupported) {
-      try {
-        final saved = await ICloudCollaborationService.saveOpenedDocument(
-          localPath: exportFile.path,
-          workingPath: targetPath,
-        );
-        if (saved) return;
-      } on PlatformException {
-        // Fall back to the direct copy for ordinary local files.
-      }
+      final saved = await ICloudCollaborationService.saveOpenedDocument(
+        localPath: exportFile.path,
+        workingPath: targetPath,
+      );
+      if (saved) return;
     }
 
+    // Native returns false for ordinary local files that have no open-in-place
+    // mapping. Platform failures remain visible to the caller.
     await exportFile.copy(targetPath);
   }
 
@@ -97,9 +97,8 @@ class DesignShareHelper {
   ///
   /// Returns the imported [SavedDesign] or `null` if cancelled or failed.
   static Future<SavedDesign?> importDesign() async {
-    final result = await FilePicker.platform.pickFiles(
+    final result = await FilePicker.pickFiles(
       type: FileType.any,
-      allowMultiple: false,
     );
 
     if (result == null || result.files.isEmpty) return null;

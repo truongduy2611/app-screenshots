@@ -8,8 +8,6 @@ import 'package:app_screenshots/features/settings/domain/repositories/settings_r
 import 'package:equatable/equatable.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import 'package:app_screenshots/features/screenshot_editor/data/play_api/models/play_custom_store_listing.dart';
-
 part 'play_upload_state.dart';
 
 /// Drives the Google Play screenshot upload sheet.
@@ -36,9 +34,6 @@ class PlayUploadCubit extends Cubit<PlayUploadState> {
         status: PlayUploadStatus.ready,
       ),
     );
-    if (hasCreds && savedPackage != null && savedPackage.isNotEmpty) {
-      await loadCustomStoreListings();
-    }
   }
 
   /// Saves service-account credentials and marks the sheet ready.
@@ -47,10 +42,7 @@ class PlayUploadCubit extends Cubit<PlayUploadState> {
       await _settingsRepo.savePlayCredentials(credentials);
       _uploadService.invalidateClient();
       emit(
-        state.copyWith(
-          hasCredentials: true,
-          status: PlayUploadStatus.ready,
-        ),
+        state.copyWith(hasCredentials: true, status: PlayUploadStatus.ready),
       );
     } catch (e, st) {
       AppLogger.error(
@@ -70,39 +62,6 @@ class PlayUploadCubit extends Cubit<PlayUploadState> {
 
   void setPackageName(String packageName) {
     emit(state.copyWith(packageName: packageName.trim()));
-    if (packageName.trim().isNotEmpty) {
-      loadCustomStoreListings();
-    }
-  }
-
-  /// Load available Custom Store Listings for the package.
-  Future<void> loadCustomStoreListings() async {
-    final pkg = state.packageName.trim();
-    if (pkg.isEmpty || !state.hasCredentials) return;
-
-    emit(state.copyWith(loadingCustomStoreListings: true));
-    try {
-      final listings = await _uploadService.listCustomStoreListings(pkg);
-      emit(
-        state.copyWith(
-          customStoreListings: listings,
-          selectedCustomStoreListing:
-              listings.isNotEmpty ? listings.first : null,
-          loadingCustomStoreListings: false,
-        ),
-      );
-    } catch (e) {
-      AppLogger.w('Failed to fetch Custom Store Listings: $e', tag: 'PlayUpload');
-      emit(state.copyWith(loadingCustomStoreListings: false));
-    }
-  }
-
-  void setTargetType(PlayUploadTargetType targetType) {
-    emit(state.copyWith(targetType: targetType));
-  }
-
-  void selectCustomStoreListing(PlayCustomStoreListing listing) {
-    emit(state.copyWith(selectedCustomStoreListing: listing));
   }
 
   void setImageType(String imageType) {
@@ -157,16 +116,12 @@ class PlayUploadCubit extends Cubit<PlayUploadState> {
 
     emit(state.copyWith(status: PlayUploadStatus.uploading));
     try {
-      final isCsl =
-          state.targetType == PlayUploadTargetType.customListing;
       final result = await _uploadService.uploadAll(
         packageName: packageName,
         localeScreenshots: filtered,
         imageType: state.imageType,
         deleteExisting: state.deleteExisting,
         changesNotSentForReview: state.commitAsDraft,
-        isCustomStoreListing: isCsl,
-        customStoreListingId: state.selectedCustomStoreListing?.id,
         onProgress: (progress) {
           emit(
             state.copyWith(
@@ -196,7 +151,8 @@ class PlayUploadCubit extends Cubit<PlayUploadState> {
         state.copyWith(
           status: PlayUploadStatus.error,
           failure: failure,
-          errorMessage: 'Upload failed: ${e is PlayApiException ? e.message : e}',
+          errorMessage:
+              'Upload failed: ${e is PlayApiException ? e.message : e}',
         ),
       );
     }
