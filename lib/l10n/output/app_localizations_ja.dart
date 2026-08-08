@@ -590,16 +590,16 @@ class AppLocalizationsJa extends AppLocalizations {
   String get zoomToFit => '画面に合わせる';
 
   @override
-  String get zoomTo100Percent => 'Zoom to 100%';
+  String get zoomTo100Percent => '100%に拡大';
 
   @override
-  String get zoomToSelection => 'Zoom to Selection';
+  String get zoomToSelection => '選択範囲にズーム';
 
   @override
-  String get zoomIn => 'Zoom In';
+  String get zoomIn => '拡大';
 
   @override
-  String get zoomOut => 'Zoom Out';
+  String get zoomOut => '縮小';
 
   @override
   String get addScreenshot => 'スクリーンショットを追加';
@@ -852,9 +852,6 @@ class AppLocalizationsJa extends AppLocalizations {
   String get lastBackup => '最後のバックアップ';
 
   @override
-  String get backupsAutomatic => 'バックアップは自動的に作成されます';
-
-  @override
   String get noBackupsAvailable => 'バックアップはありません';
 
   @override
@@ -955,6 +952,33 @@ class AppLocalizationsJa extends AppLocalizations {
 
   @override
   String get uploadToAppStoreConnect => 'App Store Connectにアップロード';
+
+  @override
+  String get uploadDestination => 'アップロード先';
+
+  @override
+  String get primaryAppVersion => 'プライマリ アプリのバージョン';
+
+  @override
+  String get customProductPage => 'カスタムプロダクトページ';
+
+  @override
+  String get selectCustomProductPage => 'カスタムプロダクトページを選択';
+
+  @override
+  String get noCustomProductPagesFound => 'このアプリのカスタムプロダクトページが見つかりません';
+
+  @override
+  String get mainStoreListing => 'メインストアの掲載情報';
+
+  @override
+  String get customStoreListing => 'カスタムストアの掲載情報';
+
+  @override
+  String get selectCustomStoreListing => 'カスタムストアの掲載情報を選択';
+
+  @override
+  String get noCustomStoreListingsFound => 'このアプリのカスタムストアの掲載情報が見つかりません';
 
   @override
   String get loadingApps => 'アプリを読み込み中...';
@@ -1745,4 +1769,60 @@ class AppLocalizationsJa extends AppLocalizations {
   @override
   String get playErrorDeclarationRequired =>
       'Google Play によってアップロードが拒否されました。まず Google Play Console の [アプリのコンテンツ] で未完了の宣言をすべて完了してください。';
+
+  @override
+  String get ascAppConfigSettings => 'App Store Connect アプリ設定';
+
+  @override
+  String get ascAppConfigAppName => 'アプリ名';
+
+  @override
+  String get ascAppConfigAppId => 'アプリID';
+
+  @override
+  String get ascAppConfigBundleId => 'バンドルID';
+
+  @override
+  String get ascAppConfigClear => '設定をクリア';
+
+  @override
+  String get ascAppConfigLoad => 'App Store Connect から読み込む';
+
+  @override
+  String get ascAppConfigNoCreds => '最初に設定で ASC API 資格情報を設定してください。';
+
+  @override
+  String get ascAppConfigSave => '設定を保存';
+
+  @override
+  String ascAppConfigFetchError(String error) {
+    return 'アプリの読み込みに失敗しました: $error';
+  }
+
+  @override
+  String get ascAppConfigAppIdEmpty => 'アプリIDは空にできません';
+
+  @override
+  String get ascAppConfigUnnamedApp => '名前のないアプリ';
+
+  @override
+  String get ascAppConfigUnknownBundleId => 'unknown.bundle.id';
+
+  @override
+  String get ascAppConfigLoadingApps => 'App Store Connectからアプリを読み込み中...';
+
+  @override
+  String get ascAppConfigAppNameHint => '例：Cute Sausage Sticker Extension';
+
+  @override
+  String get ascAppConfigAppIdHint => '例：647281920';
+
+  @override
+  String get ascAppConfigBundleIdHint => '例：com.example.stickerapp';
+
+  @override
+  String get ascAppConfigCleared => 'App Store Connect の設定をクリアしました';
+
+  @override
+  String get ascAppConfigSaved => 'App Store Connect の設定を保存しました';
 }

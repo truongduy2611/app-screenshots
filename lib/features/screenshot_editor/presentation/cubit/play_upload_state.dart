@@ -2,10 +2,7 @@ part of 'play_upload_cubit.dart';
 
 enum PlayUploadStatus { initial, ready, uploading, done, error }
 
-enum PlayUploadFailure {
-  autoSubmitRequired,
-  declarationRequired,
-}
+enum PlayUploadFailure { autoSubmitRequired, declarationRequired }
 
 class PlayUploadState extends Equatable {
   final PlayUploadStatus status;

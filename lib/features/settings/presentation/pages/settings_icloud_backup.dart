@@ -49,31 +49,6 @@ class _ICloudBackupSection extends StatelessWidget {
             ),
 
             if (state.isSyncEnabled) ...[
-              // Auto-backup toggle
-              AppListTile(
-                leading: Icon(
-                  Symbols.cloud_sync_rounded,
-                  size: 20,
-                  color: theme.colorScheme.onSurface,
-                ),
-                title: Text(
-                  context.l10n.backupsAutomatic,
-                  style: theme.textTheme.bodyMedium?.copyWith(
-                    fontWeight: FontWeight.w500,
-                  ),
-                ),
-                trailing: AppSwitch(
-                  value: state.isEnabled,
-                  onChanged: state.isAvailable
-                      ? (v) => context.read<BackupCubit>().toggleAutoBackup(v)
-                      : null,
-                ),
-                onTap: state.isAvailable
-                    ? () => context.read<BackupCubit>().toggleAutoBackup(
-                        !state.isEnabled,
-                      )
-                    : null,
-              ),
               // Last backup info
               _SettingsTile(
                 icon: Symbols.cloud_done_rounded,

@@ -5,6 +5,7 @@ import 'package:app_screenshots/features/settings/domain/repositories/settings_r
 import 'package:crypto/crypto.dart';
 import 'package:app_screenshots/core/services/app_logger.dart';
 import 'package:http/http.dart' as http;
+import 'package:image/image.dart' as img;
 
 /// Per-locale upload status.
 enum LocaleUploadStatus { pending, uploading, done, failed }
@@ -142,6 +143,107 @@ class AscUploadService {
     final response = await client.get(request);
     final versions = response.asList<AppStoreVersion>();
     return versions.isNotEmpty ? versions.first : null;
+  }
+
+  /// Lists all Custom Product Pages for an app.
+  Future<List<AppCustomProductPage>> listCustomProductPages(
+    String appId,
+  ) async {
+    final client = await _getClient();
+    final request = GetRequest(
+      AppStoreConnectUri.v1('apps/$appId/appCustomProductPages'),
+    )..limit(200);
+    final response = await client.get(request);
+    return response.asList<AppCustomProductPage>();
+  }
+
+  /// Finds an editable version of a Custom Product Page.
+  Future<AppCustomProductPageVersion?> getEditableCustomProductPageVersion(
+    String cppId,
+  ) async {
+    final client = await _getClient();
+    final request = GetRequest(
+      AppStoreConnectUri.v1(
+        'appCustomProductPages/$cppId/appCustomProductPageVersions',
+      ),
+    )..include('appCustomProductPageLocalizations');
+    final response = await client.get(request);
+    final versions = response.asList<AppCustomProductPageVersion>();
+    for (final v in versions) {
+      if (v.editable) return v;
+    }
+    return null;
+  }
+
+  /// Gets all existing localizations for a Custom Product Page version.
+  Future<List<AppCustomProductPageLocalization>>
+  getCustomProductPageLocalizations(String cppVersionId) async {
+    final client = await _getClient();
+    final request = GetRequest(
+      AppStoreConnectUri.v1(
+        'appCustomProductPageVersions/$cppVersionId/appCustomProductPageLocalizations',
+      ),
+    );
+    final response = await client.get(request);
+    return response.asList<AppCustomProductPageLocalization>();
+  }
+
+  /// Gets or creates localizations for a Custom Product Page version.
+  Future<Map<String, AppCustomProductPageLocalization>>
+  getOrCreateCustomProductPageLocalizations(
+    String cppVersionId,
+    List<String> locales,
+  ) async {
+    final client = await _getClient();
+    final existing = await getCustomProductPageLocalizations(cppVersionId);
+    final result = <String, AppCustomProductPageLocalization>{};
+
+    final existingByLocale = <String, AppCustomProductPageLocalization>{
+      for (final loc in existing) loc.locale: loc,
+    };
+
+    for (final locale in locales) {
+      if (existingByLocale.containsKey(locale)) {
+        result[locale] = existingByLocale[locale]!;
+      } else {
+        final langPrefix = locale.split('-').first.toLowerCase();
+        for (final entry in existingByLocale.entries) {
+          if (entry.key.split('-').first.toLowerCase() == langPrefix) {
+            result[locale] = entry.value;
+            break;
+          }
+        }
+      }
+    }
+
+    for (final locale in locales) {
+      if (!result.containsKey(locale)) {
+        try {
+          final newLoc = await client
+              .postModel<AppCustomProductPageLocalization>(
+                AppStoreConnectUri.v1(),
+                AppCustomProductPageLocalization.type,
+                attributes: AppCustomProductPageLocalizationCreateAttributes(
+                  locale: locale,
+                ),
+                relationships: {
+                  'appCustomProductPageVersion': SingleModelRelationship(
+                    type: AppCustomProductPageVersion.type,
+                    id: cppVersionId,
+                  ),
+                },
+              );
+          result[locale] = newLoc;
+        } catch (e) {
+          AppLogger.w(
+            'Failed to create CPP localization for "$locale": $e',
+            tag: 'AscUpload',
+          );
+        }
+      }
+    }
+
+    return result;
   }
 
   /// Gets all existing localizations for a version.
@@ -315,41 +417,65 @@ class AscUploadService {
     );
   }
 
+  /// Maps UI display types to valid App Store Connect API screenshotDisplayType enums.
+  ///
+  /// For Custom Product Pages, ASC API does not accept `APP_IPHONE_69`; 6.9" screenshots
+  /// are uploaded under `APP_IPHONE_67`. Primary versions accept `APP_IPHONE_69` directly.
+  static String _apiDisplayType(
+    String displayType, {
+    bool isCustomProductPage = false,
+  }) {
+    if (isCustomProductPage && displayType == 'APP_IPHONE_69') {
+      return 'APP_IPHONE_67';
+    }
+    return displayType;
+  }
+
   /// Gets or creates a screenshot set for a localization + display type.
   Future<AppScreenshotSet> _getOrCreateScreenshotSet(
     String localizationId,
-    String displayType,
-  ) async {
+    String displayType, {
+    bool isCustomProductPage = false,
+  }) async {
     final client = await _getClient();
+    final apiDisplayType = _apiDisplayType(
+      displayType,
+      isCustomProductPage: isCustomProductPage,
+    );
+    final resourceName = isCustomProductPage
+        ? 'appCustomProductPageLocalizations'
+        : 'appStoreVersionLocalizations';
 
     // Check existing
     final request = GetRequest(
-      AppStoreConnectUri.v1(
-        'appStoreVersionLocalizations/$localizationId/appScreenshotSets',
-      ),
+      AppStoreConnectUri.v1('$resourceName/$localizationId/appScreenshotSets'),
     );
     request.include('appScreenshots');
     final response = await client.get(request);
     final sets = response.asList<AppScreenshotSet>();
 
     for (final set in sets) {
-      if (set.screenshotDisplayType == displayType) {
+      if (set.screenshotDisplayType == apiDisplayType) {
         return set;
       }
     }
 
     // Create new
+    final relType = isCustomProductPage
+        ? AppCustomProductPageLocalization.type
+        : VersionLocalization.type;
+    final relName = isCustomProductPage
+        ? 'appCustomProductPageLocalization'
+        : 'appStoreVersionLocalization';
+
     return client.postModel<AppScreenshotSet>(
       AppStoreConnectUri.v1(),
       AppScreenshotSet.type,
       attributes: AppScreenshotSetAttributes(
-        screenshotDisplayType: displayType,
+        screenshotDisplayType: apiDisplayType,
       ),
       relationships: {
-        'appStoreVersionLocalization': SingleModelRelationship(
-          type: VersionLocalization.type,
-          id: localizationId,
-        ),
+        relName: SingleModelRelationship(type: relType, id: localizationId),
       },
     );
   }
@@ -484,6 +610,72 @@ class AscUploadService {
     }
   }
 
+  /// Target pixel dimensions (width x height in portrait) for ASC display types.
+  ///
+  /// Currently only `APP_IPHONE_65` triggers auto-resizing; the remaining
+  /// entries are kept as a reference catalog for future expansion.
+  // TODO(resize): enable auto-resize for additional display types as needed.
+  static const _displayTypeTargetDimensions = <String, (int, int)>{
+    'APP_IPHONE_69': (1320, 2868),
+    'APP_IPHONE_67': (1284, 2778),
+    'APP_IPHONE_65': (1242, 2688),
+    'APP_IPHONE_61': (1179, 2556),
+    'APP_IPHONE_55': (1242, 2208),
+    'APP_IPAD_PRO_3GEN_129': (2048, 2732),
+    'APP_IPAD_PRO_3GEN_11': (1668, 2388),
+    'APP_IPAD_105': (1668, 2224),
+    'APP_IPAD_97': (1536, 2048),
+  };
+
+  /// Resizes image to exact target dimensions if resolution differs.
+  ///
+  /// Only applies auto-resizing for iPhone 6.5" (`APP_IPHONE_65`).
+  Future<File?> _ensureExactTargetDimensions(
+    File file,
+    String displayType, {
+    bool isCustomProductPage = false,
+  }) async {
+    final effectiveType = _apiDisplayType(
+      displayType,
+      isCustomProductPage: isCustomProductPage,
+    );
+
+    // Only auto-resize for iPhone 6.5" (APP_IPHONE_65)
+    if (effectiveType != 'APP_IPHONE_65') return null;
+
+    final target = _displayTypeTargetDimensions[effectiveType];
+    if (target == null) return null;
+
+    final bytes = await file.readAsBytes();
+    final decoded = img.decodeImage(bytes);
+    if (decoded == null) return null;
+
+    final isLandscape = decoded.width > decoded.height;
+    final reqWidth = isLandscape ? target.$2 : target.$1;
+    final reqHeight = isLandscape ? target.$1 : target.$2;
+
+    if (decoded.width == reqWidth && decoded.height == reqHeight) {
+      return null;
+    }
+
+    AppLogger.i(
+      'Resizing image from ${decoded.width}x${decoded.height} to $reqWidth x $reqHeight for $displayType (API target: $effectiveType)',
+      tag: 'AscUpload',
+    );
+
+    final resized = img.copyResize(
+      decoded,
+      width: reqWidth,
+      height: reqHeight,
+      interpolation: img.Interpolation.cubic,
+    );
+
+    final tempDir = await Directory.systemTemp.createTemp('asc_resize_');
+    final resizedFile = File('${tempDir.path}/${file.path.split('/').last}');
+    await resizedFile.writeAsBytes(img.encodePng(resized));
+    return resizedFile;
+  }
+
   /// Uploads a single screenshot file.
   ///
   /// Follows the CLI's 4-step pipeline:
@@ -495,15 +687,31 @@ class AscUploadService {
     required String localizationId,
     required String displayType,
     required File file,
+    bool isCustomProductPage = false,
   }) async {
+    File fileToUpload = file;
+    try {
+      final resized = await _ensureExactTargetDimensions(
+        file,
+        displayType,
+        isCustomProductPage: isCustomProductPage,
+      );
+      if (resized != null) {
+        fileToUpload = resized;
+      }
+    } catch (e) {
+      AppLogger.w('Failed to check/resize image: $e', tag: 'AscUpload');
+    }
+
     final client = await _getClient();
     final targetSet = await _getOrCreateScreenshotSet(
       localizationId,
       displayType,
+      isCustomProductPage: isCustomProductPage,
     );
 
-    final fileSize = await file.length();
-    final fileName = file.path.split('/').last;
+    final fileSize = await fileToUpload.length();
+    final fileName = fileToUpload.path.split('/').last;
 
     // 1. Reserve
     final screenshot = await client.postModel<AppScreenshot>(
@@ -522,7 +730,7 @@ class AscUploadService {
     );
 
     // 2. Upload binary chunks
-    final bytes = await file.readAsBytes();
+    final bytes = await fileToUpload.readAsBytes();
     final checksum = md5.convert(bytes).toString();
 
     final uploadOperations = screenshot.uploadOperations;
@@ -572,6 +780,7 @@ class AscUploadService {
   ///
   /// Improvements over previous implementation:
   /// - Accepts [platform] to filter the correct version
+  /// - Supports [isCustomProductPage] and [customProductPageId] for CPP target
   /// - Optionally deletes existing screenshots before uploading
   /// - Sets screenshot ordering after upload
   /// - Uses delivery-wait polling for each screenshot
@@ -582,22 +791,43 @@ class AscUploadService {
     required void Function(AscUploadProgress) onProgress,
     String? platform,
     bool deleteExisting = true,
+    bool isCustomProductPage = false,
+    String? customProductPageId,
   }) async {
-    // Resolve version (now with platform filter).
-    final version = await getEditableVersion(appId, platform: platform);
-    if (version == null) {
-      throw Exception(
-        'No editable version found. Create a new version in ASC first.',
+    final locales = localeScreenshots.keys.toList();
+    final Map<String, dynamic> localizations;
+
+    if (isCustomProductPage) {
+      if (customProductPageId == null) {
+        throw ArgumentError(
+          'Select a Custom Product Page before uploading screenshots.',
+        );
+      }
+      final cppVersion = await getEditableCustomProductPageVersion(
+        customProductPageId,
+      );
+      if (cppVersion == null) {
+        throw Exception(
+          'No editable Custom Product Page version found. Create or unlock a version in App Store Connect first.',
+        );
+      }
+      localizations = await getOrCreateCustomProductPageLocalizations(
+        cppVersion.id,
+        locales,
+      );
+    } else {
+      final version = await getEditableVersion(appId, platform: platform);
+      if (version == null) {
+        throw Exception(
+          'No editable version found. Create a new version in ASC first.',
+        );
+      }
+      localizations = await getOrCreateLocalizations(
+        version.id,
+        locales,
+        appId: appId,
       );
     }
-
-    // Resolve localizations.
-    final locales = localeScreenshots.keys.toList();
-    final localizations = await getOrCreateLocalizations(
-      version.id,
-      locales,
-      appId: appId,
-    );
 
     int successCount = 0;
     int failureCount = 0;
@@ -660,6 +890,7 @@ class AscUploadService {
         screenshotSet = await _getOrCreateScreenshotSet(
           localization.id,
           displayType,
+          isCustomProductPage: isCustomProductPage,
         );
 
         // Delete existing screenshots if requested.
@@ -697,6 +928,7 @@ class AscUploadService {
             localizationId: localization.id,
             displayType: displayType,
             file: file,
+            isCustomProductPage: isCustomProductPage,
           );
           uploadedIds.add(uploaded.id);
           localeSuccess++;

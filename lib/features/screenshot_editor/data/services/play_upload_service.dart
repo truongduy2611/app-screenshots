@@ -179,8 +179,10 @@ class PlayUploadService {
           }
 
           // Cap to the free slots so we never exceed Google Play's limit.
-          final freeSlots = (kPlayMaxScreenshotsPerType - existingCount)
-              .clamp(0, kPlayMaxScreenshotsPerType);
+          final freeSlots = (kPlayMaxScreenshotsPerType - existingCount).clamp(
+            0,
+            kPlayMaxScreenshotsPerType,
+          );
           final filesToUpload = files.take(freeSlots).toList();
           final skipped = files.length - filesToUpload.length;
 
@@ -190,7 +192,8 @@ class PlayUploadService {
               emitProgress(appLocale);
               final bytes = await file.readAsBytes();
               final ext = file.path.split('.').last.toLowerCase();
-              final filename = '${playLocale.replaceAll('-', '_')}_${index.toString().padLeft(2, '0')}.$ext';
+              final filename =
+                  '${playLocale.replaceAll('-', '_')}_${index.toString().padLeft(2, '0')}.$ext';
               await client.uploadImage(
                 packageName: packageName,
                 editId: editId,

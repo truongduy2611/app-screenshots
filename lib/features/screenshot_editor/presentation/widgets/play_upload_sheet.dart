@@ -117,10 +117,7 @@ class PlayUploadSheet extends StatelessWidget {
 
       case PlayUploadStatus.ready:
         return SingleChildScrollView(
-          child: _ReadyView(
-            localeScreenshots: localeScreenshots,
-            state: state,
-          ),
+          child: _ReadyView(localeScreenshots: localeScreenshots, state: state),
         );
 
       case PlayUploadStatus.uploading:
@@ -180,7 +177,11 @@ class _NoCredentialsPrompt extends StatelessWidget {
               color: theme.colorScheme.errorContainer.withValues(alpha: 0.3),
               shape: BoxShape.circle,
             ),
-            child: Icon(Symbols.key_off, size: 28, color: theme.colorScheme.error),
+            child: Icon(
+              Symbols.key_off,
+              size: 28,
+              color: theme.colorScheme.error,
+            ),
           ),
           const SizedBox(height: 16),
           Text(
@@ -477,7 +478,8 @@ class _ReadyViewState extends State<_ReadyView> {
         // ── Upload button ──
         AppButton.primary(
           onPressed:
-              (selectedLocales.isNotEmpty && state.packageName.trim().isNotEmpty)
+              (selectedLocales.isNotEmpty &&
+                  state.packageName.trim().isNotEmpty)
               ? () => cubit.startUpload(widget.localeScreenshots)
               : null,
           icon: Symbols.cloud_upload,
@@ -557,10 +559,10 @@ class _LocaleCheckTile extends StatelessWidget {
               padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 2),
               decoration: BoxDecoration(
                 color: isSelected
-                    ? theme.colorScheme.secondaryContainer.withValues(alpha: 0.4)
-                    : theme.colorScheme.surfaceContainer.withValues(
+                    ? theme.colorScheme.secondaryContainer.withValues(
                         alpha: 0.4,
-                      ),
+                      )
+                    : theme.colorScheme.surfaceContainer.withValues(alpha: 0.4),
                 borderRadius: BorderRadius.circular(4),
                 border: Border.all(
                   color: isSelected
@@ -575,7 +577,9 @@ class _LocaleCheckTile extends StatelessWidget {
                   fontWeight: FontWeight.w600,
                   color: isSelected
                       ? theme.colorScheme.secondary
-                      : theme.colorScheme.onSurfaceVariant.withValues(alpha: 0.8),
+                      : theme.colorScheme.onSurfaceVariant.withValues(
+                          alpha: 0.8,
+                        ),
                   letterSpacing: 0.5,
                 ),
               ),
@@ -860,7 +864,9 @@ class _DoneView extends StatelessWidget {
               child: Column(
                 mainAxisSize: MainAxisSize.min,
                 children: result.localeResults.values
-                    .map((lr) => _LocaleResultRow(localeResult: lr, theme: theme))
+                    .map(
+                      (lr) => _LocaleResultRow(localeResult: lr, theme: theme),
+                    )
                     .toList(),
               ),
             ),
@@ -918,7 +924,9 @@ class _LocaleResultRow extends StatelessWidget {
           Icon(
             isSuccess ? Symbols.check_circle : Symbols.cancel,
             size: 14,
-            color: isSuccess ? theme.colorScheme.primary : theme.colorScheme.error,
+            color: isSuccess
+                ? theme.colorScheme.primary
+                : theme.colorScheme.error,
           ),
           const SizedBox(width: 8),
           Container(
@@ -987,7 +995,11 @@ class _ErrorView extends StatelessWidget {
               color: theme.colorScheme.errorContainer.withValues(alpha: 0.3),
               shape: BoxShape.circle,
             ),
-            child: Icon(Symbols.error, size: 28, color: theme.colorScheme.error),
+            child: Icon(
+              Symbols.error,
+              size: 28,
+              color: theme.colorScheme.error,
+            ),
           ),
           const SizedBox(height: 16),
           Text(

@@ -5,6 +5,7 @@ import 'package:app_screenshots/features/screenshot_editor/data/asc_api/models/a
 import 'package:app_screenshots/features/screenshot_editor/data/asc_api/models/asc_build.dart';
 import 'package:app_screenshots/features/screenshot_editor/data/asc_api/models/asc_screenshot.dart';
 import 'package:app_screenshots/features/screenshot_editor/data/asc_api/models/asc_screenshot_set.dart';
+import 'package:app_screenshots/features/screenshot_editor/data/asc_api/models/asc_custom_product_page.dart';
 import 'package:app_screenshots/features/screenshot_editor/data/asc_api/models/asc_version.dart';
 import 'package:app_screenshots/features/screenshot_editor/data/asc_api/models/asc_version_localization.dart';
 
@@ -38,6 +39,12 @@ abstract class Model {
         return AppScreenshotSet(id, client, attributes, relations);
       case AppScreenshot.type:
         return AppScreenshot(id, client, attributes);
+      case AppCustomProductPage.type:
+        return AppCustomProductPage(id, client, attributes, relations);
+      case AppCustomProductPageVersion.type:
+        return AppCustomProductPageVersion(id, client, attributes, relations);
+      case AppCustomProductPageLocalization.type:
+        return AppCustomProductPageLocalization(id, client, attributes);
       default:
         throw Exception('Type $type is not supported yet');
     }

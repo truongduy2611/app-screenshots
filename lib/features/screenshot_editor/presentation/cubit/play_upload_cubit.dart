@@ -42,10 +42,7 @@ class PlayUploadCubit extends Cubit<PlayUploadState> {
       await _settingsRepo.savePlayCredentials(credentials);
       _uploadService.invalidateClient();
       emit(
-        state.copyWith(
-          hasCredentials: true,
-          status: PlayUploadStatus.ready,
-        ),
+        state.copyWith(hasCredentials: true, status: PlayUploadStatus.ready),
       );
     } catch (e, st) {
       AppLogger.error(
@@ -154,7 +151,8 @@ class PlayUploadCubit extends Cubit<PlayUploadState> {
         state.copyWith(
           status: PlayUploadStatus.error,
           failure: failure,
-          errorMessage: 'Upload failed: ${e is PlayApiException ? e.message : e}',
+          errorMessage:
+              'Upload failed: ${e is PlayApiException ? e.message : e}',
         ),
       );
     }

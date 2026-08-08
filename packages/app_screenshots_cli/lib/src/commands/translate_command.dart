@@ -37,7 +37,8 @@ class _TranslateStateCommand extends Command<int> {
 
   @override
   Future<int> run() async {
-    final client = await AppClient.discover();
+    final client = await AppClient.discover(
+        portOverride: globalResults?['port'] as String?);
     final result = await client.get(TranslateAction.state.path);
     Output.print(result, json: Output.isJson(globalResults));
     client.close();
@@ -54,7 +55,8 @@ class _TranslateGetTextsCommand extends Command<int> {
 
   @override
   Future<int> run() async {
-    final client = await AppClient.discover();
+    final client = await AppClient.discover(
+        portOverride: globalResults?['port'] as String?);
     final result = await client.get(TranslateAction.getTexts.path);
     Output.print(result, json: Output.isJson(globalResults));
     client.close();
@@ -78,7 +80,8 @@ class _TranslateAllCommand extends Command<int> {
   @override
   Future<int> run() async {
     final to = argResults!['to'] as String;
-    final client = await AppClient.discover();
+    final client = await AppClient.discover(
+        portOverride: globalResults?['port'] as String?);
     final result = await client.post(TranslateAction.all.path, {
       'from': argResults!['from'],
       'to': to.split(',').map((s) => s.trim()).toList(),
@@ -104,7 +107,8 @@ class _TranslatePreviewCommand extends Command<int> {
   @override
   Future<int> run() async {
     final locale = argResults!['locale'] as String;
-    final client = await AppClient.discover();
+    final client = await AppClient.discover(
+        portOverride: globalResults?['port'] as String?);
     final result = await client.post(TranslateAction.preview.path, {
       'locale': locale == 'none' ? null : locale,
     });
@@ -131,7 +135,8 @@ class _TranslateEditCommand extends Command<int> {
 
   @override
   Future<int> run() async {
-    final client = await AppClient.discover();
+    final client = await AppClient.discover(
+        portOverride: globalResults?['port'] as String?);
     final result = await client.post(TranslateAction.edit.path, {
       'locale': argResults!['locale'],
       'overlayId': argResults!['overlay-id'],
@@ -168,7 +173,8 @@ class _TranslateApplyManualCommand extends Command<int> {
     } catch (e) {
       usageException('Invalid JSON for --translations: $e');
     }
-    final client = await AppClient.discover();
+    final client = await AppClient.discover(
+        portOverride: globalResults?['port'] as String?);
     final result = await client.post(TranslateAction.applyManual.path, {
       'locale': argResults!['locale'],
       'translations': translations.cast<String, String>(),
@@ -193,7 +199,8 @@ class _TranslateRemoveLocaleCommand extends Command<int> {
 
   @override
   Future<int> run() async {
-    final client = await AppClient.discover();
+    final client = await AppClient.discover(
+        portOverride: globalResults?['port'] as String?);
     final result = await client.post(TranslateAction.removeLocale.path, {
       'locale': argResults!['locale'],
     });
@@ -216,7 +223,8 @@ class _TranslateSetPromptCommand extends Command<int> {
 
   @override
   Future<int> run() async {
-    final client = await AppClient.discover();
+    final client = await AppClient.discover(
+        portOverride: globalResults?['port'] as String?);
     final result = await client.post(TranslateAction.setPrompt.path, {
       'prompt': argResults?['prompt'],
     });
@@ -273,7 +281,8 @@ class _TranslateOverrideOverlayCommand extends Command<int> {
     if (argResults?['font-weight'] != null) {
       body['fontWeightIndex'] = int.parse(argResults!['font-weight']);
     }
-    final client = await AppClient.discover();
+    final client = await AppClient.discover(
+        portOverride: globalResults?['port'] as String?);
     final result =
         await client.post(TranslateAction.overrideOverlay.path, body);
     Output.print(result, json: Output.isJson(globalResults));
@@ -309,7 +318,8 @@ class _TranslateSetLocaleImageCommand extends Command<int> {
       'locale': argResults!['locale'],
       'data': base64Data,
     };
-    final client = await AppClient.discover();
+    final client = await AppClient.discover(
+        portOverride: globalResults?['port'] as String?);
     final result = await client.post(TranslateAction.setLocaleImage.path, body);
     Output.print(result, json: Output.isJson(globalResults));
     client.close();

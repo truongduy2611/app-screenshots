@@ -597,16 +597,16 @@ class AppLocalizationsNl extends AppLocalizations {
   String get zoomToFit => 'Passend maken';
 
   @override
-  String get zoomTo100Percent => 'Zoom to 100%';
+  String get zoomTo100Percent => 'Zoomen naar 100%';
 
   @override
-  String get zoomToSelection => 'Zoom to Selection';
+  String get zoomToSelection => 'Zoomen naar selectie';
 
   @override
-  String get zoomIn => 'Zoom In';
+  String get zoomIn => 'Inzoomen';
 
   @override
-  String get zoomOut => 'Zoom Out';
+  String get zoomOut => 'Uitzoomen';
 
   @override
   String get addScreenshot => 'Screenshot toevoegen';
@@ -866,9 +866,6 @@ class AppLocalizationsNl extends AppLocalizations {
   String get lastBackup => 'Laatste back-up';
 
   @override
-  String get backupsAutomatic => 'Back-ups worden automatisch gemaakt';
-
-  @override
   String get noBackupsAvailable => 'Geen back-ups beschikbaar';
 
   @override
@@ -972,6 +969,36 @@ class AppLocalizationsNl extends AppLocalizations {
 
   @override
   String get uploadToAppStoreConnect => 'Uploaden naar App Store Connect';
+
+  @override
+  String get uploadDestination => 'Uploadbestemming';
+
+  @override
+  String get primaryAppVersion => 'Primaire app-versie';
+
+  @override
+  String get customProductPage => 'Aangepaste productpagina';
+
+  @override
+  String get selectCustomProductPage => 'Aangepaste productpagina selecteren';
+
+  @override
+  String get noCustomProductPagesFound =>
+      'Geen aangepaste productpagina\'s gevonden voor deze app';
+
+  @override
+  String get mainStoreListing => 'Hoofdwinkelvermelding';
+
+  @override
+  String get customStoreListing => 'Aangepaste winkelvermelding';
+
+  @override
+  String get selectCustomStoreListing =>
+      'Aangepaste winkelvermelding selecteren';
+
+  @override
+  String get noCustomStoreListingsFound =>
+      'Geen aangepaste winkelvermeldingen gevonden voor deze app';
 
   @override
   String get loadingApps => 'Apps laden...';
@@ -1834,4 +1861,61 @@ class AppLocalizationsNl extends AppLocalizations {
   @override
   String get playErrorDeclarationRequired =>
       'Upload geweigerd door Google Play: controleer uw Google Play Console en vul eerst eventuele openstaande verklaringen in onder App-inhoud.';
+
+  @override
+  String get ascAppConfigSettings => 'App Store Connect App-instellingen';
+
+  @override
+  String get ascAppConfigAppName => 'App-naam';
+
+  @override
+  String get ascAppConfigAppId => 'App-ID';
+
+  @override
+  String get ascAppConfigBundleId => 'Bundle-ID';
+
+  @override
+  String get ascAppConfigClear => 'Configuratie wissen';
+
+  @override
+  String get ascAppConfigLoad => 'Laden van App Store Connect';
+
+  @override
+  String get ascAppConfigNoCreds =>
+      'Configureer eerst de ASC API-inloggegevens in Instellingen.';
+
+  @override
+  String get ascAppConfigSave => 'Instellingen opslaan';
+
+  @override
+  String ascAppConfigFetchError(String error) {
+    return 'Fout bij laden van apps: $error';
+  }
+
+  @override
+  String get ascAppConfigAppIdEmpty => 'App-ID mag niet leeg zijn';
+
+  @override
+  String get ascAppConfigUnnamedApp => 'Naamloze app';
+
+  @override
+  String get ascAppConfigUnknownBundleId => 'unknown.bundle.id';
+
+  @override
+  String get ascAppConfigLoadingApps => 'Apps laden van App Store Connect...';
+
+  @override
+  String get ascAppConfigAppNameHint => 'bijv. Cute Sausage Sticker Extension';
+
+  @override
+  String get ascAppConfigAppIdHint => 'bijv. 647281920';
+
+  @override
+  String get ascAppConfigBundleIdHint => 'bijv. com.example.stickerapp';
+
+  @override
+  String get ascAppConfigCleared => 'App Store Connect-configuratie gewist';
+
+  @override
+  String get ascAppConfigSaved => 'App Store Connect-configuratie opgeslagen';
 }

@@ -57,8 +57,7 @@ class PlayApiException implements Exception {
   /// feature declaration first.
   bool get isHealthDeclarationRequired {
     final lower = message.toLowerCase();
-    return statusCode == 403 &&
-        lower.contains('health features');
+    return statusCode == 403 && lower.contains('health features');
   }
 
   @override
@@ -111,7 +110,10 @@ class GooglePlayClient {
     final body = jsonDecode(r.body) as Map<String, dynamic>;
     final id = body['id'] as String?;
     if (id == null) {
-      throw PlayApiException(r.statusCode, 'Edit response missing id: ${r.body}');
+      throw PlayApiException(
+        r.statusCode,
+        'Edit response missing id: ${r.body}',
+      );
     }
     return id;
   }
@@ -133,9 +135,7 @@ class GooglePlayClient {
     }
     final uri = Uri.parse(
       '$_base/applications/$packageName/edits/$editId:commit',
-    ).replace(
-      queryParameters: queryParams.isEmpty ? null : queryParams,
-    );
+    ).replace(queryParameters: queryParams.isEmpty ? null : queryParams);
     final r = await _httpClient.post(uri, headers: await _headers());
     if (r.statusCode < 200 || r.statusCode >= 300) _fail(r);
   }
@@ -196,19 +196,24 @@ class GooglePlayClient {
     String? filename,
   }) async {
     final token = await _token.getValue();
+    final uploadUrl =
+        '$_uploadBase/applications/$packageName/edits/$editId/listings/$language/$imageType';
 
     if (filename != null) {
       final uri = Uri.parse(
-        '$_uploadBase/applications/$packageName/edits/$editId/listings/$language/$imageType',
+        uploadUrl,
       ).replace(queryParameters: {'uploadType': 'multipart'});
 
-      final boundary = 'app_screenshots_boundary_${DateTime.now().millisecondsSinceEpoch}';
+      final boundary =
+          'app_screenshots_boundary_${DateTime.now().millisecondsSinceEpoch}';
 
-      final metadataHeader = '--$boundary\r\n'
+      final metadataHeader =
+          '--$boundary\r\n'
           'Content-Type: application/json; charset=UTF-8\r\n\r\n'
           '{}\r\n';
 
-      final mediaHeader = '--$boundary\r\n'
+      final mediaHeader =
+          '--$boundary\r\n'
           'Content-Type: $contentType\r\n'
           'Content-Disposition: attachment; filename="$filename"\r\n\r\n';
 
@@ -238,7 +243,7 @@ class GooglePlayClient {
       }
     } else {
       final uri = Uri.parse(
-        '$_uploadBase/applications/$packageName/edits/$editId/listings/$language/$imageType',
+        uploadUrl,
       ).replace(queryParameters: {'uploadType': 'media'});
 
       final r = await _httpClient.post(

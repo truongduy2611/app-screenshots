@@ -76,6 +76,24 @@ void main() {
       expect(response['received'], equals({'foo': 'bar'}));
     });
 
+    test('sends the discovered session token as bearer authorization',
+        () async {
+      final authenticatedClient = AppClient(port: server.port, token: 'secret');
+      addTearDown(authenticatedClient.close);
+      server.listen((HttpRequest request) {
+        request.response
+          ..headers.contentType = ContentType.json
+          ..write(jsonEncode({
+            'ok': true,
+            'authorization': request.headers.value('authorization'),
+          }))
+          ..close();
+      });
+
+      final response = await authenticatedClient.get('/test');
+      expect(response['authorization'], 'Bearer secret');
+    });
+
     test('returns connection error when server is not running', () async {
       final badClient = AppClient(port: 9999); // Unlikely to be used
       final response = await badClient.get('/test');

@@ -1,4 +1,5 @@
 import 'package:app_screenshots/core/extensions/context_extensions.dart';
+import 'package:app_screenshots/features/screenshot_editor/utils/font_resolver.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:material_symbols_icons/symbols.dart';
@@ -25,7 +26,27 @@ class _FontPickerSheetState extends State<FontPickerSheet> {
   @override
   void initState() {
     super.initState();
-    _allFonts = GoogleFonts.asMap().keys.toList();
+    const nativeFonts = [
+      'SF Pro',
+      'SF Pro Rounded',
+      'SF Compact',
+      'SF Compact Rounded',
+      'SF Mono',
+      'New York',
+    ];
+    final keys = GoogleFonts.asMap().keys.toList();
+    if (!keys.contains('Google Sans Rounded')) {
+      final index = keys.indexOf('Google Sans');
+      if (index != -1) {
+        keys.insert(index + 1, 'Google Sans Rounded');
+      } else {
+        keys.insert(0, 'Google Sans Rounded');
+      }
+    }
+    _allFonts = [
+      ...nativeFonts,
+      ...keys.where((k) => !nativeFonts.contains(k)),
+    ];
     _filteredFonts = _allFonts;
     _searchController.addListener(_onSearchChanged);
   }
@@ -124,7 +145,10 @@ class _FontPickerSheetState extends State<FontPickerSheet> {
               final isSelected = font == widget.selectedFont;
               return ListTile(
                 selected: isSelected,
-                title: Text(font, style: GoogleFonts.getFont(font)),
+                title: Text(
+                  font,
+                  style: FontResolver.apply(font, const TextStyle()),
+                ),
                 trailing: isSelected
                     ? const Icon(Symbols.check_rounded, color: Colors.blue)
                     : null,
@@ -140,3 +164,4 @@ class _FontPickerSheetState extends State<FontPickerSheet> {
     );
   }
 }
+

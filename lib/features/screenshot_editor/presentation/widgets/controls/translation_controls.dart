@@ -1310,7 +1310,7 @@ class _TranslationControlsState extends State<TranslationControls> {
                   localeImagePath: (slot) =>
                       translationState.bundle?.getLocaleImage(locale, slot),
                   onPickLocaleImage: (slot) async {
-                    final result = await FilePicker.platform.pickFiles(
+                    final result = await FilePicker.pickFiles(
                       type: FileType.image,
                     );
                     if (result != null && result.files.single.path != null) {

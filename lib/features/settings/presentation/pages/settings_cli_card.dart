@@ -109,11 +109,8 @@ class _SettingsCliCard extends StatelessWidget {
                                   visualDensity: VisualDensity.compact,
                                 ),
                                 onPressed: () {
-                                  launchUrl(
-                                    Uri.parse(
-                                      'http://localhost:19222/api/docs',
-                                    ),
-                                  );
+                                  final uri = sl<CommandServer>().docsUri;
+                                  if (uri != null) launchUrl(uri);
                                 },
                               ),
                               FilledButton.tonalIcon(

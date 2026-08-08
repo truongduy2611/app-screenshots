@@ -1126,10 +1126,6 @@
   "@lastBackup": {
     "description": "Label showing the last backup date"
   },
-  "backupsAutomatic": "Backups are created automatically",
-  "@backupsAutomatic": {
-    "description": "Info text about automatic backups"
-  },
   "noBackupsAvailable": "No backups available",
   "@noBackupsAvailable": {
     "description": "Message when no iCloud backups exist"
@@ -1263,6 +1259,42 @@
   "uploadToAppStoreConnect": "Upload to App Store Connect",
   "@uploadToAppStoreConnect": {
     "description": "ASC upload sheet header title"
+  },
+  "uploadDestination": "Upload Destination",
+  "@uploadDestination": {
+    "description": "Label for selecting where screenshots will be uploaded (Primary Version vs Custom Product Page)"
+  },
+  "primaryAppVersion": "Primary App Version",
+  "@primaryAppVersion": {
+    "description": "Option for uploading screenshots to the primary app version"
+  },
+  "customProductPage": "Custom Product Page",
+  "@customProductPage": {
+    "description": "Option for uploading screenshots to a Custom Product Page"
+  },
+  "selectCustomProductPage": "Select Custom Product Page",
+  "@selectCustomProductPage": {
+    "description": "Title/placeholder for choosing a Custom Product Page"
+  },
+  "noCustomProductPagesFound": "No custom product pages found for this app",
+  "@noCustomProductPagesFound": {
+    "description": "Helper text shown when an app has no Custom Product Pages created"
+  },
+  "mainStoreListing": "Main Store Listing",
+  "@mainStoreListing": {
+    "description": "Option for uploading screenshots to the main Play Store listing"
+  },
+  "customStoreListing": "Custom Store Listing",
+  "@customStoreListing": {
+    "description": "Option for uploading screenshots to a Google Play Custom Store Listing"
+  },
+  "selectCustomStoreListing": "Select Custom Store Listing",
+  "@selectCustomStoreListing": {
+    "description": "Title/placeholder for choosing a Google Play Custom Store Listing"
+  },
+  "noCustomStoreListingsFound": "No custom store listings found for this app",
+  "@noCustomStoreListingsFound": {
+    "description": "Helper text shown when an app has no Custom Store Listings created"
   },
   "loadingApps": "Loading apps...",
   "@loadingApps": {
@@ -2381,5 +2413,82 @@
   "playErrorDeclarationRequired": "Upload rejected by Google Play: Please check your Google Play Console and complete any outstanding declarations under App Content first.",
   "@playErrorDeclarationRequired": {
     "description": "Error message when Google Play rejects upload due to missing declarations under App Content"
+  },
+  "ascAppConfigSettings": "App Store Connect App Settings",
+  "@ascAppConfigSettings": {
+    "description": "Title of the App Store Connect App configuration settings dialog"
+  },
+  "ascAppConfigAppName": "App Name",
+  "@ascAppConfigAppName": {
+    "description": "Label for App Name in ASC config"
+  },
+  "ascAppConfigAppId": "App ID",
+  "@ascAppConfigAppId": {
+    "description": "Label for App ID in ASC config"
+  },
+  "ascAppConfigBundleId": "Bundle ID",
+  "@ascAppConfigBundleId": {
+    "description": "Label for Bundle ID in ASC config"
+  },
+  "ascAppConfigClear": "Clear Configuration",
+  "@ascAppConfigClear": {
+    "description": "Button to clear the App Store Connect configuration"
+  },
+  "ascAppConfigLoad": "Load from App Store Connect",
+  "@ascAppConfigLoad": {
+    "description": "Button to fetch and select app from App Store Connect"
+  },
+  "ascAppConfigNoCreds": "Configure ASC API credentials in Settings first.",
+  "@ascAppConfigNoCreds": {
+    "description": "Hint shown when ASC credentials are not set up"
+  },
+  "ascAppConfigSave": "Save Settings",
+  "@ascAppConfigSave": {
+    "description": "Button to save App Store Connect configuration settings"
+  },
+  "ascAppConfigFetchError": "Failed to load apps: {error}",
+  "@ascAppConfigFetchError": {
+    "description": "Error message when app loading from ASC fails",
+    "placeholders": {
+      "error": {
+        "type": "String"
+      }
+    }
+  },
+  "ascAppConfigAppIdEmpty": "App ID cannot be empty",
+  "@ascAppConfigAppIdEmpty": {
+    "description": "Validation error message when App ID field is empty"
+  },
+  "ascAppConfigUnnamedApp": "Unnamed App",
+  "@ascAppConfigUnnamedApp": {
+    "description": "Fallback label for unnamed app"
+  },
+  "ascAppConfigUnknownBundleId": "unknown.bundle.id",
+  "@ascAppConfigUnknownBundleId": {
+    "description": "Fallback label for unknown bundle ID"
+  },
+  "ascAppConfigLoadingApps": "Loading apps from App Store Connect...",
+  "@ascAppConfigLoadingApps": {
+    "description": "Text shown while loading apps from App Store Connect in settings"
+  },
+  "ascAppConfigAppNameHint": "e.g., Cute Sausage Sticker Extension",
+  "@ascAppConfigAppNameHint": {
+    "description": "Hint for App Name field"
+  },
+  "ascAppConfigAppIdHint": "e.g., 647281920",
+  "@ascAppConfigAppIdHint": {
+    "description": "Hint for App ID field"
+  },
+  "ascAppConfigBundleIdHint": "e.g., com.example.stickerapp",
+  "@ascAppConfigBundleIdHint": {
+    "description": "Hint for Bundle ID field"
+  },
+  "ascAppConfigCleared": "App Store Connect config cleared",
+  "@ascAppConfigCleared": {
+    "description": "Snackbar message when ASC configuration is cleared"
+  },
+  "ascAppConfigSaved": "App Store Connect config saved",
+  "@ascAppConfigSaved": {
+    "description": "Snackbar message when ASC configuration is saved"
   }
 }

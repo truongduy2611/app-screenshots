@@ -13,51 +13,19 @@ class BackupCubit extends Cubit<BackupState> {
   BackupCubit(this._backupService, this._syncService)
     : super(const BackupState());
 
-  /// Initializes the cubit: checks availability and triggers auto-backup.
+  /// Initializes backup status without performing launch-time work.
   Future<void> init() async {
     final isAvailable = await _backupService.isAvailable();
     final lastBackup = _backupService.lastBackupDate;
-    final isEnabled = _backupService.isAutoBackupEnabled;
     final isSyncEnabled = _syncService.isUserEnabled;
 
     emit(
       state.copyWith(
         isAvailable: isAvailable,
         lastBackupDate: lastBackup,
-        isEnabled: isEnabled,
         isSyncEnabled: isSyncEnabled,
       ),
     );
-
-    if (isAvailable && isEnabled) {
-      // Run auto-backup in background — don't block UI
-      _backupService.performBackupIfNeeded().then((didBackup) async {
-        if (didBackup) {
-          final backups = await _backupService.listBackups();
-          emit(
-            state.copyWith(lastBackupDate: DateTime.now(), backups: backups),
-          );
-        }
-      });
-    }
-  }
-
-  /// Toggles auto-backup on/off.
-  Future<void> toggleAutoBackup(bool enabled) async {
-    await _backupService.setAutoBackupEnabled(enabled);
-    emit(state.copyWith(isEnabled: enabled));
-
-    if (enabled) {
-      // Trigger an immediate backup when re-enabled
-      _backupService.performBackupIfNeeded().then((didBackup) async {
-        if (didBackup) {
-          final backups = await _backupService.listBackups();
-          emit(
-            state.copyWith(lastBackupDate: DateTime.now(), backups: backups),
-          );
-        }
-      });
-    }
   }
 
   /// Toggles master iCloud sync on/off.
@@ -66,15 +34,8 @@ class BackupCubit extends Cubit<BackupState> {
       await _syncService.enableSync();
     } else {
       await _syncService.disableSync();
-      // Also disable auto-backup when sync is off
-      await _backupService.setAutoBackupEnabled(false);
     }
-    emit(
-      state.copyWith(
-        isSyncEnabled: enabled,
-        isEnabled: enabled ? state.isEnabled : false,
-      ),
-    );
+    emit(state.copyWith(isSyncEnabled: enabled));
   }
 
   /// Creates a manual backup immediately.

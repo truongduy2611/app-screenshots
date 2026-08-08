@@ -593,16 +593,16 @@ class AppLocalizationsTh extends AppLocalizations {
   String get zoomToFit => 'ซูมให้พอดี';
 
   @override
-  String get zoomTo100Percent => 'Zoom to 100%';
+  String get zoomTo100Percent => 'ย่อ/ขยายเป็น 100%';
 
   @override
-  String get zoomToSelection => 'Zoom to Selection';
+  String get zoomToSelection => 'ย่อ/ขยายตามส่วนที่เลือก';
 
   @override
-  String get zoomIn => 'Zoom In';
+  String get zoomIn => 'ขยาย';
 
   @override
-  String get zoomOut => 'Zoom Out';
+  String get zoomOut => 'ย่อ';
 
   @override
   String get addScreenshot => 'เพิ่มสกรีนช็อต';
@@ -859,9 +859,6 @@ class AppLocalizationsTh extends AppLocalizations {
   String get lastBackup => 'สำรองข้อมูลล่าสุด';
 
   @override
-  String get backupsAutomatic => 'สำรองข้อมูลถูกสร้างโดยอัตโนมัติ';
-
-  @override
   String get noBackupsAvailable => 'ไม่มีข้อมูลสำรอง';
 
   @override
@@ -963,6 +960,35 @@ class AppLocalizationsTh extends AppLocalizations {
 
   @override
   String get uploadToAppStoreConnect => 'อัปโหลดไปยัง App Store Connect';
+
+  @override
+  String get uploadDestination => 'ปลายทางการอัปโหลด';
+
+  @override
+  String get primaryAppVersion => 'เวอร์ชันแอปหลัก';
+
+  @override
+  String get customProductPage => 'หน้าผลิตภัณฑ์ที่กำหนดเอง';
+
+  @override
+  String get selectCustomProductPage => 'เลือกหน้าผลิตภัณฑ์ที่กำหนดเอง';
+
+  @override
+  String get noCustomProductPagesFound =>
+      'ไม่พบหน้าผลิตภัณฑ์ที่กำหนดเองสำหรับแอปนี้';
+
+  @override
+  String get mainStoreListing => 'ข้อมูลร้านค้าหลัก';
+
+  @override
+  String get customStoreListing => 'ข้อมูลร้านค้าที่กำหนดเอง';
+
+  @override
+  String get selectCustomStoreListing => 'เลือกข้อมูลร้านค้าที่กำหนดเอง';
+
+  @override
+  String get noCustomStoreListingsFound =>
+      'ไม่พบข้อมูลร้านค้าที่กำหนดเองสำหรับแอปนี้';
 
   @override
   String get loadingApps => 'กำลังโหลดแอป...';
@@ -1772,4 +1798,61 @@ class AppLocalizationsTh extends AppLocalizations {
   @override
   String get playErrorDeclarationRequired =>
       'การอัปโหลดถูกปฏิเสธโดย Google Play: โปรดตรวจสอบ Google Play Console ของคุณและกรอกคำประกาศที่ค้างอยู่ภายใต้เนื้อหาแอปก่อน';
+
+  @override
+  String get ascAppConfigSettings => 'การตั้งค่าแอป App Store Connect';
+
+  @override
+  String get ascAppConfigAppName => 'ชื่อแอป';
+
+  @override
+  String get ascAppConfigAppId => 'รหัสแอป (App ID)';
+
+  @override
+  String get ascAppConfigBundleId => 'รหัสแพ็กเกจ (Bundle ID)';
+
+  @override
+  String get ascAppConfigClear => 'ล้างการตั้งค่า';
+
+  @override
+  String get ascAppConfigLoad => 'โหลดจาก App Store Connect';
+
+  @override
+  String get ascAppConfigNoCreds =>
+      'โปรดตั้งค่าข้อมูลประจำตัว ASC API ในการตั้งค่าก่อน';
+
+  @override
+  String get ascAppConfigSave => 'บันทึกการตั้งค่า';
+
+  @override
+  String ascAppConfigFetchError(String error) {
+    return 'ไม่สามารถโหลดแอปได้: $error';
+  }
+
+  @override
+  String get ascAppConfigAppIdEmpty => 'รหัสแอปต้องไม่ว่างเปล่า';
+
+  @override
+  String get ascAppConfigUnnamedApp => 'แอปไม่มีชื่อ';
+
+  @override
+  String get ascAppConfigUnknownBundleId => 'unknown.bundle.id';
+
+  @override
+  String get ascAppConfigLoadingApps => 'กำลังโหลดแอปจาก App Store Connect...';
+
+  @override
+  String get ascAppConfigAppNameHint => 'เช่น Cute Sausage Sticker Extension';
+
+  @override
+  String get ascAppConfigAppIdHint => 'เช่น 647281920';
+
+  @override
+  String get ascAppConfigBundleIdHint => 'เช่น com.example.stickerapp';
+
+  @override
+  String get ascAppConfigCleared => 'ล้างการกำหนดค่า App Store Connect แล้ว';
+
+  @override
+  String get ascAppConfigSaved => 'บันทึกการกำหนดค่า App Store Connect แล้ว';
 }

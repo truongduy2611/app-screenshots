@@ -590,16 +590,16 @@ class AppLocalizationsZh extends AppLocalizations {
   String get zoomToFit => '适应窗口';
 
   @override
-  String get zoomTo100Percent => 'Zoom to 100%';
+  String get zoomTo100Percent => '缩放至 100%';
 
   @override
-  String get zoomToSelection => 'Zoom to Selection';
+  String get zoomToSelection => '缩放至选中项';
 
   @override
-  String get zoomIn => 'Zoom In';
+  String get zoomIn => '放大';
 
   @override
-  String get zoomOut => 'Zoom Out';
+  String get zoomOut => '缩小';
 
   @override
   String get addScreenshot => '添加截图';
@@ -849,9 +849,6 @@ class AppLocalizationsZh extends AppLocalizations {
   String get lastBackup => '上次备份';
 
   @override
-  String get backupsAutomatic => '备份自动创建';
-
-  @override
   String get noBackupsAvailable => '没有可用的备份';
 
   @override
@@ -952,6 +949,33 @@ class AppLocalizationsZh extends AppLocalizations {
 
   @override
   String get uploadToAppStoreConnect => '上传至App Store Connect';
+
+  @override
+  String get uploadDestination => '上传目的地';
+
+  @override
+  String get primaryAppVersion => '主 App 版本';
+
+  @override
+  String get customProductPage => '自定产品页';
+
+  @override
+  String get selectCustomProductPage => '选择自定产品页';
+
+  @override
+  String get noCustomProductPagesFound => '未找到此 App 的自定产品页';
+
+  @override
+  String get mainStoreListing => '主商品详情';
+
+  @override
+  String get customStoreListing => '自定义商品详情';
+
+  @override
+  String get selectCustomStoreListing => '选择自定义商品详情';
+
+  @override
+  String get noCustomStoreListingsFound => '未找到此 App 的自定义商品详情';
 
   @override
   String get loadingApps => '正在加载应用...';
@@ -1731,6 +1755,62 @@ class AppLocalizationsZh extends AppLocalizations {
   @override
   String get playErrorDeclarationRequired =>
       '上传被 Google Play 拒绝：请先检查您的 Google Play Console 并完成“应用内容”下所有未完成的声明。';
+
+  @override
+  String get ascAppConfigSettings => 'App Store Connect 应用设置';
+
+  @override
+  String get ascAppConfigAppName => '应用名称';
+
+  @override
+  String get ascAppConfigAppId => '应用 ID';
+
+  @override
+  String get ascAppConfigBundleId => '套装 ID (Bundle ID)';
+
+  @override
+  String get ascAppConfigClear => '清除配置';
+
+  @override
+  String get ascAppConfigLoad => '从 App Store Connect 加载';
+
+  @override
+  String get ascAppConfigNoCreds => '请先在“设置”中配置 ASC API 凭据。';
+
+  @override
+  String get ascAppConfigSave => '保存设置';
+
+  @override
+  String ascAppConfigFetchError(String error) {
+    return '加载应用失败: $error';
+  }
+
+  @override
+  String get ascAppConfigAppIdEmpty => '应用 ID 不能为空';
+
+  @override
+  String get ascAppConfigUnnamedApp => '未命名应用';
+
+  @override
+  String get ascAppConfigUnknownBundleId => 'unknown.bundle.id';
+
+  @override
+  String get ascAppConfigLoadingApps => '正在从 App Store Connect 加载应用...';
+
+  @override
+  String get ascAppConfigAppNameHint => '例如 Cute Sausage Sticker Extension';
+
+  @override
+  String get ascAppConfigAppIdHint => '例如 647281920';
+
+  @override
+  String get ascAppConfigBundleIdHint => '例如 com.example.stickerapp';
+
+  @override
+  String get ascAppConfigCleared => 'App Store Connect 配置已清除';
+
+  @override
+  String get ascAppConfigSaved => 'App Store Connect 配置已保存';
 }
 
 /// The translations for Chinese, using the Han script (`zh_Hant`).
@@ -2319,6 +2399,18 @@ class AppLocalizationsZhHant extends AppLocalizationsZh {
   String get zoomToFit => '縮放至適當大小';
 
   @override
+  String get zoomTo100Percent => '縮放至 100%';
+
+  @override
+  String get zoomToSelection => '縮放至選取項目';
+
+  @override
+  String get zoomIn => '放大';
+
+  @override
+  String get zoomOut => '縮小';
+
+  @override
   String get addScreenshot => '新增截圖';
 
   @override
@@ -2566,9 +2658,6 @@ class AppLocalizationsZhHant extends AppLocalizationsZh {
   String get lastBackup => '上次備份';
 
   @override
-  String get backupsAutomatic => '備份會自動建立';
-
-  @override
   String get noBackupsAvailable => '沒有可用的備份';
 
   @override
@@ -2669,6 +2758,33 @@ class AppLocalizationsZhHant extends AppLocalizationsZh {
 
   @override
   String get uploadToAppStoreConnect => '上傳至App Store Connect';
+
+  @override
+  String get uploadDestination => '上傳目的地';
+
+  @override
+  String get primaryAppVersion => '主 App 版本';
+
+  @override
+  String get customProductPage => '自訂產品頁面';
+
+  @override
+  String get selectCustomProductPage => '選取自訂產品頁面';
+
+  @override
+  String get noCustomProductPagesFound => '未找到此 App 的自訂產品頁面';
+
+  @override
+  String get mainStoreListing => '主商品詳情';
+
+  @override
+  String get customStoreListing => '自訂商品詳情';
+
+  @override
+  String get selectCustomStoreListing => '選取自訂商品詳情';
+
+  @override
+  String get noCustomStoreListingsFound => '未找到此 App 的自訂商品詳情';
 
   @override
   String get loadingApps => '正在載入應用程式...';
@@ -3448,4 +3564,60 @@ class AppLocalizationsZhHant extends AppLocalizationsZh {
   @override
   String get playErrorDeclarationRequired =>
       '上傳被 Google Play 拒絕：請先檢查您的 Google Play Console 並完成「應用內容」下所有未完成的聲明。';
+
+  @override
+  String get ascAppConfigSettings => 'App Store Connect 應用程式設定';
+
+  @override
+  String get ascAppConfigAppName => '應用程式名稱';
+
+  @override
+  String get ascAppConfigAppId => '應用程式 ID';
+
+  @override
+  String get ascAppConfigBundleId => '套件 ID (Bundle ID)';
+
+  @override
+  String get ascAppConfigClear => '清除設定';
+
+  @override
+  String get ascAppConfigLoad => '從 App Store Connect 載入';
+
+  @override
+  String get ascAppConfigNoCreds => '請先在「設定」中配置 ASC API 憑據。';
+
+  @override
+  String get ascAppConfigSave => '儲存設定';
+
+  @override
+  String ascAppConfigFetchError(String error) {
+    return '載入應用程式失敗: $error';
+  }
+
+  @override
+  String get ascAppConfigAppIdEmpty => '應用程式 ID 欄位不能為空';
+
+  @override
+  String get ascAppConfigUnnamedApp => '未命名應用程式';
+
+  @override
+  String get ascAppConfigUnknownBundleId => 'unknown.bundle.id';
+
+  @override
+  String get ascAppConfigLoadingApps => '正在從 App Store Connect 載入應用程式...';
+
+  @override
+  String get ascAppConfigAppNameHint => '例如 Cute Sausage Sticker Extension';
+
+  @override
+  String get ascAppConfigAppIdHint => '例如 647281920';
+
+  @override
+  String get ascAppConfigBundleIdHint => '例如 com.example.stickerapp';
+
+  @override
+  String get ascAppConfigCleared => 'App Store Connect 設定已清除';
+
+  @override
+  String get ascAppConfigSaved => 'App Store Connect 設定已儲存';
 }

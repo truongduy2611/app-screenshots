@@ -55,12 +55,17 @@ class AppDelegate: FlutterAppDelegate {
     NSLog("[AppDelegate] openFile called with: \(filename)")
 
     if filename.hasSuffix(".appshots") {
+      guard let workingPath = ICloudBackupHandler.shared.prepareOpenedDocument(
+        url: URL(fileURLWithPath: filename)
+      ) else {
+        return false
+      }
       if flutterReady, let channel = fileOpenChannel {
-        NSLog("[AppDelegate] Sending fileOpened to Flutter: \(filename)")
-        channel.invokeMethod("fileOpened", arguments: filename)
+        NSLog("[AppDelegate] Sending fileOpened to Flutter: \(workingPath)")
+        channel.invokeMethod("fileOpened", arguments: workingPath)
       } else {
-        NSLog("[AppDelegate] Not ready, queuing: \(filename)")
-        pendingFilePaths.append(filename)
+        NSLog("[AppDelegate] Not ready, queuing: \(workingPath)")
+        pendingFilePaths.append(workingPath)
       }
       return true
     }
@@ -72,7 +77,9 @@ class AppDelegate: FlutterAppDelegate {
     NSLog("[AppDelegate] open urls called with: \(urls)")
     for url in urls {
       if url.isFileURL && url.pathExtension == "appshots" {
-        let path = url.path
+        guard let path = ICloudBackupHandler.shared.prepareOpenedDocument(url: url) else {
+          continue
+        }
         if flutterReady, let channel = fileOpenChannel {
           NSLog("[AppDelegate] Sending fileOpened (URL) to Flutter: \(path)")
           channel.invokeMethod("fileOpened", arguments: path)

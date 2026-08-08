@@ -598,16 +598,16 @@ class AppLocalizationsDe extends AppLocalizations {
   String get zoomToFit => 'Einpassen';
 
   @override
-  String get zoomTo100Percent => 'Zoom to 100%';
+  String get zoomTo100Percent => 'Auf 100% zoomen';
 
   @override
-  String get zoomToSelection => 'Zoom to Selection';
+  String get zoomToSelection => 'Auf Auswahl zoomen';
 
   @override
-  String get zoomIn => 'Zoom In';
+  String get zoomIn => 'Vergrößern';
 
   @override
-  String get zoomOut => 'Zoom Out';
+  String get zoomOut => 'Verkleinern';
 
   @override
   String get addScreenshot => 'Screenshot hinzufügen';
@@ -868,9 +868,6 @@ class AppLocalizationsDe extends AppLocalizations {
   String get lastBackup => 'Letztes Backup';
 
   @override
-  String get backupsAutomatic => 'Backups werden automatisch erstellt';
-
-  @override
   String get noBackupsAvailable => 'Keine Backups verfügbar';
 
   @override
@@ -975,6 +972,37 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String get uploadToAppStoreConnect => 'In App Store Connect hochladen';
+
+  @override
+  String get uploadDestination => 'Upload-Ziel';
+
+  @override
+  String get primaryAppVersion => 'Haupt-App-Version';
+
+  @override
+  String get customProductPage => 'Benutzerdefinierte Produktseite';
+
+  @override
+  String get selectCustomProductPage =>
+      'Benutzerdefinierte Produktseite auswählen';
+
+  @override
+  String get noCustomProductPagesFound =>
+      'Keine benutzerdefinierten Produktseiten für diese App gefunden';
+
+  @override
+  String get mainStoreListing => 'Haupt-Store-Eintrag';
+
+  @override
+  String get customStoreListing => 'Benutzerdefinierter Store-Eintrag';
+
+  @override
+  String get selectCustomStoreListing =>
+      'Benutzerdefinierten Store-Eintrag auswählen';
+
+  @override
+  String get noCustomStoreListingsFound =>
+      'Keine benutzerdefinierten Store-Einträge für diese App gefunden';
 
   @override
   String get loadingApps => 'Apps werden geladen...';
@@ -1839,4 +1867,61 @@ class AppLocalizationsDe extends AppLocalizations {
   @override
   String get playErrorDeclarationRequired =>
       'Upload von Google Play abgelehnt: Bitte überprüfen Sie Ihre Google Play Console und füllen Sie zuerst alle ausstehenden Erklärungen unter App-Inhalte aus.';
+
+  @override
+  String get ascAppConfigSettings => 'App Store Connect App-Einstellungen';
+
+  @override
+  String get ascAppConfigAppName => 'App-Name';
+
+  @override
+  String get ascAppConfigAppId => 'App-ID';
+
+  @override
+  String get ascAppConfigBundleId => 'Bundle-ID';
+
+  @override
+  String get ascAppConfigClear => 'Konfiguration löschen';
+
+  @override
+  String get ascAppConfigLoad => 'Aus App Store Connect laden';
+
+  @override
+  String get ascAppConfigNoCreds =>
+      'Konfigurieren Sie zuerst die ASC-API-Anmeldedaten in den Einstellungen.';
+
+  @override
+  String get ascAppConfigSave => 'Einstellungen speichern';
+
+  @override
+  String ascAppConfigFetchError(String error) {
+    return 'Fehler beim Laden der Apps: $error';
+  }
+
+  @override
+  String get ascAppConfigAppIdEmpty => 'App-ID darf nicht leer sein';
+
+  @override
+  String get ascAppConfigUnnamedApp => 'Unbenannte App';
+
+  @override
+  String get ascAppConfigUnknownBundleId => 'unknown.bundle.id';
+
+  @override
+  String get ascAppConfigLoadingApps => 'Lade Apps von App Store Connect...';
+
+  @override
+  String get ascAppConfigAppNameHint => 'z. B. Cute Sausage Sticker Extension';
+
+  @override
+  String get ascAppConfigAppIdHint => 'z. B. 647281920';
+
+  @override
+  String get ascAppConfigBundleIdHint => 'z. B. com.example.stickerapp';
+
+  @override
+  String get ascAppConfigCleared => 'App Store Connect-Konfiguration gelöscht';
+
+  @override
+  String get ascAppConfigSaved => 'App Store Connect-Konfiguration gespeichert';
 }

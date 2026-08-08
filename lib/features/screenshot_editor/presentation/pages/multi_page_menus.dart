@@ -81,6 +81,11 @@ class _SaveExportMenu extends StatelessWidget {
           title: context.l10n.uploadExistingFolderToAsc,
         ),
         AppPopupMenuItem(
+          value: _MultiMenuAction.ascSettings,
+          icon: Symbols.settings_suggest_rounded,
+          title: context.l10n.ascAppConfigSettings,
+        ),
+        AppPopupMenuItem(
           value: _MultiMenuAction.uploadToGooglePlay,
           icon: Symbols.android_rounded,
           title: context.l10n.uploadToGooglePlay,
@@ -170,6 +175,11 @@ class _MobileOverflowMenu extends StatelessWidget {
           title: context.l10n.copyToClipboard,
         ),
         const AppPopupMenuItem.divider(),
+        AppPopupMenuItem(
+          value: _MultiMenuAction.ascSettings,
+          icon: Symbols.settings_suggest_rounded,
+          title: context.l10n.ascAppConfigSettings,
+        ),
         AppPopupMenuItem(
           value: _MultiMenuAction.shareDesign,
           icon: Symbols.share_rounded,

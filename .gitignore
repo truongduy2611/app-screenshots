@@ -59,6 +59,7 @@ macos/build/
 # Agent configs (personal)
 .agent/
 .agents/
+.codegraph/
 
 # Temp / generated
 tmp_*.json

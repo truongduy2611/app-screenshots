@@ -5,7 +5,7 @@ import 'package:app_screenshots/core/widgets/app_button.dart';
 import 'package:app_screenshots/core/widgets/app_card.dart';
 import 'package:app_screenshots/core/widgets/app_list_tile.dart';
 import 'package:app_screenshots/features/screenshot_editor/presentation/widgets/controls/app_switch.dart';
-import 'package:app_screenshots/features/screenshot_editor/data/asc_api/models/asc_app.dart';
+import 'package:app_screenshots/features/screenshot_editor/data/asc_api/asc_api.dart';
 import 'package:app_screenshots/features/screenshot_editor/data/models/asc_app_config.dart';
 import 'package:app_screenshots/features/screenshot_editor/data/services/asc_upload_service.dart';
 import 'package:app_screenshots/features/screenshot_editor/presentation/cubit/asc_upload_cubit.dart';
@@ -193,6 +193,18 @@ class AscUploadSheet extends StatelessWidget {
             rememberApp: state.rememberApp,
             onRememberAppChanged: (v) =>
                 context.read<AscUploadCubit>().setRememberApp(v),
+            targetType: state.targetType,
+            onTargetTypeChanged: (type) =>
+                context.read<AscUploadCubit>().setTargetType(type),
+            customProductPages: state.customProductPages,
+            selectedCustomProductPage: state.selectedCustomProductPage,
+            hasEditableCustomProductPage:
+                state.customProductPageVersion != null,
+            onCustomProductPageChanged: (cpp) {
+              if (cpp != null) {
+                context.read<AscUploadCubit>().selectCustomProductPage(cpp);
+              }
+            },
           ),
         );
 

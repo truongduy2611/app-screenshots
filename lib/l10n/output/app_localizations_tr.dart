@@ -598,16 +598,16 @@ class AppLocalizationsTr extends AppLocalizations {
   String get zoomToFit => 'Sığdır';
 
   @override
-  String get zoomTo100Percent => 'Zoom to 100%';
+  String get zoomTo100Percent => '%100 Yakınlaştır';
 
   @override
-  String get zoomToSelection => 'Zoom to Selection';
+  String get zoomToSelection => 'Seçime Yakınlaştır';
 
   @override
-  String get zoomIn => 'Zoom In';
+  String get zoomIn => 'Yakınlaştır';
 
   @override
-  String get zoomOut => 'Zoom Out';
+  String get zoomOut => 'Uzaklaştır';
 
   @override
   String get addScreenshot => 'Ekran Görüntüsü Ekle';
@@ -867,9 +867,6 @@ class AppLocalizationsTr extends AppLocalizations {
   String get lastBackup => 'Son yedekleme';
 
   @override
-  String get backupsAutomatic => 'Yedekler otomatik olarak oluşturulur';
-
-  @override
   String get noBackupsAvailable => 'Yedek mevcut değil';
 
   @override
@@ -973,6 +970,35 @@ class AppLocalizationsTr extends AppLocalizations {
 
   @override
   String get uploadToAppStoreConnect => 'App Store Connect\'e yükle';
+
+  @override
+  String get uploadDestination => 'Yükleme Hedefi';
+
+  @override
+  String get primaryAppVersion => 'Birincil Uygulama Sürümü';
+
+  @override
+  String get customProductPage => 'Özel Ürün Sayfası';
+
+  @override
+  String get selectCustomProductPage => 'Özel Ürün Sayfası Seçin';
+
+  @override
+  String get noCustomProductPagesFound =>
+      'Bu uygulama için özel ürün sayfası bulunamadı';
+
+  @override
+  String get mainStoreListing => 'Ana Mağaza Girişi';
+
+  @override
+  String get customStoreListing => 'Özel Mağaza Girişi';
+
+  @override
+  String get selectCustomStoreListing => 'Özel Mağaza Girişi Seçin';
+
+  @override
+  String get noCustomStoreListingsFound =>
+      'Bu uygulama için özel mağaza girişi bulunamadı';
 
   @override
   String get loadingApps => 'Uygulamalar yükleniyor...';
@@ -1829,4 +1855,63 @@ class AppLocalizationsTr extends AppLocalizations {
   @override
   String get playErrorDeclarationRequired =>
       'Yükleme Google Play tarafından reddedildi: Lütfen öncelikle Google Play Console\'u kontrol edin ve Uygulama İçeriği altındaki tüm eksik bildirimleri tamamlayın.';
+
+  @override
+  String get ascAppConfigSettings => 'App Store Connect Uygulama Ayarları';
+
+  @override
+  String get ascAppConfigAppName => 'Uygulama Adı';
+
+  @override
+  String get ascAppConfigAppId => 'Uygulama Kimliği (App ID)';
+
+  @override
+  String get ascAppConfigBundleId => 'Paket Kimliği (Bundle ID)';
+
+  @override
+  String get ascAppConfigClear => 'Yapılandırmayı Temizle';
+
+  @override
+  String get ascAppConfigLoad => 'App Store Connect\'ten Yükle';
+
+  @override
+  String get ascAppConfigNoCreds =>
+      'Öncelikle Ayarlar\'dan ASC API kimlik bilgilerini yapılandırın.';
+
+  @override
+  String get ascAppConfigSave => 'Ayarları Kaydet';
+
+  @override
+  String ascAppConfigFetchError(String error) {
+    return 'Uygulamalar yüklenemedi: $error';
+  }
+
+  @override
+  String get ascAppConfigAppIdEmpty => 'Uygulama kimliği boş olamaz';
+
+  @override
+  String get ascAppConfigUnnamedApp => 'Adlandırılmamış Uygulama';
+
+  @override
+  String get ascAppConfigUnknownBundleId => 'unknown.bundle.id';
+
+  @override
+  String get ascAppConfigLoadingApps =>
+      'Uygulamalar App Store Connect\'ten yükleniyor...';
+
+  @override
+  String get ascAppConfigAppNameHint => 'ör. Cute Sausage Sticker Extension';
+
+  @override
+  String get ascAppConfigAppIdHint => 'ör. 647281920';
+
+  @override
+  String get ascAppConfigBundleIdHint => 'ör. com.example.stickerapp';
+
+  @override
+  String get ascAppConfigCleared =>
+      'App Store Connect yapılandırması temizlendi';
+
+  @override
+  String get ascAppConfigSaved => 'App Store Connect yapılandırması kaydedildi';
 }

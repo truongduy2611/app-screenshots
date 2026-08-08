@@ -601,16 +601,16 @@ class AppLocalizationsFr extends AppLocalizations {
   String get zoomToFit => 'Ajuster';
 
   @override
-  String get zoomTo100Percent => 'Zoom to 100%';
+  String get zoomTo100Percent => 'Zoom à 100 %';
 
   @override
-  String get zoomToSelection => 'Zoom to Selection';
+  String get zoomToSelection => 'Zoom sur la sélection';
 
   @override
-  String get zoomIn => 'Zoom In';
+  String get zoomIn => 'Zoom avant';
 
   @override
-  String get zoomOut => 'Zoom Out';
+  String get zoomOut => 'Zoom arrière';
 
   @override
   String get addScreenshot => 'Ajouter une capture';
@@ -874,9 +874,6 @@ class AppLocalizationsFr extends AppLocalizations {
   String get lastBackup => 'Dernière sauvegarde';
 
   @override
-  String get backupsAutomatic => 'Les sauvegardes sont créées automatiquement';
-
-  @override
   String get noBackupsAvailable => 'Aucune sauvegarde disponible';
 
   @override
@@ -980,6 +977,37 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get uploadToAppStoreConnect => 'Envoyer vers App Store Connect';
+
+  @override
+  String get uploadDestination => 'Destination de téléversement';
+
+  @override
+  String get primaryAppVersion => 'Version principale de l\'application';
+
+  @override
+  String get customProductPage => 'Page de produit personnalisée';
+
+  @override
+  String get selectCustomProductPage =>
+      'Sélectionner une page de produit personnalisée';
+
+  @override
+  String get noCustomProductPagesFound =>
+      'Aucune page de produit personnalisée trouvée pour cette application';
+
+  @override
+  String get mainStoreListing => 'Fiche du store principale';
+
+  @override
+  String get customStoreListing => 'Fiche du store personnalisée';
+
+  @override
+  String get selectCustomStoreListing =>
+      'Sélectionner une fiche du store personnalisée';
+
+  @override
+  String get noCustomStoreListingsFound =>
+      'Aucune fiche du store personnalisée trouvée pour cette application';
 
   @override
   String get loadingApps => 'Chargement des apps...';
@@ -1845,4 +1873,64 @@ class AppLocalizationsFr extends AppLocalizations {
   @override
   String get playErrorDeclarationRequired =>
       'Téléchargement rejeté par Google Play : veuillez vérifier votre Google Play Console et compléter d\'abord toutes les déclarations en attente sous Contenu de l\'application.';
+
+  @override
+  String get ascAppConfigSettings =>
+      'Paramètres de l\'application App Store Connect';
+
+  @override
+  String get ascAppConfigAppName => 'Nom de l\'application';
+
+  @override
+  String get ascAppConfigAppId => 'Identifiant de l\'application';
+
+  @override
+  String get ascAppConfigBundleId => 'Identifiant de lot (Bundle ID)';
+
+  @override
+  String get ascAppConfigClear => 'Effacer la configuration';
+
+  @override
+  String get ascAppConfigLoad => 'Charger depuis App Store Connect';
+
+  @override
+  String get ascAppConfigNoCreds =>
+      'Configurez d\'abord les identifiants API ASC dans les Réglages.';
+
+  @override
+  String get ascAppConfigSave => 'Enregistrer les paramètres';
+
+  @override
+  String ascAppConfigFetchError(String error) {
+    return 'Échec du chargement des applications: $error';
+  }
+
+  @override
+  String get ascAppConfigAppIdEmpty =>
+      'L\'identifiant de l\'application ne peut pas être vide';
+
+  @override
+  String get ascAppConfigUnnamedApp => 'Application sans nom';
+
+  @override
+  String get ascAppConfigUnknownBundleId => 'unknown.bundle.id';
+
+  @override
+  String get ascAppConfigLoadingApps =>
+      'Chargement des applications depuis App Store Connect...';
+
+  @override
+  String get ascAppConfigAppNameHint => 'ex. Cute Sausage Sticker Extension';
+
+  @override
+  String get ascAppConfigAppIdHint => 'ex. 647281920';
+
+  @override
+  String get ascAppConfigBundleIdHint => 'ex. com.example.stickerapp';
+
+  @override
+  String get ascAppConfigCleared => 'Configuration App Store Connect effacée';
+
+  @override
+  String get ascAppConfigSaved => 'Configuration App Store Connect enregistrée';
 }

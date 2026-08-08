@@ -25,7 +25,8 @@ class _PresetListCommand extends Command<int> {
 
   @override
   Future<int> run() async {
-    final client = await AppClient.discover();
+    final client = await AppClient.discover(
+        portOverride: globalResults?['port'] as String?);
     final result = await client.get(PresetAction.list.path);
     Output.print(result, json: Output.isJson(globalResults));
     client.close();
@@ -45,7 +46,8 @@ class _PresetShowCommand extends Command<int> {
 
   @override
   Future<int> run() async {
-    final client = await AppClient.discover();
+    final client = await AppClient.discover(
+        portOverride: globalResults?['port'] as String?);
     final result =
         await client.post(PresetAction.show.path, {'id': argResults!['id']});
     Output.print(result, json: Output.isJson(globalResults));

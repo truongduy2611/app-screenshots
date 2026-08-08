@@ -76,8 +76,9 @@ void _registerServices(ICloudSyncService syncService) {
   );
   sl.registerLazySingleton(
     () => TemplatePersistenceService(
-      storageRootFuture: syncService.designsPathFuture
-          .then((root) => '$root/screenshot_templates'),
+      storageRootFuture: syncService.designsPathFuture.then(
+        (root) => '$root/screenshot_templates',
+      ),
     ),
   );
   sl.registerLazySingleton(() => AppIconService());
@@ -95,7 +96,13 @@ void _registerServices(ICloudSyncService syncService) {
   sl.registerLazySingleton(() => DesignFileService());
 
   sl.registerLazySingleton(
-    () => CommandServer(persistenceService: sl(), designFileService: sl()),
+    () => CommandServer(
+      persistenceService: sl(),
+      designFileService: sl(),
+      settingsRepository: sl(),
+      ascUploadService: sl(),
+      playUploadService: sl(),
+    ),
   );
 }
 
@@ -132,5 +139,4 @@ void _registerCubits() {
     () => BackupCubit(sl(), sl<ICloudSyncService>())..init(),
   );
   sl.registerLazySingleton(() => CliCubit(sl()));
-
 }

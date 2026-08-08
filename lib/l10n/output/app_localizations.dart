@@ -1745,12 +1745,6 @@ abstract class AppLocalizations {
   /// **'Last backup'**
   String get lastBackup;
 
-  /// Info text about automatic backups
-  ///
-  /// In en, this message translates to:
-  /// **'Backups are created automatically'**
-  String get backupsAutomatic;
-
   /// Message when no iCloud backups exist
   ///
   /// In en, this message translates to:
@@ -1936,6 +1930,60 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Upload to App Store Connect'**
   String get uploadToAppStoreConnect;
+
+  /// Label for selecting where screenshots will be uploaded (Primary Version vs Custom Product Page)
+  ///
+  /// In en, this message translates to:
+  /// **'Upload Destination'**
+  String get uploadDestination;
+
+  /// Option for uploading screenshots to the primary app version
+  ///
+  /// In en, this message translates to:
+  /// **'Primary App Version'**
+  String get primaryAppVersion;
+
+  /// Option for uploading screenshots to a Custom Product Page
+  ///
+  /// In en, this message translates to:
+  /// **'Custom Product Page'**
+  String get customProductPage;
+
+  /// Title/placeholder for choosing a Custom Product Page
+  ///
+  /// In en, this message translates to:
+  /// **'Select Custom Product Page'**
+  String get selectCustomProductPage;
+
+  /// Helper text shown when an app has no Custom Product Pages created
+  ///
+  /// In en, this message translates to:
+  /// **'No custom product pages found for this app'**
+  String get noCustomProductPagesFound;
+
+  /// Option for uploading screenshots to the main Play Store listing
+  ///
+  /// In en, this message translates to:
+  /// **'Main Store Listing'**
+  String get mainStoreListing;
+
+  /// Option for uploading screenshots to a Google Play Custom Store Listing
+  ///
+  /// In en, this message translates to:
+  /// **'Custom Store Listing'**
+  String get customStoreListing;
+
+  /// Title/placeholder for choosing a Google Play Custom Store Listing
+  ///
+  /// In en, this message translates to:
+  /// **'Select Custom Store Listing'**
+  String get selectCustomStoreListing;
+
+  /// Helper text shown when an app has no Custom Store Listings created
+  ///
+  /// In en, this message translates to:
+  /// **'No custom store listings found for this app'**
+  String get noCustomStoreListingsFound;
 
   /// Loading state text while fetching apps from ASC
   ///
@@ -3352,6 +3400,114 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Upload rejected by Google Play: Please check your Google Play Console and complete any outstanding declarations under App Content first.'**
   String get playErrorDeclarationRequired;
+
+  /// Title of the App Store Connect App configuration settings dialog
+  ///
+  /// In en, this message translates to:
+  /// **'App Store Connect App Settings'**
+  String get ascAppConfigSettings;
+
+  /// Label for App Name in ASC config
+  ///
+  /// In en, this message translates to:
+  /// **'App Name'**
+  String get ascAppConfigAppName;
+
+  /// Label for App ID in ASC config
+  ///
+  /// In en, this message translates to:
+  /// **'App ID'**
+  String get ascAppConfigAppId;
+
+  /// Label for Bundle ID in ASC config
+  ///
+  /// In en, this message translates to:
+  /// **'Bundle ID'**
+  String get ascAppConfigBundleId;
+
+  /// Button to clear the App Store Connect configuration
+  ///
+  /// In en, this message translates to:
+  /// **'Clear Configuration'**
+  String get ascAppConfigClear;
+
+  /// Button to fetch and select app from App Store Connect
+  ///
+  /// In en, this message translates to:
+  /// **'Load from App Store Connect'**
+  String get ascAppConfigLoad;
+
+  /// Hint shown when ASC credentials are not set up
+  ///
+  /// In en, this message translates to:
+  /// **'Configure ASC API credentials in Settings first.'**
+  String get ascAppConfigNoCreds;
+
+  /// Button to save App Store Connect configuration settings
+  ///
+  /// In en, this message translates to:
+  /// **'Save Settings'**
+  String get ascAppConfigSave;
+
+  /// Error message when app loading from ASC fails
+  ///
+  /// In en, this message translates to:
+  /// **'Failed to load apps: {error}'**
+  String ascAppConfigFetchError(String error);
+
+  /// Validation error message when App ID field is empty
+  ///
+  /// In en, this message translates to:
+  /// **'App ID cannot be empty'**
+  String get ascAppConfigAppIdEmpty;
+
+  /// Fallback label for unnamed app
+  ///
+  /// In en, this message translates to:
+  /// **'Unnamed App'**
+  String get ascAppConfigUnnamedApp;
+
+  /// Fallback label for unknown bundle ID
+  ///
+  /// In en, this message translates to:
+  /// **'unknown.bundle.id'**
+  String get ascAppConfigUnknownBundleId;
+
+  /// Text shown while loading apps from App Store Connect in settings
+  ///
+  /// In en, this message translates to:
+  /// **'Loading apps from App Store Connect...'**
+  String get ascAppConfigLoadingApps;
+
+  /// Hint for App Name field
+  ///
+  /// In en, this message translates to:
+  /// **'e.g., Cute Sausage Sticker Extension'**
+  String get ascAppConfigAppNameHint;
+
+  /// Hint for App ID field
+  ///
+  /// In en, this message translates to:
+  /// **'e.g., 647281920'**
+  String get ascAppConfigAppIdHint;
+
+  /// Hint for Bundle ID field
+  ///
+  /// In en, this message translates to:
+  /// **'e.g., com.example.stickerapp'**
+  String get ascAppConfigBundleIdHint;
+
+  /// Snackbar message when ASC configuration is cleared
+  ///
+  /// In en, this message translates to:
+  /// **'App Store Connect config cleared'**
+  String get ascAppConfigCleared;
+
+  /// Snackbar message when ASC configuration is saved
+  ///
+  /// In en, this message translates to:
+  /// **'App Store Connect config saved'**
+  String get ascAppConfigSaved;
 }
 
 class _AppLocalizationsDelegate

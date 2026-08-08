@@ -1,14 +1,18 @@
 import 'dart:async';
 import 'dart:convert';
 import 'dart:io';
+import 'dart:math';
 import 'dart:typed_data';
 
 import 'package:app_screenshots/core/services/app_logger.dart';
+import 'package:app_screenshots/core/services/icloud_collaboration_service.dart';
 import 'package:app_screenshots/features/screenshot_editor/data/models/screenshot_design.dart';
 import 'package:app_screenshots/features/screenshot_editor/data/models/mesh_gradient_settings.dart';
 import 'package:app_screenshots/features/screenshot_editor/data/models/overlay_override.dart';
 import 'package:app_screenshots/features/screenshot_editor/data/services/screenshot_persistence_service.dart';
 import 'package:app_screenshots/features/screenshot_editor/data/services/design_file_service.dart';
+import 'package:app_screenshots/features/screenshot_editor/data/services/asc_upload_service.dart';
+import 'package:app_screenshots/features/screenshot_editor/data/services/play_upload_service.dart';
 import 'package:app_screenshots/features/screenshot_editor/data/screenshot_presets.dart';
 import 'package:app_screenshots/features/screenshot_editor/presentation/widgets/icon_picker_dialog.dart';
 import 'package:app_screenshots/features/screenshot_editor/presentation/cubit/multi_screenshot_cubit.dart';
@@ -16,6 +20,7 @@ import 'package:app_screenshots/features/screenshot_editor/presentation/cubit/sc
 import 'package:app_screenshots/features/screenshot_editor/presentation/cubit/screenshot_library_cubit.dart';
 import 'package:app_screenshots/features/screenshot_editor/presentation/cubit/translation_cubit.dart';
 import 'package:app_screenshots_shared/app_screenshots_shared.dart';
+import 'package:app_screenshots/features/settings/domain/repositories/settings_repository.dart';
 import 'package:device_frame/device_frame.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -28,6 +33,9 @@ part 'command_server_preset.dart';
 part 'command_server_translate.dart';
 part 'command_server_utils.dart';
 part 'command_server_openapi.dart';
+part 'command_server_jobs.dart';
+part 'command_server_upload.dart';
+part 'command_server_collaboration.dart';
 
 /// Embedded HTTP server that exposes the app's editor API for CLI/agent control.
 ///
@@ -47,6 +55,9 @@ class CommandServer {
 
   HttpServer? _server;
   int? _port;
+  String _sessionToken = '';
+
+  final Map<String, _CommandJob> _jobs = {};
 
   // ── Registered cubits ──
 
@@ -82,15 +93,27 @@ class CommandServer {
 
   /// Design file service for import/export.
   final DesignFileService _designFileService;
+  final SettingsRepository? _settingsRepository;
+  final AscUploadService? _ascUploadService;
+  final PlayUploadService? _playUploadService;
 
   CommandServer({
     required ScreenshotPersistenceService persistenceService,
     DesignFileService? designFileService,
+    SettingsRepository? settingsRepository,
+    AscUploadService? ascUploadService,
+    PlayUploadService? playUploadService,
   }) : _persistenceService = persistenceService,
-       _designFileService = designFileService ?? DesignFileService();
+       _designFileService = designFileService ?? DesignFileService(),
+       _settingsRepository = settingsRepository,
+       _ascUploadService = ascUploadService,
+       _playUploadService = playUploadService;
 
   int? get port => _port;
   bool get isRunning => _server != null;
+  String get sessionToken => _sessionToken;
+  Uri? get docsUri =>
+      _port == null ? null : Uri.parse('http://localhost:$_port/api/docs');
 
   // ═══════════════════════════════════════════════════════════════════════════
   // Cubit registration
@@ -171,6 +194,9 @@ class CommandServer {
   // ═══════════════════════════════════════════════════════════════════════════
 
   Future<void> start() async {
+    if (isRunning) return;
+
+    _sessionToken = _createSessionToken();
     int port = defaultPort;
     for (int attempt = 0; attempt < 10; attempt++) {
       try {
@@ -196,6 +222,8 @@ class CommandServer {
     await _server?.close(force: true);
     _server = null;
     _port = null;
+    _sessionToken = '';
+    _jobs.clear();
     await _removePortFile();
     AppLogger.i('Command server stopped', tag: _tag);
   }
@@ -214,12 +242,23 @@ class CommandServer {
   Future<void> _writePortFile() async {
     final dir = await _configDir;
     await File('$dir/server.port').writeAsString('$_port');
+    await File(
+      '$dir/${AppConstants.sessionFileName}',
+    ).writeAsString(jsonEncode({'port': _port, 'token': _sessionToken}));
   }
 
   Future<void> _removePortFile() async {
     final dir = await _configDir;
     final file = File('$dir/server.port');
     if (await file.exists()) await file.delete();
+    final sessionFile = File('$dir/${AppConstants.sessionFileName}');
+    if (await sessionFile.exists()) await sessionFile.delete();
+  }
+
+  String _createSessionToken() {
+    final random = Random.secure();
+    final bytes = List<int>.generate(32, (_) => random.nextInt(256));
+    return base64UrlEncode(bytes).replaceAll('=', '');
   }
 
   // ═══════════════════════════════════════════════════════════════════════════
@@ -227,18 +266,6 @@ class CommandServer {
   // ═══════════════════════════════════════════════════════════════════════════
 
   Future<void> _handleRequest(HttpRequest request) async {
-    request.response.headers
-      ..set('Access-Control-Allow-Origin', '*')
-      ..set('Access-Control-Allow-Methods', 'GET, POST, OPTIONS')
-      ..set('Access-Control-Allow-Headers', 'Content-Type')
-      ..set('Content-Type', 'application/json');
-
-    if (request.method == 'OPTIONS') {
-      request.response.statusCode = 200;
-      await request.response.close();
-      return;
-    }
-
     final path = request.uri.path;
 
     // Intercept OpenAPI documentation routes
@@ -257,8 +284,19 @@ class CommandServer {
     if (path == '/api/docs' || path == '/api/docs/') {
       request.response.statusCode = 200;
       request.response.headers.contentType = ContentType.html;
-      request.response.write(_swaggerUiHtml);
+      request.response.write(
+        _swaggerUiHtml.replaceAll('__APPSHOTS_TOKEN__', _sessionToken),
+      );
       await request.response.close();
+      return;
+    }
+
+    if (!_isAuthorized(request)) {
+      _sendError(
+        request.response,
+        'Unauthorized local API request',
+        statusCode: HttpStatus.unauthorized,
+      );
       return;
     }
 
@@ -274,6 +312,13 @@ class CommandServer {
       );
       _sendError(request.response, e.toString(), statusCode: 500);
     }
+  }
+
+  bool _isAuthorized(HttpRequest request) {
+    final authorization = request.headers.value(
+      HttpHeaders.authorizationHeader,
+    );
+    return authorization == 'Bearer $_sessionToken';
   }
 
   void _sendJson(
@@ -329,6 +374,28 @@ class CommandServer {
           'hasLibrary': true,
           'hasTranslation': _translationCubit != null,
         });
+      case ApiRoute.capabilities:
+        final ascCredentials = await _settingsRepository?.getAscCredentials();
+        final playCredentials = await _settingsRepository?.getPlayCredentials();
+        return ServerResponse.ok({
+          'editor': true,
+          'library': true,
+          'translation': true,
+          'appStoreConnect': {
+            'mainListing': _ascUploadService != null,
+            'customProductPages': _ascUploadService != null,
+            'credentialsConfigured': ascCredentials?.isValid ?? false,
+          },
+          'googlePlay': {
+            'mainListing': _playUploadService != null,
+            'customStoreListings': false,
+            'customStoreListingsReason':
+                'Google Play has no supported public Custom Store Listing API.',
+            'credentialsConfigured': playCredentials?.isValid ?? false,
+          },
+          'iCloudCollaboration': ICloudCollaborationService.isSupported,
+          'backgroundJobs': true,
+        });
       case ApiRoute.editor:
         return handleEditor(route.actionFrom(path), method, request);
       case ApiRoute.library:
@@ -339,6 +406,14 @@ class CommandServer {
         return handlePreset(route.actionFrom(path), method, request);
       case ApiRoute.multi:
         return handleMulti(route.actionFrom(path), method, request);
+      case ApiRoute.asc:
+        return handleAsc(route.actionFrom(path), method, request);
+      case ApiRoute.play:
+        return handlePlay(route.actionFrom(path), method, request);
+      case ApiRoute.collaboration:
+        return handleCollaboration(route.actionFrom(path), method, request);
+      case ApiRoute.jobs:
+        return handleJobs(route.actionFrom(path), method, request);
     }
   }
 }

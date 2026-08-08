@@ -597,16 +597,16 @@ class AppLocalizationsAr extends AppLocalizations {
   String get zoomToFit => 'ملاءمة النافذة';
 
   @override
-  String get zoomTo100Percent => 'Zoom to 100%';
+  String get zoomTo100Percent => 'التكبير إلى 100%';
 
   @override
-  String get zoomToSelection => 'Zoom to Selection';
+  String get zoomToSelection => 'التكبير على المحدد';
 
   @override
-  String get zoomIn => 'Zoom In';
+  String get zoomIn => 'تكبير';
 
   @override
-  String get zoomOut => 'Zoom Out';
+  String get zoomOut => 'تصغير';
 
   @override
   String get addScreenshot => 'إضافة لقطة شاشة';
@@ -864,9 +864,6 @@ class AppLocalizationsAr extends AppLocalizations {
   String get lastBackup => 'آخر نسخة احتياطية';
 
   @override
-  String get backupsAutomatic => 'يتم إنشاء النسخ الاحتياطية تلقائياً';
-
-  @override
   String get noBackupsAvailable => 'لا توجد نسخ احتياطية';
 
   @override
@@ -970,6 +967,35 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get uploadToAppStoreConnect => 'رفع إلى App Store Connect';
+
+  @override
+  String get uploadDestination => 'وجهة الرفع';
+
+  @override
+  String get primaryAppVersion => 'الإصدار الرئيسي للتطبيق';
+
+  @override
+  String get customProductPage => 'صفحة منتج مخصصة';
+
+  @override
+  String get selectCustomProductPage => 'حدد صفحة منتج مخصصة';
+
+  @override
+  String get noCustomProductPagesFound =>
+      'لم يتم العثور على صفحات منتجات مخصصة لهذا التطبيق';
+
+  @override
+  String get mainStoreListing => 'قائمة المتجر الرئيسية';
+
+  @override
+  String get customStoreListing => 'قائمة متجر مخصصة';
+
+  @override
+  String get selectCustomStoreListing => 'حدد قائمة متجر مخصصة';
+
+  @override
+  String get noCustomStoreListingsFound =>
+      'لم يتم العثور على قوائم متجر مخصصة لهذا التطبيق';
 
   @override
   String get loadingApps => 'جارٍ تحميل التطبيقات...';
@@ -1820,4 +1846,62 @@ class AppLocalizationsAr extends AppLocalizations {
   @override
   String get playErrorDeclarationRequired =>
       'تم رفض التحميل من قِvel Google Play: يرجى التحقق من Google Play Console وإكمال أي إقرارات معلقة ضمن محتوى التطبيق أولاً.';
+
+  @override
+  String get ascAppConfigSettings => 'إعدادات تطبيق App Store Connect';
+
+  @override
+  String get ascAppConfigAppName => 'اسم التطبيق';
+
+  @override
+  String get ascAppConfigAppId => 'معرف التطبيق (App ID)';
+
+  @override
+  String get ascAppConfigBundleId => 'معرف الحزمة (Bundle ID)';
+
+  @override
+  String get ascAppConfigClear => 'مسح التكوين';
+
+  @override
+  String get ascAppConfigLoad => 'تحميل من App Store Connect';
+
+  @override
+  String get ascAppConfigNoCreds =>
+      'قم بتكوين بيانات اعتماد ASC API في الإعدادات أولاً.';
+
+  @override
+  String get ascAppConfigSave => 'حفظ الإعدادات';
+
+  @override
+  String ascAppConfigFetchError(String error) {
+    return 'فشل تحميل التطبيقات: $error';
+  }
+
+  @override
+  String get ascAppConfigAppIdEmpty => 'لا يمكن أن يكون معرّف التطبيق فارغًا';
+
+  @override
+  String get ascAppConfigUnnamedApp => 'تطبيق بدون اسم';
+
+  @override
+  String get ascAppConfigUnknownBundleId => 'unknown.bundle.id';
+
+  @override
+  String get ascAppConfigLoadingApps =>
+      'جاري تحميل التطبيقات من App Store Connect...';
+
+  @override
+  String get ascAppConfigAppNameHint => 'مثال: Cute Sausage Sticker Extension';
+
+  @override
+  String get ascAppConfigAppIdHint => 'مثال: 647281920';
+
+  @override
+  String get ascAppConfigBundleIdHint => 'مثال: com.example.stickerapp';
+
+  @override
+  String get ascAppConfigCleared => 'تم مسح تكوين App Store Connect';
+
+  @override
+  String get ascAppConfigSaved => 'تم حفظ تكوين App Store Connect';
 }

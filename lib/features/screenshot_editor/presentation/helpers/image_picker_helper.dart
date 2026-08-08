@@ -84,9 +84,10 @@ class ImagePickerHelper {
     final prefs = GetIt.I<SharedPreferences>();
     final initialDir = prefs.getString(_lastOpenPathKey);
 
-    final result = await FilePicker.platform.pickFiles(
+    final result = await FilePicker.pickFiles(
       type: FileType.custom,
       allowedExtensions: ['png', 'jpg', 'jpeg', 'gif', 'webp', 'svg'],
+      // ignore: deprecated_member_use
       allowMultiple: allowMultiple,
       initialDirectory: initialDir,
     );

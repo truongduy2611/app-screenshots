@@ -6,13 +6,14 @@ import 'package:app_screenshots/features/screenshot_editor/presentation/cubit/sc
 import 'package:app_screenshots/features/screenshot_editor/presentation/cubit/translation_cubit.dart';
 import 'package:app_screenshots/features/screenshot_editor/presentation/widgets/controls/control_styles.dart';
 import 'package:app_screenshots/features/screenshot_editor/presentation/widgets/controls/font_picker_sheet.dart';
+import 'package:app_screenshots/features/screenshot_editor/utils/font_resolver.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:app_screenshots/features/screenshot_editor/presentation/widgets/controls/app_color_picker.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:material_symbols_icons/symbols.dart';
 import 'package:app_screenshots/features/screenshot_editor/utils/screenshot_utils.dart';
 import 'package:app_screenshots/features/screenshot_editor/presentation/widgets/controls/app_switch.dart';
+
 
 class TextControls extends StatefulWidget {
   const TextControls({super.key});
@@ -1553,7 +1554,10 @@ class _FontFamilyPicker extends StatelessWidget {
             Expanded(
               child: Text(
                 fontName,
-                style: GoogleFonts.getFont(fontName, fontSize: 14),
+                style: FontResolver.apply(
+                  fontName,
+                  const TextStyle(fontSize: 14),
+                ),
               ),
             ),
             Icon(

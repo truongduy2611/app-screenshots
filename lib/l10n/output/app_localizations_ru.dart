@@ -597,16 +597,16 @@ class AppLocalizationsRu extends AppLocalizations {
   String get zoomToFit => 'По размеру';
 
   @override
-  String get zoomTo100Percent => 'Zoom to 100%';
+  String get zoomTo100Percent => 'Масштаб 100%';
 
   @override
-  String get zoomToSelection => 'Zoom to Selection';
+  String get zoomToSelection => 'Масштаб по выделению';
 
   @override
-  String get zoomIn => 'Zoom In';
+  String get zoomIn => 'Увеличить';
 
   @override
-  String get zoomOut => 'Zoom Out';
+  String get zoomOut => 'Уменьшить';
 
   @override
   String get addScreenshot => 'Добавить скриншот';
@@ -864,9 +864,6 @@ class AppLocalizationsRu extends AppLocalizations {
   String get lastBackup => 'Последняя копия';
 
   @override
-  String get backupsAutomatic => 'Копии создаются автоматически';
-
-  @override
   String get noBackupsAvailable => 'Нет доступных копий';
 
   @override
@@ -971,6 +968,37 @@ class AppLocalizationsRu extends AppLocalizations {
 
   @override
   String get uploadToAppStoreConnect => 'Загрузить в App Store Connect';
+
+  @override
+  String get uploadDestination => 'Назначение загрузки';
+
+  @override
+  String get primaryAppVersion => 'Основная версия приложения';
+
+  @override
+  String get customProductPage => 'Пользовательская страница продукта';
+
+  @override
+  String get selectCustomProductPage =>
+      'Выбрать пользовательскую страницу продукта';
+
+  @override
+  String get noCustomProductPagesFound =>
+      'Пользовательские страницы продуктов для этого приложения не найдены';
+
+  @override
+  String get mainStoreListing => 'Главная страница приложения в магазине';
+
+  @override
+  String get customStoreListing => 'Пользовательская страница в магазине';
+
+  @override
+  String get selectCustomStoreListing =>
+      'Выбрать пользовательскую страницу в магазине';
+
+  @override
+  String get noCustomStoreListingsFound =>
+      'Пользовательские страницы в магазине для этого приложения не найдены';
 
   @override
   String get loadingApps => 'Загрузка приложений...';
@@ -1833,4 +1861,64 @@ class AppLocalizationsRu extends AppLocalizations {
   @override
   String get playErrorDeclarationRequired =>
       'Загрузка отклонена Google Play: пожалуйста, проверьте Google Play Console и сначала заполните все незавершенные декларации в разделе \'Контент приложения\'.';
+
+  @override
+  String get ascAppConfigSettings => 'Настройки приложения App Store Connect';
+
+  @override
+  String get ascAppConfigAppName => 'Имя приложения';
+
+  @override
+  String get ascAppConfigAppId => 'Идентификатор приложения (App ID)';
+
+  @override
+  String get ascAppConfigBundleId => 'Идентификатор пакета (Bundle ID)';
+
+  @override
+  String get ascAppConfigClear => 'Очистить конфигурацию';
+
+  @override
+  String get ascAppConfigLoad => 'Загрузить из App Store Connect';
+
+  @override
+  String get ascAppConfigNoCreds =>
+      'Сначала настройте учетные данные ASC API в Настройках.';
+
+  @override
+  String get ascAppConfigSave => 'Сохранить настройки';
+
+  @override
+  String ascAppConfigFetchError(String error) {
+    return 'Не удалось загрузить приложения: $error';
+  }
+
+  @override
+  String get ascAppConfigAppIdEmpty =>
+      'Идентификатор приложения не может быть пустым';
+
+  @override
+  String get ascAppConfigUnnamedApp => 'Безымянное приложение';
+
+  @override
+  String get ascAppConfigUnknownBundleId => 'unknown.bundle.id';
+
+  @override
+  String get ascAppConfigLoadingApps =>
+      'Загрузка приложений из App Store Connect...';
+
+  @override
+  String get ascAppConfigAppNameHint =>
+      'например, Cute Sausage Sticker Extension';
+
+  @override
+  String get ascAppConfigAppIdHint => 'например, 647281920';
+
+  @override
+  String get ascAppConfigBundleIdHint => 'например, com.example.stickerapp';
+
+  @override
+  String get ascAppConfigCleared => 'Конфигурация App Store Connect очищена';
+
+  @override
+  String get ascAppConfigSaved => 'Конфигурация App Store Connect сохранена';
 }
