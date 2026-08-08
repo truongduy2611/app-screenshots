@@ -351,6 +351,9 @@ class ICloudBackupService {
   Future<Uint8List?> _zipDirectory(Directory dir) async {
     try {
       final path = dir.path;
+      // Isolate.run spawns a short-lived isolate. The inner async function
+      // runs its own event loop; the returned Future is correctly awaited
+      // and the result is sent back to the root isolate via a SendPort.
       return await Isolate.run(() => _encodeDirectory(path));
     } catch (e, st) {
       AppLogger.error(

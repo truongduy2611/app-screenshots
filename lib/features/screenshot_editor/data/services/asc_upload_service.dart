@@ -172,7 +172,7 @@ class AscUploadService {
     for (final v in versions) {
       if (v.editable) return v;
     }
-    return versions.isNotEmpty ? versions.first : null;
+    return null;
   }
 
   /// Gets all existing localizations for a Custom Product Page version.
@@ -219,8 +219,8 @@ class AscUploadService {
     for (final locale in locales) {
       if (!result.containsKey(locale)) {
         try {
-          final newLoc =
-              await client.postModel<AppCustomProductPageLocalization>(
+          final newLoc = await client
+              .postModel<AppCustomProductPageLocalization>(
                 AppStoreConnectUri.v1(),
                 AppCustomProductPageLocalization.type,
                 attributes: AppCustomProductPageLocalizationCreateAttributes(
@@ -448,9 +448,7 @@ class AscUploadService {
 
     // Check existing
     final request = GetRequest(
-      AppStoreConnectUri.v1(
-        '$resourceName/$localizationId/appScreenshotSets',
-      ),
+      AppStoreConnectUri.v1('$resourceName/$localizationId/appScreenshotSets'),
     );
     request.include('appScreenshots');
     final response = await client.get(request);
@@ -477,10 +475,7 @@ class AscUploadService {
         screenshotDisplayType: apiDisplayType,
       ),
       relationships: {
-        relName: SingleModelRelationship(
-          type: relType,
-          id: localizationId,
-        ),
+        relName: SingleModelRelationship(type: relType, id: localizationId),
       },
     );
   }
@@ -616,6 +611,10 @@ class AscUploadService {
   }
 
   /// Target pixel dimensions (width x height in portrait) for ASC display types.
+  ///
+  /// Currently only `APP_IPHONE_65` triggers auto-resizing; the remaining
+  /// entries are kept as a reference catalog for future expansion.
+  // TODO(resize): enable auto-resize for additional display types as needed.
   static const _displayTypeTargetDimensions = <String, (int, int)>{
     'APP_IPHONE_69': (1320, 2868),
     'APP_IPHONE_67': (1284, 2778),
@@ -798,7 +797,12 @@ class AscUploadService {
     final locales = localeScreenshots.keys.toList();
     final Map<String, dynamic> localizations;
 
-    if (isCustomProductPage && customProductPageId != null) {
+    if (isCustomProductPage) {
+      if (customProductPageId == null) {
+        throw ArgumentError(
+          'Select a Custom Product Page before uploading screenshots.',
+        );
+      }
       final cppVersion = await getEditableCustomProductPageVersion(
         customProductPageId,
       );
