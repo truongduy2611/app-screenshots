@@ -205,7 +205,7 @@ class ICloudBackupHandler: NSObject {
             return
         }
 
-        iCloudQueue.async {
+        iCloudQueue.async { [weak self] in
             let sourceURL = URL(fileURLWithPath: localPath)
             var coordinationError: NSError?
             var writeError: Error?
@@ -218,10 +218,10 @@ class ICloudBackupHandler: NSObject {
                     let stagedURL = coordinatedURL.deletingLastPathComponent()
                         .appendingPathComponent(".appshots-save-\(UUID().uuidString)")
                     try FileManager.default.copyItem(at: sourceURL, to: stagedURL)
-                    if FileManager.default.fileExists(atPath: coordinatedURL.path) {
-                        try FileManager.default.removeItem(at: coordinatedURL)
-                    }
-                    try FileManager.default.moveItem(at: stagedURL, to: coordinatedURL)
+                    try FileManager.default.replaceItemAt(
+                        coordinatedURL,
+                        withItemAt: stagedURL
+                    )
                 } catch {
                     writeError = error
                 }
@@ -232,6 +232,14 @@ class ICloudBackupHandler: NSObject {
                 let workingURL = URL(fileURLWithPath: workingPath)
                 try? FileManager.default.removeItem(at: workingURL)
                 try? FileManager.default.copyItem(at: sourceURL, to: workingURL)
+            }
+
+            // Release the security-scoped resource and remove from tracking.
+            self?.openedDocumentsLock.lock()
+            let removed = self?.openedDocuments.removeValue(forKey: workingPath)
+            self?.openedDocumentsLock.unlock()
+            if removed?.hasSecurityScope == true {
+                removed?.originalURL.stopAccessingSecurityScopedResource()
             }
 
             DispatchQueue.main.async {
