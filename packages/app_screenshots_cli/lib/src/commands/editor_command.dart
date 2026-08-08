@@ -70,7 +70,8 @@ class _EditorStateCommand extends Command<int> {
 
   @override
   Future<int> run() async {
-    final client = await AppClient.discover();
+    final client = await AppClient.discover(
+        portOverride: globalResults?['port'] as String?);
     final result = await client.get(EditorAction.state.path);
     Output.print(result, json: Output.isJson(globalResults));
     client.close();
@@ -95,7 +96,8 @@ class _EditorSetBackgroundCommand extends Command<int> {
     if (color == null) {
       usageException('Provide a color: --color "#FF5733" or just "#FF5733"');
     }
-    final client = await AppClient.discover();
+    final client = await AppClient.discover(
+        portOverride: globalResults?['port'] as String?);
     final result =
         await client.post(EditorAction.setBackground.path, {'color': color});
     Output.print(result, json: Output.isJson(globalResults));
@@ -118,7 +120,8 @@ class _EditorSetFrameCommand extends Command<int> {
   Future<int> run() async {
     final device =
         argResults?['device'] as String? ?? argResults?.rest.firstOrNull;
-    final client = await AppClient.discover();
+    final client = await AppClient.discover(
+        portOverride: globalResults?['port'] as String?);
     final result =
         await client.post(EditorAction.setFrame.path, {'device': device});
     Output.print(result, json: Output.isJson(globalResults));
@@ -135,7 +138,8 @@ class _EditorListDevicesCommand extends Command<int> {
 
   @override
   Future<int> run() async {
-    final client = await AppClient.discover();
+    final client = await AppClient.discover(
+        portOverride: globalResults?['port'] as String?);
     final result = await client.get(EditorAction.listDevices.path);
     Output.print(result, json: Output.isJson(globalResults));
     client.close();
@@ -158,7 +162,8 @@ class _EditorSetPaddingCommand extends Command<int> {
     final value = double.tryParse(
         argResults?['value'] as String? ?? argResults?.rest.firstOrNull ?? '');
     if (value == null) usageException('Provide a number: --value 200');
-    final client = await AppClient.discover();
+    final client = await AppClient.discover(
+        portOverride: globalResults?['port'] as String?);
     final result =
         await client.post(EditorAction.setPadding.path, {'padding': value});
     Output.print(result, json: Output.isJson(globalResults));
@@ -182,7 +187,8 @@ class _EditorSetCornerRadiusCommand extends Command<int> {
     final value = double.tryParse(
         argResults?['value'] as String? ?? argResults?.rest.firstOrNull ?? '');
     if (value == null) usageException('Provide a number: --value 20');
-    final client = await AppClient.discover();
+    final client = await AppClient.discover(
+        portOverride: globalResults?['port'] as String?);
     final result =
         await client.post(EditorAction.setCornerRadius.path, {'radius': value});
     Output.print(result, json: Output.isJson(globalResults));
@@ -210,7 +216,8 @@ class _EditorSetRotationCommand extends Command<int> {
     if (argResults?['y'] != null) body['y'] = double.parse(argResults!['y']);
     if (argResults?['z'] != null) body['z'] = double.parse(argResults!['z']);
     if (body.isEmpty) usageException('Provide at least one: --x, --y, --z');
-    final client = await AppClient.discover();
+    final client = await AppClient.discover(
+        portOverride: globalResults?['port'] as String?);
     final result = await client.post(EditorAction.setRotation.path, body);
     Output.print(result, json: Output.isJson(globalResults));
     client.close();
@@ -232,7 +239,8 @@ class _EditorSetImageCommand extends Command<int> {
   Future<int> run() async {
     final file = argResults?['file'] as String? ?? argResults?.rest.firstOrNull;
     if (file == null) usageException('Provide: --file /path/to/image.png');
-    final client = await AppClient.discover();
+    final client = await AppClient.discover(
+        portOverride: globalResults?['port'] as String?);
     final result =
         await client.post(EditorAction.setImage.path, {'file': file});
     Output.print(result, json: Output.isJson(globalResults));
@@ -276,7 +284,8 @@ class _EditorAddTextCommand extends Command<int> {
     }
     if (argResults?['align'] != null) body['align'] = argResults!['align'];
 
-    final client = await AppClient.discover();
+    final client = await AppClient.discover(
+        portOverride: globalResults?['port'] as String?);
     final result = await client.post(EditorAction.addText.path, body);
     Output.print(result, json: Output.isJson(globalResults));
     client.close();
@@ -328,7 +337,8 @@ class _EditorUpdateTextCommand extends Command<int> {
     }
     if (argResults?['align'] != null) body['align'] = argResults!['align'];
 
-    final client = await AppClient.discover();
+    final client = await AppClient.discover(
+        portOverride: globalResults?['port'] as String?);
     final result = await client.post(EditorAction.updateText.path, body);
     Output.print(result, json: Output.isJson(globalResults));
     client.close();
@@ -363,7 +373,8 @@ class _EditorAddImageCommand extends Command<int> {
       body['height'] = double.parse(argResults!['height']);
     }
 
-    final client = await AppClient.discover();
+    final client = await AppClient.discover(
+        portOverride: globalResults?['port'] as String?);
     final result = await client.post(EditorAction.addImage.path, body);
     Output.print(result, json: Output.isJson(globalResults));
     client.close();
@@ -385,7 +396,8 @@ class _EditorDeleteOverlayCommand extends Command<int> {
   Future<int> run() async {
     final body = <String, dynamic>{};
     if (argResults?['id'] != null) body['id'] = argResults!['id'];
-    final client = await AppClient.discover();
+    final client = await AppClient.discover(
+        portOverride: globalResults?['port'] as String?);
     final result = await client.post(EditorAction.deleteOverlay.path, body);
     Output.print(result, json: Output.isJson(globalResults));
     client.close();
@@ -406,7 +418,8 @@ class _EditorSelectOverlayCommand extends Command<int> {
   @override
   Future<int> run() async {
     final id = argResults?['id'] as String? ?? argResults?.rest.firstOrNull;
-    final client = await AppClient.discover();
+    final client = await AppClient.discover(
+        portOverride: globalResults?['port'] as String?);
     final result =
         await client.post(EditorAction.selectOverlay.path, {'id': id});
     Output.print(result, json: Output.isJson(globalResults));
@@ -430,7 +443,8 @@ class _EditorMoveOverlayCommand extends Command<int> {
   Future<int> run() async {
     final dx = double.parse(argResults!['dx']);
     final dy = double.parse(argResults!['dy']);
-    final client = await AppClient.discover();
+    final client = await AppClient.discover(
+        portOverride: globalResults?['port'] as String?);
     final result =
         await client.post(EditorAction.moveOverlay.path, {'dx': dx, 'dy': dy});
     Output.print(result, json: Output.isJson(globalResults));
@@ -447,7 +461,8 @@ class _EditorListOverlaysCommand extends Command<int> {
 
   @override
   Future<int> run() async {
-    final client = await AppClient.discover();
+    final client = await AppClient.discover(
+        portOverride: globalResults?['port'] as String?);
     final result = await client.get(EditorAction.listOverlays.path);
     Output.print(result, json: Output.isJson(globalResults));
     client.close();
@@ -463,7 +478,8 @@ class _EditorUndoCommand extends Command<int> {
 
   @override
   Future<int> run() async {
-    final client = await AppClient.discover();
+    final client = await AppClient.discover(
+        portOverride: globalResults?['port'] as String?);
     final result = await client.post(EditorAction.undo.path);
     Output.print(result, json: Output.isJson(globalResults));
     client.close();
@@ -479,7 +495,8 @@ class _EditorRedoCommand extends Command<int> {
 
   @override
   Future<int> run() async {
-    final client = await AppClient.discover();
+    final client = await AppClient.discover(
+        portOverride: globalResults?['port'] as String?);
     final result = await client.post(EditorAction.redo.path);
     Output.print(result, json: Output.isJson(globalResults));
     client.close();
@@ -501,7 +518,8 @@ class _EditorApplyPresetCommand extends Command<int> {
 
   @override
   Future<int> run() async {
-    final client = await AppClient.discover();
+    final client = await AppClient.discover(
+        portOverride: globalResults?['port'] as String?);
     final result = await client
         .post(EditorAction.applyPreset.path, {'id': argResults!['id']});
     Output.print(result, json: Output.isJson(globalResults));
@@ -533,7 +551,8 @@ class _EditorAddIconCommand extends Command<int> {
       'fontPackage': argResults!['fontPackage'],
     };
     if (argResults?['color'] != null) body['color'] = argResults!['color'];
-    final client = await AppClient.discover();
+    final client = await AppClient.discover(
+        portOverride: globalResults?['port'] as String?);
     final result = await client.post(EditorAction.addIcon.path, body);
     Output.print(result, json: Output.isJson(globalResults));
     client.close();
@@ -549,7 +568,8 @@ class _EditorAddMagnifierCommand extends Command<int> {
 
   @override
   Future<int> run() async {
-    final client = await AppClient.discover();
+    final client = await AppClient.discover(
+        portOverride: globalResults?['port'] as String?);
     final result = await client.post(EditorAction.addMagnifier.path);
     Output.print(result, json: Output.isJson(globalResults));
     client.close();
@@ -572,7 +592,8 @@ class _EditorSetDisplayTypeCommand extends Command<int> {
 
   @override
   Future<int> run() async {
-    final client = await AppClient.discover();
+    final client = await AppClient.discover(
+        portOverride: globalResults?['port'] as String?);
     final result = await client.post(
         EditorAction.setDisplayType.path, {'displayType': argResults!['type']});
     Output.print(result, json: Output.isJson(globalResults));
@@ -596,7 +617,8 @@ class _EditorExportCommand extends Command<int> {
   Future<int> run() async {
     final body = <String, dynamic>{};
     if (argResults?['path'] != null) body['path'] = argResults!['path'];
-    final client = await AppClient.discover();
+    final client = await AppClient.discover(
+        portOverride: globalResults?['port'] as String?);
     final result = await client.post(EditorAction.export_.path, body);
     Output.print(result, json: Output.isJson(globalResults));
     client.close();
@@ -619,7 +641,8 @@ class _EditorExportAllCommand extends Command<int> {
   Future<int> run() async {
     final body = <String, dynamic>{};
     if (argResults?['dir'] != null) body['dir'] = argResults!['dir'];
-    final client = await AppClient.discover();
+    final client = await AppClient.discover(
+        portOverride: globalResults?['port'] as String?);
     final result = await client.post(EditorAction.exportAll.path, body);
     Output.print(result, json: Output.isJson(globalResults));
     client.close();
@@ -646,7 +669,8 @@ class _EditorListFontsCommand extends Command<int> {
     final body = <String, dynamic>{};
     if (argResults?['query'] != null) body['query'] = argResults!['query'];
     body['limit'] = int.tryParse(argResults?['limit'] ?? '50') ?? 50;
-    final client = await AppClient.discover();
+    final client = await AppClient.discover(
+        portOverride: globalResults?['port'] as String?);
     final result = await client.post(EditorAction.listFonts.path, body);
     Output.print(result, json: Output.isJson(globalResults));
     client.close();
@@ -672,7 +696,8 @@ class _EditorListIconsCommand extends Command<int> {
     final body = <String, dynamic>{};
     if (argResults?['query'] != null) body['query'] = argResults!['query'];
     if (argResults?['style'] != null) body['style'] = argResults!['style'];
-    final client = await AppClient.discover();
+    final client = await AppClient.discover(
+        portOverride: globalResults?['port'] as String?);
     final result = await client.post(EditorAction.listIcons.path, body);
     Output.print(result, json: Output.isJson(globalResults));
     client.close();
@@ -702,7 +727,8 @@ class _EditorUploadImageCommand extends Command<int> {
     }
     final bytes = await file.readAsBytes();
     final base64Data = base64Encode(bytes);
-    final client = await AppClient.discover();
+    final client = await AppClient.discover(
+        portOverride: globalResults?['port'] as String?);
     final result = await client.post(EditorAction.setImageBase64.path, {
       'data': base64Data,
     });
@@ -727,7 +753,8 @@ class _EditorSetMeshGradientCommand extends Command<int> {
 
   @override
   Future<int> run() async {
-    final client = await AppClient.discover();
+    final client = await AppClient.discover(
+        portOverride: globalResults?['port'] as String?);
     Map<String, dynamic> result;
     if (argResults!['clear'] == true) {
       result = await client.post(EditorAction.setMeshGradient.path, {});
@@ -766,7 +793,8 @@ class _EditorSetDoodleCommand extends Command<int> {
 
   @override
   Future<int> run() async {
-    final client = await AppClient.discover();
+    final client = await AppClient.discover(
+        portOverride: globalResults?['port'] as String?);
     if (argResults!['clear'] == true) {
       final result =
           await client.post(EditorAction.setDoodle.path, {'enabled': false});
@@ -815,7 +843,8 @@ class _EditorSetGridCommand extends Command<int> {
       'showCenterLines': argResults!['center'],
       'gridSize': double.parse(argResults!['size']),
     };
-    final client = await AppClient.discover();
+    final client = await AppClient.discover(
+        portOverride: globalResults?['port'] as String?);
     final result = await client.post(EditorAction.setGrid.path, body);
     Output.print(result, json: Output.isJson(globalResults));
     client.close();
@@ -854,7 +883,8 @@ class _EditorUpdateIconCommand extends Command<int> {
     if (argResults?['opacity'] != null) {
       body['opacity'] = double.parse(argResults!['opacity']);
     }
-    final client = await AppClient.discover();
+    final client = await AppClient.discover(
+        portOverride: globalResults?['port'] as String?);
     final result = await client.post(EditorAction.updateIcon.path, body);
     Output.print(result, json: Output.isJson(globalResults));
     client.close();
@@ -895,7 +925,8 @@ class _EditorUpdateMagnifierCommand extends Command<int> {
     if (argResults?['corner-radius'] != null) {
       body['cornerRadius'] = double.parse(argResults!['corner-radius']);
     }
-    final client = await AppClient.discover();
+    final client = await AppClient.discover(
+        portOverride: globalResults?['port'] as String?);
     final result = await client.post(EditorAction.updateMagnifier.path, body);
     Output.print(result, json: Output.isJson(globalResults));
     client.close();
@@ -911,7 +942,8 @@ class _EditorCopyOverlayCommand extends Command<int> {
 
   @override
   Future<int> run() async {
-    final client = await AppClient.discover();
+    final client = await AppClient.discover(
+        portOverride: globalResults?['port'] as String?);
     final result = await client.post(EditorAction.copyOverlay.path);
     Output.print(result, json: Output.isJson(globalResults));
     client.close();
@@ -927,7 +959,8 @@ class _EditorPasteOverlayCommand extends Command<int> {
 
   @override
   Future<int> run() async {
-    final client = await AppClient.discover();
+    final client = await AppClient.discover(
+        portOverride: globalResults?['port'] as String?);
     final result = await client.post(EditorAction.pasteOverlay.path);
     Output.print(result, json: Output.isJson(globalResults));
     client.close();
@@ -943,7 +976,8 @@ class _EditorBringForwardCommand extends Command<int> {
 
   @override
   Future<int> run() async {
-    final client = await AppClient.discover();
+    final client = await AppClient.discover(
+        portOverride: globalResults?['port'] as String?);
     final result = await client.post(EditorAction.bringForward.path);
     Output.print(result, json: Output.isJson(globalResults));
     client.close();
@@ -959,7 +993,8 @@ class _EditorSendBackwardCommand extends Command<int> {
 
   @override
   Future<int> run() async {
-    final client = await AppClient.discover();
+    final client = await AppClient.discover(
+        portOverride: globalResults?['port'] as String?);
     final result = await client.post(EditorAction.sendBackward.path);
     Output.print(result, json: Output.isJson(globalResults));
     client.close();
@@ -981,7 +1016,8 @@ class _EditorSaveDesignCommand extends Command<int> {
   Future<int> run() async {
     final body = <String, dynamic>{};
     if (argResults?['name'] != null) body['name'] = argResults!['name'];
-    final client = await AppClient.discover();
+    final client = await AppClient.discover(
+        portOverride: globalResults?['port'] as String?);
     final result = await client.post(EditorAction.saveDesign.path, body);
     Output.print(result, json: Output.isJson(globalResults));
     client.close();
@@ -1001,7 +1037,8 @@ class _EditorLoadDesignCommand extends Command<int> {
 
   @override
   Future<int> run() async {
-    final client = await AppClient.discover();
+    final client = await AppClient.discover(
+        portOverride: globalResults?['port'] as String?);
     final result = await client
         .post(EditorAction.loadDesign.path, {'id': argResults!['id']});
     Output.print(result, json: Output.isJson(globalResults));
@@ -1018,7 +1055,8 @@ class _EditorSetOrientationCommand extends Command<int> {
 
   @override
   Future<int> run() async {
-    final client = await AppClient.discover();
+    final client = await AppClient.discover(
+        portOverride: globalResults?['port'] as String?);
     final result = await client.post(EditorAction.setOrientation.path);
     Output.print(result, json: Output.isJson(globalResults));
     client.close();
@@ -1039,7 +1077,8 @@ class _EditorSetGradientCommand extends Command<int> {
 
   @override
   Future<int> run() async {
-    final client = await AppClient.discover();
+    final client = await AppClient.discover(
+        portOverride: globalResults?['port'] as String?);
     Map<String, dynamic> result;
     if (argResults!['clear'] == true) {
       result = await client.post(EditorAction.setGradient.path, {});
@@ -1069,7 +1108,8 @@ class _EditorSetTransparentCommand extends Command<int> {
 
   @override
   Future<int> run() async {
-    final client = await AppClient.discover();
+    final client = await AppClient.discover(
+        portOverride: globalResults?['port'] as String?);
     final result = await client.post(EditorAction.setTransparent.path,
         {'transparent': argResults!['value']});
     Output.print(result, json: Output.isJson(globalResults));
@@ -1093,7 +1133,8 @@ class _EditorSetImagePositionCommand extends Command<int> {
   Future<int> run() async {
     final x = double.parse(argResults!['x']);
     final y = double.parse(argResults!['y']);
-    final client = await AppClient.discover();
+    final client = await AppClient.discover(
+        portOverride: globalResults?['port'] as String?);
     final result =
         await client.post(EditorAction.setImagePosition.path, {'x': x, 'y': y});
     Output.print(result, json: Output.isJson(globalResults));
@@ -1139,7 +1180,8 @@ class _EditorUpdateImageCommand extends Command<int> {
     if (argResults?['opacity'] != null) {
       body['opacity'] = double.parse(argResults!['opacity']);
     }
-    final client = await AppClient.discover();
+    final client = await AppClient.discover(
+        portOverride: globalResults?['port'] as String?);
     final result = await client.post(EditorAction.updateImage.path, body);
     Output.print(result, json: Output.isJson(globalResults));
     client.close();

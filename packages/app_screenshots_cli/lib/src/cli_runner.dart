@@ -9,6 +9,11 @@ import 'commands/library_command.dart';
 import 'commands/translate_command.dart';
 import 'commands/preset_command.dart';
 import 'commands/multi_command.dart';
+import 'commands/capabilities_command.dart';
+import 'commands/jobs_command.dart';
+import 'commands/asc_command.dart';
+import 'commands/play_command.dart';
+import 'commands/collaboration_command.dart';
 
 /// Main CLI runner that parses args and dispatches to subcommands.
 class CliRunner {
@@ -30,7 +35,12 @@ class CliRunner {
       ..addCommand(LibraryCommand())
       ..addCommand(TranslateCommand())
       ..addCommand(PresetCommand())
-      ..addCommand(MultiCommand());
+      ..addCommand(MultiCommand())
+      ..addCommand(CapabilitiesCommand())
+      ..addCommand(JobsCommand())
+      ..addCommand(AscCommand())
+      ..addCommand(PlayCommand())
+      ..addCommand(CollaborationCommand());
 
     try {
       final result = await runner.run(args);
@@ -85,7 +95,12 @@ class CliRunner {
         ..addCommand(LibraryCommand())
         ..addCommand(TranslateCommand())
         ..addCommand(PresetCommand())
-        ..addCommand(MultiCommand());
+        ..addCommand(MultiCommand())
+        ..addCommand(CapabilitiesCommand())
+        ..addCommand(JobsCommand())
+        ..addCommand(AscCommand())
+        ..addCommand(PlayCommand())
+        ..addCommand(CollaborationCommand());
 
       try {
         await replRunner.run(replArgs);

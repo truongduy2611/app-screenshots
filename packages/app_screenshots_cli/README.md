@@ -1,6 +1,6 @@
 # App Screenshots CLI (`appshots`)
 
-Command-line tool for controlling the **App Screenshots** macOS app. The CLI communicates with the running app over a local HTTP API, enabling full programmatic control of the screenshot editor — ideal for automation, AI agents, and scripted workflows.
+Command-line tool for controlling the **App Screenshots** desktop app. The CLI communicates with the running app over an authenticated local HTTP API, enabling design automation, publishing, and collaboration workflows.
 
 ## Installation
 
@@ -211,6 +211,42 @@ appshots status
 
 ---
 
+### Publishing and collaboration
+
+Configure App Store Connect and Google Play credentials in the app's Settings
+screen. Credentials stay in the app's secure storage and are never returned to
+the CLI.
+
+Rendered upload directories must contain one immediate subdirectory per locale:
+
+```text
+screenshots/
+├── en-US/
+│   ├── 01.png
+│   └── 02.png
+└── ja/
+    ├── 01.png
+    └── 02.png
+```
+
+| Command | Description |
+|---------|-------------|
+| `capabilities` | Show supported integrations and credential state |
+| `asc apps` | List accessible App Store Connect apps |
+| `asc custom-product-pages --app-id ID` | List CPPs and editable-version state |
+| `asc upload --app-id ID --source DIR --display-type TYPE` | Upload to the editable main version |
+| `asc upload ... --custom-product-page-id ID` | Upload to an editable Custom Product Page |
+| `play upload --package NAME --source DIR --image-type TYPE` | Upload to the Google Play main listing |
+| `jobs list` / `jobs status --id ID` | Inspect asynchronous upload jobs |
+| `collaboration share --file FILE` | Present the native iCloud collaboration sheet |
+| `collaboration save --original FILE --working FILE` | Save a working copy back to its opened document |
+
+Uploads wait for completion by default. Pass `--no-wait` to return the job ID
+immediately. Google Play Custom Store Listings are intentionally unavailable
+because Google does not provide a supported public API for them.
+
+---
+
 ## Workflow Examples
 
 ### 1. AI Translation Workflow
@@ -315,7 +351,10 @@ appshots --json editor list-icons --query "star"
 
 ## Architecture
 
-The CLI communicates with the running app via HTTP on `localhost`. The app writes its port to `~/.config/app-screenshots/server.port` on startup.
+The CLI communicates with the running app via HTTP on `localhost`. The app writes
+an ephemeral port and bearer token to
+`~/.config/app-screenshots/server.session.json`. The token changes each time the
+server starts.
 
 ```
 CLI (appshots) ──HTTP──▶ CommandServer (in-app)
@@ -325,12 +364,11 @@ CLI (appshots) ──HTTP──▶ CommandServer (in-app)
           EditorCubit   MultiCubit   TranslationCubit
 ```
 
-### Ports
+### Port
 
-| Feature | Port | Description |
-|---------|------|-------------|
-| Single editor | `19221` | `CommandServer` — editor + translate + library |
-| Multi editor | `19222` | `CommandServerMulti` — multi-screenshot management |
+The unified server starts at `19222` and tries the next nine ports if that port
+is occupied. The CLI discovers the active port automatically; `--port` can be
+used as an explicit override.
 
 ### Display Types
 

@@ -34,7 +34,8 @@ class _LibraryListCommand extends Command<int> {
 
   @override
   Future<int> run() async {
-    final client = await AppClient.discover();
+    final client = await AppClient.discover(
+        portOverride: globalResults?['port'] as String?);
     final result = await client.get(LibraryAction.list.path);
     Output.print(result, json: Output.isJson(globalResults));
     client.close();
@@ -50,7 +51,8 @@ class _LibraryFoldersCommand extends Command<int> {
 
   @override
   Future<int> run() async {
-    final client = await AppClient.discover();
+    final client = await AppClient.discover(
+        portOverride: globalResults?['port'] as String?);
     final result = await client.get(LibraryAction.folders.path);
     Output.print(result, json: Output.isJson(globalResults));
     client.close();
@@ -70,7 +72,8 @@ class _LibraryGetCommand extends Command<int> {
 
   @override
   Future<int> run() async {
-    final client = await AppClient.discover();
+    final client = await AppClient.discover(
+        portOverride: globalResults?['port'] as String?);
     final result =
         await client.post(LibraryAction.get.path, {'id': argResults!['id']});
     Output.print(result, json: Output.isJson(globalResults));
@@ -91,7 +94,8 @@ class _LibraryDeleteCommand extends Command<int> {
 
   @override
   Future<int> run() async {
-    final client = await AppClient.discover();
+    final client = await AppClient.discover(
+        portOverride: globalResults?['port'] as String?);
     final result =
         await client.post(LibraryAction.delete.path, {'id': argResults!['id']});
     Output.print(result, json: Output.isJson(globalResults));
@@ -113,7 +117,8 @@ class _LibraryRenameCommand extends Command<int> {
 
   @override
   Future<int> run() async {
-    final client = await AppClient.discover();
+    final client = await AppClient.discover(
+        portOverride: globalResults?['port'] as String?);
     final result = await client.post(LibraryAction.rename.path, {
       'id': argResults!['id'],
       'name': argResults!['name'],
@@ -140,7 +145,8 @@ class _LibraryCreateFolderCommand extends Command<int> {
   Future<int> run() async {
     final body = <String, dynamic>{'name': argResults!['name']};
     if (argResults?['parent'] != null) body['parentId'] = argResults!['parent'];
-    final client = await AppClient.discover();
+    final client = await AppClient.discover(
+        portOverride: globalResults?['port'] as String?);
     final result = await client.post(LibraryAction.createFolder.path, body);
     Output.print(result, json: Output.isJson(globalResults));
     client.close();
@@ -161,7 +167,8 @@ class _LibraryImportCommand extends Command<int> {
 
   @override
   Future<int> run() async {
-    final client = await AppClient.discover();
+    final client = await AppClient.discover(
+        portOverride: globalResults?['port'] as String?);
     final result = await client
         .post(LibraryAction.import_.path, {'file': argResults!['file']});
     Output.print(result, json: Output.isJson(globalResults));
@@ -182,7 +189,8 @@ class _LibraryExportCommand extends Command<int> {
 
   @override
   Future<int> run() async {
-    final client = await AppClient.discover();
+    final client = await AppClient.discover(
+        portOverride: globalResults?['port'] as String?);
     final result = await client
         .post(LibraryAction.export_.path, {'id': argResults!['id']});
     Output.print(result, json: Output.isJson(globalResults));
@@ -205,7 +213,8 @@ class _LibraryMoveCommand extends Command<int> {
 
   @override
   Future<int> run() async {
-    final client = await AppClient.discover();
+    final client = await AppClient.discover(
+        portOverride: globalResults?['port'] as String?);
     final result = await client.post(LibraryAction.move.path, {
       'designId': argResults!['design'],
       'folderId': argResults?['folder'],
@@ -229,7 +238,8 @@ class _LibrarySearchCommand extends Command<int> {
 
   @override
   Future<int> run() async {
-    final client = await AppClient.discover();
+    final client = await AppClient.discover(
+        portOverride: globalResults?['port'] as String?);
     final result = await client
         .post(LibraryAction.search.path, {'query': argResults!['query']});
     Output.print(result, json: Output.isJson(globalResults));
@@ -256,7 +266,8 @@ class _LibraryDeleteFolderCommand extends Command<int> {
       'id': argResults!['id'],
       'withDesigns': argResults!['with-designs'],
     };
-    final client = await AppClient.discover();
+    final client = await AppClient.discover(
+        portOverride: globalResults?['port'] as String?);
     final result = await client.post(LibraryAction.deleteFolder.path, body);
     Output.print(result, json: Output.isJson(globalResults));
     client.close();

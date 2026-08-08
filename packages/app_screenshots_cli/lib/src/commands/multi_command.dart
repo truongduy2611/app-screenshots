@@ -48,7 +48,8 @@ class _MultiOpenCommand extends Command<int> {
   @override
   Future<int> run() async {
     final displayType = argResults!['display-type'] as String;
-    final client = await AppClient.discover();
+    final client = await AppClient.discover(
+        portOverride: globalResults?['port'] as String?);
     final result = await client.post(MultiAction.open.path, {
       'displayType': displayType,
     });
@@ -66,7 +67,8 @@ class _MultiStateCommand extends Command<int> {
 
   @override
   Future<int> run() async {
-    final client = await AppClient.discover();
+    final client = await AppClient.discover(
+        portOverride: globalResults?['port'] as String?);
     final result = await client.get(MultiAction.state.path);
     Output.print(result, json: Output.isJson(globalResults));
     client.close();
@@ -88,7 +90,8 @@ class _MultiSwitchCommand extends Command<int> {
   @override
   Future<int> run() async {
     final index = int.parse(argResults!['index']);
-    final client = await AppClient.discover();
+    final client = await AppClient.discover(
+        portOverride: globalResults?['port'] as String?);
     final result =
         await client.post(MultiAction.switchDesign.path, {'index': index});
     Output.print(result, json: Output.isJson(globalResults));
@@ -105,7 +108,8 @@ class _MultiAddCommand extends Command<int> {
 
   @override
   Future<int> run() async {
-    final client = await AppClient.discover();
+    final client = await AppClient.discover(
+        portOverride: globalResults?['port'] as String?);
     final result = await client.post(MultiAction.addDesign.path);
     Output.print(result, json: Output.isJson(globalResults));
     client.close();
@@ -128,7 +132,8 @@ class _MultiRemoveCommand extends Command<int> {
     final body = <String, dynamic>{};
     final index = argResults?['index'] as String?;
     if (index != null) body['index'] = int.parse(index);
-    final client = await AppClient.discover();
+    final client = await AppClient.discover(
+        portOverride: globalResults?['port'] as String?);
     final result = await client.post(MultiAction.removeDesign.path, body);
     Output.print(result, json: Output.isJson(globalResults));
     client.close();
@@ -151,7 +156,8 @@ class _MultiDuplicateCommand extends Command<int> {
     final body = <String, dynamic>{};
     final index = argResults?['index'] as String?;
     if (index != null) body['index'] = int.parse(index);
-    final client = await AppClient.discover();
+    final client = await AppClient.discover(
+        portOverride: globalResults?['port'] as String?);
     final result = await client.post(MultiAction.duplicateDesign.path, body);
     Output.print(result, json: Output.isJson(globalResults));
     client.close();
@@ -174,7 +180,8 @@ class _MultiReorderCommand extends Command<int> {
   Future<int> run() async {
     final from = int.parse(argResults!['from']);
     final to = int.parse(argResults!['to']);
-    final client = await AppClient.discover();
+    final client = await AppClient.discover(
+        portOverride: globalResults?['port'] as String?);
     final result =
         await client.post(MultiAction.reorder.path, {'from': from, 'to': to});
     Output.print(result, json: Output.isJson(globalResults));
@@ -195,7 +202,8 @@ class _MultiApplyPresetCommand extends Command<int> {
 
   @override
   Future<int> run() async {
-    final client = await AppClient.discover();
+    final client = await AppClient.discover(
+        portOverride: globalResults?['port'] as String?);
     final result = await client
         .post(MultiAction.applyPreset.path, {'id': argResults!['id']});
     Output.print(result, json: Output.isJson(globalResults));
@@ -231,7 +239,8 @@ class _MultiBatchCommand extends Command<int> {
       body[action == 'set-padding' ? 'padding' : 'radius'] =
           double.parse(value);
     }
-    final client = await AppClient.discover();
+    final client = await AppClient.discover(
+        portOverride: globalResults?['port'] as String?);
     final result = await client.post(MultiAction.batch.path, body);
     Output.print(result, json: Output.isJson(globalResults));
     client.close();
@@ -265,7 +274,8 @@ class _MultiSetImageCommand extends Command<int> {
     final body = <String, dynamic>{'data': base64Data};
     final index = argResults?['index'] as String?;
     if (index != null) body['index'] = int.parse(index);
-    final client = await AppClient.discover();
+    final client = await AppClient.discover(
+        portOverride: globalResults?['port'] as String?);
     final result = await client.post(MultiAction.setImage.path, body);
     Output.print(result, json: Output.isJson(globalResults));
     client.close();
@@ -291,7 +301,8 @@ class _MultiSaveDesignCommand extends Command<int> {
     final body = <String, dynamic>{};
     if (argResults?['name'] != null) body['name'] = argResults!['name'];
     if (argResults!['override'] == true) body['override'] = true;
-    final client = await AppClient.discover();
+    final client = await AppClient.discover(
+        portOverride: globalResults?['port'] as String?);
     final result = await client.post(MultiAction.saveDesign.path, body);
     Output.print(result, json: Output.isJson(globalResults));
     client.close();
