@@ -601,5 +601,21 @@
   "applyBoardTemplateConfirm": "Dies ersetzt den Board-Hintergrund und positioniert jeden Rahmen neu. Deine importierten Screenshots bleiben erhalten.",
   "zoneLimitReached": "Maximal {max} Screenshots pro Gerätegröße",
   "playLimitWarning": "Google Play akzeptiert {max} Screenshots – die letzten {extra} werden nicht hochgeladen",
-  "storeLimitsHint": "App Store erlaubt {ios} Screenshots, Google Play {android}."
+  "storeLimitsHint": "App Store erlaubt {ios} Screenshots, Google Play {android}.",
+  "playDestination": "Zielort",
+  "playMainListing": "Haupt-Eintrag",
+  "playCustomStoreListing": "Benutzerdefinierter Eintrag",
+  "playCslNoApiNote": "Google Play bietet keine API für benutzerdefinierte Store-Einträge, daher werden diese in einen Ordner exportiert, den Sie in der Play Console hochladen.",
+  "playCslListingName": "Name des Eintrags",
+  "playCslListingNameHint": "z. B. Fitness-Schlüsselwort",
+  "playCslTargeting": "Zielgruppen-Hinweis (optional)",
+  "playCslTargetingHint": "z. B. Suchbegriff \"Fitness-Tracker\"",
+  "playCslExportNLocales": "{count} Sprachen exportieren…",
+  "playCslSelectLocalesToExport": "Sprachen zum Exportieren auswählen",
+  "playCslExportDialogTitle": "Speicherort für benutzerdefinierten Store-Eintrag wählen",
+  "playCslExportDone": "Export bereit",
+  "playCslExportSummary": "{count} Screenshots in {folder} geschrieben",
+  "playCslOpenFolder": "Ordner anzeigen",
+  "playCslReadInstructions": "Lesen Sie UPLOAD.md für Schritte in der Play Console.",
+  "playCslExportInstead": "Stattdessen für benutzerdefinierten Store-Eintrag exportieren"
 }

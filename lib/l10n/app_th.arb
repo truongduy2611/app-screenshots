@@ -601,5 +601,21 @@
   "applyBoardTemplateConfirm": "การดำเนินการนี้จะแทนที่พื้นหลังของบอร์ดและจัดตำแหน่งกรอบใหม่ทั้งหมด ภาพหน้าจอที่คุณนำเข้าจะยังคงอยู่",
   "zoneLimitReached": "สูงสุด {max} สกรีนช็อตต่อขนาดอุปกรณ์",
   "playLimitWarning": "Google Play ยอมรับสกรีนช็อต {max} ภาพ — {extra} ภาพท้ายสุดจะไม่ถูกอัปโหลด",
-  "storeLimitsHint": "App Store อนุญาตให้ใช้สกรีนช็อต {ios} ภาพ, Google Play {android} ภาพ"
+  "storeLimitsHint": "App Store อนุญาตให้ใช้สกรีนช็อต {ios} ภาพ, Google Play {android} ภาพ",
+  "playDestination": "ปลายทาง",
+  "playMainListing": "รายการหลัก",
+  "playCustomStoreListing": "รายการร้านค้าแบบกำหนดเอง",
+  "playCslNoApiNote": "Google Play ไม่มี API สำหรับรายการร้านค้าแบบกำหนดเอง ดังนั้นจึงต้องส่งออกไปยังโฟลเดอร์เพื่ออัปโหลดใน Play Console",
+  "playCslListingName": "ชื่อรายการ",
+  "playCslListingNameHint": "เช่น คำค้นหาฟิตเนส",
+  "playCslTargeting": "บันทึกการกำหนดเป้าหมาย (ไม่บังคับ)",
+  "playCslTargetingHint": "เช่น คำค้นหา \"แอปบันทึกออกกำลังกาย\"",
+  "playCslExportNLocales": "ส่งออก {count} ภาษา…",
+  "playCslSelectLocalesToExport": "เลือกภาษาที่จะส่งออก",
+  "playCslExportDialogTitle": "เลือกตำแหน่งที่จะส่งออกรายการร้านค้าแบบกำหนดเอง",
+  "playCslExportDone": "ส่งออกเรียบร้อยแล้ว",
+  "playCslExportSummary": "เขียนภาพหน้าจอ {count} ภาพไปยัง {folder}",
+  "playCslOpenFolder": "แสดงโฟลเดอร์",
+  "playCslReadInstructions": "อ่าน UPLOAD.md สำหรับขั้นตอนใน Play Console",
+  "playCslExportInstead": "ส่งออกสำหรับรายการร้านค้าแบบกำหนดเองแทน"
 }

@@ -601,5 +601,21 @@
   "applyBoardTemplateConfirm": "Questo sostituisce lo sfondo della tavola e riposiziona ogni cornice. Gli screenshot importati verranno conservati.",
   "zoneLimitReached": "Massimo {max} screenshot per dimensione dispositivo",
   "playLimitWarning": "Google Play accetta {max} screenshot — gli ultimi {extra} non verranno caricati",
-  "storeLimitsHint": "L'App Store consente {ios} screenshot, Google Play {android}."
+  "storeLimitsHint": "L'App Store consente {ios} screenshot, Google Play {android}.",
+  "playDestination": "Destinazione",
+  "playMainListing": "Scheda principale",
+  "playCustomStoreListing": "Scheda dello store personalizzata",
+  "playCslNoApiNote": "Google Play non offre API per le schede dello store personalizzate, quindi vengono esportate in una cartella da caricare su Play Console.",
+  "playCslListingName": "Nome della scheda",
+  "playCslListingNameHint": "es. Parola chiave Fitness",
+  "playCslTargeting": "Nota sul targeting (opzionale)",
+  "playCslTargetingHint": "es. Parola chiave di ricerca \"tracker allenamento\"",
+  "playCslExportNLocales": "Esporta {count} lingue…",
+  "playCslSelectLocalesToExport": "Seleziona le lingue da esportare",
+  "playCslExportDialogTitle": "Scegli dove esportare la scheda dello store personalizzata",
+  "playCslExportDone": "Esportazione pronta",
+  "playCslExportSummary": "{count} screenshot salvati in {folder}",
+  "playCslOpenFolder": "Mostra cartella",
+  "playCslReadInstructions": "Leggi UPLOAD.md per i passaggi in Play Console.",
+  "playCslExportInstead": "Esporta invece per una scheda dello store personalizzata"
 }

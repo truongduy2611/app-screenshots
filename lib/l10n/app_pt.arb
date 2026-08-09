@@ -601,5 +601,21 @@
   "applyBoardTemplateConfirm": "Isso substitui o fundo do quadro e reposiciona todas as molduras. Suas capturas importadas serão mantidas.",
   "zoneLimitReached": "Máximo de {max} capturas por tamanho de dispositivo",
   "playLimitWarning": "O Google Play aceita {max} capturas — as últimas {extra} não serão enviadas",
-  "storeLimitsHint": "A App Store permite {ios} capturas, o Google Play {android}."
+  "storeLimitsHint": "A App Store permite {ios} capturas, o Google Play {android}.",
+  "playDestination": "Destino",
+  "playMainListing": "Ficha principal",
+  "playCustomStoreListing": "Ficha da loja personalizada",
+  "playCslNoApiNote": "O Google Play não possui API para fichas de loja personalizadas, portanto elas são exportadas para uma pasta que você envia no Play Console.",
+  "playCslListingName": "Nome da ficha",
+  "playCslListingNameHint": "ex.: Palavra-chave Fitness",
+  "playCslTargeting": "Nota de segmentação (opcional)",
+  "playCslTargetingHint": "ex.: Palavra-chave de busca \"treino\"",
+  "playCslExportNLocales": "Exportar {count} idiomas…",
+  "playCslSelectLocalesToExport": "Selecione os idiomas para exportar",
+  "playCslExportDialogTitle": "Escolha onde exportar a ficha da loja personalizada",
+  "playCslExportDone": "Exportação concluída",
+  "playCslExportSummary": "{count} capturas de tela salvas em {folder}",
+  "playCslOpenFolder": "Mostrar pasta",
+  "playCslReadInstructions": "Leia UPLOAD.md para os passos no Play Console.",
+  "playCslExportInstead": "Exportar para ficha de loja personalizada em vez disso"
 }

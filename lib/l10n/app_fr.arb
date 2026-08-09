@@ -601,5 +601,21 @@
   "applyBoardTemplateConfirm": "Cela remplace l'arrière-plan du tableau et repositionne chaque cadre. Vos captures importées sont conservées.",
   "zoneLimitReached": "Maximum {max} captures par taille d'appareil",
   "playLimitWarning": "Google Play accepte {max} captures — les {extra} dernières ne seront pas envoyées",
-  "storeLimitsHint": "L'App Store autorise {ios} captures, Google Play {android}."
+  "storeLimitsHint": "L'App Store autorise {ios} captures, Google Play {android}.",
+  "playDestination": "Destination",
+  "playMainListing": "Fiche principale",
+  "playCustomStoreListing": "Fiche de store personnalisée",
+  "playCslNoApiNote": "Google Play n'a pas d'API pour les fiches de store personnalisées, elles sont donc exportées dans un dossier à importer dans Play Console.",
+  "playCslListingName": "Nom de la fiche",
+  "playCslListingNameHint": "ex. Mot-clé Fitness",
+  "playCslTargeting": "Note de ciblage (optionnel)",
+  "playCslTargetingHint": "ex. Mot-clé de recherche \"suivi d'entraînement\"",
+  "playCslExportNLocales": "Exporter {count} langues…",
+  "playCslSelectLocalesToExport": "Sélectionnez les langues à exporter",
+  "playCslExportDialogTitle": "Choisir où exporter la fiche de store personnalisée",
+  "playCslExportDone": "Exportation prête",
+  "playCslExportSummary": "{count} captures d'écran enregistrées dans {folder}",
+  "playCslOpenFolder": "Afficher le dossier",
+  "playCslReadInstructions": "Lisez UPLOAD.md pour les étapes dans Play Console.",
+  "playCslExportInstead": "Exporter plutôt pour une fiche de store personnalisée"
 }

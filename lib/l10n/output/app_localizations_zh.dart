@@ -1942,60 +1942,57 @@ class AppLocalizationsZh extends AppLocalizations {
   String get searchDevices => '搜索设备';
 
   @override
-  String get playDestination => 'Destination';
+  String get playDestination => '目标位置';
 
   @override
-  String get playMainListing => 'Main listing';
+  String get playMainListing => '主商品详情';
 
   @override
-  String get playCustomStoreListing => 'Custom store listing';
+  String get playCustomStoreListing => '自定义商品详情';
 
   @override
   String get playCslNoApiNote =>
-      'Google Play has no API for custom store listings, so these are exported to a folder you upload in Play Console.';
+      'Google Play 没有用于自定义商品详情的 API，因此这些内容将导出到一个文件夹中，由您在 Play Console 中上传。';
 
   @override
-  String get playCslListingName => 'Listing name';
+  String get playCslListingName => '详情名称';
 
   @override
-  String get playCslListingNameHint => 'e.g. Fitness keyword';
+  String get playCslListingNameHint => '例如：健身关键词';
 
   @override
-  String get playCslTargeting => 'Targeting note (optional)';
+  String get playCslTargeting => '定位说明（可选）';
 
   @override
-  String get playCslTargetingHint => 'e.g. Search keyword \"workout tracker\"';
+  String get playCslTargetingHint => '例如：搜索关键词“健身追踪”';
 
   @override
   String playCslExportNLocales(int count) {
-    return 'Export $count locales…';
+    return '导出 $count 个语言…';
   }
 
   @override
-  String get playCslSelectLocalesToExport => 'Select locales to export';
+  String get playCslSelectLocalesToExport => '选择要导出的语言';
 
   @override
-  String get playCslExportDialogTitle =>
-      'Choose where to export the custom store listing';
+  String get playCslExportDialogTitle => '选择导出自定义商品详情的位置';
 
   @override
-  String get playCslExportDone => 'Export ready';
+  String get playCslExportDone => '导出就绪';
 
   @override
   String playCslExportSummary(int count, String folder) {
-    return '$count screenshots written to $folder';
+    return '已将 $count 张截图写入 $folder';
   }
 
   @override
-  String get playCslOpenFolder => 'Reveal folder';
+  String get playCslOpenFolder => '显示文件夹';
 
   @override
-  String get playCslReadInstructions =>
-      'Read UPLOAD.md for the Play Console steps.';
+  String get playCslReadInstructions => '请参阅 UPLOAD.md 了解 Play Console 操作步骤。';
 
   @override
-  String get playCslExportInstead =>
-      'Export for a custom store listing instead';
+  String get playCslExportInstead => '改用导出自定义商品详情';
 }
 
 /// The translations for Chinese, using the Han script (`zh_Hant`).
@@ -3934,4 +3931,57 @@ class AppLocalizationsZhHant extends AppLocalizationsZh {
 
   @override
   String get searchDevices => '搜尋裝置';
+
+  @override
+  String get playDestination => '目標位置';
+
+  @override
+  String get playMainListing => '主商品詳情';
+
+  @override
+  String get playCustomStoreListing => '自訂商品詳情';
+
+  @override
+  String get playCslNoApiNote =>
+      'Google Play 沒有用於自訂商品詳情格的 API，因此這些內容將匯出至資料夾中，由您在 Play Console 中上傳。';
+
+  @override
+  String get playCslListingName => '詳情名稱';
+
+  @override
+  String get playCslListingNameHint => '例如：健身關鍵字';
+
+  @override
+  String get playCslTargeting => '定位說明（選填）';
+
+  @override
+  String get playCslTargetingHint => '例如：搜尋關鍵字「健身追蹤」';
+
+  @override
+  String playCslExportNLocales(int count) {
+    return '匯出 $count 個語言…';
+  }
+
+  @override
+  String get playCslSelectLocalesToExport => '選擇要匯出的語言';
+
+  @override
+  String get playCslExportDialogTitle => '選擇匯出自訂商品詳情的位置';
+
+  @override
+  String get playCslExportDone => '匯出就緒';
+
+  @override
+  String playCslExportSummary(int count, String folder) {
+    return '已將 $count 張截圖寫入 $folder';
+  }
+
+  @override
+  String get playCslOpenFolder => '顯示資料夾';
+
+  @override
+  String get playCslReadInstructions => '請參閱 UPLOAD.md 了解 Play Console 操作步驟。';
+
+  @override
+  String get playCslExportInstead => '改用匯出自訂商品詳情';
 }

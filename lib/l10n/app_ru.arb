@@ -601,5 +601,21 @@
   "applyBoardTemplateConfirm": "Это заменит фон доски и изменит положение всех рамок. Ваши импортированные скриншоты сохранятся.",
   "zoneLimitReached": "Максимум {max} скриншотов на размер устройства",
   "playLimitWarning": "Google Play принимает {max} скриншотов — последние {extra} не будут загружены",
-  "storeLimitsHint": "App Store позволяет {ios} скриншотов, Google Play — {android}."
+  "storeLimitsHint": "App Store позволяет {ios} скриншотов, Google Play — {android}.",
+  "playDestination": "Назначение",
+  "playMainListing": "Основная страница",
+  "playCustomStoreListing": "Пользовательская страница приложения",
+  "playCslNoApiNote": "У Google Play нет API для пользовательских страниц приложения, поэтому они экспортируются в папку для загрузки через Play Console.",
+  "playCslListingName": "Название страницы",
+  "playCslListingNameHint": "например, Ключевое слово Фитнес",
+  "playCslTargeting": "Примечание по таргетингу (необязательно)",
+  "playCslTargetingHint": "например, Поисковый запрос \"трекер тренировок\"",
+  "playCslExportNLocales": "Экспортировать языки ({count})…",
+  "playCslSelectLocalesToExport": "Выберите языки для экспорта",
+  "playCslExportDialogTitle": "Выберите папку для экспорта пользовательской страницы",
+  "playCslExportDone": "Экспорт готов",
+  "playCslExportSummary": "Скриншотов сохранено: {count} в папку {folder}",
+  "playCslOpenFolder": "Показать в папке",
+  "playCslReadInstructions": "Инструкции по загрузке в Play Console см. в UPLOAD.md.",
+  "playCslExportInstead": "Экспортировать для пользовательской страницы приложения"
 }

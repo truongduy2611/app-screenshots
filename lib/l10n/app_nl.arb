@@ -601,5 +601,21 @@
   "applyBoardTemplateConfirm": "Dit vervangt de bordachtergrond en herpositioneert elk kader. Je geïmporteerde screenshots blijven behouden.",
   "zoneLimitReached": "Maximaal {max} screenshots per apparaatgrootte",
   "playLimitWarning": "Google Play accepteert {max} screenshots – de laatste {extra} worden niet geüpload",
-  "storeLimitsHint": "App Store staat {ios} screenshots toe, Google Play {android}."
+  "storeLimitsHint": "App Store staat {ios} screenshots toe, Google Play {android}.",
+  "playDestination": "Bestemming",
+  "playMainListing": "Hoofdvermelding",
+  "playCustomStoreListing": "Aangepaste winkelvermelding",
+  "playCslNoApiNote": "Google Play heeft geen API voor aangepaste winkelvermeldingen, dus deze worden geëxporteerd naar een map die u uploadt in Play Console.",
+  "playCslListingName": "Naam van vermelding",
+  "playCslListingNameHint": "bijv. Fitness trefwoord",
+  "playCslTargeting": "Targetingopmerking (optioneel)",
+  "playCslTargetingHint": "bijv. Zoektrefwoord \"workout tracker\"",
+  "playCslExportNLocales": "{count} talen exporteren…",
+  "playCslSelectLocalesToExport": "Selecteer te exporteren talen",
+  "playCslExportDialogTitle": "Kies waar u de aangepaste winkelvermelding wilt exporteren",
+  "playCslExportDone": "Export gereed",
+  "playCslExportSummary": "{count} screenshots geschreven naar {folder}",
+  "playCslOpenFolder": "Map tonen",
+  "playCslReadInstructions": "Lees UPLOAD.md voor de stappen in Play Console.",
+  "playCslExportInstead": "In plaats daarvan exporteren voor aangepaste winkelvermelding"
 }

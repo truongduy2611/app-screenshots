@@ -601,5 +601,21 @@
   "applyBoardTemplateConfirm": "Bu işlem pano arka planını değiştirir ve her çerçeveyi yeniden konumlandırır. İçe aktarılan ekran görüntüleriniz korunur.",
   "zoneLimitReached": "Cihaz boyutu başına en fazla {max} ekran görüntüsü",
   "playLimitWarning": "Google Play {max} ekran görüntüsü kabul eder — son {extra} tanesi yüklenmez",
-  "storeLimitsHint": "App Store {ios} ekran görüntüsüne izin verir, Google Play {android}."
+  "storeLimitsHint": "App Store {ios} ekran görüntüsüne izin verir, Google Play {android}.",
+  "playDestination": "Hedef",
+  "playMainListing": "Ana mağaza kaydı",
+  "playCustomStoreListing": "Özel mağaza kaydı",
+  "playCslNoApiNote": "Google Play'in özel mağaza kayıtları için bir API'si yoktur, bu nedenle bunlar Play Console'da yükleyeceğiniz bir klasöre aktarılır.",
+  "playCslListingName": "Kayıt adı",
+  "playCslListingNameHint": "örn. Fitness anahtar kelimesi",
+  "playCslTargeting": "Hedefleme notu (isteğe bağlı)",
+  "playCslTargetingHint": "örn. Arama anahtar kelimesi \"egzersiz takibi\"",
+  "playCslExportNLocales": "{count} dili dışa aktar…",
+  "playCslSelectLocalesToExport": "Dışa aktarılacak dilleri seçin",
+  "playCslExportDialogTitle": "Özel mağaza kaydının dışa aktarılacağı yeri seçin",
+  "playCslExportDone": "Dışa aktarma hazır",
+  "playCslExportSummary": "{count} ekran görüntüsü {folder} klasörüne yazıldı",
+  "playCslOpenFolder": "Klasörü göster",
+  "playCslReadInstructions": "Play Console adımları için UPLOAD.md dosyasını okuyun.",
+  "playCslExportInstead": "Bunun yerine özel mağaza kaydı için dışa aktar"
 }

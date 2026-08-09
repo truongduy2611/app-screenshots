@@ -1991,58 +1991,57 @@ class AppLocalizationsTh extends AppLocalizations {
   String get searchDevices => 'ค้นหาอุปกรณ์';
 
   @override
-  String get playDestination => 'Destination';
+  String get playDestination => 'ปลายทาง';
 
   @override
-  String get playMainListing => 'Main listing';
+  String get playMainListing => 'รายการหลัก';
 
   @override
-  String get playCustomStoreListing => 'Custom store listing';
+  String get playCustomStoreListing => 'รายการร้านค้าแบบกำหนดเอง';
 
   @override
   String get playCslNoApiNote =>
-      'Google Play has no API for custom store listings, so these are exported to a folder you upload in Play Console.';
+      'Google Play ไม่มี API สำหรับรายการร้านค้าแบบกำหนดเอง ดังนั้นจึงต้องส่งออกไปยังโฟลเดอร์เพื่ออัปโหลดใน Play Console';
 
   @override
-  String get playCslListingName => 'Listing name';
+  String get playCslListingName => 'ชื่อรายการ';
 
   @override
-  String get playCslListingNameHint => 'e.g. Fitness keyword';
+  String get playCslListingNameHint => 'เช่น คำค้นหาฟิตเนส';
 
   @override
-  String get playCslTargeting => 'Targeting note (optional)';
+  String get playCslTargeting => 'บันทึกการกำหนดเป้าหมาย (ไม่บังคับ)';
 
   @override
-  String get playCslTargetingHint => 'e.g. Search keyword \"workout tracker\"';
+  String get playCslTargetingHint => 'เช่น คำค้นหา \"แอปบันทึกออกกำลังกาย\"';
 
   @override
   String playCslExportNLocales(int count) {
-    return 'Export $count locales…';
+    return 'ส่งออก $count ภาษา…';
   }
 
   @override
-  String get playCslSelectLocalesToExport => 'Select locales to export';
+  String get playCslSelectLocalesToExport => 'เลือกภาษาที่จะส่งออก';
 
   @override
   String get playCslExportDialogTitle =>
-      'Choose where to export the custom store listing';
+      'เลือกตำแหน่งที่จะส่งออกรายการร้านค้าแบบกำหนดเอง';
 
   @override
-  String get playCslExportDone => 'Export ready';
+  String get playCslExportDone => 'ส่งออกเรียบร้อยแล้ว';
 
   @override
   String playCslExportSummary(int count, String folder) {
-    return '$count screenshots written to $folder';
+    return 'เขียนภาพหน้าจอ $count ภาพไปยัง $folder';
   }
 
   @override
-  String get playCslOpenFolder => 'Reveal folder';
+  String get playCslOpenFolder => 'แสดงโฟลเดอร์';
 
   @override
   String get playCslReadInstructions =>
-      'Read UPLOAD.md for the Play Console steps.';
+      'อ่าน UPLOAD.md สำหรับขั้นตอนใน Play Console';
 
   @override
-  String get playCslExportInstead =>
-      'Export for a custom store listing instead';
+  String get playCslExportInstead => 'ส่งออกสำหรับรายการร้านค้าแบบกำหนดเองแทน';
 }

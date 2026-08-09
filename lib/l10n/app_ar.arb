@@ -601,5 +601,21 @@
   "applyBoardTemplateConfirm": "سيؤدي هذا إلى استبدال خلفية اللوحة وإعادة تحديد موقع كل إطار. سيتم الاحتفاظ بلقطات الشاشة المستوردة.",
   "zoneLimitReached": "الحد الأقصى {max} لقطات شاشة لكل حجم جهاز",
   "playLimitWarning": "يقبل Google Play ‏{max} لقطات شاشة — لن يتم تحميل آخر {extra}",
-  "storeLimitsHint": "يتيح App Store ‏{ios} من لقطات الشاشة، وGoogle Play ‏{android}."
+  "storeLimitsHint": "يتيح App Store ‏{ios} من لقطات الشاشة، وGoogle Play ‏{android}.",
+  "playDestination": "الوجهة",
+  "playMainListing": "القائمة الرئيسية",
+  "playCustomStoreListing": "قائمة المتجر المخصصة",
+  "playCslNoApiNote": "لا يوفر Google Play واجهة برمجة تطبيقات للقوائم المخصصة، لذا يتم تصديرها إلى مجلد ترفعه في Play Console.",
+  "playCslListingName": "اسم القائمة",
+  "playCslListingNameHint": "مثال: الكلمة الرئيسية للياقة البدنية",
+  "playCslTargeting": "ملاحظة الاستهداف (اختياري)",
+  "playCslTargetingHint": "مثال: الكلمة الرئيسية للبحث \"تتبع التمارين\"",
+  "playCslExportNLocales": "تصدير {count} لغات…",
+  "playCslSelectLocalesToExport": "حدد اللغات للتصدير",
+  "playCslExportDialogTitle": "اختر موقع تصدير قائمة المتجر المخصصة",
+  "playCslExportDone": "التصدير جاهز",
+  "playCslExportSummary": "تم كتابة {count} لقطات شاشة إلى {folder}",
+  "playCslOpenFolder": "إظهار المجلد",
+  "playCslReadInstructions": "اقرأ UPLOAD.md لخطوات Play Console.",
+  "playCslExportInstead": "التصدير لقائمة متجر مخصصة بدلاً من ذلك"
 }
