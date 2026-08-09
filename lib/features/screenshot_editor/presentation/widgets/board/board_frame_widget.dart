@@ -7,6 +7,7 @@ import 'package:app_screenshots/features/screenshot_editor/data/models/frame_ele
 import 'package:app_screenshots/features/screenshot_editor/presentation/cubit/board_cubit.dart';
 import 'package:app_screenshots/features/screenshot_editor/presentation/cubit/translation_cubit.dart';
 import 'package:app_screenshots/features/screenshot_editor/presentation/helpers/image_picker_helper.dart';
+import 'package:app_screenshots/features/screenshot_editor/presentation/widgets/board/board_viewport_scale.dart';
 import 'package:app_screenshots/features/screenshot_editor/presentation/widgets/canvas/import_hint_placeholder.dart';
 import 'package:device_frame/device_frame.dart';
 import 'package:flutter/material.dart';
@@ -370,7 +371,15 @@ class _BoardFrameWidgetState extends State<BoardFrameWidget> {
     final frame = widget.frame;
     final chrome = widget.showChrome && widget.isSelected;
 
-    const m = BoardFrameWidget.chromeMargin;
+    // Chrome sizes are board pixels at zoom 1 and grow as the canvas zooms
+    // out, so handles stay the same size on screen. Only frames actually
+    // drawing chrome subscribe to the zoom, so a board full of unselected
+    // frames does not rebuild on every pan.
+    final chromeScale = chrome ? BoardViewportScale.of(context) : 1.0;
+    final m = BoardViewportScale.size(
+      BoardFrameWidget.chromeMargin,
+      chromeScale,
+    );
 
     // The box extends past the frame by [chromeMargin] on every side. Flutter
     // will not hit-test a child outside its parent's bounds — it paints under
@@ -436,7 +445,7 @@ class _BoardFrameWidgetState extends State<BoardFrameWidget> {
                             decoration: BoxDecoration(
                               border: Border.all(
                                 color: Theme.of(context).colorScheme.primary,
-                                width: 6,
+                                width: BoardViewportScale.size(6, chromeScale),
                               ),
                             ),
                           ),
@@ -444,16 +453,16 @@ class _BoardFrameWidgetState extends State<BoardFrameWidget> {
                       ),
                       // Rotation affordances come first so the resize
                       // handles, added last, win where they overlap.
-                      ..._buildRotateBands(),
-                      ..._buildCornerRotatePads(),
-                      ..._buildResizeHandles(),
+                      ..._buildRotateBands(chromeScale),
+                      ..._buildCornerRotatePads(chromeScale),
+                      ..._buildResizeHandles(chromeScale),
                     ],
                   ),
                 ),
               ),
             // Deliberately outside the rotation: the readout stays upright
             // so the angle is legible whatever the frame is doing.
-            if (chrome && _dragRotation != null) _buildAngleBadge(),
+            if (chrome && _dragRotation != null) _buildAngleBadge(chromeScale),
           ],
         ),
       ),
@@ -464,8 +473,11 @@ class _BoardFrameWidgetState extends State<BoardFrameWidget> {
   ///
   /// Where a pad and the corner handle overlap the handle wins: these are added
   /// to the stack first, and Flutter hit-tests the last child first.
-  List<Widget> _buildCornerRotatePads() {
-    const pad = BoardFrameWidget.rotateCornerSize;
+  List<Widget> _buildCornerRotatePads(double scale) {
+    final pad = BoardViewportScale.size(
+      BoardFrameWidget.rotateCornerSize,
+      scale,
+    );
     final color = Theme.of(context).colorScheme.primary;
 
     const corners = [
@@ -475,7 +487,7 @@ class _BoardFrameWidgetState extends State<BoardFrameWidget> {
       Alignment.bottomRight,
     ];
 
-    const m = BoardFrameWidget.chromeMargin;
+    final m = BoardViewportScale.size(BoardFrameWidget.chromeMargin, scale);
 
     return corners.map((corner) {
       final hovered = _hoveredRotateCorner == corner;
@@ -521,12 +533,12 @@ class _BoardFrameWidgetState extends State<BoardFrameWidget> {
   /// Grab bands along the four edges. Dragging one rotates the frame around
   /// its centre; the corners stay reserved for resizing, so each band stops a
   /// handle's width short of both ends.
-  List<Widget> _buildRotateBands() {
-    const band = BoardFrameWidget.rotateBand;
-    const inset = BoardFrameWidget.handleSize;
+  List<Widget> _buildRotateBands(double scale) {
+    final band = BoardViewportScale.size(BoardFrameWidget.rotateBand, scale);
+    final inset = BoardViewportScale.size(BoardFrameWidget.handleSize, scale);
     final color = Theme.of(context).colorScheme.primary;
 
-    const m = BoardFrameWidget.chromeMargin;
+    final m = BoardViewportScale.size(BoardFrameWidget.chromeMargin, scale);
 
     Widget buildBand(Alignment side) {
       final horizontal =
@@ -588,18 +600,27 @@ class _BoardFrameWidgetState extends State<BoardFrameWidget> {
   }
 
   /// Live angle readout while rotating, so the drag is landable on a number.
-  Widget _buildAngleBadge() {
+  Widget _buildAngleBadge(double scale) {
     final degrees = (_rotation * 180 / math.pi).roundToDouble();
     final theme = Theme.of(context);
 
+    final m = BoardViewportScale.size(BoardFrameWidget.chromeMargin, scale);
+    final lift = BoardViewportScale.size(
+      BoardFrameWidget.handleSize * 2.4,
+      scale,
+    );
+
     return Positioned(
-      top: BoardFrameWidget.chromeMargin - BoardFrameWidget.handleSize * 2.4,
-      left: BoardFrameWidget.chromeMargin,
-      right: BoardFrameWidget.chromeMargin,
+      top: m - lift,
+      left: m,
+      right: m,
       child: IgnorePointer(
         child: Center(
           child: Container(
-            padding: const EdgeInsets.symmetric(horizontal: 28, vertical: 14),
+            padding: EdgeInsets.symmetric(
+              horizontal: BoardViewportScale.size(28, scale),
+              vertical: BoardViewportScale.size(14, scale),
+            ),
             decoration: BoxDecoration(
               color: theme.colorScheme.primary,
               borderRadius: BorderRadius.circular(999),
@@ -607,7 +628,7 @@ class _BoardFrameWidgetState extends State<BoardFrameWidget> {
             child: Text(
               '${degrees.toStringAsFixed(0)}°',
               style: TextStyle(
-                fontSize: 52,
+                fontSize: BoardViewportScale.size(52, scale),
                 fontWeight: FontWeight.w700,
                 color: theme.colorScheme.onPrimary,
                 fontFeatures: const [FontFeature.tabularFigures()],
@@ -619,15 +640,15 @@ class _BoardFrameWidgetState extends State<BoardFrameWidget> {
     );
   }
 
-  List<Widget> _buildResizeHandles() {
+  List<Widget> _buildResizeHandles(double scale) {
     const corners = [
       Alignment.topLeft,
       Alignment.topRight,
       Alignment.bottomLeft,
       Alignment.bottomRight,
     ];
-    const size = BoardFrameWidget.handleSize;
-    const m = BoardFrameWidget.chromeMargin;
+    final size = BoardViewportScale.size(BoardFrameWidget.handleSize, scale);
+    final m = BoardViewportScale.size(BoardFrameWidget.chromeMargin, scale);
     final color = Theme.of(context).colorScheme.primary;
 
     return corners.map((corner) {
@@ -653,7 +674,10 @@ class _BoardFrameWidgetState extends State<BoardFrameWidget> {
               height: size,
               decoration: BoxDecoration(
                 color: Colors.white,
-                border: Border.all(color: color, width: 5),
+                border: Border.all(
+                  color: color,
+                  width: BoardViewportScale.size(5, scale),
+                ),
                 shape: BoxShape.circle,
               ),
             ),

@@ -27,6 +27,7 @@ import 'package:app_screenshots/features/screenshot_editor/presentation/widgets/
 import 'package:app_screenshots/features/screenshot_editor/presentation/widgets/asc_upload_sheet.dart';
 import 'package:app_screenshots/features/screenshot_editor/presentation/widgets/board/board_canvas.dart';
 import 'package:app_screenshots/features/screenshot_editor/presentation/widgets/board/board_template_picker_dialog.dart';
+import 'package:app_screenshots/features/screenshot_editor/presentation/widgets/board/board_viewport_scale.dart';
 import 'package:app_screenshots/features/screenshot_editor/presentation/widgets/controls/board_controls.dart';
 import 'package:app_screenshots/features/screenshot_editor/presentation/widgets/controls/desktop_editor_controls.dart';
 import 'package:app_screenshots/features/screenshot_editor/presentation/widgets/controls/grid_controls.dart';

@@ -5,6 +5,7 @@ import 'package:app_screenshots/core/widgets/app_popup_menu.dart';
 import 'package:app_screenshots/features/screenshot_editor/data/models/board_design.dart';
 import 'package:app_screenshots/features/screenshot_editor/data/models/crop_zone.dart';
 import 'package:app_screenshots/features/screenshot_editor/presentation/cubit/board_cubit.dart';
+import 'package:app_screenshots/features/screenshot_editor/presentation/widgets/board/board_viewport_scale.dart';
 import 'package:app_screenshots/features/screenshot_editor/utils/screenshot_utils.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -72,6 +73,11 @@ class CropZoneLayer extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    // Outlines, labels, and handles are chrome: they hold a constant on-screen
+    // size instead of shrinking with the board. The zone rectangles themselves
+    // stay in board coordinates — they define the exported crop.
+    final scale = BoardViewportScale.of(context);
+
     return Stack(
       clipBehavior: Clip.none,
       children: [
@@ -82,11 +88,12 @@ class CropZoneLayer extends StatelessWidget {
             index: i,
             isSelected: zones[i].id == selectedZoneId,
             radius: radiusFor(zones, zones[i]),
+            scale: scale,
           ),
         // Hidden at the store cap rather than shown disabled — an inert button
         // floating on the canvas reads as broken.
         if (zones.isNotEmpty && zones.length < BoardDesign.maxZones)
-          _AddZoneButton(zones: zones),
+          _AddZoneButton(zones: zones, scale: scale),
       ],
     );
   }
@@ -95,9 +102,10 @@ class CropZoneLayer extends StatelessWidget {
 /// Quick "add another screenshot" affordance at the end of the zone strip, so
 /// a board can be extended without leaving the canvas for the side panel.
 class _AddZoneButton extends StatelessWidget {
-  const _AddZoneButton({required this.zones});
+  const _AddZoneButton({required this.zones, required this.scale});
 
   final List<CropZone> zones;
+  final double scale;
 
   /// Diameter in board pixels — large, because board coordinates are
   /// screenshot-resolution and the canvas is usually zoomed well out.
@@ -109,6 +117,8 @@ class _AddZoneButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
+    final size = BoardViewportScale.size(_AddZoneButton.size, scale);
+    final gap = BoardViewportScale.size(_AddZoneButton.gap, scale);
 
     // Anchor to the rightmost zone rather than the last in list order — the
     // list is export order, which the user can reorder independently.
@@ -135,7 +145,7 @@ class _AddZoneButton extends StatelessWidget {
                 color: theme.colorScheme.primary.withValues(alpha: 0.15),
                 border: Border.all(
                   color: theme.colorScheme.primary.withValues(alpha: 0.7),
-                  width: 4,
+                  width: BoardViewportScale.size(4, scale),
                 ),
               ),
               child: Icon(
@@ -158,11 +168,15 @@ class _CropZoneBox extends StatefulWidget {
     required this.index,
     required this.isSelected,
     required this.radius,
+    required this.scale,
   });
 
   final CropZone zone;
   final int index;
   final bool isSelected;
+
+  /// Viewport zoom, so chrome can keep a constant on-screen size.
+  final double scale;
 
   /// Per-corner rounding; square on any edge that abuts a neighbouring zone.
   final BorderRadius radius;
@@ -189,13 +203,18 @@ class _DashedZonePainter extends CustomPainter {
     required this.color,
     required this.strokeWidth,
     required this.radius,
+    required this.dashScale,
   });
 
   final Color color;
   final double strokeWidth;
   final BorderRadius radius;
 
-  /// Dash and gap lengths in board pixels.
+  /// Viewport zoom. Board-space dashes go sub-pixel when zoomed out and the
+  /// outline reads as solid, so the rhythm scales with the chrome.
+  final double dashScale;
+
+  /// Dash and gap lengths in board pixels at zoom 1.
   static const double _dash = 56.0;
   static const double _gap = 34.0;
 
@@ -210,12 +229,15 @@ class _DashedZonePainter extends CustomPainter {
       ..strokeCap = StrokeCap.round
       ..color = color;
 
+    final dash = BoardViewportScale.size(_dash, dashScale);
+    final gap = BoardViewportScale.size(_gap, dashScale);
+
     for (final metric in path.computeMetrics()) {
       var distance = 0.0;
       while (distance < metric.length) {
-        final end = math.min(distance + _dash, metric.length);
+        final end = math.min(distance + dash, metric.length);
         canvas.drawPath(metric.extractPath(distance, end), paint);
-        distance = end + _gap;
+        distance = end + gap;
       }
     }
   }
@@ -224,7 +246,8 @@ class _DashedZonePainter extends CustomPainter {
   bool shouldRepaint(_DashedZonePainter old) =>
       old.color != color ||
       old.strokeWidth != strokeWidth ||
-      old.radius != radius;
+      old.radius != radius ||
+      old.dashScale != dashScale;
 }
 
 class _CropZoneBoxState extends State<_CropZoneBox> {
@@ -299,7 +322,10 @@ class _CropZoneBoxState extends State<_CropZoneBox> {
     final accent = zone.included
         ? theme.colorScheme.primary
         : theme.colorScheme.outline;
-    final borderWidth = widget.isSelected ? 8.0 : 4.0;
+    final borderWidth = BoardViewportScale.size(
+      widget.isSelected ? 8.0 : 4.0,
+      widget.scale,
+    );
 
     return Positioned(
       left: _position.dx,
@@ -323,6 +349,7 @@ class _CropZoneBoxState extends State<_CropZoneBox> {
                   ),
                   strokeWidth: borderWidth,
                   radius: widget.radius,
+                  dashScale: widget.scale,
                 ),
               ),
             ),
@@ -343,7 +370,9 @@ class _CropZoneBoxState extends State<_CropZoneBox> {
           // line up in a row instead of stepping with their zones.
           Positioned(
             left: 0,
-            bottom: _position.dy + _size.height + _CropZoneBox.labelGap,
+            bottom: _position.dy +
+                _size.height +
+                BoardViewportScale.size(_CropZoneBox.labelGap, widget.scale),
             child: _buildLabel(context, accent),
           ),
 
@@ -354,7 +383,7 @@ class _CropZoneBoxState extends State<_CropZoneBox> {
   }
 
   Widget _edgeBand(Alignment side) {
-    const band = _CropZoneBox.edgeBand;
+    final band = BoardViewportScale.size(_CropZoneBox.edgeBand, widget.scale);
     final horizontal = side == Alignment.topCenter ||
         side == Alignment.bottomCenter;
 
@@ -421,25 +450,25 @@ class _CropZoneBoxState extends State<_CropZoneBox> {
               zone.included
                   ? Symbols.crop_rounded
                   : Symbols.visibility_off_rounded,
-              size: 52,
+              size: BoardViewportScale.size(52, widget.scale),
               color: titleColor,
             ),
-            const SizedBox(width: 14),
+            SizedBox(width: BoardViewportScale.size(14, widget.scale)),
             Text(
               title,
               style: TextStyle(
-                fontSize: 56,
+                fontSize: BoardViewportScale.size(56, widget.scale),
                 fontWeight: selected ? FontWeight.w700 : FontWeight.w500,
                 color: titleColor,
               ),
             ),
-            const SizedBox(width: 22),
+            SizedBox(width: BoardViewportScale.size(22, widget.scale)),
             Text(
               '${ScreenshotUtils.friendlyDisplayName(zone.displayType)} · '
               '${target.width.toInt()} × ${target.height.toInt()}'
               '${zone.locked ? '' : ' ↔'}',
               style: TextStyle(
-                fontSize: 40,
+                fontSize: BoardViewportScale.size(40, widget.scale),
                 fontWeight: FontWeight.w400,
                 color: metaColor,
                 fontFeatures: const [FontFeature.tabularFigures()],
@@ -452,13 +481,16 @@ class _CropZoneBoxState extends State<_CropZoneBox> {
   }
 
   List<Widget> _buildResizeHandles(Color accent) {
+    final size = BoardViewportScale.size(
+      _CropZoneBox.handleSize,
+      widget.scale,
+    );
     const corners = [
       Alignment.topLeft,
       Alignment.topRight,
       Alignment.bottomLeft,
       Alignment.bottomRight,
     ];
-    const size = _CropZoneBox.handleSize;
 
     return corners.map((corner) {
       return Positioned(
@@ -481,7 +513,10 @@ class _CropZoneBoxState extends State<_CropZoneBox> {
               height: size,
               decoration: BoxDecoration(
                 color: Colors.white,
-                border: Border.all(color: accent, width: 5),
+                border: Border.all(
+                  color: accent,
+                  width: BoardViewportScale.size(5, widget.scale),
+                ),
               ),
             ),
           ),

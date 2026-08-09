@@ -59,11 +59,17 @@ class _BoardCanvasArea extends StatelessWidget {
                   builder: (context, showCropZones) {
                     return Padding(
                       padding: const EdgeInsets.all(canvasPadding),
-                      child: RepaintBoundary(
-                        child: BoardCanvas(
-                          screenshotController: screenshotController,
-                          showCropZones: showCropZones,
-                          interactive: !isExporting,
+                      // Publishes the zoom so selection chrome can hold a
+                      // constant on-screen size instead of shrinking with the
+                      // board.
+                      child: BoardViewportScale(
+                        controller: viewportController,
+                        child: RepaintBoundary(
+                          child: BoardCanvas(
+                            screenshotController: screenshotController,
+                            showCropZones: showCropZones,
+                            interactive: !isExporting,
+                          ),
                         ),
                       ),
                     );
