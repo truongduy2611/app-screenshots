@@ -1,6 +1,9 @@
 import 'dart:io';
 
 import 'package:app_screenshots/core/di/service_locator.dart';
+import 'package:app_screenshots/core/services/command_server.dart';
+import 'package:app_screenshots/core/services/app_logger.dart';
+import 'package:path_provider/path_provider.dart';
 import 'package:app_screenshots/core/extensions/context_extensions.dart';
 import 'package:app_screenshots/core/widgets/app_dialog.dart';
 import 'package:app_screenshots/core/widgets/app_popup_menu.dart';
@@ -213,13 +216,90 @@ class _BoardViewState extends State<_BoardView>
     WidgetsBinding.instance.addPostFrameCallback((_) {
       _zoomToFit(animate: false);
 
+      // Register with the CLI command server. The editor cubit is registered
+      // too, so the existing /api/editor/* background and overlay commands
+      // work on a board — but board-aware save and export live on /api/board/,
+      // since the editor cubit knows nothing about zones or frames and saving
+      // through it would drop the board payload.
+      if (mounted) {
+        final server = GetIt.I<CommandServer>();
+        server.registerBoard(_boardCubit);
+        server.registerEditor(_editorCubit);
+        server.registerTranslation(context.read<TranslationCubit>());
+        server.registerCapture(
+          captureImage: _captureThumbnailForServer,
+          syncChanges: syncBoardBackground,
+        );
+        server.registerBoardExport(_exportForServer);
+      }
     });
   }
 
   @override
   void dispose() {
+    // Cached references — context.read is unsafe during dispose.
+    final server = GetIt.I<CommandServer>();
+    server.unregisterBoard(_boardCubit);
+    server.unregisterEditor(_editorCubit);
+    server.unregisterCapture();
+    server.unregisterBoardExport();
     _viewportController.dispose();
     super.dispose();
+  }
+
+  // ---------------------------------------------------------------------------
+  // CLI command server bridge
+  // ---------------------------------------------------------------------------
+
+  /// Thumbnail for `board save-design` — the first exportable zone, matching
+  /// what the UI stores for the library card.
+  Future<Uint8List?> _captureThumbnailForServer() => renderThumbnail();
+
+  /// Writes zone PNGs to disk for `board export` / `board export-all`.
+  ///
+  /// Lives here rather than in the server because the capture pipeline needs a
+  /// mounted widget tree: the board is captured once and every zone cropped
+  /// out of that single image.
+  Future<List<String>?> _exportForServer(
+    String? zoneId,
+    String? outputDir,
+  ) async {
+    final board = _boardCubit.state.board;
+    final zones = zoneId == null
+        ? board.exportableZones
+        : [?board.zoneById(zoneId)];
+    if (zones.isEmpty) return null;
+
+    setExporting(true);
+    try {
+      final result = await renderZones(zones);
+      if (result == null || result.images.isEmpty) return null;
+
+      final dir = Directory(
+        outputDir ??
+            '${(await getTemporaryDirectory()).path}/appshots_board_'
+                '${DateTime.now().millisecondsSinceEpoch}',
+      );
+      await dir.create(recursive: true);
+
+      final paths = <String>[];
+      for (final image in result.images) {
+        final file = File('${dir.path}/${image.fileName}');
+        await file.writeAsBytes(image.bytes);
+        paths.add(file.path);
+      }
+      return paths;
+    } catch (e, st) {
+      AppLogger.error(
+        'Board export via command server failed',
+        tag: 'BoardPage',
+        error: e,
+        stackTrace: st,
+      );
+      return null;
+    } finally {
+      if (mounted) setExporting(false);
+    }
   }
 
   // ---------------------------------------------------------------------------

@@ -9,6 +9,7 @@ export 'src/actions/editor_action.dart';
 export 'src/actions/library_action.dart';
 export 'src/actions/translate_action.dart';
 export 'src/actions/multi_action.dart';
+export 'src/actions/board_action.dart';
 export 'src/actions/preset_action.dart';
 export 'src/actions/asc_action.dart';
 export 'src/actions/play_action.dart';

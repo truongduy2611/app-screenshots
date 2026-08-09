@@ -123,6 +123,22 @@ class _ScreenshotStudioViewState extends State<ScreenshotStudioView> {
         // Small delay for the page to mount and register its cubits
         await Future.delayed(const Duration(milliseconds: 500));
       },
+      openBoard: (displayType, zoneCount) async {
+        if (!mounted) return;
+        final currentFolderId = context
+            .read<ScreenshotLibraryCubit>()
+            .currentFolderId;
+        Navigator.of(context).push(
+          MaterialPageRoute(
+            builder: (_) => BoardPage(
+              displayType: displayType,
+              folderId: currentFolderId,
+              initialZoneCount: zoneCount,
+            ),
+          ),
+        );
+        await Future.delayed(const Duration(milliseconds: 500));
+      },
     );
   }
 
