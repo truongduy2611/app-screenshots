@@ -1,9 +1,24 @@
+import 'package:app_screenshots/core/di/service_locator.dart';
+import 'package:package_info_plus/package_info_plus.dart';
+
 /// Centralised app-wide constants.
 ///
 /// Keep all hard-coded strings, URLs, and identifiers here so they are easy to
 /// update and consistent across the entire app.
 class AppConstants {
   AppConstants._();
+
+  /// Returns the current app version from [PackageInfo], or fallback if not registered.
+  static String get appVersion {
+    if (sl.isRegistered<PackageInfo>()) {
+      final info = sl<PackageInfo>();
+      if (info.version.isNotEmpty) {
+        return info.version;
+      }
+    }
+    return '1.4.0';
+  }
+
 
   // ── App Store ──────────────────────────────────────────────────────────────
   /// Replace with the real App Store ID once the app is published.

@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:app_screenshots/core/app_constants.dart';
 import 'package:app_screenshots/core/di/service_locator.dart';
 import 'package:app_screenshots/core/extensions/context_extensions.dart';
 import 'package:app_screenshots/core/services/menu_callbacks.dart';
@@ -61,7 +62,7 @@ class _AppState extends State<App> {
     showAboutDialog(
       context: ctx,
       applicationName: l10n.appTitle,
-      applicationVersion: l10n.version('1.0.0'),
+      applicationVersion: l10n.version(AppConstants.appVersion),
       applicationIcon: ClipRRect(
         borderRadius: BorderRadius.circular(14),
         child: Image.asset('main-icon.png', width: 64, height: 64),

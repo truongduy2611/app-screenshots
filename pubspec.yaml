@@ -59,6 +59,7 @@ dependencies:
     path: packages/app_screenshots_shared
   image_picker: ^1.2.3
   flutter_svg: ^2.3.0
+  package_info_plus: ^10.2.1
 
 dev_dependencies:
   flutter_test:

@@ -25,7 +25,13 @@ class BoardTemplatePickerDialog extends StatelessWidget {
     final theme = Theme.of(context);
     final templates = BoardTemplates.all;
 
+    // A phone leaves little room once the default dialog inset is taken out,
+    // and the cards are what pays for it. Pull the inset in on small screens.
+    final screenWidth = MediaQuery.sizeOf(context).width;
+    final inset = screenWidth < 400 ? 12.0 : 40.0;
+
     return Dialog(
+      insetPadding: EdgeInsets.symmetric(horizontal: inset, vertical: 24),
       child: ConstrainedBox(
         constraints: const BoxConstraints(maxWidth: 620, maxHeight: 640),
         child: Column(
@@ -51,12 +57,16 @@ class BoardTemplatePickerDialog extends StatelessWidget {
             Flexible(
               child: GridView.builder(
                 padding: const EdgeInsets.fromLTRB(24, 0, 24, 24),
+                // Width-driven rather than a fixed column count: two columns
+                // on a tablet or desktop, one on a phone. A fixed count made
+                // the cards short enough on a small phone that the name and
+                // description overflowed the tile.
                 gridDelegate:
-                    const SliverGridDelegateWithFixedCrossAxisCount(
-                  crossAxisCount: 2,
+                    const SliverGridDelegateWithMaxCrossAxisExtent(
+                  maxCrossAxisExtent: 280,
                   mainAxisSpacing: 16,
                   crossAxisSpacing: 16,
-                  childAspectRatio: 1.25,
+                  childAspectRatio: 1.2,
                 ),
                 itemCount: templates.length,
                 itemBuilder: (context, i) => _TemplateCard(

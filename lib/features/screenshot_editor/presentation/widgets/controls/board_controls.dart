@@ -400,6 +400,10 @@ class _CropZoneTile extends StatelessWidget {
             DropdownButtonFormField<String>(
               initialValue: zone.displayType,
               isDense: true,
+              // Without this the button takes the intrinsic width of its
+              // widest entry, which overflows the panel on a small phone —
+              // the panel is a bottom sheet there, so it gets no more room.
+              isExpanded: true,
               decoration: const InputDecoration(
                 isDense: true,
                 border: OutlineInputBorder(),
@@ -415,6 +419,7 @@ class _CropZoneTile extends StatelessWidget {
                     child: Text(
                       ScreenshotUtils.friendlyDisplayName(type),
                       style: theme.textTheme.bodySmall,
+                      overflow: TextOverflow.ellipsis,
                     ),
                   ),
               ],
