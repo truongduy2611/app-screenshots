@@ -15,3 +15,5 @@ export 'src/actions/asc_action.dart';
 export 'src/actions/play_action.dart';
 export 'src/actions/collaboration_action.dart';
 export 'src/actions/job_action.dart';
+export 'src/play/play_metadata.dart';
+export 'src/play/play_csl_export.dart';

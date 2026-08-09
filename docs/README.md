@@ -17,6 +17,7 @@ This directory contains product and engineering documentation for App Screenshot
 | Doc | Description |
 |-----|-------------|
 | [Architecture](dev/architecture.md) | Clean Architecture overview, BLoC/Cubit patterns, DI setup, TDD approach |
+| [Play Custom Store Listings](dev/play_custom_store_listings.md) | Why Google Play has no upload API for them, and the export kit we ship instead |
 
 ### Feature Docs
 

@@ -2689,5 +2689,82 @@
   "searchDevices": "Search devices",
   "@searchDevices": {
     "description": "Search field hint in the board frame device picker"
+  },
+  "playDestination": "Destination",
+  "@playDestination": {
+    "description": "Label for choosing between the main store listing and a custom store listing"
+  },
+  "playMainListing": "Main listing",
+  "@playMainListing": {
+    "description": "Segmented button option: upload to the main Google Play store listing"
+  },
+  "playCustomStoreListing": "Custom store listing",
+  "@playCustomStoreListing": {
+    "description": "Segmented button option: export assets for a Google Play custom store listing"
+  },
+  "playCslNoApiNote": "Google Play has no API for custom store listings, so these are exported to a folder you upload in Play Console.",
+  "@playCslNoApiNote": {
+    "description": "Explains why a custom store listing is exported instead of uploaded"
+  },
+  "playCslListingName": "Listing name",
+  "@playCslListingName": {
+    "description": "Text field label for the custom store listing name"
+  },
+  "playCslListingNameHint": "e.g. Fitness keyword",
+  "@playCslListingNameHint": {
+    "description": "Placeholder for the custom store listing name field"
+  },
+  "playCslTargeting": "Targeting note (optional)",
+  "@playCslTargeting": {
+    "description": "Text field label for how the custom store listing is targeted"
+  },
+  "playCslTargetingHint": "e.g. Search keyword \"workout tracker\"",
+  "@playCslTargetingHint": {
+    "description": "Placeholder for the custom store listing targeting note"
+  },
+  "playCslExportNLocales": "Export {count} locales…",
+  "@playCslExportNLocales": {
+    "description": "Button that opens a folder picker to export a custom store listing",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "playCslSelectLocalesToExport": "Select locales to export",
+  "@playCslSelectLocalesToExport": {
+    "description": "Disabled export button label when no locale is selected"
+  },
+  "playCslExportDialogTitle": "Choose where to export the custom store listing",
+  "@playCslExportDialogTitle": {
+    "description": "Directory picker title for the custom store listing export"
+  },
+  "playCslExportDone": "Export ready",
+  "@playCslExportDone": {
+    "description": "Title of the custom store listing export result view"
+  },
+  "playCslExportSummary": "{count} screenshots written to {folder}",
+  "@playCslExportSummary": {
+    "description": "Summary of a completed custom store listing export",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      },
+      "folder": {
+        "type": "String"
+      }
+    }
+  },
+  "playCslOpenFolder": "Reveal folder",
+  "@playCslOpenFolder": {
+    "description": "Button that opens the exported folder in the file manager"
+  },
+  "playCslReadInstructions": "Read UPLOAD.md for the Play Console steps.",
+  "@playCslReadInstructions": {
+    "description": "Pointer to the generated upload walkthrough"
+  },
+  "playCslExportInstead": "Export for a custom store listing instead",
+  "@playCslExportInstead": {
+    "description": "Link shown on the credentials prompt that switches to export mode"
   }
 }

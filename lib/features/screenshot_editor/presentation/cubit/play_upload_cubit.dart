@@ -5,6 +5,7 @@ import 'package:app_screenshots/features/screenshot_editor/data/services/play_up
 import 'package:app_screenshots/features/screenshot_editor/data/play_api/play_client.dart';
 import 'package:app_screenshots/features/settings/domain/entities/play_credentials.dart';
 import 'package:app_screenshots/features/settings/domain/repositories/settings_repository.dart';
+import 'package:app_screenshots_shared/app_screenshots_shared.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -74,6 +75,18 @@ class PlayUploadCubit extends Cubit<PlayUploadState> {
 
   void setCommitAsDraft(bool value) {
     emit(state.copyWith(commitAsDraft: value));
+  }
+
+  void setDestination(PlayDestination destination) {
+    emit(state.copyWith(destination: destination));
+  }
+
+  void setListingName(String name) {
+    emit(state.copyWith(listingName: name));
+  }
+
+  void setTargetingNote(String note) {
+    emit(state.copyWith(targetingNote: note));
   }
 
   void toggleLocale(String locale) {
@@ -158,9 +171,88 @@ class PlayUploadCubit extends Cubit<PlayUploadState> {
     }
   }
 
+  /// Exports the selected locales as a custom store listing upload kit.
+  ///
+  /// Google Play has no custom store listing API, so this writes a folder
+  /// tree plus an `UPLOAD.md` walkthrough instead of calling Google.
+  Future<void> startExport(
+    Map<String, List<File>> localeScreenshots,
+    String outputDirectory,
+  ) async {
+    final listingName = state.listingName.trim();
+    if (listingName.isEmpty) {
+      emit(
+        state.copyWith(
+          status: PlayUploadStatus.error,
+          errorMessage: 'Name the custom store listing first.',
+        ),
+      );
+      return;
+    }
+
+    final filtered = <String, List<File>>{};
+    for (final entry in localeScreenshots.entries) {
+      if (state.selectedLocales.contains(entry.key)) {
+        filtered[entry.key] = entry.value;
+      }
+    }
+    if (filtered.isEmpty) return;
+
+    final packageName = state.packageName.trim();
+    if (packageName.isNotEmpty) {
+      await _settingsRepo.setPlayPackageName(packageName);
+    }
+
+    emit(state.copyWith(status: PlayUploadStatus.uploading));
+    try {
+      final targetingNote = state.targetingNote.trim();
+      final result = await PlayCslExporter().export(
+        outputDirectory: outputDirectory,
+        packageName: packageName.isEmpty ? null : packageName,
+        listings: [
+          PlayCslListing.singleType(
+            name: listingName,
+            imageType: state.imageType,
+            localeScreenshots: filtered,
+            targetingNote: targetingNote.isEmpty ? null : targetingNote,
+          ),
+        ],
+      );
+      emit(
+        state.copyWith(
+          status: PlayUploadStatus.exported,
+          exportResult: result,
+        ),
+      );
+    } catch (e, st) {
+      AppLogger.error(
+        'Play custom store listing export failed',
+        tag: 'PlayUpload',
+        error: e,
+        stackTrace: st,
+      );
+      emit(
+        state.copyWith(
+          status: PlayUploadStatus.error,
+          errorMessage: 'Export failed: $e',
+        ),
+      );
+    }
+  }
+
   /// Resets to a fresh ready state (keeps stored credentials/package name).
+  ///
+  /// The chosen destination and listing details survive a reset so retrying
+  /// after an error doesn't silently drop the user back to the main listing.
   void reset() {
-    emit(const PlayUploadState());
+    emit(
+      PlayUploadState(
+        destination: state.destination,
+        listingName: state.listingName,
+        targetingNote: state.targetingNote,
+        imageType: state.imageType,
+      ),
+    );
     init();
   }
 }

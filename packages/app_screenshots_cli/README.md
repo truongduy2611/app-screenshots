@@ -237,13 +237,56 @@ screenshots/
 | `asc upload --app-id ID --source DIR --display-type TYPE` | Upload to the editable main version |
 | `asc upload ... --custom-product-page-id ID` | Upload to an editable Custom Product Page |
 | `play upload --package NAME --source DIR --image-type TYPE` | Upload to the Google Play main listing |
+| `play export-csl --listing NAME --source DIR --out DIR` | Export an upload kit for a Google Play custom store listing |
 | `jobs list` / `jobs status --id ID` | Inspect asynchronous upload jobs |
 | `collaboration share --file FILE` | Present the native iCloud collaboration sheet |
 | `collaboration save --original FILE --working FILE` | Save a working copy back to its opened document |
 
 Uploads wait for completion by default. Pass `--no-wait` to return the job ID
-immediately. Google Play Custom Store Listings are intentionally unavailable
-because Google does not provide a supported public API for them.
+immediately.
+
+### Google Play custom store listings
+
+Google Play has **no API for custom store listings**. The Android Publisher
+API's `edits.listings` and `edits.images` are keyed only by language and image
+type, so every API write lands on the *main* listing — there is no listing ID
+to target. Custom store listings are Play Console–only.
+
+`play export-csl` covers the gap: it lays screenshots out in a
+listing/locale/image-type tree and writes an `UPLOAD.md` mapping each folder to
+a Play Console field. It runs entirely locally — no credentials, and the
+desktop app does not need to be running.
+
+```bash
+appshots play export-csl \
+  --listing "Fitness keyword" \
+  --source ./screenshots \
+  --out ./csl \
+  --package com.example.app
+```
+
+```
+csl/
+├── UPLOAD.md
+└── fitness-keyword/
+    ├── en-US/phoneScreenshots/01.png
+    └── de-DE/phoneScreenshots/01.png
+```
+
+Locale folders use Google Play's codes (`en` → `en-US`), files are renumbered in
+display order, and anything past Play's 8-per-locale cap is dropped with a
+warning. Export several listings at once by repeating `--listing`, optionally
+with its own source directory:
+
+```bash
+appshots play export-csl \
+  -L "Fitness keyword=./shots-fitness" \
+  -L "Winter sale=./shots-winter" \
+  --out ./csl
+```
+
+The folder slug (`fitness-keyword`) is also a valid `&listing=` URL parameter,
+so it doubles as the custom store listing URL if you target by URL.
 
 ---
 
