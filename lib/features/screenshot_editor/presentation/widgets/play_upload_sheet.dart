@@ -7,9 +7,12 @@ import 'package:app_screenshots/features/screenshot_editor/data/services/play_up
 import 'package:app_screenshots/features/screenshot_editor/presentation/cubit/play_upload_cubit.dart';
 import 'package:app_screenshots/features/screenshot_editor/presentation/widgets/play_credentials_dialog.dart';
 import 'package:app_screenshots/features/screenshot_editor/presentation/widgets/controls/app_switch.dart';
+import 'package:app_screenshots_shared/app_screenshots_shared.dart';
+import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:material_symbols_icons/symbols.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 /// Sheet for uploading screenshots to the Google Play Console.
 class PlayUploadSheet extends StatelessWidget {
@@ -21,10 +24,12 @@ class PlayUploadSheet extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocBuilder<PlayUploadCubit, PlayUploadState>(
       builder: (context, state) {
-        // Auto-select all locales the first time the sheet is ready.
+        // Auto-select all locales the first time the sheet is ready. A custom
+        // store listing export needs no credentials, so it doesn't wait for
+        // them.
         if (state.selectedLocales.isEmpty &&
             state.status == PlayUploadStatus.ready &&
-            state.hasCredentials) {
+            (state.hasCredentials || state.isCustomStoreListing)) {
           WidgetsBinding.instance.addPostFrameCallback((_) {
             if (context.mounted) {
               context.read<PlayUploadCubit>().setSelectedLocales(
@@ -100,7 +105,9 @@ class PlayUploadSheet extends StatelessWidget {
   }
 
   Widget _buildBody(BuildContext context, PlayUploadState state) {
-    if (!state.hasCredentials) {
+    // Only a main-listing upload needs a service account; a custom store
+    // listing is exported to disk, so it stays reachable without one.
+    if (!state.hasCredentials && !state.isCustomStoreListing) {
       return _NoCredentialsPrompt(
         onConfigure: () async {
           final saved = await PlayCredentialsDialog.show(context);
@@ -108,6 +115,9 @@ class PlayUploadSheet extends StatelessWidget {
             context.read<PlayUploadCubit>().reset();
           }
         },
+        onExportInstead: () => context.read<PlayUploadCubit>().setDestination(
+          PlayDestination.customStoreListing,
+        ),
       );
     }
 
@@ -137,6 +147,16 @@ class PlayUploadSheet extends StatelessWidget {
           ),
         );
 
+      case PlayUploadStatus.exported:
+        return Center(
+          child: SingleChildScrollView(
+            child: _ExportDoneView(
+              result: state.exportResult!,
+              onClose: () => Navigator.of(context).pop(),
+            ),
+          ),
+        );
+
       case PlayUploadStatus.error:
         final message = switch (state.failure) {
           PlayUploadFailure.autoSubmitRequired =>
@@ -159,8 +179,12 @@ class PlayUploadSheet extends StatelessWidget {
 
 class _NoCredentialsPrompt extends StatelessWidget {
   final VoidCallback onConfigure;
+  final VoidCallback onExportInstead;
 
-  const _NoCredentialsPrompt({required this.onConfigure});
+  const _NoCredentialsPrompt({
+    required this.onConfigure,
+    required this.onExportInstead,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -204,6 +228,11 @@ class _NoCredentialsPrompt extends StatelessWidget {
             icon: Symbols.key,
             label: context.l10n.configureServiceAccount,
           ),
+          const SizedBox(height: 8),
+          TextButton(
+            onPressed: onExportInstead,
+            child: Text(context.l10n.playCslExportInstead),
+          ),
         ],
       ),
     );
@@ -224,11 +253,19 @@ class _ReadyView extends StatefulWidget {
 
 class _ReadyViewState extends State<_ReadyView> {
   late final TextEditingController _packageController;
+  late final TextEditingController _listingNameController;
+  late final TextEditingController _targetingController;
 
   @override
   void initState() {
     super.initState();
     _packageController = TextEditingController(text: widget.state.packageName);
+    _listingNameController = TextEditingController(
+      text: widget.state.listingName,
+    );
+    _targetingController = TextEditingController(
+      text: widget.state.targetingNote,
+    );
   }
 
   @override
@@ -243,7 +280,18 @@ class _ReadyViewState extends State<_ReadyView> {
   @override
   void dispose() {
     _packageController.dispose();
+    _listingNameController.dispose();
+    _targetingController.dispose();
     super.dispose();
+  }
+
+  /// Picks an output folder and runs the custom store listing export.
+  Future<void> _export(PlayUploadCubit cubit) async {
+    final path = await FilePicker.getDirectoryPath(
+      dialogTitle: context.l10n.playCslExportDialogTitle,
+    );
+    if (path == null || !mounted) return;
+    await cubit.startExport(widget.localeScreenshots, path);
   }
 
   int get _totalSelectedFiles {
@@ -276,9 +324,78 @@ class _ReadyViewState extends State<_ReadyView> {
         ? state.imageType
         : kPlayImageTypes.keys.first;
 
+    final isCsl = state.isCustomStoreListing;
+
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
+        // ── Destination ──
+        SegmentedButton<PlayDestination>(
+          segments: [
+            ButtonSegment(
+              value: PlayDestination.mainListing,
+              label: Text(context.l10n.playMainListing),
+              icon: isSmall ? null : const Icon(Symbols.storefront, size: 18),
+            ),
+            ButtonSegment(
+              value: PlayDestination.customStoreListing,
+              label: Text(context.l10n.playCustomStoreListing),
+              icon: isSmall ? null : const Icon(Symbols.tune, size: 18),
+            ),
+          ],
+          selected: {state.destination},
+          onSelectionChanged: (s) => cubit.setDestination(s.first),
+          showSelectedIcon: false,
+        ),
+        const SizedBox(height: 14),
+
+        // Google Play's API only reaches the main listing, so a custom store
+        // listing is exported for a manual Play Console upload.
+        if (isCsl) ...[
+          AppCard(
+            padding: const EdgeInsets.all(12),
+            child: Row(
+              children: [
+                Icon(
+                  Symbols.info_rounded,
+                  size: 18,
+                  color: theme.colorScheme.primary,
+                ),
+                const SizedBox(width: 10),
+                Expanded(
+                  child: Text(
+                    context.l10n.playCslNoApiNote,
+                    style: theme.textTheme.bodySmall,
+                  ),
+                ),
+              ],
+            ),
+          ),
+          const SizedBox(height: 14),
+          TextField(
+            controller: _listingNameController,
+            onChanged: cubit.setListingName,
+            decoration: InputDecoration(
+              labelText: context.l10n.playCslListingName,
+              hintText: context.l10n.playCslListingNameHint,
+              prefixIcon: const Icon(Symbols.label, size: 20),
+              isDense: true,
+            ),
+          ),
+          const SizedBox(height: 14),
+          TextField(
+            controller: _targetingController,
+            onChanged: cubit.setTargetingNote,
+            decoration: InputDecoration(
+              labelText: context.l10n.playCslTargeting,
+              hintText: context.l10n.playCslTargetingHint,
+              prefixIcon: const Icon(Symbols.my_location, size: 20),
+              isDense: true,
+            ),
+          ),
+          const SizedBox(height: 14),
+        ],
+
         // ── Package name ──
         TextField(
           controller: _packageController,
@@ -308,60 +425,62 @@ class _ReadyViewState extends State<_ReadyView> {
         ),
         const SizedBox(height: 14),
 
-        // ── Replace / Append toggle ──
-        SegmentedButton<bool>(
-          segments: [
-            ButtonSegment(
-              value: true,
-              label: Text(context.l10n.replace),
-              icon: isSmall ? null : const Icon(Symbols.delete_sweep, size: 18),
-            ),
-            ButtonSegment(
-              value: false,
-              label: Text(context.l10n.append),
-              icon: isSmall
-                  ? null
-                  : const Icon(Symbols.add_photo_alternate, size: 18),
-            ),
-          ],
-          selected: {state.deleteExisting},
-          onSelectionChanged: (s) => cubit.setDeleteExisting(s.first),
-          showSelectedIcon: false,
-        ),
-        const SizedBox(height: 14),
-
-        // ── Commit as draft option ──
-        Row(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Expanded(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  Text(
-                    context.l10n.commitAsDraft,
-                    style: theme.textTheme.bodyMedium?.copyWith(
-                      fontWeight: FontWeight.w600,
-                    ),
-                  ),
-                  const SizedBox(height: 4),
-                  Text(
-                    context.l10n.commitAsDraftDesc,
-                    style: theme.textTheme.bodySmall?.copyWith(
-                      color: theme.colorScheme.onSurfaceVariant,
-                    ),
-                  ),
-                ],
+        // ── Replace / Append and draft options (API uploads only) ──
+        if (!isCsl) ...[
+          SegmentedButton<bool>(
+            segments: [
+              ButtonSegment(
+                value: true,
+                label: Text(context.l10n.replace),
+                icon: isSmall
+                    ? null
+                    : const Icon(Symbols.delete_sweep, size: 18),
               ),
-            ),
-            const SizedBox(width: 16),
-            AppSwitch(
-              value: state.commitAsDraft,
-              onChanged: cubit.setCommitAsDraft,
-            ),
-          ],
-        ),
+              ButtonSegment(
+                value: false,
+                label: Text(context.l10n.append),
+                icon: isSmall
+                    ? null
+                    : const Icon(Symbols.add_photo_alternate, size: 18),
+              ),
+            ],
+            selected: {state.deleteExisting},
+            onSelectionChanged: (s) => cubit.setDeleteExisting(s.first),
+            showSelectedIcon: false,
+          ),
+          const SizedBox(height: 14),
+          Row(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Expanded(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    Text(
+                      context.l10n.commitAsDraft,
+                      style: theme.textTheme.bodyMedium?.copyWith(
+                        fontWeight: FontWeight.w600,
+                      ),
+                    ),
+                    const SizedBox(height: 4),
+                    Text(
+                      context.l10n.commitAsDraftDesc,
+                      style: theme.textTheme.bodySmall?.copyWith(
+                        color: theme.colorScheme.onSurfaceVariant,
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+              const SizedBox(width: 16),
+              AppSwitch(
+                value: state.commitAsDraft,
+                onChanged: cubit.setCommitAsDraft,
+              ),
+            ],
+          ),
+        ],
         const SizedBox(height: 16),
 
         // ── Locales header ──
@@ -475,19 +594,35 @@ class _ReadyViewState extends State<_ReadyView> {
             ),
           ),
 
-        // ── Upload button ──
-        AppButton.primary(
-          onPressed:
-              (selectedLocales.isNotEmpty &&
-                  state.packageName.trim().isNotEmpty)
-              ? () => cubit.startUpload(widget.localeScreenshots)
-              : null,
-          icon: Symbols.cloud_upload,
-          label: selectedLocales.isEmpty
-              ? context.l10n.selectLocalesToUpload
-              : context.l10n.uploadNLocales(selectedLocales.length),
-          isExpanded: true,
-        ),
+        // ── Action button ──
+        // An export writes files locally, so it needs a listing name rather
+        // than a package name (the package only decorates the example URLs).
+        if (isCsl)
+          AppButton.primary(
+            onPressed:
+                (selectedLocales.isNotEmpty &&
+                    state.listingName.trim().isNotEmpty)
+                ? () => _export(cubit)
+                : null,
+            icon: Symbols.drive_folder_upload,
+            label: selectedLocales.isEmpty
+                ? context.l10n.playCslSelectLocalesToExport
+                : context.l10n.playCslExportNLocales(selectedLocales.length),
+            isExpanded: true,
+          )
+        else
+          AppButton.primary(
+            onPressed:
+                (selectedLocales.isNotEmpty &&
+                    state.packageName.trim().isNotEmpty)
+                ? () => cubit.startUpload(widget.localeScreenshots)
+                : null,
+            icon: Symbols.cloud_upload,
+            label: selectedLocales.isEmpty
+                ? context.l10n.selectLocalesToUpload
+                : context.l10n.uploadNLocales(selectedLocales.length),
+            isExpanded: true,
+          ),
       ],
     );
   }
@@ -897,6 +1032,113 @@ class _DoneView extends StatelessWidget {
             ),
           ],
           const SizedBox(height: 18),
+          AppButton.primary(
+            onPressed: onClose,
+            label: context.l10n.statusDone,
+            isExpanded: true,
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+// ─── Custom Store Listing Export Result ───────────────────────────────
+
+class _ExportDoneView extends StatelessWidget {
+  final PlayCslExportResult result;
+  final VoidCallback onClose;
+
+  const _ExportDoneView({required this.result, required this.onClose});
+
+  @override
+  Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+    final hasWarnings = result.warnings.isNotEmpty;
+
+    return Padding(
+      padding: const EdgeInsets.symmetric(vertical: 12),
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          Container(
+            width: 56,
+            height: 56,
+            decoration: BoxDecoration(
+              color: hasWarnings
+                  ? theme.colorScheme.tertiaryContainer.withValues(alpha: 0.3)
+                  : theme.colorScheme.primaryContainer.withValues(alpha: 0.3),
+              shape: BoxShape.circle,
+            ),
+            child: Icon(
+              hasWarnings ? Symbols.warning : Symbols.folder_open,
+              size: 28,
+              color: hasWarnings
+                  ? theme.colorScheme.tertiary
+                  : theme.colorScheme.primary,
+            ),
+          ),
+          const SizedBox(height: 14),
+          Text(
+            context.l10n.playCslExportDone,
+            style: theme.textTheme.titleMedium?.copyWith(
+              fontWeight: FontWeight.w600,
+            ),
+          ),
+          const SizedBox(height: 8),
+          Text(
+            context.l10n.playCslExportSummary(
+              result.fileCount,
+              result.outputDirectory,
+            ),
+            style: theme.textTheme.bodySmall?.copyWith(
+              color: theme.colorScheme.onSurfaceVariant,
+            ),
+            textAlign: TextAlign.center,
+          ),
+          const SizedBox(height: 8),
+          Text(
+            context.l10n.playCslReadInstructions,
+            style: theme.textTheme.bodySmall?.copyWith(
+              fontWeight: FontWeight.w600,
+            ),
+            textAlign: TextAlign.center,
+          ),
+          if (hasWarnings) ...[
+            const SizedBox(height: 12),
+            Container(
+              constraints: const BoxConstraints(maxHeight: 100),
+              width: double.infinity,
+              decoration: BoxDecoration(
+                color: theme.colorScheme.tertiaryContainer.withValues(
+                  alpha: 0.15,
+                ),
+                borderRadius: BorderRadius.circular(10),
+                border: Border.all(
+                  color: theme.colorScheme.tertiary.withValues(alpha: 0.2),
+                ),
+              ),
+              child: SingleChildScrollView(
+                padding: const EdgeInsets.all(10),
+                child: Text(
+                  result.warnings.join('\n'),
+                  style: theme.textTheme.bodySmall?.copyWith(
+                    fontSize: 11,
+                    height: 1.4,
+                  ),
+                ),
+              ),
+            ),
+          ],
+          const SizedBox(height: 18),
+          AppButton.secondary(
+            onPressed: () =>
+                launchUrl(Uri.file(result.outputDirectory)),
+            icon: Symbols.folder_open,
+            label: context.l10n.playCslOpenFolder,
+            isExpanded: true,
+          ),
+          const SizedBox(height: 8),
           AppButton.primary(
             onPressed: onClose,
             label: context.l10n.statusDone,

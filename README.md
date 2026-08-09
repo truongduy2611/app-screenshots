@@ -15,7 +15,7 @@ A powerful, cross-platform screenshot design tool built with Flutter. Create stu
 - **AI-Powered Translation** — Automatically translate all design elements to any locale
 - **Per-Locale Customization** — Fine-tune layouts and styles per language through a comprehensive override system
 - **Device Frames** — Render screenshots inside realistic device frames (iPhone, iPad, Mac, Watch, Android, etc.)
-- **Store Uploads** — Upload screenshots to App Store Connect main versions and Custom Product Pages, or Google Play main listings
+- **Store Uploads** — Upload screenshots to App Store Connect main versions and Custom Product Pages, or Google Play main listings; export a ready-to-upload kit for Google Play custom store listings
 - **CLI Automation** — Automate publishing through the authenticated local API and `appshots` CLI
 - **iCloud Sync** — Sync designs across devices via iCloud
 - **Export & Share** — Export as PNG, copy to clipboard, or share designs as `.appshots` files

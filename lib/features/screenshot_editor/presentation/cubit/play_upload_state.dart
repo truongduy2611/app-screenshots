@@ -1,8 +1,15 @@
 part of 'play_upload_cubit.dart';
 
-enum PlayUploadStatus { initial, ready, uploading, done, error }
+enum PlayUploadStatus { initial, ready, uploading, done, exported, error }
 
 enum PlayUploadFailure { autoSubmitRequired, declarationRequired }
+
+/// Where the selected screenshots are headed.
+///
+/// Google Play's API only addresses the main listing, so a custom store
+/// listing can't be uploaded — it is exported to disk for a manual Play
+/// Console upload instead.
+enum PlayDestination { mainListing, customStoreListing }
 
 class PlayUploadState extends Equatable {
   final PlayUploadStatus status;
@@ -12,8 +19,12 @@ class PlayUploadState extends Equatable {
   final Set<String> selectedLocales;
   final bool deleteExisting;
   final bool commitAsDraft;
+  final PlayDestination destination;
+  final String listingName;
+  final String targetingNote;
   final AscUploadProgress? progress;
   final AscUploadResult? result;
+  final PlayCslExportResult? exportResult;
   final String? errorMessage;
   final PlayUploadFailure? failure;
 
@@ -25,11 +36,18 @@ class PlayUploadState extends Equatable {
     this.selectedLocales = const {},
     this.deleteExisting = true,
     this.commitAsDraft = true,
+    this.destination = PlayDestination.mainListing,
+    this.listingName = '',
+    this.targetingNote = '',
     this.progress,
     this.result,
+    this.exportResult,
     this.errorMessage,
     this.failure,
   });
+
+  bool get isCustomStoreListing =>
+      destination == PlayDestination.customStoreListing;
 
   PlayUploadState copyWith({
     PlayUploadStatus? status,
@@ -39,8 +57,12 @@ class PlayUploadState extends Equatable {
     Set<String>? selectedLocales,
     bool? deleteExisting,
     bool? commitAsDraft,
+    PlayDestination? destination,
+    String? listingName,
+    String? targetingNote,
     AscUploadProgress? progress,
     AscUploadResult? result,
+    PlayCslExportResult? exportResult,
     String? errorMessage,
     PlayUploadFailure? failure,
   }) {
@@ -52,8 +74,12 @@ class PlayUploadState extends Equatable {
       selectedLocales: selectedLocales ?? this.selectedLocales,
       deleteExisting: deleteExisting ?? this.deleteExisting,
       commitAsDraft: commitAsDraft ?? this.commitAsDraft,
+      destination: destination ?? this.destination,
+      listingName: listingName ?? this.listingName,
+      targetingNote: targetingNote ?? this.targetingNote,
       progress: progress ?? this.progress,
       result: result ?? this.result,
+      exportResult: exportResult ?? this.exportResult,
       errorMessage: errorMessage,
       failure: failure ?? this.failure,
     );
@@ -68,8 +94,12 @@ class PlayUploadState extends Equatable {
     selectedLocales,
     deleteExisting,
     commitAsDraft,
+    destination,
+    listingName,
+    targetingNote,
     progress,
     result,
+    exportResult,
     errorMessage,
     failure,
   ];

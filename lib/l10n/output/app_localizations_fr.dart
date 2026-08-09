@@ -2067,4 +2067,60 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get searchDevices => 'Rechercher des appareils';
+
+  @override
+  String get playDestination => 'Destination';
+
+  @override
+  String get playMainListing => 'Main listing';
+
+  @override
+  String get playCustomStoreListing => 'Custom store listing';
+
+  @override
+  String get playCslNoApiNote =>
+      'Google Play has no API for custom store listings, so these are exported to a folder you upload in Play Console.';
+
+  @override
+  String get playCslListingName => 'Listing name';
+
+  @override
+  String get playCslListingNameHint => 'e.g. Fitness keyword';
+
+  @override
+  String get playCslTargeting => 'Targeting note (optional)';
+
+  @override
+  String get playCslTargetingHint => 'e.g. Search keyword \"workout tracker\"';
+
+  @override
+  String playCslExportNLocales(int count) {
+    return 'Export $count locales…';
+  }
+
+  @override
+  String get playCslSelectLocalesToExport => 'Select locales to export';
+
+  @override
+  String get playCslExportDialogTitle =>
+      'Choose where to export the custom store listing';
+
+  @override
+  String get playCslExportDone => 'Export ready';
+
+  @override
+  String playCslExportSummary(int count, String folder) {
+    return '$count screenshots written to $folder';
+  }
+
+  @override
+  String get playCslOpenFolder => 'Reveal folder';
+
+  @override
+  String get playCslReadInstructions =>
+      'Read UPLOAD.md for the Play Console steps.';
+
+  @override
+  String get playCslExportInstead =>
+      'Export for a custom store listing instead';
 }

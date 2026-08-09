@@ -6,23 +6,17 @@ import 'package:app_screenshots/features/screenshot_editor/data/play_api/play_to
 import 'package:app_screenshots/features/screenshot_editor/data/services/asc_upload_service.dart'
     show LocaleUploadStatus, AscUploadProgress, LocaleResult, AscUploadResult;
 import 'package:app_screenshots/features/settings/domain/repositories/settings_repository.dart';
+import 'package:app_screenshots_shared/app_screenshots_shared.dart';
 
 // Re-export the shared upload progress/result types under Play-friendly names
 // so callers don't need to reach into the ASC service.
 export 'package:app_screenshots/features/screenshot_editor/data/services/asc_upload_service.dart'
     show LocaleUploadStatus, AscUploadProgress, LocaleResult, AscUploadResult;
 
-/// Google Play `imageType` values that hold screenshots, keyed for the UI.
-const kPlayImageTypes = <String, String>{
-  'phoneScreenshots': 'Phone',
-  'sevenInchScreenshots': '7" Tablet',
-  'tenInchScreenshots': '10" Tablet',
-  'tvScreenshots': 'Android TV',
-  'wearScreenshots': 'Wear OS',
-};
-
-/// Google Play allows at most this many screenshots per image type per locale.
-const kPlayMaxScreenshotsPerType = 8;
+// The Play listing vocabulary lives in the shared package so the CLI applies
+// the same locale mapping and per-type limits as the app.
+export 'package:app_screenshots_shared/app_screenshots_shared.dart'
+    show kPlayImageTypes, kPlayMaxScreenshotsPerType, playLocaleFor;
 
 /// Orchestrates screenshot uploads to the Google Play Console using a
 /// service-account key (the same credential fastlane's `supply` consumes).
@@ -334,121 +328,9 @@ class PlayUploadService {
 
   /// Maps an app/translation locale to the Google Play listing locale code.
   ///
-  /// Google Play uses BCP-47 codes that differ from Apple's in a few cases
-  /// (notably Chinese script tags). Unknown codes pass through unchanged.
-  static String toPlayLocale(String locale) {
-    final lower = locale.toLowerCase().replaceAll('_', '-');
-    const map = <String, String>{
-      'en': 'en-US',
-      'en-us': 'en-US',
-      'en-gb': 'en-GB',
-      'de': 'de-DE',
-      'de-de': 'de-DE',
-      'fr': 'fr-FR',
-      'fr-fr': 'fr-FR',
-      'es': 'es-ES',
-      'es-es': 'es-ES',
-      'es-419': 'es-419',
-      'es-mx': 'es-419',
-      'it': 'it-IT',
-      'it-it': 'it-IT',
-      'ja': 'ja-JP',
-      'ja-jp': 'ja-JP',
-      'ko': 'ko-KR',
-      'ko-kr': 'ko-KR',
-      'nl': 'nl-NL',
-      'nl-nl': 'nl-NL',
-      'pt': 'pt-PT',
-      'pt-pt': 'pt-PT',
-      'pt-br': 'pt-BR',
-      'ru': 'ru-RU',
-      'ru-ru': 'ru-RU',
-      'tr': 'tr-TR',
-      'tr-tr': 'tr-TR',
-      'th': 'th',
-      'th-th': 'th',
-      'vi': 'vi',
-      'vi-vn': 'vi',
-      'ar': 'ar',
-      'ar-sa': 'ar',
-      'zh': 'zh-CN',
-      'zh-cn': 'zh-CN',
-      'zh-hans': 'zh-CN',
-      'zh-hans-cn': 'zh-CN',
-      'zh-hant': 'zh-TW',
-      'zh-tw': 'zh-TW',
-      'zh-hant-tw': 'zh-TW',
-      'zh-hk': 'zh-HK',
-      // Languages Google Play requires with a region suffix.
-      'pl': 'pl-PL',
-      'pl-pl': 'pl-PL',
-      'sv': 'sv-SE',
-      'sv-se': 'sv-SE',
-      'da': 'da-DK',
-      'da-dk': 'da-DK',
-      'fi': 'fi-FI',
-      'fi-fi': 'fi-FI',
-      'cs': 'cs-CZ',
-      'cs-cz': 'cs-CZ',
-      'hu': 'hu-HU',
-      'hu-hu': 'hu-HU',
-      'el': 'el-GR',
-      'el-gr': 'el-GR',
-      'no': 'no-NO',
-      'nb': 'no-NO',
-      'nb-no': 'no-NO',
-      'nn': 'no-NO',
-      'he': 'iw-IL',
-      'iw': 'iw-IL',
-      'hi': 'hi-IN',
-      'bn': 'bn-BD',
-      'ta': 'ta-IN',
-      'te': 'te-IN',
-      'ml': 'ml-IN',
-      'mr': 'mr-IN',
-      'kn': 'kn-IN',
-      'az': 'az-AZ',
-      'ka': 'ka-GE',
-      'hy': 'hy-AM',
-      'km': 'km-KH',
-      'lo': 'lo-LA',
-      'mk': 'mk-MK',
-      'mn': 'mn-MN',
-      'my': 'my-MM',
-      'ne': 'ne-NP',
-      'si': 'si-LK',
-      'is': 'is-IS',
-      'gl': 'gl-ES',
-      'eu': 'eu-ES',
-      // Languages Google Play accepts as a bare language code.
-      'sk': 'sk',
-      'ro': 'ro',
-      'uk': 'uk',
-      'hr': 'hr',
-      'bg': 'bg',
-      'sr': 'sr',
-      'sl': 'sl',
-      'lt': 'lt',
-      'lv': 'lv',
-      'et': 'et',
-      'ca': 'ca',
-      'fa': 'fa',
-      'af': 'af',
-      'sw': 'sw',
-      'am': 'am',
-      'be': 'be',
-      'kk': 'kk',
-      'ur': 'ur',
-      'sq': 'sq',
-      'zu': 'zu',
-      'ms': 'ms',
-      'ms-my': 'ms',
-      'id': 'id',
-      'fil': 'fil',
-      'tl': 'fil',
-    };
-    return map[lower] ?? locale;
-  }
+  /// Delegates to the shared [playLocaleFor] so the CLI's custom store
+  /// listing export folders match what this service uploads.
+  static String toPlayLocale(String locale) => playLocaleFor(locale);
 
   static String _contentType(String path) {
     final lower = path.toLowerCase();

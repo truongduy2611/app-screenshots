@@ -3736,6 +3736,102 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Search devices'**
   String get searchDevices;
+
+  /// Label for choosing between the main store listing and a custom store listing
+  ///
+  /// In en, this message translates to:
+  /// **'Destination'**
+  String get playDestination;
+
+  /// Segmented button option: upload to the main Google Play store listing
+  ///
+  /// In en, this message translates to:
+  /// **'Main listing'**
+  String get playMainListing;
+
+  /// Segmented button option: export assets for a Google Play custom store listing
+  ///
+  /// In en, this message translates to:
+  /// **'Custom store listing'**
+  String get playCustomStoreListing;
+
+  /// Explains why a custom store listing is exported instead of uploaded
+  ///
+  /// In en, this message translates to:
+  /// **'Google Play has no API for custom store listings, so these are exported to a folder you upload in Play Console.'**
+  String get playCslNoApiNote;
+
+  /// Text field label for the custom store listing name
+  ///
+  /// In en, this message translates to:
+  /// **'Listing name'**
+  String get playCslListingName;
+
+  /// Placeholder for the custom store listing name field
+  ///
+  /// In en, this message translates to:
+  /// **'e.g. Fitness keyword'**
+  String get playCslListingNameHint;
+
+  /// Text field label for how the custom store listing is targeted
+  ///
+  /// In en, this message translates to:
+  /// **'Targeting note (optional)'**
+  String get playCslTargeting;
+
+  /// Placeholder for the custom store listing targeting note
+  ///
+  /// In en, this message translates to:
+  /// **'e.g. Search keyword \"workout tracker\"'**
+  String get playCslTargetingHint;
+
+  /// Button that opens a folder picker to export a custom store listing
+  ///
+  /// In en, this message translates to:
+  /// **'Export {count} locales…'**
+  String playCslExportNLocales(int count);
+
+  /// Disabled export button label when no locale is selected
+  ///
+  /// In en, this message translates to:
+  /// **'Select locales to export'**
+  String get playCslSelectLocalesToExport;
+
+  /// Directory picker title for the custom store listing export
+  ///
+  /// In en, this message translates to:
+  /// **'Choose where to export the custom store listing'**
+  String get playCslExportDialogTitle;
+
+  /// Title of the custom store listing export result view
+  ///
+  /// In en, this message translates to:
+  /// **'Export ready'**
+  String get playCslExportDone;
+
+  /// Summary of a completed custom store listing export
+  ///
+  /// In en, this message translates to:
+  /// **'{count} screenshots written to {folder}'**
+  String playCslExportSummary(int count, String folder);
+
+  /// Button that opens the exported folder in the file manager
+  ///
+  /// In en, this message translates to:
+  /// **'Reveal folder'**
+  String get playCslOpenFolder;
+
+  /// Pointer to the generated upload walkthrough
+  ///
+  /// In en, this message translates to:
+  /// **'Read UPLOAD.md for the Play Console steps.'**
+  String get playCslReadInstructions;
+
+  /// Link shown on the credentials prompt that switches to export mode
+  ///
+  /// In en, this message translates to:
+  /// **'Export for a custom store listing instead'**
+  String get playCslExportInstead;
 }
 
 class _AppLocalizationsDelegate
