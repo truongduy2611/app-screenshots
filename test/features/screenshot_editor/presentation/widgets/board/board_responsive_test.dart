@@ -100,6 +100,30 @@ void main() {
       });
     }
 
+    testWidgets('the zone list scrolls rather than clipping at the limit', (
+      tester,
+    ) async {
+      final cubit = makeCubit(zoneCount: BoardDesign.maxZones);
+      addTearDown(cubit.close);
+
+      await pumpAt(
+        tester,
+        const Size(320, 568),
+        Scaffold(
+          body: BlocProvider.value(
+            value: cubit,
+            child: const BoardControls(),
+          ),
+        ),
+      );
+
+      // Ten zones plus frames never fit a phone panel; the list has to carry
+      // them rather than the column overflowing.
+      await tester.drag(find.byType(ListView), const Offset(0, -4000));
+      await tester.pumpAndSettle();
+      expect(tester.takeException(), isNull);
+    });
+
     testWidgets('the Play-limit warning fits a small phone', (tester) async {
       // The widest string in the panel, on the narrowest screen — it only
       // appears past 8 zones, so it is easy to never see while developing.

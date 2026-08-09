@@ -70,13 +70,20 @@ class _BoardSection extends StatelessWidget {
           children: [
             Row(
               children: [
-                Text(
-                  context.l10n.boardSize,
-                  style: theme.textTheme.bodySmall?.copyWith(
-                    color: theme.colorScheme.onSurfaceVariant,
+                // The label yields, not the number: a board at the zone limit
+                // is over 14,000px wide, and that readout is the point of the
+                // row. On a phone the panel is a bottom sheet with no more
+                // room to give.
+                Expanded(
+                  child: Text(
+                    context.l10n.boardSize,
+                    style: theme.textTheme.bodySmall?.copyWith(
+                      color: theme.colorScheme.onSurfaceVariant,
+                    ),
+                    overflow: TextOverflow.ellipsis,
                   ),
                 ),
-                const Spacer(),
+                const SizedBox(width: 8),
                 Text(
                   '${board.size.width.toInt()} × ${board.size.height.toInt()}',
                   style: theme.textTheme.bodySmall?.copyWith(
