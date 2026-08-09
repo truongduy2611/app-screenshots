@@ -1211,7 +1211,7 @@ paths:
                   type: string
                 data:
                   type: string
-description: Base64-encoded image bytes
+                  description: Base64-encoded image bytes
                 slot:
                   type: integer
       responses:
@@ -1301,7 +1301,7 @@ description: Base64-encoded image bytes
                   type: string
                 screenshots:
                   type: object
-description: Map of locale to base64 image objects
+                  description: Map of locale to base64 image objects
                 displayType:
                   type: string
                 platform:
@@ -1340,7 +1340,7 @@ description: Map of locale to base64 image objects
                   type: string
                 screenshots:
                   type: object
-description: Map of locale to base64 image objects
+                  description: Map of locale to base64 image objects
                 imageType:
                   type: string
                 locales:
