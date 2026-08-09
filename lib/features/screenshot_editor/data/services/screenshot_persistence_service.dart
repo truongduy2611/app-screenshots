@@ -6,7 +6,9 @@ import 'dart:typed_data';
 import 'package:app_screenshots/features/screenshot_editor/data/models/asc_app_config.dart';
 import 'package:app_screenshots/features/screenshot_editor/data/models/translation_bundle.dart';
 
+import 'package:app_screenshots/features/screenshot_editor/data/models/board_design.dart';
 import 'package:app_screenshots/features/screenshot_editor/data/models/design_folder.dart';
+import 'package:app_screenshots/features/screenshot_editor/data/models/frame_element.dart';
 import 'package:app_screenshots/features/screenshot_editor/data/models/saved_design.dart';
 import 'package:app_screenshots/features/screenshot_editor/data/models/screenshot_design.dart';
 import 'package:app_screenshots/features/screenshot_editor/utils/screenshot_utils.dart';
@@ -183,6 +185,76 @@ class ScreenshotPersistenceService {
     }).toList();
   }
 
+  /// Copies a board's frame screenshots and background overlay images into the
+  /// designs dir, returning a board whose paths are relative basenames.
+  Future<BoardDesign?> _persistBoard(
+    String dirPath,
+    String id,
+    BoardDesign? board,
+  ) async {
+    if (board == null) return null;
+
+    final relativeOverlays = await _persistImageOverlays(
+      dirPath,
+      id,
+      board.background.imageOverlays,
+      prefix: 'board',
+    );
+
+    final frames = <FrameElement>[];
+    for (final frame in board.frames) {
+      final srcPath = frame.imagePath;
+      if (srcPath == null || !p.isAbsolute(srcPath)) {
+        frames.add(frame);
+        continue;
+      }
+
+      // p.extension rather than split('.').last: an extensionless path would
+      // otherwise yield the whole path as the "extension".
+      final ext = p.extension(srcPath).isNotEmpty
+          ? p.extension(srcPath)
+          : '.png';
+      final dest = File('$dirPath/${id}_frame_${frame.id}_source$ext');
+
+      // Already stored under this design's own filename → just relativize.
+      if (p.equals(srcPath, dest.path)) {
+        frames.add(frame.copyWith(imagePath: p.basename(dest.path)));
+        continue;
+      }
+
+      final src = File(srcPath);
+      if (await src.exists()) {
+        await src.copy(dest.path);
+        frames.add(frame.copyWith(imagePath: p.basename(dest.path)));
+      } else {
+        frames.add(frame);
+      }
+    }
+
+    return board.copyWith(
+      background: board.background.copyWith(imageOverlays: relativeOverlays),
+      frames: frames,
+    );
+  }
+
+  /// Resolves a board's relative frame/overlay paths back to absolute ones.
+  static BoardDesign? _boardToAbsolute(String dirPath, BoardDesign? board) {
+    if (board == null) return null;
+    return board.copyWith(
+      background: board.background.copyWith(
+        imageOverlays: _imageOverlaysToAbsolute(
+          dirPath,
+          board.background.imageOverlays,
+        ),
+      ),
+      frames: board.frames.map((frame) {
+        final path = frame.imagePath;
+        if (path == null || p.isAbsolute(path)) return frame;
+        return frame.copyWith(imagePath: _toAbsolute(dirPath, path));
+      }).toList(),
+    );
+  }
+
   Future<SavedDesign> saveDesign({
     required ScreenshotDesign design,
     required Uint8List thumbnailBytes,
@@ -194,6 +266,7 @@ class ScreenshotPersistenceService {
     List<File?>? imageFiles,
     TranslationBundle? translationBundle,
     AscAppConfig? ascAppConfig,
+    BoardDesign? board,
   }) async {
     final dir = await _designsDir;
     final id = existingId ?? const Uuid().v4();
@@ -228,6 +301,7 @@ class ScreenshotPersistenceService {
           folderId ??= existing.folderId;
           translationBundle ??= existing.translationBundle;
           ascAppConfig ??= existing.ascAppConfig;
+          board ??= existing.board;
         }
       } catch (e) {
         AppLogger.w(
@@ -307,6 +381,9 @@ class ScreenshotPersistenceService {
       }
     }
 
+    // Persist board frame images + background overlays.
+    final relativeBoard = await _persistBoard(dir.path, id, board);
+
     // Store relative filenames in JSON for portability.
     final savedDesign = SavedDesign(
       id: id,
@@ -320,6 +397,7 @@ class ScreenshotPersistenceService {
       imagePaths: savedImagePaths?.map(_toRelative).toList(),
       translationBundle: relativeBundle,
       ascAppConfig: ascAppConfig,
+      board: relativeBoard,
     );
 
     final jsonFile = File('${dir.path}/$id.json');
@@ -342,6 +420,7 @@ class ScreenshotPersistenceService {
       imagePaths: savedImagePaths,
       translationBundle: _bundleLocaleImagesToAbsolute(dir.path, relativeBundle),
       ascAppConfig: ascAppConfig,
+      board: _boardToAbsolute(dir.path, relativeBoard),
     );
   }
 
@@ -374,6 +453,7 @@ class ScreenshotPersistenceService {
         multiDesigns: design.multiDesigns?.map((d) => d.copyWith(
           imageOverlays: _imageOverlaysToAbsolute(dirPath, d.imageOverlays),
         )).toList(),
+        board: _boardToAbsolute(dirPath, design.board),
       );
     } catch (e, st) {
       AppLogger.error(
@@ -436,6 +516,7 @@ class ScreenshotPersistenceService {
             multiDesigns: design.multiDesigns?.map((d) => d.copyWith(
               imageOverlays: _imageOverlaysToAbsolute(dirPath, d.imageOverlays),
             )).toList(),
+            board: _boardToAbsolute(dirPath, design.board),
           ),
         );
       } catch (e, st) {

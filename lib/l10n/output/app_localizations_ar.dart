@@ -1904,4 +1904,136 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get ascAppConfigSaved => 'تم حفظ تكوين App Store Connect';
+
+  @override
+  String get board => 'لوحة';
+
+  @override
+  String get newBoard => 'لوحة جديدة';
+
+  @override
+  String get boardModeDescription =>
+      'لوحة واحدة تضم عدة إطارات. تقوم مناطق القص بتقسيمها إلى لقطات شاشة فردية.';
+
+  @override
+  String get cropZones => 'مناطق القص';
+
+  @override
+  String get addCropZone => 'إضافة منطقة قص';
+
+  @override
+  String get showCropZones => 'إظهار مناطق القص';
+
+  @override
+  String get hideCropZones => 'إخفاء مناطق القص';
+
+  @override
+  String get includeInExport => 'تضمين في التصدير';
+
+  @override
+  String get excludeFromExport => 'استبعاد من التصدير';
+
+  @override
+  String get lockZoneSize => 'قفل بحجم الجهاز';
+
+  @override
+  String get unlockZoneSize => 'إلغاء قفل الحجم';
+
+  @override
+  String get zoneSizeLockedHint =>
+      'يتم تصدير المناطق المقفلة كقص بدقة مثالية. يتيح إلغاء القفل تغيير الحجم بحرية؛ ثم يتم تغيير حجم القص إلى الحجم المستهدف.';
+
+  @override
+  String get renameZone => 'إعادة تسمية المنطقة';
+
+  @override
+  String get zoneName => 'اسم المنطقة';
+
+  @override
+  String get addFrame => 'إضافة إطار';
+
+  @override
+  String get frames => 'إطارات';
+
+  @override
+  String frameLabel(int index) {
+    return 'إطار $index';
+  }
+
+  @override
+  String get bringToFront => 'إحضار إلى المقدمة';
+
+  @override
+  String get sendToBack => 'إرسال إلى الخلفية';
+
+  @override
+  String get arrangeZones => 'ترتيب المناطق في صف';
+
+  @override
+  String get fitBoardToContent => 'ملاءمة اللوحة للمحتوى';
+
+  @override
+  String get boardSize => 'حجم اللوحة';
+
+  @override
+  String zonesIncludedInExport(int included, int total) {
+    return 'سيتم تصدير $included من أصل $total منطقة';
+  }
+
+  @override
+  String get noCropZonesToExport => 'لم يتم تحديد أي منطقة قص للتصدير';
+
+  @override
+  String boardTooLargeToCapture(int megapixels) {
+    return 'هذه اللوحة كبيرة جدًا ($megapixels ميغابكسل)، لذا تم التقاطها بمقياس مخفض. قد تكون الصور المصدّرة أقل وضوحًا — قم بتقليل حجم اللوحة للحصول على نتيجة بدقة مثالية.';
+  }
+
+  @override
+  String someZonesFailedToExport(int failed, int total) {
+    return 'تعذر تصدير $failed من أصل $total منطقة قص';
+  }
+
+  @override
+  String get zoneSpacing => 'تباعد مناطق القص';
+
+  @override
+  String get zoneSpacingNone => 'بدون تباعد';
+
+  @override
+  String get zoneSpacingHint =>
+      'اجعل التباعد صفراً لتمتد الخلفية عبر جميع لقطات الشاشة كصورة واحدة مستمرة.';
+
+  @override
+  String get boardTemplates => 'تخطيطات اللوحة';
+
+  @override
+  String get boardTemplatesHint => 'خلفيات ومواضع إطارات مصممة للوحة.';
+
+  @override
+  String get artboardPresets => 'أنماط النصوص';
+
+  @override
+  String get applyBoardTemplateConfirm =>
+      'سيؤدي هذا إلى استبدال خلفية اللوحة وإعادة تحديد موقع كل إطار. سيتم الاحتفاظ بلقطات الشاشة المستوردة.';
+
+  @override
+  String zoneLimitReached(int max) {
+    return 'الحد الأقصى $max لقطات شاشة لكل حجم جهاز';
+  }
+
+  @override
+  String playLimitWarning(int max, int extra) {
+    return 'يقبل Google Play ‏$max لقطات شاشة — لن يتم تحميل آخر $extra';
+  }
+
+  @override
+  String storeLimitsHint(int ios, int android) {
+    return 'يتيح App Store ‏$ios من لقطات الشاشة، وGoogle Play ‏$android.';
+  }
+
+  @override
+  String get exportingBoard => 'جارٍ معالجة اللوحة…';
+
+  @override
+  String get searchDevices => 'بحث عن أجهزة';
 }

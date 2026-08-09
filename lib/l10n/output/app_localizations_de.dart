@@ -1924,4 +1924,138 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String get ascAppConfigSaved => 'App Store Connect-Konfiguration gespeichert';
+
+  @override
+  String get board => 'Board';
+
+  @override
+  String get newBoard => 'Neues Board';
+
+  @override
+  String get boardModeDescription =>
+      'Eine Leinwand mit mehreren Rahmen. Zuschneidebereiche teilen sie in einzelne Screenshots.';
+
+  @override
+  String get cropZones => 'Zuschneidebereiche';
+
+  @override
+  String get addCropZone => 'Zuschneidebereich hinzufügen';
+
+  @override
+  String get showCropZones => 'Zuschneidebereiche anzeigen';
+
+  @override
+  String get hideCropZones => 'Zuschneidebereiche ausblenden';
+
+  @override
+  String get includeInExport => 'Beim Export einschließen';
+
+  @override
+  String get excludeFromExport => 'Vom Export ausschließen';
+
+  @override
+  String get lockZoneSize => 'Auf Gerätegröße sperren';
+
+  @override
+  String get unlockZoneSize => 'Größe entsperren';
+
+  @override
+  String get zoneSizeLockedHint =>
+      'Gesperrte Bereiche werden als pixelgenauer Ausschnitt exportiert. Nach dem Entsperren können Sie die Größe frei anpassen; der Ausschnitt wird dann auf die Zielgröße skaliert.';
+
+  @override
+  String get renameZone => 'Bereich umbenennen';
+
+  @override
+  String get zoneName => 'Bereichsname';
+
+  @override
+  String get addFrame => 'Rahmen hinzufügen';
+
+  @override
+  String get frames => 'Rahmen';
+
+  @override
+  String frameLabel(int index) {
+    return 'Rahmen $index';
+  }
+
+  @override
+  String get bringToFront => 'Ganz nach vorne bringen';
+
+  @override
+  String get sendToBack => 'Ganz nach hinten senden';
+
+  @override
+  String get arrangeZones => 'Bereiche in einer Reihe anordnen';
+
+  @override
+  String get fitBoardToContent => 'Board an Inhalt anpassen';
+
+  @override
+  String get boardSize => 'Board-Größe';
+
+  @override
+  String zonesIncludedInExport(int included, int total) {
+    return '$included von $total Bereichen werden exportiert';
+  }
+
+  @override
+  String get noCropZonesToExport =>
+      'Keine Zuschneidebereiche für den Export markiert';
+
+  @override
+  String boardTooLargeToCapture(int megapixels) {
+    return 'Dieses Board ist sehr groß ($megapixels MP) und wurde daher in reduzierter Größe erfasst. Exportierte Bilder sind möglicherweise unschärfer — verringern Sie die Board-Größe für eine pixelgenaue Ausgabe.';
+  }
+
+  @override
+  String someZonesFailedToExport(int failed, int total) {
+    return '$failed von $total Zuschneidebereichen konnten nicht exportiert werden';
+  }
+
+  @override
+  String get zoneSpacing => 'Bereichsabstand';
+
+  @override
+  String get zoneSpacingNone => 'Kein Abstand';
+
+  @override
+  String get zoneSpacingHint =>
+      'Setze den Abstand auf Null, damit sich ein Hintergrund als ein durchgehendes Bild über alle Screenshots erstreckt.';
+
+  @override
+  String get boardTemplates => 'Board-Layouts';
+
+  @override
+  String get boardTemplatesHint =>
+      'Hintergründe und Rahmenplatzierungen, die für ein Board entwickelt wurden.';
+
+  @override
+  String get artboardPresets => 'Textstile';
+
+  @override
+  String get applyBoardTemplateConfirm =>
+      'Dies ersetzt den Board-Hintergrund und positioniert jeden Rahmen neu. Deine importierten Screenshots bleiben erhalten.';
+
+  @override
+  String zoneLimitReached(int max) {
+    return 'Maximal $max Screenshots pro Gerätegröße';
+  }
+
+  @override
+  String playLimitWarning(int max, int extra) {
+    return 'Google Play akzeptiert $max Screenshots – die letzten $extra werden nicht hochgeladen';
+  }
+
+  @override
+  String storeLimitsHint(int ios, int android) {
+    return 'App Store erlaubt $ios Screenshots, Google Play $android.';
+  }
+
+  @override
+  String get exportingBoard => 'Board wird gerendert…';
+
+  @override
+  String get searchDevices => 'Geräte suchen';
 }

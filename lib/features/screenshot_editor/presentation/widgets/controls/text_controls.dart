@@ -1,6 +1,7 @@
 import 'package:app_screenshots/core/extensions/context_extensions.dart';
 import 'package:app_screenshots/core/widgets/genie_dialog_route.dart';
 import 'package:app_screenshots/features/screenshot_editor/data/models/overlay_override.dart';
+import 'package:app_screenshots/features/screenshot_editor/presentation/cubit/board_cubit.dart';
 import 'package:app_screenshots/features/screenshot_editor/presentation/cubit/multi_screenshot_cubit.dart';
 import 'package:app_screenshots/features/screenshot_editor/presentation/cubit/screenshot_editor_cubit.dart';
 import 'package:app_screenshots/features/screenshot_editor/presentation/cubit/translation_cubit.dart';
@@ -60,6 +61,29 @@ class _TextControlsState extends State<TextControls> {
               state.design.displayType ?? '',
               state.design.orientation,
             );
+
+            // The rectangle the alignment presets position text within.
+            // On a board that is the selected crop zone — the region the user
+            // thinks of as "the screenshot" — rather than the whole canvas.
+            var alignFrame = Offset.zero & canvasSize;
+            try {
+              final boardState = context.read<BoardCubit>().state;
+              final zone =
+                  boardState.selectedZone ??
+                  boardState.board.exportableZones.firstOrNull;
+              if (zone != null) alignFrame = zone.rect;
+            } catch (_) {}
+
+            // "Apply to all screenshots" only means something with a row of
+            // artboards; single-canvas and board modes have no such list.
+            final hasMultiMode = () {
+              try {
+                context.read<MultiScreenshotCubit>();
+                return true;
+              } catch (_) {
+                return false;
+              }
+            }();
 
             // Resolve design index for scoped translation keys
             // (multi-screenshot mode stores keys as "designIndex:overlayId").
@@ -683,14 +707,14 @@ class _TextControlsState extends State<TextControls> {
                             icon: Symbols.vertical_align_top_rounded,
                             label: context.l10n.presetTopCenter,
                             onPressed: () {
-                              final width = canvasSize.width - 80;
-                              final dx = (canvasSize.width - width) / 2;
+                              final width = alignFrame.width - 80;
+                              final dx = alignFrame.left + (alignFrame.width - width) / 2;
                               final dy = selectedOverlay.position.dy > 0
                                   ? selectedOverlay.position.dy
-                                  : canvasSize.height * 0.08;
+                                  : alignFrame.top + alignFrame.height * 0.08;
                               final newPos = Offset(dx, dy);
 
-                              if (_applyToAllScreenshotsOverlays) {
+                              if (_applyToAllScreenshotsOverlays && hasMultiMode) {
                                 final multiCubit = context.read<MultiScreenshotCubit>();
                                 final updatedDesigns = multiCubit.state.designs.map((design) {
                                   final updatedOverlays = design.overlays.map((overlay) {
@@ -771,12 +795,12 @@ class _TextControlsState extends State<TextControls> {
                             icon: Symbols.vertical_align_bottom_rounded,
                             label: context.l10n.presetBottomCenter,
                             onPressed: () {
-                              final width = canvasSize.width - 80;
-                              final dx = (canvasSize.width - width) / 2;
-                              final dy = canvasSize.height * 0.85;
+                              final width = alignFrame.width - 80;
+                              final dx = alignFrame.left + (alignFrame.width - width) / 2;
+                              final dy = alignFrame.top + alignFrame.height * 0.85;
                               final newPos = Offset(dx, dy);
 
-                              if (_applyToAllScreenshotsOverlays) {
+                              if (_applyToAllScreenshotsOverlays && hasMultiMode) {
                                 final multiCubit = context.read<MultiScreenshotCubit>();
                                 final updatedDesigns = multiCubit.state.designs.map((design) {
                                   final updatedOverlays = design.overlays.map((overlay) {
@@ -857,12 +881,12 @@ class _TextControlsState extends State<TextControls> {
                             icon: Symbols.vertical_align_center_rounded,
                             label: context.l10n.presetCenter,
                             onPressed: () {
-                              final width = canvasSize.width - 80;
-                              final dx = (canvasSize.width - width) / 2;
-                              final dy = canvasSize.height * 0.45;
+                              final width = alignFrame.width - 80;
+                              final dx = alignFrame.left + (alignFrame.width - width) / 2;
+                              final dy = alignFrame.top + alignFrame.height * 0.45;
                               final newPos = Offset(dx, dy);
 
-                              if (_applyToAllScreenshotsOverlays) {
+                              if (_applyToAllScreenshotsOverlays && hasMultiMode) {
                                 final multiCubit = context.read<MultiScreenshotCubit>();
                                 final updatedDesigns = multiCubit.state.designs.map((design) {
                                   final updatedOverlays = design.overlays.map((overlay) {
@@ -943,7 +967,7 @@ class _TextControlsState extends State<TextControls> {
                             icon: Symbols.restore_rounded,
                             label: context.l10n.presetReset,
                             onPressed: () {
-                              if (_applyToAllScreenshotsOverlays) {
+                              if (_applyToAllScreenshotsOverlays && hasMultiMode) {
                                 final multiCubit = context.read<MultiScreenshotCubit>();
                                 final updatedDesigns = multiCubit.state.designs.map((design) {
                                   final updatedOverlays = design.overlays.map((overlay) {
@@ -1036,7 +1060,8 @@ class _TextControlsState extends State<TextControls> {
                           ),
                         ],
                       ),
-                      const SizedBox(height: 8),
+                      if (hasMultiMode) const SizedBox(height: 8),
+                      if (hasMultiMode)
                       Row(
                         children: [
                           Expanded(

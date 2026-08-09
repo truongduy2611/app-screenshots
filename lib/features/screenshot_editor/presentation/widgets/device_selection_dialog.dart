@@ -136,17 +136,56 @@ class DeviceSelectionDialog extends StatefulWidget {
   State<DeviceSelectionDialog> createState() => _DeviceSelectionDialogState();
 }
 
+/// What kind of design the picked format creates.
+///
+/// The dialog returns the format key prefixed by the mode, so callers can
+/// route to the right editor: `"APP_IPHONE_69"`, `"multi:APP_IPHONE_69"`, or
+/// `"board:APP_IPHONE_69"`.
+enum _CreateMode {
+  single(''),
+  multi(ScreenshotUtils.multiModePrefix),
+  board(ScreenshotUtils.boardModePrefix);
+
+  const _CreateMode(this.prefix);
+
+  final String prefix;
+}
+
 class _DeviceSelectionDialogState extends State<DeviceSelectionDialog> {
   static const _prefKeyMultiMode = 'device_selection_multi_mode';
+  static const _prefKeyMode = 'device_selection_mode';
 
   int _selectedCategoryIndex = 0;
-  bool _isMultiMode = false;
+  _CreateMode _mode = _CreateMode.single;
+
+  bool get _isPickingFormat => _mode != _CreateMode.single;
 
   @override
   void initState() {
     super.initState();
     final prefs = GetIt.I<SharedPreferences>();
-    _isMultiMode = prefs.getBool(_prefKeyMultiMode) ?? false;
+    final stored = prefs.getString(_prefKeyMode);
+    if (stored != null) {
+      _mode = _CreateMode.values.firstWhere(
+        (m) => m.name == stored,
+        orElse: () => _CreateMode.single,
+      );
+    } else {
+      // Migrate the pre-board boolean preference.
+      _mode = (prefs.getBool(_prefKeyMultiMode) ?? false)
+          ? _CreateMode.multi
+          : _CreateMode.single;
+    }
+  }
+
+  void _setMode(_CreateMode mode) {
+    setState(() => _mode = mode);
+    GetIt.I<SharedPreferences>().setString(_prefKeyMode, mode.name);
+  }
+
+  /// Closes the dialog with the picked format, tagged with the current mode.
+  void _pickFormat(BuildContext context, String type) {
+    Navigator.pop(context, '${_mode.prefix}$type');
   }
 
   static final _categoryMeta = <(DeviceCategory, String, IconData)>[
@@ -381,22 +420,33 @@ class _DeviceSelectionDialogState extends State<DeviceSelectionDialog> {
 
         const SizedBox(height: 12),
 
-        // Multi-Screenshot option ↔ back-button sub-header
+        // Mode cards ↔ back-button sub-header
         AnimatedCrossFade(
           duration: const Duration(milliseconds: 300),
           sizeCurve: Curves.easeInOut,
           firstCurve: Curves.easeInOut,
           secondCurve: Curves.easeInOut,
-          crossFadeState: _isMultiMode
+          crossFadeState: _isPickingFormat
               ? CrossFadeState.showSecond
               : CrossFadeState.showFirst,
           firstChild: Padding(
             padding: const EdgeInsets.symmetric(horizontal: 24),
-            child: _MultiScreenshotCard(
-              onTap: () {
-                setState(() => _isMultiMode = true);
-                GetIt.I<SharedPreferences>().setBool(_prefKeyMultiMode, true);
-              },
+            child: Column(
+              children: [
+                _ModeCard(
+                  icon: Symbols.photo_library_rounded,
+                  title: context.l10n.multiScreenshot,
+                  subtitle: context.l10n.createUpTo10Screenshots,
+                  onTap: () => _setMode(_CreateMode.multi),
+                ),
+                const SizedBox(height: 8),
+                _ModeCard(
+                  icon: Symbols.dashboard_customize_rounded,
+                  title: context.l10n.board,
+                  subtitle: context.l10n.boardModeDescription,
+                  onTap: () => _setMode(_CreateMode.board),
+                ),
+              ],
             ),
           ),
           secondChild: Padding(
@@ -409,13 +459,7 @@ class _DeviceSelectionDialogState extends State<DeviceSelectionDialog> {
                   child: IconButton(
                     padding: EdgeInsets.zero,
                     icon: const Icon(Symbols.arrow_back_rounded, size: 20),
-                    onPressed: () {
-                      setState(() => _isMultiMode = false);
-                      GetIt.I<SharedPreferences>().setBool(
-                        _prefKeyMultiMode,
-                        false,
-                      );
-                    },
+                    onPressed: () => _setMode(_CreateMode.single),
                     style: IconButton.styleFrom(
                       backgroundColor: theme.colorScheme.onSurface.withValues(
                         alpha: 0.08,
@@ -445,8 +489,8 @@ class _DeviceSelectionDialogState extends State<DeviceSelectionDialog> {
           curve: Curves.easeInOut,
           child: AnimatedOpacity(
             duration: const Duration(milliseconds: 200),
-            opacity: _isMultiMode ? 0.0 : 1.0,
-            child: _isMultiMode
+            opacity: _isPickingFormat ? 0.0 : 1.0,
+            child: _isPickingFormat
                 ? const SizedBox.shrink()
                 : Padding(
                     padding: const EdgeInsets.fromLTRB(40, 14, 40, 6),
@@ -511,12 +555,7 @@ class _DeviceSelectionDialogState extends State<DeviceSelectionDialog> {
                           '${dims.width.toInt()} × ${dims.height.toInt()}',
                       icon: currentCategory.$3,
                       isLocked: false,
-                      onTap: () {
-                        Navigator.pop(
-                          context,
-                          _isMultiMode ? 'multi:$type' : type,
-                        );
-                      },
+                      onTap: () => _pickFormat(context, type),
                     );
                   },
                 ),
@@ -582,9 +621,7 @@ class _DeviceSelectionDialogState extends State<DeviceSelectionDialog> {
               dimensions: '${dims.width.toInt()} × ${dims.height.toInt()}',
               icon: label?.$2 ?? currentCategory.$3,
               isLocked: false,
-              onTap: () {
-                Navigator.pop(context, _isMultiMode ? 'multi:$type' : type);
-              },
+              onTap: () => _pickFormat(context, type),
             ),
           ),
         );
@@ -674,10 +711,19 @@ class _DeviceCard extends StatelessWidget {
   }
 }
 
-class _MultiScreenshotCard extends StatelessWidget {
-  final VoidCallback onTap;
+/// An entry card for one of the multi-screenshot creation modes.
+class _ModeCard extends StatelessWidget {
+  const _ModeCard({
+    required this.icon,
+    required this.title,
+    required this.subtitle,
+    required this.onTap,
+  });
 
-  const _MultiScreenshotCard({required this.onTap});
+  final IconData icon;
+  final String title;
+  final String subtitle;
+  final VoidCallback onTap;
 
   @override
   Widget build(BuildContext context) {
@@ -711,11 +757,7 @@ class _MultiScreenshotCard extends StatelessWidget {
                   color: primary.withValues(alpha: 0.15),
                   borderRadius: BorderRadius.circular(8),
                 ),
-                child: Icon(
-                  Symbols.photo_library_rounded,
-                  size: 20,
-                  color: primary,
-                ),
+                child: Icon(icon, size: 20, color: primary),
               ),
               const SizedBox(width: 14),
               Expanded(
@@ -723,7 +765,7 @@ class _MultiScreenshotCard extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      context.l10n.multiScreenshot,
+                      title,
                       style: theme.textTheme.titleSmall?.copyWith(
                         fontWeight: FontWeight.w700,
                         color: primary,
@@ -731,7 +773,7 @@ class _MultiScreenshotCard extends StatelessWidget {
                     ),
                     const SizedBox(height: 2),
                     Text(
-                      context.l10n.createUpTo10Screenshots,
+                      subtitle,
                       style: theme.textTheme.bodySmall?.copyWith(
                         color: theme.colorScheme.onSurface.withValues(
                           alpha: 0.5,

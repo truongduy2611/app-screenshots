@@ -1914,4 +1914,138 @@ class AppLocalizationsTr extends AppLocalizations {
 
   @override
   String get ascAppConfigSaved => 'App Store Connect yapılandırması kaydedildi';
+
+  @override
+  String get board => 'Pano';
+
+  @override
+  String get newBoard => 'Yeni Pano';
+
+  @override
+  String get boardModeDescription =>
+      'Çok sayıda çerçeve içeren tek bir tuval. Kırpma bölgeleri bunu ayrı ekran görüntülerine böler.';
+
+  @override
+  String get cropZones => 'Kırpma Bölgeleri';
+
+  @override
+  String get addCropZone => 'Kırpma Bölgesi Ekle';
+
+  @override
+  String get showCropZones => 'Kırpma Bölgelerini Göster';
+
+  @override
+  String get hideCropZones => 'Kırpma Bölgelerini Gizle';
+
+  @override
+  String get includeInExport => 'Dışa Aktarmaya Dahil Et';
+
+  @override
+  String get excludeFromExport => 'Dışa Aktarmadan Hariç Tut';
+
+  @override
+  String get lockZoneSize => 'Cihaz Boyutuna Kilitle';
+
+  @override
+  String get unlockZoneSize => 'Boyut Kilidini Aç';
+
+  @override
+  String get zoneSizeLockedHint =>
+      'Kilitli bölgeler piksel mükemmelliğinde kırpılarak dışa aktarılır. Kilidi açmak serbestçe yeniden boyutlandırmanızı sağlar; ardından kırpılan alan hedef boyuta ölçeklenir.';
+
+  @override
+  String get renameZone => 'Bölgeyi Yeniden Adlandır';
+
+  @override
+  String get zoneName => 'Bölge Adı';
+
+  @override
+  String get addFrame => 'Çerçeve Ekle';
+
+  @override
+  String get frames => 'Çerçeveler';
+
+  @override
+  String frameLabel(int index) {
+    return 'Çerçeve $index';
+  }
+
+  @override
+  String get bringToFront => 'En Öne Getir';
+
+  @override
+  String get sendToBack => 'En Arkaya Gönder';
+
+  @override
+  String get arrangeZones => 'Bölgeleri Satır Halinde Düzenle';
+
+  @override
+  String get fitBoardToContent => 'Panoyu İçeriğe Sığdır';
+
+  @override
+  String get boardSize => 'Pano Boyutu';
+
+  @override
+  String zonesIncludedInExport(int included, int total) {
+    return '$total bölgeden $included tanesi dışa aktarılacak';
+  }
+
+  @override
+  String get noCropZonesToExport =>
+      'Dışa aktarım için hiçbir kırpma bölgesi işaretlenmedi';
+
+  @override
+  String boardTooLargeToCapture(int megapixels) {
+    return 'Bu pano çok büyük ($megapixels MP), bu nedenle küçültülmüş ölçekte yakalandı. Dışa aktarılan görseller daha yumuşak görünebilir — piksel mükemmelliğinde çıktı için pano boyutunu küçültün.';
+  }
+
+  @override
+  String someZonesFailedToExport(int failed, int total) {
+    return '$total kırpma bölgesinden $failed tanesi dışa aktarılamadı';
+  }
+
+  @override
+  String get zoneSpacing => 'Bölge Aralığı';
+
+  @override
+  String get zoneSpacingNone => 'Aralık yok';
+
+  @override
+  String get zoneSpacingHint =>
+      'Arka planın her ekran görüntüsünü kesintisiz tek bir görsel olarak kaplaması için aralığı sıfıra ayarlayın.';
+
+  @override
+  String get boardTemplates => 'Pano Düzenleri';
+
+  @override
+  String get boardTemplatesHint =>
+      'Pano için tasarlanmış arka planlar ve çerçeve yerleşimi.';
+
+  @override
+  String get artboardPresets => 'Metin Stilleri';
+
+  @override
+  String get applyBoardTemplateConfirm =>
+      'Bu işlem pano arka planını değiştirir ve her çerçeveyi yeniden konumlandırır. İçe aktarılan ekran görüntüleriniz korunur.';
+
+  @override
+  String zoneLimitReached(int max) {
+    return 'Cihaz boyutu başına en fazla $max ekran görüntüsü';
+  }
+
+  @override
+  String playLimitWarning(int max, int extra) {
+    return 'Google Play $max ekran görüntüsü kabul eder — son $extra tanesi yüklenmez';
+  }
+
+  @override
+  String storeLimitsHint(int ios, int android) {
+    return 'App Store $ios ekran görüntüsüne izin verir, Google Play $android.';
+  }
+
+  @override
+  String get exportingBoard => 'Pano işleniyor…';
+
+  @override
+  String get searchDevices => 'Cihaz ara';
 }

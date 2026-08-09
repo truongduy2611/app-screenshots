@@ -6,6 +6,7 @@ import 'package:app_screenshots/core/widgets/app_popup_menu.dart';
 import 'package:app_screenshots/core/widgets/genie_dialog_route.dart';
 import 'package:app_screenshots/features/screenshot_editor/data/models/saved_design.dart';
 import 'package:app_screenshots/features/screenshot_editor/presentation/cubit/screenshot_library_cubit.dart';
+import 'package:app_screenshots/features/screenshot_editor/presentation/pages/board_page.dart';
 import 'package:app_screenshots/features/screenshot_editor/presentation/pages/multi_screenshot_page.dart';
 import 'package:app_screenshots/features/screenshot_editor/presentation/pages/screenshot_editor_page.dart';
 import 'package:app_screenshots/features/screenshot_editor/presentation/widgets/device_selection_dialog.dart';
@@ -146,7 +147,12 @@ class _DesignCardState extends State<DesignCard> {
                       return;
                     }
                     final Widget page;
-                    if (widget.design.isMulti) {
+                    if (widget.design.isBoard) {
+                      page = BoardPage(
+                        initialSavedDesign: widget.design,
+                        displayType: widget.design.design.displayType,
+                      );
+                    } else if (widget.design.isMulti) {
                       page = MultiScreenshotPage(
                         initialSavedDesign: widget.design,
                         displayType: widget.design.design.displayType,

@@ -1918,4 +1918,138 @@ class AppLocalizationsNl extends AppLocalizations {
 
   @override
   String get ascAppConfigSaved => 'App Store Connect-configuratie opgeslagen';
+
+  @override
+  String get board => 'Bord';
+
+  @override
+  String get newBoard => 'Nieuw bord';
+
+  @override
+  String get boardModeDescription =>
+      'Eén canvas met meerdere kaders. Bijsnijdzones snijden het in afzonderlijke screenshots.';
+
+  @override
+  String get cropZones => 'Bijsnijdzones';
+
+  @override
+  String get addCropZone => 'Bijsnijdzone toevoegen';
+
+  @override
+  String get showCropZones => 'Bijsnijdzones tonen';
+
+  @override
+  String get hideCropZones => 'Bijsnijdzones verbergen';
+
+  @override
+  String get includeInExport => 'Opnemen in export';
+
+  @override
+  String get excludeFromExport => 'Uitsluiten van export';
+
+  @override
+  String get lockZoneSize => 'Vergrendelen op apparaatgrootte';
+
+  @override
+  String get unlockZoneSize => 'Grootte ontgrendelen';
+
+  @override
+  String get zoneSizeLockedHint =>
+      'Vergrendelde zones worden geëxporteerd als een pixel-perfecte uitsnede. Door te ontgrendelen kunt u het formaat vrij aanpassen; de uitsnede wordt dan geschaald naar het doelformaat.';
+
+  @override
+  String get renameZone => 'Zone hernoemen';
+
+  @override
+  String get zoneName => 'Zonenaam';
+
+  @override
+  String get addFrame => 'Kader toevoegen';
+
+  @override
+  String get frames => 'Kaders';
+
+  @override
+  String frameLabel(int index) {
+    return 'Kader $index';
+  }
+
+  @override
+  String get bringToFront => 'Naar voorgrond brengen';
+
+  @override
+  String get sendToBack => 'Naar achtergrond sturen';
+
+  @override
+  String get arrangeZones => 'Zones op een rij rangschikken';
+
+  @override
+  String get fitBoardToContent => 'Bord aanpassen aan inhoud';
+
+  @override
+  String get boardSize => 'Bordgrootte';
+
+  @override
+  String zonesIncludedInExport(int included, int total) {
+    return '$included van de $total zones worden geëxporteerd';
+  }
+
+  @override
+  String get noCropZonesToExport =>
+      'Er zijn geen bijsnijdzones gemarkeerd voor export';
+
+  @override
+  String boardTooLargeToCapture(int megapixels) {
+    return 'Dit bord is erg groot ($megapixels MP) en is daarom op een kleinere schaal vastgelegd. Geëxporteerde afbeeldingen zijn mogelijk minder scherp — verklein de bordgrootte voor een pixel-perfect resultaat.';
+  }
+
+  @override
+  String someZonesFailedToExport(int failed, int total) {
+    return '$failed van de $total bijsnijdzones konden niet worden geëxporteerd';
+  }
+
+  @override
+  String get zoneSpacing => 'Zone-afstand';
+
+  @override
+  String get zoneSpacingNone => 'Geen afstand';
+
+  @override
+  String get zoneSpacingHint =>
+      'Stel de afstand in op nul zodat een achtergrond over elke screenshot als één doorlopende afbeelding loopt.';
+
+  @override
+  String get boardTemplates => 'Bordindelingen';
+
+  @override
+  String get boardTemplatesHint =>
+      'Achtergronden en kaderplaatsing ontworpen voor een bord.';
+
+  @override
+  String get artboardPresets => 'Tekststijlen';
+
+  @override
+  String get applyBoardTemplateConfirm =>
+      'Dit vervangt de bordachtergrond en herpositioneert elk kader. Je geïmporteerde screenshots blijven behouden.';
+
+  @override
+  String zoneLimitReached(int max) {
+    return 'Maximaal $max screenshots per apparaatgrootte';
+  }
+
+  @override
+  String playLimitWarning(int max, int extra) {
+    return 'Google Play accepteert $max screenshots – de laatste $extra worden niet geüpload';
+  }
+
+  @override
+  String storeLimitsHint(int ios, int android) {
+    return 'App Store staat $ios screenshots toe, Google Play $android.';
+  }
+
+  @override
+  String get exportingBoard => 'Bord renderen…';
+
+  @override
+  String get searchDevices => 'Apparaten zoeken';
 }

@@ -1892,4 +1892,138 @@ class AppLocalizationsVi extends AppLocalizations {
 
   @override
   String get ascAppConfigSaved => 'Đã lưu cấu hình App Store Connect';
+
+  @override
+  String get board => 'Bảng vẽ';
+
+  @override
+  String get newBoard => 'Bảng vẽ mới';
+
+  @override
+  String get boardModeDescription =>
+      'Một khung vẽ chứa nhiều khung thiết bị. Các vùng cắt sẽ chia nhỏ thành từng ảnh chụp riêng biệt.';
+
+  @override
+  String get cropZones => 'Vùng cắt';
+
+  @override
+  String get addCropZone => 'Thêm vùng cắt';
+
+  @override
+  String get showCropZones => 'Hiện vùng cắt';
+
+  @override
+  String get hideCropZones => 'Ẩn vùng cắt';
+
+  @override
+  String get includeInExport => 'Bao gồm khi xuất';
+
+  @override
+  String get excludeFromExport => 'Loại trừ khi xuất';
+
+  @override
+  String get lockZoneSize => 'Khóa theo kích thước thiết bị';
+
+  @override
+  String get unlockZoneSize => 'Mở khóa kích thước';
+
+  @override
+  String get zoneSizeLockedHint =>
+      'Các vùng bị khóa sẽ xuất dưới dạng bản cắt chuẩn xác từng điểm ảnh. Việc mở khóa cho phép bạn tự do thay đổi kích thước; bản cắt sau đó sẽ được thu phóng theo kích thước mục tiêu.';
+
+  @override
+  String get renameZone => 'Đổi tên vùng';
+
+  @override
+  String get zoneName => 'Tên vùng';
+
+  @override
+  String get addFrame => 'Thêm khung';
+
+  @override
+  String get frames => 'Khung thiết bị';
+
+  @override
+  String frameLabel(int index) {
+    return 'Khung $index';
+  }
+
+  @override
+  String get bringToFront => 'Đưa lên trên cùng';
+
+  @override
+  String get sendToBack => 'Đưa xuống dưới cùng';
+
+  @override
+  String get arrangeZones => 'Sắp xếp các vùng thành một hàng';
+
+  @override
+  String get fitBoardToContent => 'Khớp bảng vẽ với nội dung';
+
+  @override
+  String get boardSize => 'Kích thước bảng vẽ';
+
+  @override
+  String zonesIncludedInExport(int included, int total) {
+    return 'Sẽ xuất $included trên $total vùng';
+  }
+
+  @override
+  String get noCropZonesToExport =>
+      'Không có vùng cắt nào được đánh dấu để xuất';
+
+  @override
+  String boardTooLargeToCapture(int megapixels) {
+    return 'Bảng vẽ này rất lớn ($megapixels MP), do đó đã được chụp ở tỷ lệ thu nhỏ. Hình ảnh xuất ra có thể bị mờ hơn — hãy giảm kích thước bảng vẽ để có kết quả chuẩn xác từng điểm ảnh.';
+  }
+
+  @override
+  String someZonesFailedToExport(int failed, int total) {
+    return 'Không thể xuất $failed trên $total vùng cắt';
+  }
+
+  @override
+  String get zoneSpacing => 'Khoảng cách vùng';
+
+  @override
+  String get zoneSpacingNone => 'Không có khoảng cách';
+
+  @override
+  String get zoneSpacingHint =>
+      'Đặt khoảng cách về 0 để nền trải dài qua mọi ảnh chụp màn hình như một hình ảnh liên tục.';
+
+  @override
+  String get boardTemplates => 'Bố cục bảng vẽ';
+
+  @override
+  String get boardTemplatesHint =>
+      'Hình nền và vị trí khung được thiết kế cho bảng vẽ.';
+
+  @override
+  String get artboardPresets => 'Kiểu chữ';
+
+  @override
+  String get applyBoardTemplateConfirm =>
+      'Thao tác này sẽ thay thế nền bảng vẽ và sắp xếp lại vị trí từng khung. Các ảnh chụp đã nhập của bạn sẽ được giữ nguyên.';
+
+  @override
+  String zoneLimitReached(int max) {
+    return 'Tối đa $max ảnh chụp cho mỗi kích thước thiết bị';
+  }
+
+  @override
+  String playLimitWarning(int max, int extra) {
+    return 'Google Play chấp nhận $max ảnh chụp — $extra ảnh cuối sẽ không được tải lên';
+  }
+
+  @override
+  String storeLimitsHint(int ios, int android) {
+    return 'App Store cho phép $ios ảnh chụp, Google Play $android.';
+  }
+
+  @override
+  String get exportingBoard => 'Đang xử lý bảng vẽ…';
+
+  @override
+  String get searchDevices => 'Tìm thiết bị';
 }

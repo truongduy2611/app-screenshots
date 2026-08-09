@@ -1925,4 +1925,138 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get ascAppConfigSaved => 'Configuración de App Store Connect guardada';
+
+  @override
+  String get board => 'Tablero';
+
+  @override
+  String get newBoard => 'Nuevo tablero';
+
+  @override
+  String get boardModeDescription =>
+      'Un lienzo con varios marcos. Las zonas de recorte lo dividen en capturas de pantalla individuales.';
+
+  @override
+  String get cropZones => 'Zonas de recorte';
+
+  @override
+  String get addCropZone => 'Añadir zona de recorte';
+
+  @override
+  String get showCropZones => 'Mostrar zonas de recorte';
+
+  @override
+  String get hideCropZones => 'Ocultar zonas de recorte';
+
+  @override
+  String get includeInExport => 'Incluir en la exportación';
+
+  @override
+  String get excludeFromExport => 'Excluir de la exportación';
+
+  @override
+  String get lockZoneSize => 'Bloquear a tamaño del dispositivo';
+
+  @override
+  String get unlockZoneSize => 'Desbloquear tamaño';
+
+  @override
+  String get zoneSizeLockedHint =>
+      'Las zonas bloqueadas se exportan como un recorte perfecto a nivel de píxel. Al desbloquearlas puedes cambiar el tamaño libremente; el recorte se escala después al tamaño de destino.';
+
+  @override
+  String get renameZone => 'Renombrar zona';
+
+  @override
+  String get zoneName => 'Nombre de la zona';
+
+  @override
+  String get addFrame => 'Añadir marco';
+
+  @override
+  String get frames => 'Marcos';
+
+  @override
+  String frameLabel(int index) {
+    return 'Marco $index';
+  }
+
+  @override
+  String get bringToFront => 'Traer al primer plano';
+
+  @override
+  String get sendToBack => 'Enviar al fondo';
+
+  @override
+  String get arrangeZones => 'Organizar zonas en una fila';
+
+  @override
+  String get fitBoardToContent => 'Ajustar tablero al contenido';
+
+  @override
+  String get boardSize => 'Tamaño del tablero';
+
+  @override
+  String zonesIncludedInExport(int included, int total) {
+    return 'Se exportarán $included de $total zonas';
+  }
+
+  @override
+  String get noCropZonesToExport =>
+      'No hay zonas de recorte marcadas para exportar';
+
+  @override
+  String boardTooLargeToCapture(int megapixels) {
+    return 'Este tablero es muy grande ($megapixels MP), por lo que se capturó a escala reducida. Las imágenes exportadas pueden verse menos nítidas; reduce el tamaño del tablero para una salida perfecta a nivel de píxel.';
+  }
+
+  @override
+  String someZonesFailedToExport(int failed, int total) {
+    return 'No se pudieron exportar $failed de $total zonas de recorte';
+  }
+
+  @override
+  String get zoneSpacing => 'Espaciado de zonas';
+
+  @override
+  String get zoneSpacingNone => 'Sin espaciado';
+
+  @override
+  String get zoneSpacingHint =>
+      'Ajusta el espaciado a cero para que el fondo se extienda por todas las capturas como una sola imagen continua.';
+
+  @override
+  String get boardTemplates => 'Diseños de tablero';
+
+  @override
+  String get boardTemplatesHint =>
+      'Fondos y ubicación de marcos diseñados para un tablero.';
+
+  @override
+  String get artboardPresets => 'Estilos de texto';
+
+  @override
+  String get applyBoardTemplateConfirm =>
+      'Esto reemplaza el fondo del tablero y reposiciona cada marco. Se conservarán tus capturas importadas.';
+
+  @override
+  String zoneLimitReached(int max) {
+    return 'Máximo $max capturas por tamaño de dispositivo';
+  }
+
+  @override
+  String playLimitWarning(int max, int extra) {
+    return 'Google Play permite $max capturas; las últimas $extra no se subirán';
+  }
+
+  @override
+  String storeLimitsHint(int ios, int android) {
+    return 'App Store permite $ios capturas, Google Play $android.';
+  }
+
+  @override
+  String get exportingBoard => 'Renderizando tablero…';
+
+  @override
+  String get searchDevices => 'Buscar dispositivos';
 }

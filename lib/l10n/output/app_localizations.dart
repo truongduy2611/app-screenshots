@@ -3508,6 +3508,234 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'App Store Connect config saved'**
   String get ascAppConfigSaved;
+
+  /// Name of the single-canvas board editor mode
+  ///
+  /// In en, this message translates to:
+  /// **'Board'**
+  String get board;
+
+  /// Action to create a new board design
+  ///
+  /// In en, this message translates to:
+  /// **'New Board'**
+  String get newBoard;
+
+  /// Explanation of board mode shown when picking a design type
+  ///
+  /// In en, this message translates to:
+  /// **'One canvas with many frames. Crop zones slice it into individual screenshots.'**
+  String get boardModeDescription;
+
+  /// Section title for the board's export regions
+  ///
+  /// In en, this message translates to:
+  /// **'Crop Zones'**
+  String get cropZones;
+
+  /// Action to add an export region to the board
+  ///
+  /// In en, this message translates to:
+  /// **'Add Crop Zone'**
+  String get addCropZone;
+
+  /// Action to reveal crop zone outlines
+  ///
+  /// In en, this message translates to:
+  /// **'Show Crop Zones'**
+  String get showCropZones;
+
+  /// Action to hide crop zone outlines
+  ///
+  /// In en, this message translates to:
+  /// **'Hide Crop Zones'**
+  String get hideCropZones;
+
+  /// Marks a crop zone as exported
+  ///
+  /// In en, this message translates to:
+  /// **'Include in Export'**
+  String get includeInExport;
+
+  /// Marks a crop zone as skipped during export
+  ///
+  /// In en, this message translates to:
+  /// **'Exclude from Export'**
+  String get excludeFromExport;
+
+  /// Pins a crop zone to its format's native pixel size
+  ///
+  /// In en, this message translates to:
+  /// **'Lock to Device Size'**
+  String get lockZoneSize;
+
+  /// Allows a crop zone to be resized freely
+  ///
+  /// In en, this message translates to:
+  /// **'Unlock Size'**
+  String get unlockZoneSize;
+
+  /// Explains the trade-off between locked and unlocked crop zones
+  ///
+  /// In en, this message translates to:
+  /// **'Locked zones export as a pixel-perfect crop. Unlocking lets you resize freely; the crop is then scaled to the target size.'**
+  String get zoneSizeLockedHint;
+
+  /// Action to rename a crop zone
+  ///
+  /// In en, this message translates to:
+  /// **'Rename Zone'**
+  String get renameZone;
+
+  /// Text field label for a crop zone's name
+  ///
+  /// In en, this message translates to:
+  /// **'Zone Name'**
+  String get zoneName;
+
+  /// Action to add a device frame to the board
+  ///
+  /// In en, this message translates to:
+  /// **'Add Frame'**
+  String get addFrame;
+
+  /// Section title listing the board's device frames
+  ///
+  /// In en, this message translates to:
+  /// **'Frames'**
+  String get frames;
+
+  /// Label for a device frame by its index on the board
+  ///
+  /// In en, this message translates to:
+  /// **'Frame {index}'**
+  String frameLabel(int index);
+
+  /// Raises an element above the others
+  ///
+  /// In en, this message translates to:
+  /// **'Bring to Front'**
+  String get bringToFront;
+
+  /// Lowers an element below the others
+  ///
+  /// In en, this message translates to:
+  /// **'Send to Back'**
+  String get sendToBack;
+
+  /// Re-lays crop zones out left to right
+  ///
+  /// In en, this message translates to:
+  /// **'Arrange Zones in a Row'**
+  String get arrangeZones;
+
+  /// Resizes the board canvas around its content
+  ///
+  /// In en, this message translates to:
+  /// **'Fit Board to Content'**
+  String get fitBoardToContent;
+
+  /// Label for the board canvas dimensions
+  ///
+  /// In en, this message translates to:
+  /// **'Board Size'**
+  String get boardSize;
+
+  /// Summary of how many crop zones export produces
+  ///
+  /// In en, this message translates to:
+  /// **'{included} of {total} zones will be exported'**
+  String zonesIncludedInExport(int included, int total);
+
+  /// Error shown when every crop zone is excluded
+  ///
+  /// In en, this message translates to:
+  /// **'No crop zones are marked for export'**
+  String get noCropZonesToExport;
+
+  /// Warning when the board exceeds the single-capture pixel budget
+  ///
+  /// In en, this message translates to:
+  /// **'This board is very large ({megapixels} MP), so it was captured at reduced scale. Exported images may be softer — reduce the board size for pixel-perfect output.'**
+  String boardTooLargeToCapture(int megapixels);
+
+  /// Error shown when some crop zones failed to render during export
+  ///
+  /// In en, this message translates to:
+  /// **'{failed} of {total} crop zones could not be exported'**
+  String someZonesFailedToExport(int failed, int total);
+
+  /// Slider label for the gap between crop zones
+  ///
+  /// In en, this message translates to:
+  /// **'Zone Spacing'**
+  String get zoneSpacing;
+
+  /// Label for zero gap between crop zones
+  ///
+  /// In en, this message translates to:
+  /// **'No spacing'**
+  String get zoneSpacingNone;
+
+  /// Explains why zero zone spacing is useful
+  ///
+  /// In en, this message translates to:
+  /// **'Set spacing to zero so a background spans every screenshot as one continuous image.'**
+  String get zoneSpacingHint;
+
+  /// Title for the board-specific template picker
+  ///
+  /// In en, this message translates to:
+  /// **'Board Layouts'**
+  String get boardTemplates;
+
+  /// Subtitle of the board template picker
+  ///
+  /// In en, this message translates to:
+  /// **'Backgrounds and frame placement designed for a board.'**
+  String get boardTemplatesHint;
+
+  /// Menu label for the per-artboard style presets on a board
+  ///
+  /// In en, this message translates to:
+  /// **'Text Styles'**
+  String get artboardPresets;
+
+  /// Confirmation before applying a board layout
+  ///
+  /// In en, this message translates to:
+  /// **'This replaces the board background and repositions every frame. Your imported screenshots are kept.'**
+  String get applyBoardTemplateConfirm;
+
+  /// Tooltip when no more crop zones can be added
+  ///
+  /// In en, this message translates to:
+  /// **'Maximum {max} screenshots per device size'**
+  String zoneLimitReached(int max);
+
+  /// Warning when a board has more zones than Google Play allows
+  ///
+  /// In en, this message translates to:
+  /// **'Google Play accepts {max} screenshots — the last {extra} will not upload'**
+  String playLimitWarning(int max, int extra);
+
+  /// Explains the per-store screenshot limits
+  ///
+  /// In en, this message translates to:
+  /// **'App Store allows {ios} screenshots, Google Play {android}.'**
+  String storeLimitsHint(int ios, int android);
+
+  /// Progress message while the board is captured
+  ///
+  /// In en, this message translates to:
+  /// **'Rendering board…'**
+  String get exportingBoard;
+
+  /// Search field hint in the board frame device picker
+  ///
+  /// In en, this message translates to:
+  /// **'Search devices'**
+  String get searchDevices;
 }
 
 class _AppLocalizationsDelegate

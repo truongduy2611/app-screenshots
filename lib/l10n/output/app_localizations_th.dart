@@ -1855,4 +1855,138 @@ class AppLocalizationsTh extends AppLocalizations {
 
   @override
   String get ascAppConfigSaved => 'บันทึกการกำหนดค่า App Store Connect แล้ว';
+
+  @override
+  String get board => 'บอร์ด';
+
+  @override
+  String get newBoard => 'บอร์ดใหม่';
+
+  @override
+  String get boardModeDescription =>
+      'ผืนผ้าใบเดียวที่มีหลายกรอบอุปกรณ์ พื้นที่ครอบตัดจะแบ่งออกเป็นภาพหน้าจอแต่ละภาพ';
+
+  @override
+  String get cropZones => 'พื้นที่ครอบตัด';
+
+  @override
+  String get addCropZone => 'เพิ่มพื้นที่ครอบตัด';
+
+  @override
+  String get showCropZones => 'แสดงพื้นที่ครอบตัด';
+
+  @override
+  String get hideCropZones => 'ซ่อนพื้นที่ครอบตัด';
+
+  @override
+  String get includeInExport => 'รวมในการส่งออก';
+
+  @override
+  String get excludeFromExport => 'ยกเว้นจากการส่งออก';
+
+  @override
+  String get lockZoneSize => 'ล็อกตามขนาดอุปกรณ์';
+
+  @override
+  String get unlockZoneSize => 'ปลดล็อกขนาด';
+
+  @override
+  String get zoneSizeLockedHint =>
+      'พื้นที่ที่ล็อกไว้จะส่งออกเป็นการครอบตัดแบบพิกเซลสมบูรณ์แบบ การปลดล็อกช่วยให้ปรับขนาดได้อย่างอิสระ จากนั้นการครอบตัดจะถูกปรับสเกลตามขนาดเป้าหมาย';
+
+  @override
+  String get renameZone => 'เปลี่ยนชื่อพื้นที่';
+
+  @override
+  String get zoneName => 'ชื่อพื้นที่';
+
+  @override
+  String get addFrame => 'เพิ่มกรอบ';
+
+  @override
+  String get frames => 'กรอบอุปกรณ์';
+
+  @override
+  String frameLabel(int index) {
+    return 'กรอบ $index';
+  }
+
+  @override
+  String get bringToFront => 'นำมาไว้หน้าสุด';
+
+  @override
+  String get sendToBack => 'ส่งไปหลังสุด';
+
+  @override
+  String get arrangeZones => 'จัดเรียงพื้นที่เป็นแถว';
+
+  @override
+  String get fitBoardToContent => 'ปรับบอร์ดให้พอดีกับเนื้อหา';
+
+  @override
+  String get boardSize => 'ขนาดบอร์ด';
+
+  @override
+  String zonesIncludedInExport(int included, int total) {
+    return 'จะส่งออก $included จาก $total พื้นที่';
+  }
+
+  @override
+  String get noCropZonesToExport =>
+      'ไม่มีพื้นที่ครอบตัดที่เลือกไว้สำหรับส่งออก';
+
+  @override
+  String boardTooLargeToCapture(int megapixels) {
+    return 'บอร์ดนี้มีขนาดใหญ่มาก ($megapixels MP) จึงถูกจับภาพในอัตราส่วนที่ลดลง ภาพที่ส่งออกอาจมีความคมชัดน้อยลง — ลดขนาดบอร์ดเพื่อผลลัพธ์แบบพิกเซลสมบูรณ์แบบ';
+  }
+
+  @override
+  String someZonesFailedToExport(int failed, int total) {
+    return 'ไม่สามารถส่งออก $failed จาก $total พื้นที่ครอบตัดได้';
+  }
+
+  @override
+  String get zoneSpacing => 'ระยะห่างพื้นที่';
+
+  @override
+  String get zoneSpacingNone => 'ไม่มีระยะห่าง';
+
+  @override
+  String get zoneSpacingHint =>
+      'ตั้งค่าระยะห่างเป็นศูนย์เพื่อให้พื้นหลังครอบคลุมทุกภาพหน้าจอเป็นภาพเดียวที่ต่อเนื่องกัน';
+
+  @override
+  String get boardTemplates => 'เลย์เอาต์บอร์ด';
+
+  @override
+  String get boardTemplatesHint =>
+      'พื้นหลังและการวางตำแหน่งกรอบที่ออกแบบมาสำหรับบอร์ด';
+
+  @override
+  String get artboardPresets => 'สไตล์ข้อความ';
+
+  @override
+  String get applyBoardTemplateConfirm =>
+      'การดำเนินการนี้จะแทนที่พื้นหลังของบอร์ดและจัดตำแหน่งกรอบใหม่ทั้งหมด ภาพหน้าจอที่คุณนำเข้าจะยังคงอยู่';
+
+  @override
+  String zoneLimitReached(int max) {
+    return 'สูงสุด $max สกรีนช็อตต่อขนาดอุปกรณ์';
+  }
+
+  @override
+  String playLimitWarning(int max, int extra) {
+    return 'Google Play ยอมรับสกรีนช็อต $max ภาพ — $extra ภาพท้ายสุดจะไม่ถูกอัปโหลด';
+  }
+
+  @override
+  String storeLimitsHint(int ios, int android) {
+    return 'App Store อนุญาตให้ใช้สกรีนช็อต $ios ภาพ, Google Play $android ภาพ';
+  }
+
+  @override
+  String get exportingBoard => 'กำลังเรนเดอร์บอร์ด…';
+
+  @override
+  String get searchDevices => 'ค้นหาอุปกรณ์';
 }

@@ -26,7 +26,18 @@ const kMobileControlsCollapsedHeight = 56.0 + _kHandleHeight;
 /// single-tap tab bar and a collapsible panel that keeps the canvas visible.
 /// Supports drag-to-expand and drag-to-collapse gestures on the handle area.
 class MobileEditorControls extends StatefulWidget {
-  const MobileEditorControls({super.key});
+  const MobileEditorControls({
+    super.key,
+    this.frameTab,
+    this.frameTabIcon,
+    this.frameTabLabel,
+  });
+
+  /// Replaces the Frame tab's content. Board mode swaps in its own panel,
+  /// since a board has a list of frames rather than one frame per design.
+  final Widget? frameTab;
+  final IconData? frameTabIcon;
+  final String? frameTabLabel;
 
   @override
   State<MobileEditorControls> createState() => MobileEditorControlsState();
@@ -188,7 +199,10 @@ class MobileEditorControlsState extends State<MobileEditorControls>
 
     final tabs = [
       _MobileTab(icon: Symbols.format_paint_rounded, label: l10n.background),
-      _MobileTab(icon: Symbols.phone_iphone_rounded, label: l10n.frame),
+      _MobileTab(
+        icon: widget.frameTabIcon ?? Symbols.phone_iphone_rounded,
+        label: widget.frameTabLabel ?? l10n.frame,
+      ),
       _MobileTab(icon: Symbols.text_fields_rounded, label: l10n.textOverlay),
       _MobileTab(icon: Symbols.draw_rounded, label: l10n.doodle),
       _MobileTab(icon: Symbols.auto_awesome_rounded, label: l10n.aiAssistant),
@@ -325,13 +339,13 @@ class MobileEditorControlsState extends State<MobileEditorControls>
                   setState(() => _selectedIndex = index);
                   _tabController.animateTo(index);
                 },
-                children: const [
-                  BackgroundControls(),
-                  FrameControls(),
-                  TextControls(),
-                  DoodleControls(),
-                  AiAssistantControls(),
-                  TranslationControls(),
+                children: [
+                  const BackgroundControls(),
+                  widget.frameTab ?? const FrameControls(),
+                  const TextControls(),
+                  const DoodleControls(),
+                  const AiAssistantControls(),
+                  const TranslationControls(),
                 ],
               ),
             ),

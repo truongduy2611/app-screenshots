@@ -1825,4 +1825,136 @@ class AppLocalizationsJa extends AppLocalizations {
 
   @override
   String get ascAppConfigSaved => 'App Store Connect の設定を保存しました';
+
+  @override
+  String get board => 'ボード';
+
+  @override
+  String get newBoard => '新規ボード';
+
+  @override
+  String get boardModeDescription =>
+      '1つのキャンバスに複数のフレーム。クロップゾーンで分割して個別のスクリーンショットにします。';
+
+  @override
+  String get cropZones => 'クロップゾーン';
+
+  @override
+  String get addCropZone => 'クロップゾーンを追加';
+
+  @override
+  String get showCropZones => 'クロップゾーンを表示';
+
+  @override
+  String get hideCropZones => 'クロップゾーンを非表示';
+
+  @override
+  String get includeInExport => '書き出しに含める';
+
+  @override
+  String get excludeFromExport => '書き出しから除外';
+
+  @override
+  String get lockZoneSize => 'デバイスサイズに固定';
+
+  @override
+  String get unlockZoneSize => 'サイズ固定を解除';
+
+  @override
+  String get zoneSizeLockedHint =>
+      '固定されたゾーンはピクセルパーフェクトなクロップとして書き出されます。解除すると自由に変形でき、ターゲットサイズに拡大縮小されます。';
+
+  @override
+  String get renameZone => 'ゾーンの名前を変更';
+
+  @override
+  String get zoneName => 'ゾーン名';
+
+  @override
+  String get addFrame => 'フレームを追加';
+
+  @override
+  String get frames => 'フレーム';
+
+  @override
+  String frameLabel(int index) {
+    return 'フレーム $index';
+  }
+
+  @override
+  String get bringToFront => '最前面へ移動';
+
+  @override
+  String get sendToBack => '最背面へ移動';
+
+  @override
+  String get arrangeZones => 'ゾーンを横一列に整列';
+
+  @override
+  String get fitBoardToContent => 'ボードをコンテンツに合わせる';
+
+  @override
+  String get boardSize => 'ボードサイズ';
+
+  @override
+  String zonesIncludedInExport(int included, int total) {
+    return '$total個中$included個のゾーンが書き出されます';
+  }
+
+  @override
+  String get noCropZonesToExport => '書き出し対象のクロップゾーンがありません';
+
+  @override
+  String boardTooLargeToCapture(int megapixels) {
+    return 'このボードは非常に大きいため（$megapixels MP）、縮小サイズでキャプチャされました。書き出された画像が鮮明でない場合があります。ピクセルパーフェクトに出力するには、ボードのサイズを小さくしてください。';
+  }
+
+  @override
+  String someZonesFailedToExport(int failed, int total) {
+    return '$total個中$failed個のクロップゾーンを書き出せませんでした';
+  }
+
+  @override
+  String get zoneSpacing => 'ゾーンの間隔';
+
+  @override
+  String get zoneSpacingNone => '間隔なし';
+
+  @override
+  String get zoneSpacingHint =>
+      '間隔をゼロに設定すると、背景がすべてのスクリーンショットにわたって1つの連続した画像として表示されます。';
+
+  @override
+  String get boardTemplates => 'ボードレイアウト';
+
+  @override
+  String get boardTemplatesHint => 'ボード用に設計された背景とフレームの配置。';
+
+  @override
+  String get artboardPresets => 'テキストスタイル';
+
+  @override
+  String get applyBoardTemplateConfirm =>
+      'ボードの背景が置き換えられ、すべてのフレームが再配置されます。インポートしたスクリーンショットは保持されます。';
+
+  @override
+  String zoneLimitReached(int max) {
+    return 'デバイスサイズごとに最大$max枚のスクリーンショット';
+  }
+
+  @override
+  String playLimitWarning(int max, int extra) {
+    return 'Google Playで許可されるスクリーンショットは$max枚までです — 最後の$extra枚はアップロードされません';
+  }
+
+  @override
+  String storeLimitsHint(int ios, int android) {
+    return 'App Storeは$ios枚、Google Playは$android枚のスクリーンショットを許可しています。';
+  }
+
+  @override
+  String get exportingBoard => 'ボードを描画中…';
+
+  @override
+  String get searchDevices => 'デバイスを検索';
 }

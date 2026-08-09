@@ -27,7 +27,18 @@ const _tabIcons = <IconData>[
 ];
 
 class DesktopEditorControls extends StatefulWidget {
-  const DesktopEditorControls({super.key});
+  const DesktopEditorControls({
+    super.key,
+    this.frameTab,
+    this.frameTabIcon,
+    this.frameTabLabel,
+  });
+
+  /// Replaces the Frame tab's content. Board mode swaps in its own panel,
+  /// since a board has a list of frames rather than one frame per design.
+  final Widget? frameTab;
+  final IconData? frameTabIcon;
+  final String? frameTabLabel;
 
   @override
   State<DesktopEditorControls> createState() => _DesktopEditorControlsState();
@@ -75,15 +86,25 @@ class _DesktopEditorControlsState extends State<DesktopEditorControls>
     final theme = Theme.of(context);
     final labels = [
       context.l10n.background,
-      context.l10n.frame,
+      widget.frameTabLabel ?? context.l10n.frame,
       context.l10n.text,
       context.l10n.doodle,
       context.l10n.aiAssistant,
       'Translation',
     ];
+    final contents = [
+      ..._tabContents.sublist(0, 1),
+      widget.frameTab ?? _tabContents[1],
+      ..._tabContents.sublist(2),
+    ];
+    final icons = [
+      ..._tabIcons.sublist(0, 1),
+      widget.frameTabIcon ?? _tabIcons[1],
+      ..._tabIcons.sublist(2),
+    ];
     final selectedLabel = labels[_selectedIndex];
-    final selectedContent = _tabContents[_selectedIndex];
-    final count = _tabIcons.length;
+    final selectedContent = contents[_selectedIndex];
+    final count = icons.length;
 
     return Column(
       children: [
@@ -132,7 +153,7 @@ class _DesktopEditorControlsState extends State<DesktopEditorControls>
                         // Tab icons
                         Row(
                           children: List.generate(count, (i) {
-                            final icon = _tabIcons[i];
+                            final icon = icons[i];
                             final isSelected = i == _selectedIndex;
 
                             return Expanded(
