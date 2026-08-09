@@ -1811,6 +1811,135 @@ class AppLocalizationsZh extends AppLocalizations {
 
   @override
   String get ascAppConfigSaved => 'App Store Connect 配置已保存';
+
+  @override
+  String get board => '画板';
+
+  @override
+  String get newBoard => '新建画板';
+
+  @override
+  String get boardModeDescription => '一个包含多个边框的画布。裁剪区域将其切割为独立的截图。';
+
+  @override
+  String get cropZones => '裁剪区域';
+
+  @override
+  String get addCropZone => '添加裁剪区域';
+
+  @override
+  String get showCropZones => '显示裁剪区域';
+
+  @override
+  String get hideCropZones => '隐藏裁剪区域';
+
+  @override
+  String get includeInExport => '包含在导出中';
+
+  @override
+  String get excludeFromExport => '从导出中排除';
+
+  @override
+  String get lockZoneSize => '锁定至设备尺寸';
+
+  @override
+  String get unlockZoneSize => '解锁尺寸';
+
+  @override
+  String get zoneSizeLockedHint =>
+      '锁定的区域将导出为像素级的精准裁剪。解锁后可自由调整大小，裁剪内容随后将缩放至目标尺寸。';
+
+  @override
+  String get renameZone => '重命名区域';
+
+  @override
+  String get zoneName => '区域名称';
+
+  @override
+  String get addFrame => '添加边框';
+
+  @override
+  String get frames => '设备边框';
+
+  @override
+  String frameLabel(int index) {
+    return '边框 $index';
+  }
+
+  @override
+  String get bringToFront => '置于顶层';
+
+  @override
+  String get sendToBack => '置于底层';
+
+  @override
+  String get arrangeZones => '按行排列区域';
+
+  @override
+  String get fitBoardToContent => '使画板适应内容';
+
+  @override
+  String get boardSize => '画板尺寸';
+
+  @override
+  String zonesIncludedInExport(int included, int total) {
+    return '将导出 $included / $total 个区域';
+  }
+
+  @override
+  String get noCropZonesToExport => '未标记任何用于导出的裁剪区域';
+
+  @override
+  String boardTooLargeToCapture(int megapixels) {
+    return '该画板非常大（$megapixels MP），因此按缩小比例进行了截取。导出的图片可能会变模糊 — 请减小画板尺寸以获得像素级的精准输出。';
+  }
+
+  @override
+  String someZonesFailedToExport(int failed, int total) {
+    return '无法导出 $failed / $total 个裁剪区域';
+  }
+
+  @override
+  String get zoneSpacing => '区域间距';
+
+  @override
+  String get zoneSpacingNone => '无间距';
+
+  @override
+  String get zoneSpacingHint => '将间距设置为零，使背景作为一张连续图像跨越每张截图。';
+
+  @override
+  String get boardTemplates => '画板布局';
+
+  @override
+  String get boardTemplatesHint => '为画板设计的背景和边框位置。';
+
+  @override
+  String get artboardPresets => '文本样式';
+
+  @override
+  String get applyBoardTemplateConfirm => '这将替换画板背景并重新调整每个边框的位置。您导入的截图将被保留。';
+
+  @override
+  String zoneLimitReached(int max) {
+    return '每个设备尺寸最多 $max 张截图';
+  }
+
+  @override
+  String playLimitWarning(int max, int extra) {
+    return 'Google Play 最多允许 $max 张截图 — 最后 $extra 张不会被上传';
+  }
+
+  @override
+  String storeLimitsHint(int ios, int android) {
+    return 'App Store 允许 $ios 张截图，Google Play 允许 $android 张。';
+  }
+
+  @override
+  String get exportingBoard => '正在渲染画板…';
+
+  @override
+  String get searchDevices => '搜索设备';
 }
 
 /// The translations for Chinese, using the Han script (`zh_Hant`).
@@ -3620,4 +3749,133 @@ class AppLocalizationsZhHant extends AppLocalizationsZh {
 
   @override
   String get ascAppConfigSaved => 'App Store Connect 設定已儲存';
+
+  @override
+  String get board => '畫板';
+
+  @override
+  String get newBoard => '新增畫板';
+
+  @override
+  String get boardModeDescription => '一個包含多個外框的畫布。裁切區域將其分割為單獨的截圖。';
+
+  @override
+  String get cropZones => '裁切區域';
+
+  @override
+  String get addCropZone => '新增裁切區域';
+
+  @override
+  String get showCropZones => '顯示裁切區域';
+
+  @override
+  String get hideCropZones => '隱藏裁切區域';
+
+  @override
+  String get includeInExport => '包含在匯出中';
+
+  @override
+  String get excludeFromExport => '從匯出中排除';
+
+  @override
+  String get lockZoneSize => '鎖定至裝置尺寸';
+
+  @override
+  String get unlockZoneSize => '解鎖尺寸';
+
+  @override
+  String get zoneSizeLockedHint =>
+      '鎖定的區域將匯出為像素級的精準裁切。解鎖後可自由調整大小，裁切內容隨後將縮放至目標尺寸。';
+
+  @override
+  String get renameZone => '重新命名區域';
+
+  @override
+  String get zoneName => '區域名稱';
+
+  @override
+  String get addFrame => '新增外框';
+
+  @override
+  String get frames => '裝置外框';
+
+  @override
+  String frameLabel(int index) {
+    return '外框 $index';
+  }
+
+  @override
+  String get bringToFront => '移至最前';
+
+  @override
+  String get sendToBack => '移至最後';
+
+  @override
+  String get arrangeZones => '將區域排列成一行';
+
+  @override
+  String get fitBoardToContent => '使畫板適合內容';
+
+  @override
+  String get boardSize => '畫板尺寸';
+
+  @override
+  String zonesIncludedInExport(int included, int total) {
+    return '將匯出 $included / $total 個區域';
+  }
+
+  @override
+  String get noCropZonesToExport => '未標記任何用於匯出的裁切區域';
+
+  @override
+  String boardTooLargeToCapture(int megapixels) {
+    return '該畫板非常大（$megapixels MP），因此按縮小比例進行了擷取。匯出的圖片可能會變模糊 — 請減小畫板尺寸以獲得像素級的精準輸出。';
+  }
+
+  @override
+  String someZonesFailedToExport(int failed, int total) {
+    return '無法匯出 $failed / $total 個裁切區域';
+  }
+
+  @override
+  String get zoneSpacing => '區域間距';
+
+  @override
+  String get zoneSpacingNone => '無間距';
+
+  @override
+  String get zoneSpacingHint => '將間距設定為零，使背景作為一張連續影像跨越每張截圖。';
+
+  @override
+  String get boardTemplates => '畫板佈局';
+
+  @override
+  String get boardTemplatesHint => '為畫板設計的背景和外框位置。';
+
+  @override
+  String get artboardPresets => '文字樣式';
+
+  @override
+  String get applyBoardTemplateConfirm => '這將替換畫板背景並重新調整每個外框的位置。你匯入的截圖將被保留。';
+
+  @override
+  String zoneLimitReached(int max) {
+    return '每個裝置尺寸最多 $max 張截圖';
+  }
+
+  @override
+  String playLimitWarning(int max, int extra) {
+    return 'Google Play 最多允許 $max 張截圖 — 最後 $extra 張不會被上傳';
+  }
+
+  @override
+  String storeLimitsHint(int ios, int android) {
+    return 'App Store 允許 $ios 張截圖，Google Play 允許 $android 張。';
+  }
+
+  @override
+  String get exportingBoard => '正在渲染畫板…';
+
+  @override
+  String get searchDevices => '搜尋裝置';
 }

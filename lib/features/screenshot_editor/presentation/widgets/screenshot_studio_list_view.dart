@@ -2,6 +2,7 @@ import 'package:app_screenshots/features/screenshot_editor/data/models/design_fo
 import 'package:app_screenshots/features/screenshot_editor/data/models/saved_design.dart';
 import 'package:app_screenshots/features/screenshot_editor/presentation/cubit/screenshot_library_cubit.dart';
 import 'package:app_screenshots/features/screenshot_editor/presentation/helpers/design_share_helper.dart';
+import 'package:app_screenshots/features/screenshot_editor/presentation/pages/board_page.dart';
 import 'package:app_screenshots/features/screenshot_editor/presentation/pages/multi_screenshot_page.dart';
 import 'package:app_screenshots/features/screenshot_editor/presentation/pages/screenshot_editor_page.dart';
 import 'package:app_screenshots/features/screenshot_editor/presentation/widgets/design_list_tile.dart';
@@ -74,7 +75,12 @@ class ScreenshotStudioListView extends StatelessWidget {
       design: design,
       onTap: () {
         final Widget page;
-        if (design.isMulti) {
+        if (design.isBoard) {
+          page = BoardPage(
+            initialSavedDesign: design,
+            displayType: design.design.displayType,
+          );
+        } else if (design.isMulti) {
           page = MultiScreenshotPage(
             initialSavedDesign: design,
             displayType: design.design.displayType,
@@ -221,7 +227,12 @@ class _FolderGroup extends StatelessWidget {
               design: design,
               onTap: () {
                 final Widget page;
-                if (design.isMulti) {
+                if (design.isBoard) {
+                  page = BoardPage(
+                    initialSavedDesign: design,
+                    displayType: design.design.displayType,
+                  );
+                } else if (design.isMulti) {
                   page = MultiScreenshotPage(
                     initialSavedDesign: design,
                     displayType: design.design.displayType,

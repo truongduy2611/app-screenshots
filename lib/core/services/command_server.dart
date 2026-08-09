@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:math' as math;
 import 'dart:convert';
 import 'dart:io';
 import 'dart:math';
@@ -17,6 +18,9 @@ import 'package:app_screenshots/features/screenshot_editor/data/screenshot_prese
 import 'package:app_screenshots/features/screenshot_editor/presentation/widgets/icon_picker_dialog.dart';
 import 'package:app_screenshots/features/screenshot_editor/presentation/cubit/multi_screenshot_cubit.dart';
 import 'package:app_screenshots/features/screenshot_editor/presentation/cubit/screenshot_editor_cubit.dart';
+import 'package:app_screenshots/features/screenshot_editor/data/models/board_design.dart';
+import 'package:app_screenshots/features/screenshot_editor/data/models/board_templates.dart';
+import 'package:app_screenshots/features/screenshot_editor/presentation/cubit/board_cubit.dart';
 import 'package:app_screenshots/features/screenshot_editor/presentation/cubit/screenshot_library_cubit.dart';
 import 'package:app_screenshots/features/screenshot_editor/presentation/cubit/translation_cubit.dart';
 import 'package:app_screenshots_shared/app_screenshots_shared.dart';
@@ -29,6 +33,7 @@ import 'package:path_provider/path_provider.dart';
 part 'command_server_editor.dart';
 part 'command_server_library.dart';
 part 'command_server_multi.dart';
+part 'command_server_board.dart';
 part 'command_server_preset.dart';
 part 'command_server_translate.dart';
 part 'command_server_utils.dart';
@@ -67,6 +72,9 @@ class CommandServer {
   /// Multi-screenshot cubit — set when multi-editor is open.
   MultiScreenshotCubit? _multiCubit;
 
+  /// Board cubit — set when the board editor is open.
+  BoardCubit? _boardCubit;
+
   /// Library cubit — set once at startup.
   ScreenshotLibraryCubit? _libraryCubit;
 
@@ -85,6 +93,17 @@ class CommandServer {
   /// multi-screenshot editor with the given display type. Returns a Future
   /// that completes once the editor is ready and cubits are registered.
   Future<void> Function(String displayType)? _navigateToMultiCallback;
+
+  /// Navigate-to-board callback — opens the board editor with the given
+  /// display type and starting zone count.
+  Future<void> Function(String displayType, int zoneCount)?
+      _navigateToBoardCallback;
+
+  /// Board export callback — registered by the board page, which owns the
+  /// capture pipeline. A null zone id means "every exportable zone". Returns
+  /// the written file paths.
+  Future<List<String>?> Function(String? zoneId, String? outputDir)?
+      _boardExportCallback;
 
   // ── Services ──
 
@@ -143,6 +162,31 @@ class CommandServer {
     }
   }
 
+  void registerBoard(BoardCubit cubit) {
+    _boardCubit = cubit;
+    if (isRunning) AppLogger.d('Board cubit registered', tag: _tag);
+  }
+
+  void unregisterBoard(BoardCubit cubit) {
+    if (_boardCubit == cubit) {
+      _boardCubit = null;
+      if (isRunning) AppLogger.d('Board cubit unregistered', tag: _tag);
+    }
+  }
+
+  /// Register the board page's export pipeline, which owns the single-capture
+  /// crop path the CLI cannot reach on its own.
+  void registerBoardExport(
+    Future<List<String>?> Function(String? zoneId, String? outputDir) export,
+  ) {
+    _boardExportCallback = export;
+    if (isRunning) AppLogger.d('Board export callback registered', tag: _tag);
+  }
+
+  void unregisterBoardExport() {
+    _boardExportCallback = null;
+  }
+
   void registerLibrary(ScreenshotLibraryCubit cubit) {
     _libraryCubit = cubit;
     if (isRunning) AppLogger.d('Library cubit registered', tag: _tag);
@@ -179,13 +223,16 @@ class CommandServer {
   /// Register navigation callback from the studio page so CLI can open editors.
   void registerNavigation({
     required Future<void> Function(String displayType) openMulti,
+    Future<void> Function(String displayType, int zoneCount)? openBoard,
   }) {
     _navigateToMultiCallback = openMulti;
+    _navigateToBoardCallback = openBoard;
     if (isRunning) AppLogger.d('Navigation callback registered', tag: _tag);
   }
 
   void unregisterNavigation() {
     _navigateToMultiCallback = null;
+    _navigateToBoardCallback = null;
     if (isRunning) AppLogger.d('Navigation callback unregistered', tag: _tag);
   }
 
@@ -371,6 +418,7 @@ class CommandServer {
           'version': '1.0.0',
           'hasEditor': _editorCubit != null,
           'hasMulti': _multiCubit != null,
+          'hasBoard': _boardCubit != null,
           'hasLibrary': true,
           'hasTranslation': _translationCubit != null,
         });
@@ -381,6 +429,12 @@ class CommandServer {
           'editor': true,
           'library': true,
           'translation': true,
+          'board': {
+            'available': true,
+            'open': _boardCubit != null,
+            'maxZones': BoardDesign.maxZones,
+            'maxPlayZones': BoardDesign.maxPlayZones,
+          },
           'appStoreConnect': {
             'mainListing': _ascUploadService != null,
             'customProductPages': _ascUploadService != null,
@@ -406,6 +460,8 @@ class CommandServer {
         return handlePreset(route.actionFrom(path), method, request);
       case ApiRoute.multi:
         return handleMulti(route.actionFrom(path), method, request);
+      case ApiRoute.board:
+        return handleBoard(route.actionFrom(path), method, request);
       case ApiRoute.asc:
         return handleAsc(route.actionFrom(path), method, request);
       case ApiRoute.play:

@@ -1933,4 +1933,138 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get ascAppConfigSaved => 'Configuration App Store Connect enregistrée';
+
+  @override
+  String get board => 'Tableau';
+
+  @override
+  String get newBoard => 'Nouveau tableau';
+
+  @override
+  String get boardModeDescription =>
+      'Un canevas avec plusieurs cadres. Les zones de découpe le divisent en captures d\'écran individuelles.';
+
+  @override
+  String get cropZones => 'Zones de découpe';
+
+  @override
+  String get addCropZone => 'Ajouter une zone de découpe';
+
+  @override
+  String get showCropZones => 'Afficher les zones de découpe';
+
+  @override
+  String get hideCropZones => 'Masquer les zones de découpe';
+
+  @override
+  String get includeInExport => 'Inclure dans l\'exportation';
+
+  @override
+  String get excludeFromExport => 'Exclure de l\'exportation';
+
+  @override
+  String get lockZoneSize => 'Verrouiller à la taille de l\'appareil';
+
+  @override
+  String get unlockZoneSize => 'Déverrouiller la taille';
+
+  @override
+  String get zoneSizeLockedHint =>
+      'Les zones verrouillées sont exportées sous forme de découpe parfaite au pixel près. Le déverrouillage vous permet de redimensionner librement ; la découpe est ensuite mise à l\'échelle à la taille cible.';
+
+  @override
+  String get renameZone => 'Renommer la zone';
+
+  @override
+  String get zoneName => 'Nom de la zone';
+
+  @override
+  String get addFrame => 'Ajouter un cadre';
+
+  @override
+  String get frames => 'Cadres';
+
+  @override
+  String frameLabel(int index) {
+    return 'Cadre $index';
+  }
+
+  @override
+  String get bringToFront => 'Placer au premier plan';
+
+  @override
+  String get sendToBack => 'Envoyer à l\'arrière-plan';
+
+  @override
+  String get arrangeZones => 'Organiser les zones en ligne';
+
+  @override
+  String get fitBoardToContent => 'Ajuster le tableau au contenu';
+
+  @override
+  String get boardSize => 'Taille du tableau';
+
+  @override
+  String zonesIncludedInExport(int included, int total) {
+    return '$included sur $total zones seront exportées';
+  }
+
+  @override
+  String get noCropZonesToExport =>
+      'Aucune zone de découpe n\'est marquée pour l\'exportation';
+
+  @override
+  String boardTooLargeToCapture(int megapixels) {
+    return 'Ce tableau est très grand ($megapixels Mpx), il a donc été capturé à une échelle réduite. Les images exportées peuvent être moins nettes — réduisez la taille du tableau pour un rendu parfait au pixel près.';
+  }
+
+  @override
+  String someZonesFailedToExport(int failed, int total) {
+    return 'Impossible d\'exporter $failed zones de découpe sur $total';
+  }
+
+  @override
+  String get zoneSpacing => 'Espacement des zones';
+
+  @override
+  String get zoneSpacingNone => 'Aucun espacement';
+
+  @override
+  String get zoneSpacingHint =>
+      'Réglez l\'espacement sur zéro pour que l\'arrière-plan s\'étende sur chaque capture sous la forme d\'une image continue.';
+
+  @override
+  String get boardTemplates => 'Dispositions du tableau';
+
+  @override
+  String get boardTemplatesHint =>
+      'Arrière-plans et placement des cadres conçus pour un tableau.';
+
+  @override
+  String get artboardPresets => 'Styles de texte';
+
+  @override
+  String get applyBoardTemplateConfirm =>
+      'Cela remplace l\'arrière-plan du tableau et repositionne chaque cadre. Vos captures importées sont conservées.';
+
+  @override
+  String zoneLimitReached(int max) {
+    return 'Maximum $max captures par taille d\'appareil';
+  }
+
+  @override
+  String playLimitWarning(int max, int extra) {
+    return 'Google Play accepte $max captures — les $extra dernières ne seront pas envoyées';
+  }
+
+  @override
+  String storeLimitsHint(int ios, int android) {
+    return 'L\'App Store autorise $ios captures, Google Play $android.';
+  }
+
+  @override
+  String get exportingBoard => 'Rendu du tableau…';
+
+  @override
+  String get searchDevices => 'Rechercher des appareils';
 }

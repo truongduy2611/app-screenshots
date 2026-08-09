@@ -282,11 +282,11 @@ class ScreenshotLibraryCubit extends Cubit<ScreenshotLibraryState> {
       return;
     }
 
-    // Strip the "multi:" prefix if present — it's only a UI routing signal,
-    // not a valid display type key.
-    final cleanDisplayType = newDisplayType.startsWith('multi:')
-        ? newDisplayType.substring(6)
-        : newDisplayType;
+    // Strip any "multi:" / "board:" prefix — those are UI routing signals, not
+    // valid display type keys.
+    final cleanDisplayType = ScreenshotUtils.stripCreateModePrefix(
+      newDisplayType,
+    );
 
     try {
       final originalDesign = originalSavedDesign.design;
@@ -337,6 +337,9 @@ class ScreenshotLibraryCubit extends Cubit<ScreenshotLibraryState> {
         imageFiles: imageFiles,
         translationBundle: originalSavedDesign.translationBundle,
         ascAppConfig: null,
+        // A board carries its own canvas size and zone formats, so it is
+        // copied as-is rather than re-scaled to `cleanDisplayType`.
+        board: originalSavedDesign.board,
       );
 
       await loadDesigns();
@@ -533,6 +536,7 @@ class ScreenshotLibraryCubit extends Cubit<ScreenshotLibraryState> {
         originalImageFile: originalImageFile,
         multiDesigns: imported.multiDesigns,
         imageFiles: imageFiles,
+        board: imported.board,
       );
       AppLogger.i('Design saved: ${saved.id}', tag: _tag);
       await loadDesigns();

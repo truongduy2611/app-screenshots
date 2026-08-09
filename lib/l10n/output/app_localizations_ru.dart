@@ -1921,4 +1921,138 @@ class AppLocalizationsRu extends AppLocalizations {
 
   @override
   String get ascAppConfigSaved => 'Конфигурация App Store Connect сохранена';
+
+  @override
+  String get board => 'Доска';
+
+  @override
+  String get newBoard => 'Новая доска';
+
+  @override
+  String get boardModeDescription =>
+      'Один холст с множеством рамок. Зоны кадрирования разделяют его на отдельные скриншоты.';
+
+  @override
+  String get cropZones => 'Зоны кадрирования';
+
+  @override
+  String get addCropZone => 'Добавить зону кадрирования';
+
+  @override
+  String get showCropZones => 'Показать зоны кадрирования';
+
+  @override
+  String get hideCropZones => 'Скрыть зоны кадрирования';
+
+  @override
+  String get includeInExport => 'Включить в экспорт';
+
+  @override
+  String get excludeFromExport => 'Исключить из экспорта';
+
+  @override
+  String get lockZoneSize => 'Зафиксировать размер устройства';
+
+  @override
+  String get unlockZoneSize => 'Разблокировать размер';
+
+  @override
+  String get zoneSizeLockedHint =>
+      'Заблокированные зоны экспортируются с точностью до пикселя. Разблокировка позволяет свободно менять размер; в этом случае обрезка масштабируется до целевого размера.';
+
+  @override
+  String get renameZone => 'Переименовать зону';
+
+  @override
+  String get zoneName => 'Название зоны';
+
+  @override
+  String get addFrame => 'Добавить рамку';
+
+  @override
+  String get frames => 'Рамки';
+
+  @override
+  String frameLabel(int index) {
+    return 'Рамка $index';
+  }
+
+  @override
+  String get bringToFront => 'На передний план';
+
+  @override
+  String get sendToBack => 'На задний план';
+
+  @override
+  String get arrangeZones => 'Расположить зоны в ряд';
+
+  @override
+  String get fitBoardToContent => 'Подогнать доску по содержимому';
+
+  @override
+  String get boardSize => 'Размер доски';
+
+  @override
+  String zonesIncludedInExport(int included, int total) {
+    return 'Будет экспортировано $included из $total зон';
+  }
+
+  @override
+  String get noCropZonesToExport =>
+      'Нет зон кадрирования, отмеченных для экспорта';
+
+  @override
+  String boardTooLargeToCapture(int megapixels) {
+    return 'Эта доска очень большая ($megapixels MP), поэтому она была захвачена в уменьшенном масштабе. Экспортированные изображения могут быть менее четкими — уменьшите размер доски для экспорта с точностью до пикселя.';
+  }
+
+  @override
+  String someZonesFailedToExport(int failed, int total) {
+    return 'Не удалось экспортировать $failed из $total зон кадрирования';
+  }
+
+  @override
+  String get zoneSpacing => 'Интервал зон';
+
+  @override
+  String get zoneSpacingNone => 'Без интервала';
+
+  @override
+  String get zoneSpacingHint =>
+      'Установите интервал на ноль, чтобы фон растягивался на все скриншоты как единое непрерывное изображение.';
+
+  @override
+  String get boardTemplates => 'Макеты доски';
+
+  @override
+  String get boardTemplatesHint =>
+      'Фоны и размещение рамок, разработанные для доски.';
+
+  @override
+  String get artboardPresets => 'Стили текста';
+
+  @override
+  String get applyBoardTemplateConfirm =>
+      'Это заменит фон доски и изменит положение всех рамок. Ваши импортированные скриншоты сохранятся.';
+
+  @override
+  String zoneLimitReached(int max) {
+    return 'Максимум $max скриншотов на размер устройства';
+  }
+
+  @override
+  String playLimitWarning(int max, int extra) {
+    return 'Google Play принимает $max скриншотов — последние $extra не будут загружены';
+  }
+
+  @override
+  String storeLimitsHint(int ios, int android) {
+    return 'App Store позволяет $ios скриншотов, Google Play — $android.';
+  }
+
+  @override
+  String get exportingBoard => 'Рендеринг доски…';
+
+  @override
+  String get searchDevices => 'Поиск устройств';
 }

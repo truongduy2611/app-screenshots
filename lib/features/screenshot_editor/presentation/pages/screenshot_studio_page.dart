@@ -14,12 +14,14 @@ import 'package:app_screenshots/features/screenshot_editor/data/models/saved_des
 import 'package:app_screenshots/features/screenshot_editor/presentation/cubit/screenshot_library_cubit.dart';
 import 'package:app_screenshots/features/screenshot_editor/presentation/models/screenshot_studio_item.dart';
 import 'package:app_screenshots/features/screenshot_editor/presentation/pages/screenshot_editor_page.dart';
+import 'package:app_screenshots/features/screenshot_editor/presentation/pages/board_page.dart';
 import 'package:app_screenshots/features/screenshot_editor/presentation/pages/multi_screenshot_page.dart';
 import 'package:app_screenshots/features/screenshot_editor/presentation/widgets/device_selection_dialog.dart';
 import 'package:app_screenshots/features/screenshot_editor/presentation/widgets/screenshot_studio_empty_state.dart';
 import 'package:app_screenshots/features/screenshot_editor/presentation/widgets/move_to_folder_dialog.dart';
 import 'package:app_screenshots/features/screenshot_editor/presentation/widgets/screenshot_studio_grid_view.dart';
 import 'package:app_screenshots/features/screenshot_editor/presentation/widgets/screenshot_studio_list_view.dart';
+import 'package:app_screenshots/features/screenshot_editor/utils/screenshot_utils.dart';
 import 'package:app_screenshots/features/settings/presentation/pages/settings_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -76,7 +78,16 @@ class _ScreenshotStudioViewState extends State<ScreenshotStudioView> {
       }
 
       // Open the appropriate editor with sourceFilePath set
-      if (design.isMulti) {
+      if (design.isBoard) {
+        Navigator.of(context).push(
+          MaterialPageRoute(
+            builder: (_) => BoardPage(
+              initialSavedDesign: design,
+              sourceFilePath: file.path,
+            ),
+          ),
+        );
+      } else if (design.isMulti) {
         Navigator.of(context).push(
           MaterialPageRoute(
             builder: (_) => MultiScreenshotPage(
@@ -110,6 +121,22 @@ class _ScreenshotStudioViewState extends State<ScreenshotStudioView> {
           ),
         );
         // Small delay for the page to mount and register its cubits
+        await Future.delayed(const Duration(milliseconds: 500));
+      },
+      openBoard: (displayType, zoneCount) async {
+        if (!mounted) return;
+        final currentFolderId = context
+            .read<ScreenshotLibraryCubit>()
+            .currentFolderId;
+        Navigator.of(context).push(
+          MaterialPageRoute(
+            builder: (_) => BoardPage(
+              displayType: displayType,
+              folderId: currentFolderId,
+              initialZoneCount: zoneCount,
+            ),
+          ),
+        );
         await Future.delayed(const Duration(milliseconds: 500));
       },
     );
@@ -558,10 +585,14 @@ class _ScreenshotStudioViewState extends State<ScreenshotStudioView> {
             .read<ScreenshotLibraryCubit>()
             .currentFolderId;
         final Widget page;
-        if (value.startsWith('multi:')) {
-          final displayType = value.substring(6);
+        if (value.startsWith(ScreenshotUtils.boardModePrefix)) {
+          page = BoardPage(
+            displayType: ScreenshotUtils.stripCreateModePrefix(value),
+            folderId: currentFolderId,
+          );
+        } else if (value.startsWith(ScreenshotUtils.multiModePrefix)) {
           page = MultiScreenshotPage(
-            displayType: displayType,
+            displayType: ScreenshotUtils.stripCreateModePrefix(value),
             folderId: currentFolderId,
           );
         } else {

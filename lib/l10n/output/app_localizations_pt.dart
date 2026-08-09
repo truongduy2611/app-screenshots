@@ -1926,4 +1926,138 @@ class AppLocalizationsPt extends AppLocalizations {
 
   @override
   String get ascAppConfigSaved => 'Configuração do App Store Connect salva';
+
+  @override
+  String get board => 'Quadro';
+
+  @override
+  String get newBoard => 'Novo Quadro';
+
+  @override
+  String get boardModeDescription =>
+      'Uma única tela com várias molduras. As zonas de recorte a dividem em capturas de tela individuais.';
+
+  @override
+  String get cropZones => 'Zonas de Recorte';
+
+  @override
+  String get addCropZone => 'Adicionar Zona de Recorte';
+
+  @override
+  String get showCropZones => 'Mostrar Zonas de Recorte';
+
+  @override
+  String get hideCropZones => 'Ocultar Zonas de Recorte';
+
+  @override
+  String get includeInExport => 'Incluir na Exportação';
+
+  @override
+  String get excludeFromExport => 'Excluir da Exportação';
+
+  @override
+  String get lockZoneSize => 'Bloquear no Tamanho do Dispositivo';
+
+  @override
+  String get unlockZoneSize => 'Desbloquear Tamanho';
+
+  @override
+  String get zoneSizeLockedHint =>
+      'Zonas bloqueadas são exportadas como um recorte com precisão de pixel. Desbloquear permite redimensionar livremente; o recorte é então dimensionado para o tamanho final.';
+
+  @override
+  String get renameZone => 'Renomear Zona';
+
+  @override
+  String get zoneName => 'Nome da Zona';
+
+  @override
+  String get addFrame => 'Adicionar Moldura';
+
+  @override
+  String get frames => 'Molduras';
+
+  @override
+  String frameLabel(int index) {
+    return 'Moldura $index';
+  }
+
+  @override
+  String get bringToFront => 'Trazer para a Frente';
+
+  @override
+  String get sendToBack => 'Enviar para o Fundo';
+
+  @override
+  String get arrangeZones => 'Organizar Zonas em Fila';
+
+  @override
+  String get fitBoardToContent => 'Ajustar Quadro ao Conteúdo';
+
+  @override
+  String get boardSize => 'Tamanho do Quadro';
+
+  @override
+  String zonesIncludedInExport(int included, int total) {
+    return '$included de $total zonas serão exportadas';
+  }
+
+  @override
+  String get noCropZonesToExport =>
+      'Nenhuma zona de recorte marcada para exportação';
+
+  @override
+  String boardTooLargeToCapture(int megapixels) {
+    return 'Este quadro é muito grande ($megapixels MP), por isso foi capturado em escala reduzida. As imagens exportadas podem ficar menos nítidas — reduza o tamanho do quadro para uma saída com precisão de pixel.';
+  }
+
+  @override
+  String someZonesFailedToExport(int failed, int total) {
+    return 'Não foi possível exportar $failed de $total zonas de recorte';
+  }
+
+  @override
+  String get zoneSpacing => 'Espaçamento de Zonas';
+
+  @override
+  String get zoneSpacingNone => 'Sem espaçamento';
+
+  @override
+  String get zoneSpacingHint =>
+      'Defina o espaçamento como zero para que o fundo se estenda por todas as capturas como uma única imagem contínua.';
+
+  @override
+  String get boardTemplates => 'Layouts do Quadro';
+
+  @override
+  String get boardTemplatesHint =>
+      'Fundos e posicionamento de molduras projetados para um quadro.';
+
+  @override
+  String get artboardPresets => 'Estilos de Texto';
+
+  @override
+  String get applyBoardTemplateConfirm =>
+      'Isso substitui o fundo do quadro e reposiciona todas as molduras. Suas capturas importadas serão mantidas.';
+
+  @override
+  String zoneLimitReached(int max) {
+    return 'Máximo de $max capturas por tamanho de dispositivo';
+  }
+
+  @override
+  String playLimitWarning(int max, int extra) {
+    return 'O Google Play aceita $max capturas — as últimas $extra não serão enviadas';
+  }
+
+  @override
+  String storeLimitsHint(int ios, int android) {
+    return 'A App Store permite $ios capturas, o Google Play $android.';
+  }
+
+  @override
+  String get exportingBoard => 'Renderizando quadro…';
+
+  @override
+  String get searchDevices => 'Buscar dispositivos';
 }

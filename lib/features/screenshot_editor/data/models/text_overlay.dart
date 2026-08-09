@@ -47,6 +47,9 @@ class TextOverlay {
   });
 
   TextOverlay copyWith({
+    /// Overriding the id forks the overlay into a distinct one — used when a
+    /// template is instantiated once per board crop zone.
+    String? id,
     String? text,
     TextStyle? style,
     Offset? position,
@@ -69,7 +72,7 @@ class TextOverlay {
     bool clearWidth = false,
   }) {
     return TextOverlay(
-      id: id,
+      id: id ?? this.id,
       text: text ?? this.text,
       style: style ?? this.style,
       position: position ?? this.position,

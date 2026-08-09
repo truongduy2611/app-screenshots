@@ -2490,5 +2490,204 @@
   "ascAppConfigSaved": "App Store Connect config saved",
   "@ascAppConfigSaved": {
     "description": "Snackbar message when ASC configuration is saved"
+  },
+  "board": "Board",
+  "@board": {
+    "description": "Name of the single-canvas board editor mode"
+  },
+  "newBoard": "New Board",
+  "@newBoard": {
+    "description": "Action to create a new board design"
+  },
+  "boardModeDescription": "One canvas with many frames. Crop zones slice it into individual screenshots.",
+  "@boardModeDescription": {
+    "description": "Explanation of board mode shown when picking a design type"
+  },
+  "cropZones": "Crop Zones",
+  "@cropZones": {
+    "description": "Section title for the board's export regions"
+  },
+  "addCropZone": "Add Crop Zone",
+  "@addCropZone": {
+    "description": "Action to add an export region to the board"
+  },
+  "showCropZones": "Show Crop Zones",
+  "@showCropZones": {
+    "description": "Action to reveal crop zone outlines"
+  },
+  "hideCropZones": "Hide Crop Zones",
+  "@hideCropZones": {
+    "description": "Action to hide crop zone outlines"
+  },
+  "includeInExport": "Include in Export",
+  "@includeInExport": {
+    "description": "Marks a crop zone as exported"
+  },
+  "excludeFromExport": "Exclude from Export",
+  "@excludeFromExport": {
+    "description": "Marks a crop zone as skipped during export"
+  },
+  "lockZoneSize": "Lock to Device Size",
+  "@lockZoneSize": {
+    "description": "Pins a crop zone to its format's native pixel size"
+  },
+  "unlockZoneSize": "Unlock Size",
+  "@unlockZoneSize": {
+    "description": "Allows a crop zone to be resized freely"
+  },
+  "zoneSizeLockedHint": "Locked zones export as a pixel-perfect crop. Unlocking lets you resize freely; the crop is then scaled to the target size.",
+  "@zoneSizeLockedHint": {
+    "description": "Explains the trade-off between locked and unlocked crop zones"
+  },
+  "renameZone": "Rename Zone",
+  "@renameZone": {
+    "description": "Action to rename a crop zone"
+  },
+  "zoneName": "Zone Name",
+  "@zoneName": {
+    "description": "Text field label for a crop zone's name"
+  },
+  "addFrame": "Add Frame",
+  "@addFrame": {
+    "description": "Action to add a device frame to the board"
+  },
+  "frames": "Frames",
+  "@frames": {
+    "description": "Section title listing the board's device frames"
+  },
+  "frameLabel": "Frame {index}",
+  "@frameLabel": {
+    "description": "Label for a device frame by its index on the board",
+    "placeholders": {
+      "index": {
+        "type": "int"
+      }
+    }
+  },
+  "bringToFront": "Bring to Front",
+  "@bringToFront": {
+    "description": "Raises an element above the others"
+  },
+  "sendToBack": "Send to Back",
+  "@sendToBack": {
+    "description": "Lowers an element below the others"
+  },
+  "arrangeZones": "Arrange Zones in a Row",
+  "@arrangeZones": {
+    "description": "Re-lays crop zones out left to right"
+  },
+  "fitBoardToContent": "Fit Board to Content",
+  "@fitBoardToContent": {
+    "description": "Resizes the board canvas around its content"
+  },
+  "boardSize": "Board Size",
+  "@boardSize": {
+    "description": "Label for the board canvas dimensions"
+  },
+  "zonesIncludedInExport": "{included} of {total} zones will be exported",
+  "@zonesIncludedInExport": {
+    "description": "Summary of how many crop zones export produces",
+    "placeholders": {
+      "included": {
+        "type": "int"
+      },
+      "total": {
+        "type": "int"
+      }
+    }
+  },
+  "noCropZonesToExport": "No crop zones are marked for export",
+  "@noCropZonesToExport": {
+    "description": "Error shown when every crop zone is excluded"
+  },
+  "boardTooLargeToCapture": "This board is very large ({megapixels} MP), so it was captured at reduced scale. Exported images may be softer — reduce the board size for pixel-perfect output.",
+  "@boardTooLargeToCapture": {
+    "description": "Warning when the board exceeds the single-capture pixel budget",
+    "placeholders": {
+      "megapixels": {
+        "type": "int"
+      }
+    }
+  },
+  "someZonesFailedToExport": "{failed} of {total} crop zones could not be exported",
+  "@someZonesFailedToExport": {
+    "description": "Error shown when some crop zones failed to render during export",
+    "placeholders": {
+      "failed": {
+        "type": "int"
+      },
+      "total": {
+        "type": "int"
+      }
+    }
+  },
+  "zoneSpacing": "Zone Spacing",
+  "@zoneSpacing": {
+    "description": "Slider label for the gap between crop zones"
+  },
+  "zoneSpacingNone": "No spacing",
+  "@zoneSpacingNone": {
+    "description": "Label for zero gap between crop zones"
+  },
+  "zoneSpacingHint": "Set spacing to zero so a background spans every screenshot as one continuous image.",
+  "@zoneSpacingHint": {
+    "description": "Explains why zero zone spacing is useful"
+  },
+  "boardTemplates": "Board Layouts",
+  "@boardTemplates": {
+    "description": "Title for the board-specific template picker"
+  },
+  "boardTemplatesHint": "Backgrounds and frame placement designed for a board.",
+  "@boardTemplatesHint": {
+    "description": "Subtitle of the board template picker"
+  },
+  "artboardPresets": "Text Styles",
+  "@artboardPresets": {
+    "description": "Menu label for the per-artboard style presets on a board"
+  },
+  "applyBoardTemplateConfirm": "This replaces the board background and repositions every frame. Your imported screenshots are kept.",
+  "@applyBoardTemplateConfirm": {
+    "description": "Confirmation before applying a board layout"
+  },
+  "zoneLimitReached": "Maximum {max} screenshots per device size",
+  "@zoneLimitReached": {
+    "description": "Tooltip when no more crop zones can be added",
+    "placeholders": {
+      "max": {
+        "type": "int"
+      }
+    }
+  },
+  "playLimitWarning": "Google Play accepts {max} screenshots — the last {extra} will not upload",
+  "@playLimitWarning": {
+    "description": "Warning when a board has more zones than Google Play allows",
+    "placeholders": {
+      "max": {
+        "type": "int"
+      },
+      "extra": {
+        "type": "int"
+      }
+    }
+  },
+  "storeLimitsHint": "App Store allows {ios} screenshots, Google Play {android}.",
+  "@storeLimitsHint": {
+    "description": "Explains the per-store screenshot limits",
+    "placeholders": {
+      "ios": {
+        "type": "int"
+      },
+      "android": {
+        "type": "int"
+      }
+    }
+  },
+  "exportingBoard": "Rendering board…",
+  "@exportingBoard": {
+    "description": "Progress message while the board is captured"
+  },
+  "searchDevices": "Search devices",
+  "@searchDevices": {
+    "description": "Search field hint in the board frame device picker"
   }
 }

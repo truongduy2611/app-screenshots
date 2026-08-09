@@ -1911,4 +1911,137 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get ascAppConfigSaved => 'App Store Connect config saved';
+
+  @override
+  String get board => 'Board';
+
+  @override
+  String get newBoard => 'New Board';
+
+  @override
+  String get boardModeDescription =>
+      'One canvas with many frames. Crop zones slice it into individual screenshots.';
+
+  @override
+  String get cropZones => 'Crop Zones';
+
+  @override
+  String get addCropZone => 'Add Crop Zone';
+
+  @override
+  String get showCropZones => 'Show Crop Zones';
+
+  @override
+  String get hideCropZones => 'Hide Crop Zones';
+
+  @override
+  String get includeInExport => 'Include in Export';
+
+  @override
+  String get excludeFromExport => 'Exclude from Export';
+
+  @override
+  String get lockZoneSize => 'Lock to Device Size';
+
+  @override
+  String get unlockZoneSize => 'Unlock Size';
+
+  @override
+  String get zoneSizeLockedHint =>
+      'Locked zones export as a pixel-perfect crop. Unlocking lets you resize freely; the crop is then scaled to the target size.';
+
+  @override
+  String get renameZone => 'Rename Zone';
+
+  @override
+  String get zoneName => 'Zone Name';
+
+  @override
+  String get addFrame => 'Add Frame';
+
+  @override
+  String get frames => 'Frames';
+
+  @override
+  String frameLabel(int index) {
+    return 'Frame $index';
+  }
+
+  @override
+  String get bringToFront => 'Bring to Front';
+
+  @override
+  String get sendToBack => 'Send to Back';
+
+  @override
+  String get arrangeZones => 'Arrange Zones in a Row';
+
+  @override
+  String get fitBoardToContent => 'Fit Board to Content';
+
+  @override
+  String get boardSize => 'Board Size';
+
+  @override
+  String zonesIncludedInExport(int included, int total) {
+    return '$included of $total zones will be exported';
+  }
+
+  @override
+  String get noCropZonesToExport => 'No crop zones are marked for export';
+
+  @override
+  String boardTooLargeToCapture(int megapixels) {
+    return 'This board is very large ($megapixels MP), so it was captured at reduced scale. Exported images may be softer — reduce the board size for pixel-perfect output.';
+  }
+
+  @override
+  String someZonesFailedToExport(int failed, int total) {
+    return '$failed of $total crop zones could not be exported';
+  }
+
+  @override
+  String get zoneSpacing => 'Zone Spacing';
+
+  @override
+  String get zoneSpacingNone => 'No spacing';
+
+  @override
+  String get zoneSpacingHint =>
+      'Set spacing to zero so a background spans every screenshot as one continuous image.';
+
+  @override
+  String get boardTemplates => 'Board Layouts';
+
+  @override
+  String get boardTemplatesHint =>
+      'Backgrounds and frame placement designed for a board.';
+
+  @override
+  String get artboardPresets => 'Text Styles';
+
+  @override
+  String get applyBoardTemplateConfirm =>
+      'This replaces the board background and repositions every frame. Your imported screenshots are kept.';
+
+  @override
+  String zoneLimitReached(int max) {
+    return 'Maximum $max screenshots per device size';
+  }
+
+  @override
+  String playLimitWarning(int max, int extra) {
+    return 'Google Play accepts $max screenshots — the last $extra will not upload';
+  }
+
+  @override
+  String storeLimitsHint(int ios, int android) {
+    return 'App Store allows $ios screenshots, Google Play $android.';
+  }
+
+  @override
+  String get exportingBoard => 'Rendering board…';
+
+  @override
+  String get searchDevices => 'Search devices';
 }

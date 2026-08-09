@@ -321,7 +321,7 @@ class _SettingsDialogState extends State<SettingsDialog> {
                 _SettingsTile(
                   icon: Symbols.info_rounded,
                   title: context.l10n.appTitle,
-                  subtitle: context.l10n.version('1.0.0'),
+                  subtitle: context.l10n.version(AppConstants.appVersion),
                   theme: theme,
                   onTap: _onVersionTap,
                 ),

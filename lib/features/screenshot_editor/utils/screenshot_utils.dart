@@ -5,6 +5,27 @@ import '../data/models/screenshot_design.dart';
 
 /// Utility for screenshot dimensions by device category.
 class ScreenshotUtils {
+  /// Prefixes the device-selection dialog tags onto its result to signal which
+  /// editor the caller should open. They are routing signals, not display
+  /// types.
+  static const String multiModePrefix = 'multi:';
+  static const String boardModePrefix = 'board:';
+
+  /// Strips any creation-mode prefix, leaving a bare display-type key.
+  ///
+  /// The device-selection dialog is reused by flows that only want a format
+  /// (e.g. "clone to device"), and it remembers the last chosen mode across
+  /// sessions — so a result can arrive prefixed even when the caller never
+  /// offered a mode choice. An unrecognised display type falls back silently
+  /// to iPhone dimensions in [getDimensions], so a missed prefix corrupts the
+  /// design instead of failing loudly.
+  static String stripCreateModePrefix(String value) {
+    for (final prefix in const [multiModePrefix, boardModePrefix]) {
+      if (value.startsWith(prefix)) return value.substring(prefix.length);
+    }
+    return value;
+  }
+
   /// Standard App Store screenshot dimensions by display type.
   static const _dimensions = <String, List<Size>>{
     // iPhone

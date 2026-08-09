@@ -1,9 +1,12 @@
 import 'dart:async';
 import 'dart:convert';
 import 'dart:io';
+import 'dart:math' as math;
 import 'dart:typed_data';
 
 import 'package:app_screenshots/core/services/app_logger.dart';
+import 'package:app_screenshots/features/screenshot_editor/data/models/board_template.dart';
+import 'package:app_screenshots/features/screenshot_editor/data/models/crop_zone.dart';
 import 'package:app_screenshots/features/screenshot_editor/data/models/screenshot_preset.dart';
 import 'package:app_screenshots/features/screenshot_editor/data/models/saved_design.dart';
 import 'package:app_screenshots/features/screenshot_editor/data/models/mesh_gradient_settings.dart';
@@ -1018,6 +1021,126 @@ class ScreenshotEditorCubit extends Cubit<ScreenshotEditorState> {
         orientation: currentDesign.orientation,
       ),
       selectedOverlayId: null,
+    );
+  }
+
+  /// Applies a preset to a board.
+  ///
+  /// A preset is authored as one design per artboard, but a board is a single
+  /// canvas — so the first template supplies the background, and each
+  /// template's overlays are translated into the matching crop zone's
+  /// coordinates. Templates cycle when there are more zones than templates, so
+  /// a 3-artboard preset still fills a 5-zone board.
+  ///
+  /// Existing overlays are replaced; frames and zones are untouched.
+  void applyBoardPreset(
+    ScreenshotPreset preset,
+    {required List<CropZone> zones}
+  ) {
+    if (preset.designs.isEmpty) return;
+    final first = preset.designs.first;
+
+    // No zones yet — treat it as a plain background/overlay preset.
+    if (zones.isEmpty) {
+      _updateDesign(
+        _boardPresetBase(first),
+        selectedOverlayId: null,
+      );
+      return;
+    }
+
+    final overlays = <TextOverlay>[];
+    final icons = <IconOverlay>[];
+
+    for (var i = 0; i < zones.length; i++) {
+      final zone = zones[i];
+      final template = preset.designs[i % preset.designs.length];
+
+      // Templates are authored against a full-size artboard, so scale their
+      // coordinates to this zone before offsetting them into board space.
+      final source = ScreenshotUtils.getDimensions(
+        template.displayType ?? zone.displayType,
+        zone.orientation,
+      );
+      final scaleX = zone.size.width / source.width;
+      final scaleY = zone.size.height / source.height;
+      final scaleP = math.min(scaleX, scaleY);
+
+      for (final overlay in template.overlays) {
+        overlays.add(
+          overlay.copyWith(
+            id: '${zone.id}_${overlay.id}',
+            position: Offset(
+              zone.position.dx + overlay.position.dx * scaleX,
+              zone.position.dy + overlay.position.dy * scaleY,
+            ),
+            width: overlay.width != null ? overlay.width! * scaleX : null,
+            style: overlay.style.copyWith(
+              fontSize: (overlay.style.fontSize ?? 20) * scaleP,
+            ),
+          ),
+        );
+      }
+
+      for (final icon in template.iconOverlays) {
+        icons.add(
+          icon.copyWith(
+            id: '${zone.id}_${icon.id}',
+            position: Offset(
+              zone.position.dx + icon.position.dx * scaleX,
+              zone.position.dy + icon.position.dy * scaleY,
+            ),
+            size: icon.size * scaleP,
+          ),
+        );
+      }
+    }
+
+    _updateDesign(
+      _boardPresetBase(first).copyWith(
+        overlays: overlays,
+        iconOverlays: icons,
+      ),
+      selectedOverlayId: null,
+    );
+  }
+
+  /// Applies a board template's background.
+  ///
+  /// The frame layout half is applied by [BoardCubit.applyTemplate], which owns
+  /// the frames. Text and icon overlays are left alone — a board template
+  /// describes background and frame placement, so it should not silently
+  /// discard captions the user has written.
+  void applyBoardTemplateBackground(BoardTemplate template) {
+    _updateDesign(
+      _boardPresetBase(template.background).copyWith(
+        overlays: state.design.overlays,
+        iconOverlays: state.design.iconOverlays,
+      ),
+      selectedOverlayId: null,
+    );
+  }
+
+  /// The board's design with [template]'s styling applied wholesale.
+  ///
+  /// Built *from* the template rather than by copying a couple of fields onto
+  /// the current design — a background is not just a colour. Mesh gradients,
+  /// doodles, grid, and transparency are all separate layers, so patching only
+  /// `backgroundColor`/`backgroundGradient` left a previous template's mesh
+  /// painting over the new one and made mesh- or doodle-based templates look
+  /// like they did nothing.
+  ///
+  /// Only fields a board owns rather than a template are carried over: the
+  /// canvas format, and the user's own image overlays, whose positions are in
+  /// board coordinates and would land wrong if replaced by artboard-authored
+  /// ones.
+  ScreenshotDesign _boardPresetBase(ScreenshotDesign template) {
+    final current = state.design;
+    return template.copyWith(
+      displayType: current.displayType,
+      orientation: current.orientation,
+      deviceFrame: current.deviceFrame,
+      imageOverlays: current.imageOverlays,
     );
   }
 

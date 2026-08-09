@@ -875,6 +875,397 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/SuccessResponse"
+  /api/board/open:
+    post:
+      tags:
+        - Board
+      summary: Execute open
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                displayType:
+                  type: string
+                  example: "APP_IPHONE_67"
+                zoneCount:
+                  type: integer
+                  example: 3
+      responses:
+        "200":
+          description: Successful execution
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/SuccessResponse"
+  /api/board/state:
+    post:
+      tags:
+        - Board
+      summary: Execute state
+      responses:
+        "200":
+          description: Successful execution
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/SuccessResponse"
+  /api/board/add-zone:
+    post:
+      tags:
+        - Board
+      summary: Execute add-zone
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                displayType:
+                  type: string
+                  example: "APP_IPHONE_69"
+                orientation:
+                  type: string
+                  example: "portrait"
+      responses:
+        "200":
+          description: Successful execution
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/SuccessResponse"
+  /api/board/remove-zone:
+    post:
+      tags:
+        - Board
+      summary: Execute remove-zone
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                id:
+                  type: string
+                index:
+                  type: integer
+                  example: 0
+      responses:
+        "200":
+          description: Successful execution
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/SuccessResponse"
+  /api/board/update-zone:
+    post:
+      tags:
+        - Board
+      summary: Execute update-zone
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                id:
+                  type: string
+                index:
+                  type: integer
+                  example: 0
+                displayType:
+                  type: string
+                orientation:
+                  type: string
+                name:
+                  type: string
+                included:
+                  type: boolean
+                  example: true
+                locked:
+                  type: boolean
+                  example: true
+      responses:
+        "200":
+          description: Successful execution
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/SuccessResponse"
+  /api/board/set-zone-spacing:
+    post:
+      tags:
+        - Board
+      summary: Execute set-zone-spacing
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                gap:
+                  type: number
+                  example: 0
+      responses:
+        "200":
+          description: Successful execution
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/SuccessResponse"
+  /api/board/arrange-zones:
+    post:
+      tags:
+        - Board
+      summary: Execute arrange-zones
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                gap:
+                  type: number
+                  example: 120
+      responses:
+        "200":
+          description: Successful execution
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/SuccessResponse"
+  /api/board/list-templates:
+    post:
+      tags:
+        - Board
+      summary: Execute list-templates
+      responses:
+        "200":
+          description: Successful execution
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/SuccessResponse"
+  /api/board/apply-template:
+    post:
+      tags:
+        - Board
+      summary: Execute apply-template
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                id:
+                  type: string
+                  example: "tilted_trio"
+      responses:
+        "200":
+          description: Successful execution
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/SuccessResponse"
+  /api/board/add-frame:
+    post:
+      tags:
+        - Board
+      summary: Execute add-frame
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                zoneId:
+                  type: string
+                imagePath:
+                  type: string
+      responses:
+        "200":
+          description: Successful execution
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/SuccessResponse"
+  /api/board/remove-frame:
+    post:
+      tags:
+        - Board
+      summary: Execute remove-frame
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                id:
+                  type: string
+      responses:
+        "200":
+          description: Successful execution
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/SuccessResponse"
+  /api/board/update-frame:
+    post:
+      tags:
+        - Board
+      summary: Execute update-frame
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                id:
+                  type: string
+                x:
+                  type: number
+                y:
+                  type: number
+                width:
+                  type: number
+                height:
+                  type: number
+                rotationDegrees:
+                  type: number
+                  example: -8
+                zIndex:
+                  type: integer
+                  example: 0
+      responses:
+        "200":
+          description: Successful execution
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/SuccessResponse"
+  /api/board/set-frame-image:
+    post:
+      tags:
+        - Board
+      summary: Execute set-frame-image
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                id:
+                  type: string
+                path:
+                  type: string
+      responses:
+        "200":
+          description: Successful execution
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/SuccessResponse"
+  /api/board/import-images:
+    post:
+      tags:
+        - Board
+      summary: Execute import-images
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                paths:
+                  type: array
+      responses:
+        "200":
+          description: Successful execution
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/SuccessResponse"
+  /api/board/export:
+    post:
+      tags:
+        - Board
+      summary: Execute export
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                zoneId:
+                  type: string
+                outputDir:
+                  type: string
+      responses:
+        "200":
+          description: Successful execution
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/SuccessResponse"
+  /api/board/export-all:
+    post:
+      tags:
+        - Board
+      summary: Execute export-all
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                outputDir:
+                  type: string
+      responses:
+        "200":
+          description: Successful execution
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/SuccessResponse"
+  /api/board/save-design:
+    post:
+      tags:
+        - Board
+      summary: Execute save-design
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                override:
+                  type: boolean
+                  example: false
+      responses:
+        "200":
+          description: Successful execution
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/SuccessResponse"
   /api/multi/open:
     post:
       tags:
@@ -1211,7 +1602,7 @@ paths:
                   type: string
                 data:
                   type: string
-description: Base64-encoded image bytes
+                  description: Base64-encoded image bytes
                 slot:
                   type: integer
       responses:
@@ -1301,7 +1692,7 @@ description: Base64-encoded image bytes
                   type: string
                 screenshots:
                   type: object
-description: Map of locale to base64 image objects
+                  description: Map of locale to base64 image objects
                 displayType:
                   type: string
                 platform:
@@ -1340,7 +1731,7 @@ description: Map of locale to base64 image objects
                   type: string
                 screenshots:
                   type: object
-description: Map of locale to base64 image objects
+                  description: Map of locale to base64 image objects
                 imageType:
                   type: string
                 locales:

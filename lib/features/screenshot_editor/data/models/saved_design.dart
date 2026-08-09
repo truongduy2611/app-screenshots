@@ -1,4 +1,5 @@
 import 'package:app_screenshots/features/screenshot_editor/data/models/asc_app_config.dart';
+import 'package:app_screenshots/features/screenshot_editor/data/models/board_design.dart';
 import 'package:app_screenshots/features/screenshot_editor/data/models/screenshot_design.dart';
 import 'package:app_screenshots/features/screenshot_editor/data/models/translation_bundle.dart';
 
@@ -24,6 +25,12 @@ class SavedDesign {
   /// Persisted ASC app selection for this design.
   final AscAppConfig? ascAppConfig;
 
+  /// For board saves: the single-canvas board with its frames and crop zones.
+  /// When non-null this design opens in the board editor; [design] /
+  /// [multiDesigns] are then only kept so older builds can still show a
+  /// thumbnail.
+  final BoardDesign? board;
+
   SavedDesign({
     required this.id,
     required this.name,
@@ -36,10 +43,14 @@ class SavedDesign {
     this.imagePaths,
     this.translationBundle,
     this.ascAppConfig,
+    this.board,
   });
 
   /// Whether this saved design is a multi-canvas project.
   bool get isMulti => multiDesigns != null && multiDesigns!.isNotEmpty;
+
+  /// Whether this saved design is a board project (single canvas + crop zones).
+  bool get isBoard => board != null;
 
   SavedDesign copyWith({
     String? id,
@@ -55,6 +66,7 @@ class SavedDesign {
     TranslationBundle? translationBundle,
     AscAppConfig? ascAppConfig,
     bool clearAscAppConfig = false,
+    BoardDesign? board,
   }) {
     return SavedDesign(
       id: id ?? this.id,
@@ -70,6 +82,7 @@ class SavedDesign {
       ascAppConfig: clearAscAppConfig
           ? null
           : (ascAppConfig ?? this.ascAppConfig),
+      board: board ?? this.board,
     );
   }
 
@@ -88,6 +101,7 @@ class SavedDesign {
       if (translationBundle != null)
         'translationBundle': translationBundle!.toJson(),
       if (ascAppConfig != null) 'ascAppConfig': ascAppConfig!.toJson(),
+      if (board != null) 'board': board!.toJson(),
     };
   }
 
@@ -115,6 +129,11 @@ class SavedDesign {
           : null,
       ascAppConfig: json['ascAppConfig'] != null
           ? AscAppConfig.fromJson(json['ascAppConfig'] as Map<String, dynamic>)
+          : null,
+      board: json['board'] != null
+          ? BoardDesign.fromJson(
+              Map<String, dynamic>.from(json['board'] as Map),
+            )
           : null,
     );
   }

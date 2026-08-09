@@ -1,6 +1,8 @@
 import 'dart:convert';
 import 'dart:io';
 
+import 'package:app_screenshots/features/screenshot_editor/data/models/board_design.dart';
+import 'package:app_screenshots/features/screenshot_editor/data/models/frame_element.dart';
 import 'package:app_screenshots/features/screenshot_editor/data/models/saved_design.dart';
 import 'package:app_screenshots/features/screenshot_editor/data/models/screenshot_design.dart';
 import 'package:archive/archive.dart';
@@ -269,6 +271,45 @@ class DesignFileService {
       }
     }
 
+    // 5. Board assets — frame screenshots and background overlays.
+    //
+    // These live in their own `board_*` asset namespace rather than sharing
+    // the index-based `overlay_N` keys above, so bundles written before board
+    // mode still import unchanged.
+    final board = design.board;
+    if (board != null) {
+      for (int i = 0; i < board.frames.length; i++) {
+        final path = board.frames[i].imagePath;
+        if (path == null) continue;
+        final frameFile = File(path);
+        if (!await frameFile.exists()) continue;
+        final ext = p.extension(frameFile.path).isNotEmpty
+            ? p.extension(frameFile.path)
+            : '.png';
+        final zipPath = '${prefix}frames/$i$ext';
+        archive.addFile(
+          ArchiveFile.bytes(zipPath, await frameFile.readAsBytes()),
+        );
+        assetMap['frame_$i'] = zipPath;
+      }
+
+      final boardOverlays = board.background.imageOverlays;
+      for (int i = 0; i < boardOverlays.length; i++) {
+        final path = boardOverlays[i].filePath;
+        if (path == null) continue;
+        final overlayFile = File(path);
+        if (!await overlayFile.exists()) continue;
+        final ext = p.extension(overlayFile.path).isNotEmpty
+            ? p.extension(overlayFile.path)
+            : '.png';
+        final zipPath = '${prefix}board_overlays/$i$ext';
+        archive.addFile(
+          ArchiveFile.bytes(zipPath, await overlayFile.readAsBytes()),
+        );
+        assetMap['board_overlay_$i'] = zipPath;
+      }
+    }
+
     // Build manifest
     final manifest = {
       'version': _currentVersion,
@@ -361,15 +402,50 @@ class DesignFileService {
         });
       }
 
+      // Remap the board's frame images and background overlays.
+      BoardDesign? board;
+      if (designJson.containsKey('board')) {
+        final parsedBoard = BoardDesign.fromJson(
+          Map<String, dynamic>.from(designJson['board'] as Map),
+        );
+
+        final frames = <FrameElement>[];
+        for (int i = 0; i < parsedBoard.frames.length; i++) {
+          final extracted = extractedPaths['frame_$i'];
+          frames.add(
+            extracted != null
+                ? parsedBoard.frames[i].copyWith(imagePath: extracted)
+                : parsedBoard.frames[i].copyWith(clearImage: true),
+          );
+        }
+
+        final overlays = <ImageOverlay>[];
+        final boardOverlays = parsedBoard.background.imageOverlays;
+        for (int i = 0; i < boardOverlays.length; i++) {
+          final extracted = extractedPaths['board_overlay_$i'];
+          overlays.add(
+            extracted != null
+                ? boardOverlays[i].copyWith(filePath: extracted)
+                : boardOverlays[i],
+          );
+        }
+
+        board = parsedBoard.copyWith(
+          frames: frames,
+          background: parsedBoard.background.copyWith(imageOverlays: overlays),
+        );
+      }
+
       return SavedDesign(
         id: newId,
         name: designJson['name'] ?? 'Imported Design',
         lastModified: DateTime.now(),
         thumbnailPath: extractedPaths['thumbnail'] ?? '',
         imagePath: extractedPaths['screenshot'],
-        design: remappedDesign,
+        design: board?.background ?? remappedDesign,
         multiDesigns: multiDesigns,
         imagePaths: imagePaths,
+        board: board,
       );
     } catch (e, st) {
       AppLogger.error(
@@ -423,6 +499,10 @@ class DesignFileService {
 
     if (design.imagePaths != null) {
       json['imagePaths'] = design.imagePaths;
+    }
+
+    if (design.board != null) {
+      json['board'] = design.board!.toJson();
     }
 
     return json;

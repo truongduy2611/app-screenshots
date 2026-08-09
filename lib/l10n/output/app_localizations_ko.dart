@@ -1822,4 +1822,136 @@ class AppLocalizationsKo extends AppLocalizations {
 
   @override
   String get ascAppConfigSaved => 'App Store Connect 설정이 저장되었습니다';
+
+  @override
+  String get board => '보드';
+
+  @override
+  String get newBoard => '새 보드';
+
+  @override
+  String get boardModeDescription =>
+      '하나의 캔버스에 여러 프레임을 배치합니다. 크롭 영역으로 잘라내어 개별 스크린샷으로 만듭니다.';
+
+  @override
+  String get cropZones => '크롭 영역';
+
+  @override
+  String get addCropZone => '크롭 영역 추가';
+
+  @override
+  String get showCropZones => '크롭 영역 표시';
+
+  @override
+  String get hideCropZones => '크롭 영역 숨기기';
+
+  @override
+  String get includeInExport => '내보내기에 포함';
+
+  @override
+  String get excludeFromExport => '내보내기에서 제외';
+
+  @override
+  String get lockZoneSize => '기기 크기로 잠금';
+
+  @override
+  String get unlockZoneSize => '크기 잠금 해제';
+
+  @override
+  String get zoneSizeLockedHint =>
+      '잠긴 영역은 픽셀 단위로 정확하게 잘라내어 내보냅니다. 잠금을 해제하면 자유롭게 크기를 조정할 수 있으며, 이 경우 대상 크기에 맞게 조절됩니다.';
+
+  @override
+  String get renameZone => '영역 이름 변경';
+
+  @override
+  String get zoneName => '영역 이름';
+
+  @override
+  String get addFrame => '프레임 추가';
+
+  @override
+  String get frames => '프레임';
+
+  @override
+  String frameLabel(int index) {
+    return '프레임 $index';
+  }
+
+  @override
+  String get bringToFront => '맨 앞으로 가져오기';
+
+  @override
+  String get sendToBack => '맨 뒤로 보내기';
+
+  @override
+  String get arrangeZones => '영역을 한 줄로 정렬';
+
+  @override
+  String get fitBoardToContent => '보드를 콘텐츠에 맞추기';
+
+  @override
+  String get boardSize => '보드 크기';
+
+  @override
+  String zonesIncludedInExport(int included, int total) {
+    return '총 $total개 중 $included개의 영역이 내보내집니다';
+  }
+
+  @override
+  String get noCropZonesToExport => '내보낼 크롭 영역이 지정되지 않았습니다';
+
+  @override
+  String boardTooLargeToCapture(int megapixels) {
+    return '이 보드는 매우 커서($megapixels MP) 축소된 해상도로 캡처되었습니다. 내보낸 이미지가 선명하지 않을 수 있으니, 픽셀 단위로 정확하게 출력하려면 보드 크기를 줄이세요.';
+  }
+
+  @override
+  String someZonesFailedToExport(int failed, int total) {
+    return '$total개 중 $failed개의 크롭 영역을 내보내지 못했습니다';
+  }
+
+  @override
+  String get zoneSpacing => '영역 간격';
+
+  @override
+  String get zoneSpacingNone => '간격 없음';
+
+  @override
+  String get zoneSpacingHint =>
+      '간격을 0으로 설정하면 배경이 모든 스크린샷에 걸쳐 하나의 연속된 이미지로 이어집니다.';
+
+  @override
+  String get boardTemplates => '보드 레이아웃';
+
+  @override
+  String get boardTemplatesHint => '보드용으로 설계된 배경 및 프레임 배치입니다.';
+
+  @override
+  String get artboardPresets => '텍스트 스타일';
+
+  @override
+  String get applyBoardTemplateConfirm =>
+      '보드 배경이 교체되고 모든 프레임 위치가 재조정됩니다. 가져온 스크린샷은 유지됩니다.';
+
+  @override
+  String zoneLimitReached(int max) {
+    return '기기 크기당 최대 $max개의 스크린샷';
+  }
+
+  @override
+  String playLimitWarning(int max, int extra) {
+    return 'Google Play는 $max개의 스크린샷만 허용합니다 — 마지막 $extra개는 업로드되지 않습니다';
+  }
+
+  @override
+  String storeLimitsHint(int ios, int android) {
+    return 'App Store는 $ios개, Google Play는 $android개의 스크린샷을 허용합니다.';
+  }
+
+  @override
+  String get exportingBoard => '보드 렌더링 중…';
+
+  @override
+  String get searchDevices => '기기 검색';
 }

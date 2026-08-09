@@ -1922,4 +1922,138 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get ascAppConfigSaved => 'Configurazione App Store Connect salvata';
+
+  @override
+  String get board => 'Tavola';
+
+  @override
+  String get newBoard => 'Nuova tavola';
+
+  @override
+  String get boardModeDescription =>
+      'Una tela con più cornici. Le zone di ritaglio la dividono in singoli screenshot.';
+
+  @override
+  String get cropZones => 'Zone di ritaglio';
+
+  @override
+  String get addCropZone => 'Aggiungi zona di ritaglio';
+
+  @override
+  String get showCropZones => 'Mostra zone di ritaglio';
+
+  @override
+  String get hideCropZones => 'Nascondi zone di ritaglio';
+
+  @override
+  String get includeInExport => 'Includi nell\'esportazione';
+
+  @override
+  String get excludeFromExport => 'Escludi dall\'esportazione';
+
+  @override
+  String get lockZoneSize => 'Blocca a dimensione dispositivo';
+
+  @override
+  String get unlockZoneSize => 'Sblocca dimensione';
+
+  @override
+  String get zoneSizeLockedHint =>
+      'Le zone bloccate vengono esportate come ritaglio perfetto al pixel. Lo sblocco consente di ridimensionare liberamente; il ritaglio viene quindi scalato alla dimensione finale.';
+
+  @override
+  String get renameZone => 'Rinomina zona';
+
+  @override
+  String get zoneName => 'Nome zona';
+
+  @override
+  String get addFrame => 'Aggiungi cornice';
+
+  @override
+  String get frames => 'Cornici';
+
+  @override
+  String frameLabel(int index) {
+    return 'Cornice $index';
+  }
+
+  @override
+  String get bringToFront => 'Porta in primo piano';
+
+  @override
+  String get sendToBack => 'Manda in secondo piano';
+
+  @override
+  String get arrangeZones => 'Disponi zone in fila';
+
+  @override
+  String get fitBoardToContent => 'Adatta tavola al contenuto';
+
+  @override
+  String get boardSize => 'Dimensioni tavola';
+
+  @override
+  String zonesIncludedInExport(int included, int total) {
+    return 'Verranno esportate $included zone su $total';
+  }
+
+  @override
+  String get noCropZonesToExport =>
+      'Nessuna zona di ritaglio contrassegnata per l\'esportazione';
+
+  @override
+  String boardTooLargeToCapture(int megapixels) {
+    return 'Questa tavola è molto grande ($megapixels MP), quindi è stata acquisita a scala ridotta. Le immagini esportate potrebbero essere meno definite — riduci le dimensioni della tavola per un\'uscita perfetta al pixel.';
+  }
+
+  @override
+  String someZonesFailedToExport(int failed, int total) {
+    return 'Impossibile esportare $failed zone di ritaglio su $total';
+  }
+
+  @override
+  String get zoneSpacing => 'Spaziatura zone';
+
+  @override
+  String get zoneSpacingNone => 'Nessuna spaziatura';
+
+  @override
+  String get zoneSpacingHint =>
+      'Imposta la spaziatura a zero per estendere lo sfondo su ogni screenshot come un\'unica immagine continua.';
+
+  @override
+  String get boardTemplates => 'Layout tavola';
+
+  @override
+  String get boardTemplatesHint =>
+      'Sfondi e posizionamento delle cornici progettati per una tavola.';
+
+  @override
+  String get artboardPresets => 'Stili testo';
+
+  @override
+  String get applyBoardTemplateConfirm =>
+      'Questo sostituisce lo sfondo della tavola e riposiziona ogni cornice. Gli screenshot importati verranno conservati.';
+
+  @override
+  String zoneLimitReached(int max) {
+    return 'Massimo $max screenshot per dimensione dispositivo';
+  }
+
+  @override
+  String playLimitWarning(int max, int extra) {
+    return 'Google Play accetta $max screenshot — gli ultimi $extra non verranno caricati';
+  }
+
+  @override
+  String storeLimitsHint(int ios, int android) {
+    return 'L\'App Store consente $ios screenshot, Google Play $android.';
+  }
+
+  @override
+  String get exportingBoard => 'Rendering della tavola in corso…';
+
+  @override
+  String get searchDevices => 'Cerca dispositivi';
 }

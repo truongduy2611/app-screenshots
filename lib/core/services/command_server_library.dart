@@ -145,6 +145,7 @@ extension _LibraryRoutes on CommandServer {
               ? originalImageFile
               : null,
           multiDesigns: imported.multiDesigns,
+          board: imported.board,
           imageFiles: imageFiles,
           translationBundle: imported.translationBundle,
           ascAppConfig: imported.ascAppConfig,

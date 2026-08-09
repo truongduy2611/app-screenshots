@@ -10,6 +10,7 @@ enum ApiRoute {
   translate('/api/translate/'),
   preset('/api/preset/'),
   multi('/api/multi/'),
+  board('/api/board/'),
   asc('/api/asc/'),
   play('/api/play/'),
   collaboration('/api/collaboration/'),

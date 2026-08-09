@@ -132,15 +132,36 @@ class TranslationBundle extends Equatable {
   /// Get the locale-specific screenshot image path for a design slot.
   /// Returns `null` if no per-locale image is set for that (locale, slot).
   String? getLocaleImage(String locale, [int slot = 0]) =>
-      localeImages[locale]?['$slot'];
+      getLocaleImageForKey(locale, '$slot');
 
   /// Set (or replace) the screenshot image path for a (locale, slot).
-  TranslationBundle setLocaleImage(String locale, int slot, String filePath) {
+  TranslationBundle setLocaleImage(String locale, int slot, String filePath) =>
+      setLocaleImageForKey(locale, '$slot', filePath);
+
+  /// Remove the screenshot image for a (locale, slot). Drops the locale entry
+  /// entirely once it has no remaining slot images.
+  TranslationBundle removeLocaleImage(String locale, int slot) =>
+      removeLocaleImageForKey(locale, '$slot');
+
+  // The slot key is an opaque string. Multi-screenshot designs use the slot
+  // index ("0", "1", …); boards use the frame element's id, since a board has
+  // no slot ordering. The int-based helpers above are thin wrappers.
+
+  /// Get the locale-specific screenshot image path for an arbitrary slot key.
+  String? getLocaleImageForKey(String locale, String slotKey) =>
+      localeImages[locale]?[slotKey];
+
+  /// Set (or replace) the screenshot image path for a (locale, slotKey).
+  TranslationBundle setLocaleImageForKey(
+    String locale,
+    String slotKey,
+    String filePath,
+  ) {
     final updated = Map<String, Map<String, String>>.from(
       localeImages.map((k, v) => MapEntry(k, Map<String, String>.from(v))),
     );
     final slots = Map<String, String>.from(updated[locale] ?? const {});
-    slots['$slot'] = filePath;
+    slots[slotKey] = filePath;
     updated[locale] = slots;
     final targets = (targetLocales.contains(locale) || locale == sourceLocale)
         ? targetLocales
@@ -149,14 +170,14 @@ class TranslationBundle extends Equatable {
     return copyWith(localeImages: updated, targetLocales: targets);
   }
 
-  /// Remove the screenshot image for a (locale, slot). Drops the locale entry
-  /// entirely once it has no remaining slot images.
-  TranslationBundle removeLocaleImage(String locale, int slot) {
+  /// Remove the screenshot image for a (locale, slotKey). Drops the locale
+  /// entry entirely once it has no remaining slot images.
+  TranslationBundle removeLocaleImageForKey(String locale, String slotKey) {
     final updated = Map<String, Map<String, String>>.from(
       localeImages.map((k, v) => MapEntry(k, Map<String, String>.from(v))),
     );
     final slots = Map<String, String>.from(updated[locale] ?? const {})
-      ..remove('$slot');
+      ..remove(slotKey);
     if (slots.isEmpty) {
       updated.remove(locale);
     } else {

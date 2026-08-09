@@ -27,6 +27,7 @@ import 'package:app_screenshots/features/settings/presentation/cubit/cli_cubit.d
 import 'package:app_screenshots/features/settings/presentation/cubit/theme_cubit.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:get_it/get_it.dart';
+import 'package:package_info_plus/package_info_plus.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 final sl = GetIt.instance;
@@ -49,6 +50,13 @@ Future<void> _registerExternalDeps() async {
   sl.registerLazySingleton<FlutterSecureStorage>(
     () => const FlutterSecureStorage(),
   );
+
+  try {
+    final packageInfo = await PackageInfo.fromPlatform();
+    sl.registerSingleton<PackageInfo>(packageInfo);
+  } catch (_) {
+    // In test environment or uninitialized channel context, fallback gracefully.
+  }
 }
 
 // ─────────────────────────────────────────────────────────────────────────────

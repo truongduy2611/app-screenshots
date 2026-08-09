@@ -46,6 +46,9 @@ class IconOverlay {
   bool get isSFSymbol => fontFamily == 'sficons';
 
   IconOverlay copyWith({
+    /// Overriding the id forks the overlay into a distinct one — used when a
+    /// template is instantiated once per board crop zone.
+    String? id,
     int? codePoint,
     String? fontFamily,
     String? fontPackage,
@@ -68,7 +71,7 @@ class IconOverlay {
     bool? behindFrame,
   }) {
     return IconOverlay(
-      id: id,
+      id: id ?? this.id,
       codePoint: codePoint ?? this.codePoint,
       fontFamily: fontFamily ?? this.fontFamily,
       fontPackage: fontPackage ?? this.fontPackage,

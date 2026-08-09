@@ -309,6 +309,15 @@ class ScreenshotDesign {
     ];
   }
 
+  /// Every known device, including the color/band variants that are not part
+  /// of `Devices.all`. Shared so board frame elements resolve against the same
+  /// cached list.
+  static List<DeviceInfo> get allDevices => _allDevices;
+
+  /// Resolves a serialized device reference (identifier, or a legacy display
+  /// name) back to its [DeviceInfo]. Returns `null` when unknown.
+  static DeviceInfo? findDevice(String? name) => _findDeviceByName(name);
+
   static DeviceInfo? _findDeviceByName(String? name) {
     if (name == null) return null;
     try {

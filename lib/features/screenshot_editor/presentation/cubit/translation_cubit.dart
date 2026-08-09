@@ -317,10 +317,32 @@ class TranslationCubit extends Cubit<TranslationState> {
 
   /// Get the locale-specific screenshot image path for the current preview
   /// locale and the given design [slot], or `null` if none is set.
-  String? localeImagePathForSlot(int slot) {
+  String? localeImagePathForSlot(int slot) => localeImagePathForKey('$slot');
+
+  /// Board variant of [setLocaleImage]: keyed by frame element id, since a
+  /// board has no slot ordering.
+  void setLocaleImageForKey(String locale, String slotKey, String filePath) {
+    var bundle = state.bundle ?? const TranslationBundle();
+    bundle = bundle.setLocaleImageForKey(locale, slotKey, filePath);
+    emit(state.copyWith(bundle: bundle));
+  }
+
+  /// Board variant of [removeLocaleImage].
+  void removeLocaleImageForKey(String locale, String slotKey) {
+    if (state.bundle == null) return;
+    emit(
+      state.copyWith(
+        bundle: state.bundle!.removeLocaleImageForKey(locale, slotKey),
+      ),
+    );
+  }
+
+  /// Get the locale-specific screenshot image path for the current preview
+  /// locale and an arbitrary slot key, or `null` if none is set.
+  String? localeImagePathForKey(String slotKey) {
     final locale = state.previewLocale;
     if (locale == null || state.bundle == null) return null;
-    return state.bundle!.getLocaleImage(locale, slot);
+    return state.bundle!.getLocaleImageForKey(locale, slotKey);
   }
 
   /// Apply translations from the manual copy-paste flow.

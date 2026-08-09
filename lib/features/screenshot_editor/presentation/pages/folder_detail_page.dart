@@ -8,6 +8,7 @@ import 'package:app_screenshots/features/screenshot_editor/data/models/design_fo
 import 'package:app_screenshots/features/screenshot_editor/data/models/saved_design.dart';
 import 'package:app_screenshots/features/screenshot_editor/presentation/cubit/screenshot_library_cubit.dart';
 import 'package:app_screenshots/features/screenshot_editor/presentation/models/screenshot_studio_item.dart';
+import 'package:app_screenshots/features/screenshot_editor/presentation/pages/board_page.dart';
 import 'package:app_screenshots/features/screenshot_editor/presentation/pages/multi_screenshot_page.dart';
 import 'package:app_screenshots/features/screenshot_editor/presentation/pages/screenshot_editor_page.dart';
 
@@ -15,6 +16,7 @@ import 'package:app_screenshots/features/screenshot_editor/presentation/widgets/
 import 'package:app_screenshots/features/screenshot_editor/presentation/widgets/move_to_folder_dialog.dart';
 import 'package:app_screenshots/features/screenshot_editor/presentation/widgets/screenshot_studio_grid_view.dart';
 import 'package:app_screenshots/features/screenshot_editor/presentation/widgets/screenshot_studio_list_view.dart';
+import 'package:app_screenshots/features/screenshot_editor/utils/screenshot_utils.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -370,9 +372,14 @@ class _FolderDetailPageState extends State<FolderDetailPage> {
     DeviceSelectionDialog.show(context, sourceRect: sourceRect).then((value) {
       if (!context.mounted || value == null) return;
       final Widget page;
-      if (value.startsWith('multi:')) {
+      if (value.startsWith(ScreenshotUtils.boardModePrefix)) {
+        page = BoardPage(
+          displayType: ScreenshotUtils.stripCreateModePrefix(value),
+          folderId: widget.folder.id,
+        );
+      } else if (value.startsWith(ScreenshotUtils.multiModePrefix)) {
         page = MultiScreenshotPage(
-          displayType: value.substring(6),
+          displayType: ScreenshotUtils.stripCreateModePrefix(value),
           folderId: widget.folder.id,
         );
       } else {

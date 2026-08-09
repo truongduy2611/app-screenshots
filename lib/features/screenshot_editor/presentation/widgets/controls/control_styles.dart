@@ -49,6 +49,8 @@ class LabeledSlider extends StatelessWidget {
     this.divisions,
     this.valueLabel,
     this.suffix = '',
+    this.onEditStart,
+    this.onEditEnd,
   });
 
   final String label;
@@ -59,6 +61,12 @@ class LabeledSlider extends StatelessWidget {
   final int? divisions;
   final String? valueLabel;
   final String suffix;
+
+  /// Called once when the drag begins / ends, so a cubit can collapse the whole
+  /// gesture into a single undo entry. Same contract as [AppColorPicker] —
+  /// a caller that starts a batch edit here **must** end it in [onEditEnd].
+  final VoidCallback? onEditStart;
+  final VoidCallback? onEditEnd;
 
   @override
   Widget build(BuildContext context) {
@@ -99,6 +107,8 @@ class LabeledSlider extends StatelessWidget {
             max: max,
             divisions: divisions,
             onChanged: onChanged,
+            onChangeStart: onEditStart == null ? null : (_) => onEditStart!(),
+            onChangeEnd: onEditEnd == null ? null : (_) => onEditEnd!(),
           ),
         ),
       ],
