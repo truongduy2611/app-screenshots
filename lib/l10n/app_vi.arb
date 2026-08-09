@@ -601,5 +601,21 @@
   "applyBoardTemplateConfirm": "Thao tác này sẽ thay thế nền bảng vẽ và sắp xếp lại vị trí từng khung. Các ảnh chụp đã nhập của bạn sẽ được giữ nguyên.",
   "zoneLimitReached": "Tối đa {max} ảnh chụp cho mỗi kích thước thiết bị",
   "playLimitWarning": "Google Play chấp nhận {max} ảnh chụp — {extra} ảnh cuối sẽ không được tải lên",
-  "storeLimitsHint": "App Store cho phép {ios} ảnh chụp, Google Play {android}."
+  "storeLimitsHint": "App Store cho phép {ios} ảnh chụp, Google Play {android}.",
+  "playDestination": "Đích đến",
+  "playMainListing": "Trang niêm yết chính",
+  "playCustomStoreListing": "Trang niêm yết tùy chỉnh",
+  "playCslNoApiNote": "Google Play không hỗ trợ API cho trang niêm yết tùy chỉnh, vì vậy hình ảnh sẽ được xuất ra thư mục để bạn tải lên Play Console.",
+  "playCslListingName": "Tên trang niêm yết",
+  "playCslListingNameHint": "ví dụ: Từ khóa Thể hình",
+  "playCslTargeting": "Ghi chú mục tiêu (không bắt buộc)",
+  "playCslTargetingHint": "ví dụ: Từ khóa tìm kiếm \"theo dõi tập luyện\"",
+  "playCslExportNLocales": "Xuất {count} ngôn ngữ…",
+  "playCslSelectLocalesToExport": "Chọn các ngôn ngữ cần xuất",
+  "playCslExportDialogTitle": "Chọn nơi xuất trang niêm yết cửa hàng tùy chỉnh",
+  "playCslExportDone": "Đã xuất xong",
+  "playCslExportSummary": "Đã ghi {count} ảnh chụp màn hình vào {folder}",
+  "playCslOpenFolder": "Mở thư mục",
+  "playCslReadInstructions": "Đọc file UPLOAD.md để xem các bước trên Play Console.",
+  "playCslExportInstead": "Xuất cho trang niêm yết cửa hàng tùy chỉnh"
 }

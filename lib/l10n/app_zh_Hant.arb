@@ -601,5 +601,21 @@
   "applyBoardTemplateConfirm": "這將替換畫板背景並重新調整每個外框的位置。你匯入的截圖將被保留。",
   "zoneLimitReached": "每個裝置尺寸最多 {max} 張截圖",
   "playLimitWarning": "Google Play 最多允許 {max} 張截圖 — 最後 {extra} 張不會被上傳",
-  "storeLimitsHint": "App Store 允許 {ios} 張截圖，Google Play 允許 {android} 張。"
+  "storeLimitsHint": "App Store 允許 {ios} 張截圖，Google Play 允許 {android} 張。",
+  "playDestination": "目標位置",
+  "playMainListing": "主商品詳情",
+  "playCustomStoreListing": "自訂商品詳情",
+  "playCslNoApiNote": "Google Play 沒有用於自訂商品詳情格的 API，因此這些內容將匯出至資料夾中，由您在 Play Console 中上傳。",
+  "playCslListingName": "詳情名稱",
+  "playCslListingNameHint": "例如：健身關鍵字",
+  "playCslTargeting": "定位說明（選填）",
+  "playCslTargetingHint": "例如：搜尋關鍵字「健身追蹤」",
+  "playCslExportNLocales": "匯出 {count} 個語言…",
+  "playCslSelectLocalesToExport": "選擇要匯出的語言",
+  "playCslExportDialogTitle": "選擇匯出自訂商品詳情的位置",
+  "playCslExportDone": "匯出就緒",
+  "playCslExportSummary": "已將 {count} 張截圖寫入 {folder}",
+  "playCslOpenFolder": "顯示資料夾",
+  "playCslReadInstructions": "請參閱 UPLOAD.md 了解 Play Console 操作步驟。",
+  "playCslExportInstead": "改用匯出自訂商品詳情"
 }

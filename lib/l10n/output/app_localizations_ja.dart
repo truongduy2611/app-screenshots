@@ -1959,58 +1959,56 @@ class AppLocalizationsJa extends AppLocalizations {
   String get searchDevices => 'デバイスを検索';
 
   @override
-  String get playDestination => 'Destination';
+  String get playDestination => '送信先';
 
   @override
-  String get playMainListing => 'Main listing';
+  String get playMainListing => 'メインのストア掲載情報';
 
   @override
-  String get playCustomStoreListing => 'Custom store listing';
+  String get playCustomStoreListing => 'カスタムストア掲載情報';
 
   @override
   String get playCslNoApiNote =>
-      'Google Play has no API for custom store listings, so these are exported to a folder you upload in Play Console.';
+      'Google Playにはカスタムストア掲載情報用のAPIがないため、Play Consoleでアップロードするフォルダにエクスポートされます。';
 
   @override
-  String get playCslListingName => 'Listing name';
+  String get playCslListingName => '掲載情報名';
 
   @override
-  String get playCslListingNameHint => 'e.g. Fitness keyword';
+  String get playCslListingNameHint => '例：フィットネスキーワード';
 
   @override
-  String get playCslTargeting => 'Targeting note (optional)';
+  String get playCslTargeting => 'ターゲット設定メモ（任意）';
 
   @override
-  String get playCslTargetingHint => 'e.g. Search keyword \"workout tracker\"';
+  String get playCslTargetingHint => '例：検索キーワード「ワークアウト トラッカー」';
 
   @override
   String playCslExportNLocales(int count) {
-    return 'Export $count locales…';
+    return '$count個の言語をエクスポート…';
   }
 
   @override
-  String get playCslSelectLocalesToExport => 'Select locales to export';
+  String get playCslSelectLocalesToExport => 'エクスポートする言語を選択';
 
   @override
-  String get playCslExportDialogTitle =>
-      'Choose where to export the custom store listing';
+  String get playCslExportDialogTitle => 'カスタムストア掲載情報のエクスポート先を選択';
 
   @override
-  String get playCslExportDone => 'Export ready';
+  String get playCslExportDone => 'エクスポート完了';
 
   @override
   String playCslExportSummary(int count, String folder) {
-    return '$count screenshots written to $folder';
+    return '$count枚のスクリーンショットを $folder に保存しました';
   }
 
   @override
-  String get playCslOpenFolder => 'Reveal folder';
+  String get playCslOpenFolder => 'フォルダを表示';
 
   @override
   String get playCslReadInstructions =>
-      'Read UPLOAD.md for the Play Console steps.';
+      'Play Consoleの手順については UPLOAD.md をお読みください。';
 
   @override
-  String get playCslExportInstead =>
-      'Export for a custom store listing instead';
+  String get playCslExportInstead => '代わりにカスタムストア掲載情報用にエクスポート';
 }

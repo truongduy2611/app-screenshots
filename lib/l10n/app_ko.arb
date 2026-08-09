@@ -601,5 +601,21 @@
   "applyBoardTemplateConfirm": "보드 배경이 교체되고 모든 프레임 위치가 재조정됩니다. 가져온 스크린샷은 유지됩니다.",
   "zoneLimitReached": "기기 크기당 최대 {max}개의 스크린샷",
   "playLimitWarning": "Google Play는 {max}개의 스크린샷만 허용합니다 — 마지막 {extra}개는 업로드되지 않습니다",
-  "storeLimitsHint": "App Store는 {ios}개, Google Play는 {android}개의 스크린샷을 허용합니다."
+  "storeLimitsHint": "App Store는 {ios}개, Google Play는 {android}개의 스크린샷을 허용합니다.",
+  "playDestination": "전송 대상",
+  "playMainListing": "기본 스토어 등록정보",
+  "playCustomStoreListing": "맞춤 스토어 등록정보",
+  "playCslNoApiNote": "Google Play에는 맞춤 스토어 등록정보용 API가 없으므로, Play Console에 업로드할 폴더로 내보냅니다.",
+  "playCslListingName": "등록정보 이름",
+  "playCslListingNameHint": "예: 피트니스 키워드",
+  "playCslTargeting": "타겟팅 메모 (선택사항)",
+  "playCslTargetingHint": "예: 검색 키워드 \"운동 추적기\"",
+  "playCslExportNLocales": "{count}개 언어 내보내기…",
+  "playCslSelectLocalesToExport": "내보낼 언어 선택",
+  "playCslExportDialogTitle": "맞춤 스토어 등록정보를 내보낼 위치 선택",
+  "playCslExportDone": "내보내기 완료",
+  "playCslExportSummary": "{count}개의 스크린샷이 {folder}에 저장되었습니다",
+  "playCslOpenFolder": "폴더 열기",
+  "playCslReadInstructions": "Play Console 단계는 UPLOAD.md를 참조하세요.",
+  "playCslExportInstead": "대신 맞춤 스토어 등록정보용으로 내보내기"
 }

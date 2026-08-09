@@ -2072,55 +2072,57 @@ class AppLocalizationsFr extends AppLocalizations {
   String get playDestination => 'Destination';
 
   @override
-  String get playMainListing => 'Main listing';
+  String get playMainListing => 'Fiche principale';
 
   @override
-  String get playCustomStoreListing => 'Custom store listing';
+  String get playCustomStoreListing => 'Fiche de store personnalisée';
 
   @override
   String get playCslNoApiNote =>
-      'Google Play has no API for custom store listings, so these are exported to a folder you upload in Play Console.';
+      'Google Play n\'a pas d\'API pour les fiches de store personnalisées, elles sont donc exportées dans un dossier à importer dans Play Console.';
 
   @override
-  String get playCslListingName => 'Listing name';
+  String get playCslListingName => 'Nom de la fiche';
 
   @override
-  String get playCslListingNameHint => 'e.g. Fitness keyword';
+  String get playCslListingNameHint => 'ex. Mot-clé Fitness';
 
   @override
-  String get playCslTargeting => 'Targeting note (optional)';
+  String get playCslTargeting => 'Note de ciblage (optionnel)';
 
   @override
-  String get playCslTargetingHint => 'e.g. Search keyword \"workout tracker\"';
+  String get playCslTargetingHint =>
+      'ex. Mot-clé de recherche \"suivi d\'entraînement\"';
 
   @override
   String playCslExportNLocales(int count) {
-    return 'Export $count locales…';
+    return 'Exporter $count langues…';
   }
 
   @override
-  String get playCslSelectLocalesToExport => 'Select locales to export';
+  String get playCslSelectLocalesToExport =>
+      'Sélectionnez les langues à exporter';
 
   @override
   String get playCslExportDialogTitle =>
-      'Choose where to export the custom store listing';
+      'Choisir où exporter la fiche de store personnalisée';
 
   @override
-  String get playCslExportDone => 'Export ready';
+  String get playCslExportDone => 'Exportation prête';
 
   @override
   String playCslExportSummary(int count, String folder) {
-    return '$count screenshots written to $folder';
+    return '$count captures d\'écran enregistrées dans $folder';
   }
 
   @override
-  String get playCslOpenFolder => 'Reveal folder';
+  String get playCslOpenFolder => 'Afficher le dossier';
 
   @override
   String get playCslReadInstructions =>
-      'Read UPLOAD.md for the Play Console steps.';
+      'Lisez UPLOAD.md pour les étapes dans Play Console.';
 
   @override
   String get playCslExportInstead =>
-      'Export for a custom store listing instead';
+      'Exporter plutôt pour une fiche de store personnalisée';
 }

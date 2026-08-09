@@ -2028,58 +2028,59 @@ class AppLocalizationsVi extends AppLocalizations {
   String get searchDevices => 'Tìm thiết bị';
 
   @override
-  String get playDestination => 'Destination';
+  String get playDestination => 'Đích đến';
 
   @override
-  String get playMainListing => 'Main listing';
+  String get playMainListing => 'Trang niêm yết chính';
 
   @override
-  String get playCustomStoreListing => 'Custom store listing';
+  String get playCustomStoreListing => 'Trang niêm yết tùy chỉnh';
 
   @override
   String get playCslNoApiNote =>
-      'Google Play has no API for custom store listings, so these are exported to a folder you upload in Play Console.';
+      'Google Play không hỗ trợ API cho trang niêm yết tùy chỉnh, vì vậy hình ảnh sẽ được xuất ra thư mục để bạn tải lên Play Console.';
 
   @override
-  String get playCslListingName => 'Listing name';
+  String get playCslListingName => 'Tên trang niêm yết';
 
   @override
-  String get playCslListingNameHint => 'e.g. Fitness keyword';
+  String get playCslListingNameHint => 'ví dụ: Từ khóa Thể hình';
 
   @override
-  String get playCslTargeting => 'Targeting note (optional)';
+  String get playCslTargeting => 'Ghi chú mục tiêu (không bắt buộc)';
 
   @override
-  String get playCslTargetingHint => 'e.g. Search keyword \"workout tracker\"';
+  String get playCslTargetingHint =>
+      'ví dụ: Từ khóa tìm kiếm \"theo dõi tập luyện\"';
 
   @override
   String playCslExportNLocales(int count) {
-    return 'Export $count locales…';
+    return 'Xuất $count ngôn ngữ…';
   }
 
   @override
-  String get playCslSelectLocalesToExport => 'Select locales to export';
+  String get playCslSelectLocalesToExport => 'Chọn các ngôn ngữ cần xuất';
 
   @override
   String get playCslExportDialogTitle =>
-      'Choose where to export the custom store listing';
+      'Chọn nơi xuất trang niêm yết cửa hàng tùy chỉnh';
 
   @override
-  String get playCslExportDone => 'Export ready';
+  String get playCslExportDone => 'Đã xuất xong';
 
   @override
   String playCslExportSummary(int count, String folder) {
-    return '$count screenshots written to $folder';
+    return 'Đã ghi $count ảnh chụp màn hình vào $folder';
   }
 
   @override
-  String get playCslOpenFolder => 'Reveal folder';
+  String get playCslOpenFolder => 'Mở thư mục';
 
   @override
   String get playCslReadInstructions =>
-      'Read UPLOAD.md for the Play Console steps.';
+      'Đọc file UPLOAD.md để xem các bước trên Play Console.';
 
   @override
   String get playCslExportInstead =>
-      'Export for a custom store listing instead';
+      'Xuất cho trang niêm yết cửa hàng tùy chỉnh';
 }

@@ -601,5 +601,21 @@
   "applyBoardTemplateConfirm": "ボードの背景が置き換えられ、すべてのフレームが再配置されます。インポートしたスクリーンショットは保持されます。",
   "zoneLimitReached": "デバイスサイズごとに最大{max}枚のスクリーンショット",
   "playLimitWarning": "Google Playで許可されるスクリーンショットは{max}枚までです — 最後の{extra}枚はアップロードされません",
-  "storeLimitsHint": "App Storeは{ios}枚、Google Playは{android}枚のスクリーンショットを許可しています。"
+  "storeLimitsHint": "App Storeは{ios}枚、Google Playは{android}枚のスクリーンショットを許可しています。",
+  "playDestination": "送信先",
+  "playMainListing": "メインのストア掲載情報",
+  "playCustomStoreListing": "カスタムストア掲載情報",
+  "playCslNoApiNote": "Google Playにはカスタムストア掲載情報用のAPIがないため、Play Consoleでアップロードするフォルダにエクスポートされます。",
+  "playCslListingName": "掲載情報名",
+  "playCslListingNameHint": "例：フィットネスキーワード",
+  "playCslTargeting": "ターゲット設定メモ（任意）",
+  "playCslTargetingHint": "例：検索キーワード「ワークアウト トラッカー」",
+  "playCslExportNLocales": "{count}個の言語をエクスポート…",
+  "playCslSelectLocalesToExport": "エクスポートする言語を選択",
+  "playCslExportDialogTitle": "カスタムストア掲載情報のエクスポート先を選択",
+  "playCslExportDone": "エクスポート完了",
+  "playCslExportSummary": "{count}枚のスクリーンショットを {folder} に保存しました",
+  "playCslOpenFolder": "フォルダを表示",
+  "playCslReadInstructions": "Play Consoleの手順については UPLOAD.md をお読みください。",
+  "playCslExportInstead": "代わりにカスタムストア掲載情報用にエクスポート"
 }
